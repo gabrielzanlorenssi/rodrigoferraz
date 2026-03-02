@@ -1,1 +1,1953 @@
-Testando
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rodrigo Ferraz — ICT4D & Rural Development</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    /* =============================================
+       CSS VARIABLES — easy to adjust
+       Três paletas disponíveis. Para trocar, 
+       descomente a paleta desejada e comente 
+       a que estiver ativa.
+    ============================================= */
+
+    /* --------------------------------------------------
+       PALETA 1 — ATIVA
+       Terra & Verde-Musgo
+       Campo, natureza, consultoria sustentável.
+       Fundo creme quente, verde-floresta escuro,
+       acento âmbar dourado.
+    -------------------------------------------------- */
+    :root {
+      --c-bg:         #f5f0e8;
+      --c-bg-alt:     #ece7db;
+      --c-bg-dark:    #1a2e1a;
+      --c-ink:        #1c1c1c;
+      --c-ink-muted:  #6b6b5e;
+      --c-green-dark: #1f4023;
+      --c-green:      #2d6a32;
+      --c-green-mid:  #4a8c50;
+      --c-green-light:#8ab890;
+      --c-amber:      #c47c2b;
+      --c-amber-light:#e8a84a;
+      --c-cream:      #fdf8f0;
+      --c-border:     #d4cdc0;
+
+      --f-serif:  'Libre Baskerville', Georgia, serif;
+      --f-sans:   'DM Sans', system-ui, sans-serif;
+
+      --nav-h: 56px;
+      --max-w: 860px;
+      --section-gap: 100px;
+    }
+
+    /* --------------------------------------------------
+       PALETA 2 — COMENTADA
+       Azul Institucional & Areia
+       Mais próxima da identidade do FIDA/IICA.
+       Fundo areia fria, azul-marinho profundo,
+       acento laranja queimado.
+    -------------------------------------------------- */
+    /*
+    :root {
+      --c-bg:         #f2f4f7;
+      --c-bg-alt:     #e8ecf0;
+      --c-bg-dark:    #0f2340;
+      --c-ink:        #1a1f2e;
+      --c-ink-muted:  #5a6478;
+      --c-green-dark: #0f2340;
+      --c-green:      #1a4a7a;
+      --c-green-mid:  #2e6da4;
+      --c-green-light:#7aafd4;
+      --c-amber:      #c85a1e;
+      --c-amber-light:#e07a3a;
+      --c-cream:      #f8fafc;
+      --c-border:     #cdd4de;
+
+      --f-serif:  'Libre Baskerville', Georgia, serif;
+      --f-sans:   'DM Sans', system-ui, sans-serif;
+
+      --nav-h: 56px;
+      --max-w: 860px;
+      --section-gap: 100px;
+    }
+    */
+
+    /* --------------------------------------------------
+       PALETA 3 — COMENTADA
+       Escura & Mineral
+       Portfólio moderno, contraste alto.
+       Fundo quase-preto com textura, acento
+       verde-lima vibrante, detalhes dourados.
+    -------------------------------------------------- */
+    /*
+    :root {
+      --c-bg:         #16181c;
+      --c-bg-alt:     #1e2126;
+      --c-bg-dark:    #0e1012;
+      --c-ink:        #e8e6e0;
+      --c-ink-muted:  #8a8880;
+      --c-green-dark: #2a4a1e;
+      --c-green:      #5a9e38;
+      --c-green-mid:  #78c050;
+      --c-green-light:#a8d888;
+      --c-amber:      #d4a830;
+      --c-amber-light:#f0c850;
+      --c-cream:      #1e2126;
+      --c-border:     #2e3238;
+
+      --f-serif:  'Libre Baskerville', Georgia, serif;
+      --f-sans:   'DM Sans', system-ui, sans-serif;
+
+      --nav-h: 56px;
+      --max-w: 860px;
+      --section-gap: 100px;
+    }
+    */
+
+    /* =============================================
+       RESET & BASE
+    ============================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--f-sans);
+
+  background: var(--c-bg);
+      color: var(--c-ink);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* =============================================
+       NAVIGATION
+    ============================================= */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: var(--c-bg-dark);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      z-index: 1000;
+border-bottom: none;
+box-shadow: 0 1px 0 var(--c-amber);
+    }
+
+    .nav-logo {
+      font-family: var(--f-serif);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--c-cream);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .nav-logo span {
+      color: var(--c-amber-light);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-links a {
+      font-family: var(--f-sans);
+      font-size: 11px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 10px;
+      border-radius: 3px;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: white;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .nav-links a.active {
+      color: var(--c-amber-light);
+    }
+
+    .nav-divider {
+      width: 1px;
+      height: 16px;
+      background: rgba(255,255,255,0.2);
+      margin: 0 4px;
+    }
+
+    .lang-btn {
+      font-family: var(--f-sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      padding: 5px 10px;
+      border-radius: 3px;
+      border: 1px solid rgba(255,255,255,0.25);
+      cursor: pointer;
+      transition: all 0.2s;
+      color: rgba(255,255,255,0.65);
+      background: transparent;
+    }
+
+    .lang-btn.active {
+      background: var(--c-amber);
+      border-color: var(--c-amber);
+      color: white;
+    }
+
+    .lang-btn:hover:not(.active) {
+      border-color: rgba(255,255,255,0.5);
+      color: white;
+    }
+
+    /* hamburger mobile */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: rgba(255,255,255,0.7);
+      transition: all 0.3s;
+    }
+
+    /* =============================================
+       LAYOUT
+    ============================================= */
+    .page-content {
+      padding-top: 0;
+    }
+
+    .section-wrap {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section {
+      padding: var(--section-gap) 0;
+    }
+
+    section:nth-child(even) {
+      background: var(--c-bg-alt);
+    }
+
+    /* Share anchor helper */
+    .section-anchor {
+      display: block;
+      position: relative;
+      top: calc(-1 * var(--nav-h) - 20px);
+      visibility: hidden;
+    }
+
+    /* =============================================
+       HERO
+    ============================================= */
+    #hero {
+      background: var(--c-bg-dark);
+     padding: calc(var(--nav-h) + var(--section-gap) * 1.2) 0 var(--section-gap);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse 60% 50% at 80% 50%, rgba(45,106,50,0.25) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 10% 80%, rgba(196,124,43,0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* subtle grid texture */
+    #hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-family: var(--f-sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--c-amber-light);
+      border: 1px solid rgba(232,168,74,0.4);
+      padding: 5px 12px;
+      border-radius: 2px;
+      margin-bottom: 24px;
+    }
+
+    .hero-name {
+      font-family: var(--f-serif);
+      font-size: clamp(38px, 6vw, 68px);
+      font-weight: 700;
+      color: var(--c-cream);
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .hero-name em {
+      font-style: italic;
+      color: var(--c-green-light);
+    }
+
+    .hero-desc {
+      font-size: clamp(15px, 2vw, 18px);
+      font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--c-amber);
+      color: white;
+      font-family: var(--f-sans);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      padding: 12px 22px;
+      border-radius: 3px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      text-decoration: none;
+    }
+
+    .btn-primary:hover {
+      background: var(--c-amber-light);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: rgba(255,255,255,0.75);
+      font-family: var(--f-sans);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 11px 20px;
+      border-radius: 3px;
+      border: 1px solid rgba(255,255,255,0.25);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .btn-secondary:hover {
+      border-color: rgba(255,255,255,0.6);
+      color: white;
+    }
+
+    /* =============================================
+       SECTION HEADERS
+    ============================================= */
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .section-label span {
+      font-family: var(--f-sans);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--c-amber);
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--c-border);
+      max-width: 60px;
+    }
+
+    .section-title {
+      font-family: var(--f-serif);
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 700;
+      color: var(--c-green-dark);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .section-sub {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--c-ink-muted);
+      max-width: 560px;
+      line-height: 1.65;
+      margin-bottom: 40px;
+    }
+
+    /* =============================================
+       MAP SECTION
+    ============================================= */
+    #mapa_d3 svg { width: 0; height: 0; }
+    #mapa_d3 #svg_mapa { width: 100%; height: auto; }
+
+    .map-controls {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    .zoom-btn {
+      width: 34px; height: 34px;
+      border: 1px solid var(--c-border);
+      background: var(--c-cream);
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 18px;
+      font-family: var(--f-sans);
+      color: var(--c-ink);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s;
+    }
+
+    .zoom-btn:hover { background: var(--c-bg-alt); }
+
+    .map-legend-wrap {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 2px;
+      margin-bottom: 16px;
+    }
+
+    .map-legend-item {
+      flex: 1;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--f-sans);
+      font-size: 12px;
+      font-weight: 500;
+      color: white;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      user-select: none;
+    }
+
+    /* =============================================
+       TIMELINE
+    ============================================= */
+    .timeline-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 36px;
+    }
+
+    .filter-chip {
+      font-family: var(--f-sans);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1.5px solid var(--c-border);
+      background: transparent;
+      color: var(--c-ink-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-chip:hover,
+    .filter-chip.active {
+      border-color: var(--c-green);
+      color: var(--c-green-dark);
+      background: rgba(45,106,50,0.08);
+    }
+
+    .filter-chip.active {
+      background: var(--c-green-dark);
+      color: white;
+      border-color: var(--c-green-dark);
+    }
+
+    .timeline-list {
+      position: relative;
+      padding-left: 28px;
+    }
+
+    .timeline-list::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--c-amber), var(--c-green));
+    }
+
+    .tl-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .tl-tag {
+      font-family: var(--f-sans);
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 9px;
+      border-radius: 10px;
+      background: var(--c-bg-alt);
+      border: 1px solid var(--c-border);
+      color: var(--c-ink-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+    }
+
+    .tl-tag:hover {
+      border-color: var(--c-amber);
+      color: var(--c-amber);
+      background: rgba(196,124,43,0.07);
+    }
+
+
+    .tl-item {
+      position: relative;
+      margin-bottom: 28px;
+      transition: opacity 0.3s;
+    }
+
+    .tl-item.hidden { display: none; }
+
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -24px;
+      top: 8px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 2px solid var(--c-cream);
+      background: var(--c-amber);
+      transition: transform 0.2s;
+    }
+
+    .tl-item:hover::before { transform: scale(1.3); }
+
+    .tl-card {
+      background: var(--c-cream);
+      border: 1px solid var(--c-border);
+      border-left: 3px solid var(--c-amber);
+      padding: 14px 18px;
+      border-radius: 0 4px 4px 0;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .tl-item:hover .tl-card {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      transform: translateX(3px);
+    }
+
+    .tl-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .tl-year {
+      font-family: var(--f-serif);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--c-amber);
+    }
+
+    .tl-cat-badge {
+      font-family: var(--f-sans);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 10px;
+      color: white;
+    }
+
+    .tl-text {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--c-ink);
+    }
+
+    .tl-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      color: var(--c-green);
+      margin-top: 6px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .tl-link:hover { color: var(--c-amber); }
+
+    /* =============================================
+   MAP SELECTOR & FONTE
+============================================= */
+.map-indicator-selector {
+  font-family: var(--f-sans);
+  font-size: 13px;
+  padding: 7px 12px;
+  border: 1px solid var(--c-border);
+  border-radius: 4px;
+  background: var(--c-cream);
+  color: var(--c-ink);
+  cursor: pointer;
+  width: 100%;
+  max-width: 420px;
+  margin-bottom: 16px;
+}
+
+.map-fonte {
+  font-size: 11px;
+  color: var(--c-ink-muted);
+  margin-top: 10px;
+  text-align: right;
+}
+
+@media (max-width: 600px) {
+  .map-indicator-selector {
+    max-width: 100%;
+  }
+}
+
+
+    /* =============================================
+       ABOUT / PROFILE
+    ============================================= */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .about-photo-wrap {
+      position: relative;
+    }
+
+    .about-photo-placeholder {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: var(--c-bg-alt);
+      border: 2px solid var(--c-border);
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--c-ink-muted);
+      font-size: 13px;
+    }
+
+    .about-photo-placeholder svg {
+      opacity: 0.3;
+    }
+
+    .about-links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .about-link-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border: 1px solid var(--c-border);
+      border-radius: 4px;
+      background: var(--c-cream);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--c-ink);
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .about-link-btn:hover {
+      border-color: var(--c-green);
+      color: var(--c-green-dark);
+      background: rgba(45,106,50,0.05);
+    }
+
+    .about-link-btn .link-icon {
+      width: 28px;
+      height: 28px;
+      background: var(--c-green-dark);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .about-link-btn .link-icon svg {
+      width: 14px;
+      height: 14px;
+      fill: white;
+    }
+
+    .about-text p {
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--c-ink);
+      margin-bottom: 16px;
+    }
+
+    .about-text p:last-child { margin-bottom: 0; }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .tag {
+      font-family: var(--f-sans);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 12px;
+      background: var(--c-bg-alt);
+      border: 1px solid var(--c-border);
+      border-radius: 2px;
+      color: var(--c-ink-muted);
+    }
+
+    /* =============================================
+       PROJECTS / CARDS
+    ============================================= */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .project-card {
+      background: var(--c-cream);
+      border: 1px solid var(--c-border);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: box-shadow 0.25s, transform 0.2s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-card:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      transform: translateY(-3px);
+    }
+
+    .project-card-thumb {
+      height: 130px;
+      background: var(--c-green-dark);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .project-card-thumb .thumb-label {
+      font-family: var(--f-serif);
+      font-size: 13px;
+      font-style: italic;
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 12px;
+    }
+
+    .project-card-thumb .thumb-accent {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--c-amber);
+    }
+
+    .project-card-body {
+      padding: 16px;
+      flex: 1;
+    }
+
+    .project-card-org {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--c-amber);
+      margin-bottom: 6px;
+    }
+
+    .project-card-title {
+      font-family: var(--f-serif);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--c-green-dark);
+      line-height: 1.35;
+      margin-bottom: 8px;
+    }
+
+    .project-card-desc {
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--c-ink-muted);
+    }
+
+    /* =============================================
+       PUBLICATIONS
+    ============================================= */
+    .pub-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .pub-item {
+      display: flex;
+      gap: 16px;
+      padding: 18px;
+      background: var(--c-cream);
+      border: 1px solid var(--c-border);
+      border-radius: 4px;
+      transition: box-shadow 0.2s;
+    }
+
+    .pub-item:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+    }
+
+    .pub-year {
+      font-family: var(--f-serif);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--c-amber);
+      min-width: 36px;
+      padding-top: 2px;
+    }
+
+    .pub-body { flex: 1; }
+
+    .pub-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--c-ink);
+      line-height: 1.45;
+      margin-bottom: 4px;
+    }
+
+    .pub-meta {
+      font-size: 12px;
+      color: var(--c-ink-muted);
+      margin-bottom: 6px;
+    }
+
+    .pub-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--c-green);
+      transition: color 0.2s;
+    }
+
+    .pub-link:hover { color: var(--c-amber); }
+
+    /* =============================================
+       VIDEOS
+    ============================================= */
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .video-card {
+      background: var(--c-cream);
+      border: 1px solid var(--c-border);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.2s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .video-card:hover {
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      transform: translateY(-2px);
+    }
+
+    .video-thumb {
+      position: relative;
+      height: 140px;
+      background: #111;
+      overflow: hidden;
+    }
+
+    .video-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.8;
+      transition: opacity 0.3s;
+    }
+
+    .video-card:hover .video-thumb img { opacity: 1; }
+
+    .video-play {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .video-play-btn {
+      width: 44px;
+      height: 44px;
+      background: rgba(196,124,43,0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .video-card:hover .video-play-btn {
+      transform: scale(1.1);
+      background: var(--c-amber);
+    }
+
+    .video-body {
+      padding: 14px 16px;
+    }
+
+    .video-title {
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.45;
+      color: var(--c-ink);
+    }
+
+    /* =============================================
+       FOOTER
+    ============================================= */
+    footer {
+      background: var(--c-bg-dark);
+      color: rgba(255,255,255,0.5);
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 13px;
+    }
+    
+
+    footer a { color: var(--c-amber-light); }
+
+    /* =============================================
+       SHARE TOAST
+    ============================================= */
+    .share-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--c-green-dark);
+      color: white;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 10px 18px;
+      border-radius: 4px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: all 0.3s;
+      pointer-events: none;
+      z-index: 2000;
+    }
+
+    .share-toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* share button on section headers */
+    .share-section-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--c-ink-muted);
+      background: transparent;
+      border: 1px solid var(--c-border);
+      border-radius: 3px;
+      padding: 5px 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      float: right;
+      margin-top: 4px;
+    }
+
+    .share-section-btn:hover {
+      border-color: var(--c-amber);
+      color: var(--c-amber);
+    }
+
+    /* =============================================
+       TOOLTIPS (D3 map)
+    ============================================= */
+    ttip.tooltip {
+      position: absolute;
+      max-width: 240px;
+      padding: 10px 12px;
+      font-family: var(--f-sans);
+      font-size: 13px;
+      background: var(--c-green-dark);
+      color: white;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.1);
+      pointer-events: none;
+      z-index: 999;
+      line-height: 1.5;
+    }
+
+    /* =============================================
+       RESPONSIVE
+    ============================================= */
+    @media (max-width: 768px) {
+      :root { --section-gap: 60px; }
+
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: var(--nav-h);
+        left: 0; right: 0;
+        background: var(--c-bg-dark);
+        padding: 12px 0 16px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        gap: 2px;
+      }
+
+      .nav-links.open .nav-divider { display: none; }
+      .nav-links.open a { padding: 8px 24px; }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-photo-wrap {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+      }
+
+      .about-photo-placeholder {
+        width: 120px;
+        min-width: 120px;
+        aspect-ratio: 1;
+      }
+
+      .about-links {
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin-top: 0;
+      }
+
+      .map-legend-wrap { flex-wrap: wrap; }
+      .map-legend-item { flex: 0 0 calc(33.333% - 2px); }
+
+      .share-section-btn { float: none; display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav id="main-nav">
+  <a href="#hero" class="nav-logo">Rodrigo <span>Ferraz</span></a>
+  <div class="nav-links" id="nav-links">
+    <a href="#mapa" data-section="mapa" class="nav-anchor" data-pt="Mapa" data-en="Map">Mapa</a>
+    <a href="#timeline" data-section="timeline" class="nav-anchor" data-pt="Linha do Tempo" data-en="Timeline">Linha do Tempo</a>
+    <a href="#sobre" data-section="sobre" class="nav-anchor" data-pt="Sobre" data-en="About">Sobre</a>
+    <a href="#projetos" data-section="projetos" class="nav-anchor" data-pt="Projetos" data-en="Projects">Projetos</a>
+    <a href="#publicacoes" data-section="publicacoes" class="nav-anchor" data-pt="Publicações" data-en="Publications">Publicações</a>
+    <a href="#videos" data-section="videos" class="nav-anchor" data-pt="Vídeos" data-en="Videos">Vídeos</a>
+    <div class="nav-divider"></div>
+    <button class="lang-btn active" id="btn-pt" onclick="setLang('pt')">PT</button>
+    <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+  </div>
+  <div class="nav-hamburger" id="nav-hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- SHARE TOAST -->
+<div class="share-toast" id="share-toast"></div>
+
+<div class="page-content">
+
+<!-- =============================================
+     HERO
+============================================= -->
+<section id="hero">
+  <a class="section-anchor" id="anchor-hero"></a>
+  <div class="hero-inner">
+    <div class="hero-tag" data-pt="Consultor Internacional · ICT4D · Extensão Rural · Engenheiro Agrônomo" data-en="International Consultant · ICT4D · Rural Extension · Agronomist">
+      Consultor Internacional · ICT4D · Extensão Rural · Engenheiro Agrônomo
+    </div>
+    <h1 class="hero-name">Rodrigo<br><em>Ferraz</em></h1>
+    <p class="hero-desc" 
+       data-pt="  Especialista em Gestão de Projetos, com sólida atuação em inovação e inclusão digital, e  foco em Tecnologias da Informação e Comunicação para o Desenvolvimento (ICT4D), aplicadas a sistemas sociais no contexto do desenvolvimento agrícola.  "
+       data-en="Project Management Specialist with a strong background in innovation and digital inclusion, focusing on Information and Communication Technologies for Development (ICT4D) applied to social systems in the context of agricultural development.">
+   Especialista em Gestão de Projetos, com sólida atuação em inovação e inclusão digital, e  foco em Tecnologias da Informação e Comunicação para o Desenvolvimento (ICT4D), aplicadas a sistemas sociais no contexto do desenvolvimento agrícola.  
+    </p>
+    <div class="hero-ctas">
+      <a href="#sobre" class="btn-primary" data-pt="Sobre mim" data-en="About me">Sobre mim</a>
+      <a href="#projetos" class="btn-secondary" data-pt="Ver projetos" data-en="See projects">Ver projetos</a>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     MAP
+============================================= -->
+<section id="mapa">
+  <a class="section-anchor" id="anchor-mapa"></a>
+  <div class="section-wrap">
+    <div class="section-label">
+      <span data-pt="Atuação" data-en="Presence">Atuação</span>
+    </div>
+    <div style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+      <h2 class="section-title" style="margin-bottom:0" 
+          data-pt="Indicadores ATER no Brasil" 
+          data-en="ATER Indicators in Brazil">Indicadores ATER no Brasil</h2>
+      <button class="share-section-btn" onclick="shareSection('mapa')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        <span data-pt="Compartilhar" data-en="Share">Compartilhar</span>
+      </button>
+    </div>
+    <p class="section-sub" 
+      data-pt="Indicadores socioeconômicos e climáticos por município. Selecione a variável para explorar o mapa"
+data-en="Socioeconomic and climate indicators by municipality. Select a variable to explore the map">
+      Indicadores socioeconômicos e climáticos por município. Selecione a variável para explorar o mapa
+    </p>
+<select id="map-indicator-selector" class="map-indicator-selector"></select>
+    <!-- Legend (filled by JS) -->
+    <div class="map-legend-wrap" id="map-legend-wrap"></div>
+
+    <div id="mapa_d3"></div>
+
+    <div class="map-controls">
+      <button class="zoom-btn" id="zoom-in" title="Zoom in">+</button>
+      <button class="zoom-btn" id="zoom-out" title="Zoom out">−</button>
+      <button class="zoom-btn" id="zoom-reset" title="Reset zoom" style="font-size:14px">⟲</button>
+    </div>
+    <p id="map-fonte" class="map-fonte"></p>
+  </div>
+</section>
+
+<!-- =============================================
+     TIMELINE
+============================================= -->
+<section id="timeline">
+  <a class="section-anchor" id="anchor-timeline"></a>
+  <div class="section-wrap">
+    <div class="section-label">
+      <span data-pt="Contexto Histórico" data-en="Historical Context">Contexto Histórico</span>
+    </div>
+    <div style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+      <h2 class="section-title" style="margin-bottom:0"
+          data-pt="Digitalização da ATER no Brasil"
+          data-en="Digitalization of Rural Extension in Brazil">Digitalização da ATER no Brasil</h2>
+      <button class="share-section-btn" onclick="shareSection('timeline')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        <span data-pt="Compartilhar" data-en="Share">Compartilhar</span>
+      </button>
+    </div>
+    <p class="section-sub"
+       data-pt="Principais marcos da inovação tecnológica na extensão rural brasileira, de 1948 ao presente."
+       data-en="Key milestones of technological innovation in Brazilian rural extension, from 1948 to the present.">
+      Principais marcos da inovação tecnológica na extensão rural brasileira, de 1948 ao presente.
+    </p>
+
+    <div class="timeline-filters" id="tl-filters">
+      <!-- filled by JS -->
+    </div>
+
+    <div class="timeline-list" id="tl-list">
+      <!-- filled by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     ABOUT
+============================================= -->
+<section id="sobre">
+  <a class="section-anchor" id="anchor-sobre"></a>
+  <div class="section-wrap">
+    <div class="section-label">
+      <span data-pt="Perfil" data-en="Profile">Perfil</span>
+    </div>
+    <h2 class="section-title" 
+        data-pt="Sobre Rodrigo Ferraz"
+        data-en="About Rodrigo Ferraz">Sobre Rodrigo Ferraz</h2>
+
+    <div class="about-grid">
+      <div>
+        <div class="about-photo-wrap">
+          <div class="about-photo-placeholder">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            <span data-pt="Rodrigo Ferraz" data-en="Rodrigo Ferraz">Rodrigo Ferraz</span>
+          </div>
+        </div>
+        <div class="about-links">
+          <a href="https://www.linkedin.com/in/rodrigo-ferraz-840a50a0/" target="_blank" class="about-link-btn">
+            <div class="link-icon">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </div>
+            LinkedIn
+          </a>
+          <a href="https://lattes.cnpq.br/2069378221576688" target="_blank" class="about-link-btn">
+            <div class="link-icon">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </div>
+            Currículo Lattes
+          </a>
+        </div>
+      </div>
+
+<div class="about-text">
+  <p data-pt="Rodrigo Ferraz é Especialista em Gestão de Projetos, com sólida atuação em inovação e inclusão digital e foco em Tecnologias da Informação e Comunicação para o Desenvolvimento (ICT4D), aplicadas a sistemas sociais no contexto do desenvolvimento agrícola. É agrônomo, mestre em Ciências Sociais pela Universidade de Brasília (UnB) e doutorando em Administração, Estratégia Pública, Inovação e Marketing, também pela UnB."
+     data-en="Rodrigo Ferraz is a Project Management Specialist with extensive experience in digital innovation and inclusion, focused on Information and Communication Technologies for Development (ICT4D) applied to social systems in agricultural development contexts. He holds a degree in Agronomy, a Master's in Social Sciences from the University of Brasília (UnB), and is currently a PhD candidate in Public Strategy, Innovation and Marketing, also at UnB.">
+  </p>
+  <p data-pt="Possui ampla experiência na implementação e supervisão de iniciativas internacionais, tendo trabalhado no desenvolvimento e assessoramento de programas multilaterais com ênfase em atividades conduzidas na África, América Latina e Caribe e Nordeste do Brasil. Ao longo de mais de 10 anos, atuou no desenho e na gestão de projetos apoiados por BMGF, UK-DFID, UE, FIDA, BID, GEF, Banco Mundial, entre outras instituições."
+     data-en="He has extensive experience in the implementation and supervision of international initiatives, having worked on the development and advisory of multilateral programs with emphasis on activities carried out in Africa, Latin America and the Caribbean, and Northeast Brazil. Over more than 10 years, he has worked on the design and management of projects supported by BMGF, UK-DFID, EU, IFAD, IDB, GEF, World Bank, and other institutions.">
+  </p>
+  <p data-pt="Atualmente, coordena pelo IICA o Programa ATER Digital, lançado pelo Ministério da Agricultura, Pecuária e Abastecimento (MAPA) em 2020, que visa fortalecer o sistema brasileiro de extensão rural por meio de um modelo inovador de governança e do uso amplo das TICs. Atua também como consultor no FIDA, apoiando o desenho e a implementação de projetos da carteira brasileira, com foco em cooperação internacional, governança e redes."
+     data-en="Rodrigo Ferraz currently coordinates the ATER Digital Program at IICA, launched by Brazil's Ministry of Agriculture (MAPA) in 2020, which aims to strengthen the Brazilian rural extension system through an innovative governance model and the broad use of ICTs. He also works as a consultant at IFAD, supporting the design and implementation of projects within the Brazilian portfolio, with a focus on international cooperation, governance, and networks.">
+  </p>
+  <p data-pt="Publicou diversos trabalhos, artigos e livros — dois deles finalistas do Prêmio Jabuti em 2011 e 2016. Em 2022, recebeu o Prêmio de Mérito em Gestão na categoria Maturidade em Gestão, concedido pelo MAPA, em reconhecimento à gestão de projetos orientada para resultados."
+     data-en="He has published numerous works, articles and books — two of which were finalists for the Jabuti Prize in 2011 and 2016. In 2022, he received the Management Merit Award in the category of Management Maturity, granted by MAPA, in recognition of results-oriented project management.">
+  </p>
+  <div class="tag-list">
+    <span class="tag">ICT4D</span>
+    <span class="tag">ATER Digital</span>
+    <span class="tag">Extensão Rural</span>
+    <span class="tag">Agricultura Familiar</span>
+    <span class="tag">FIDA / IFAD</span>
+    <span class="tag">IICA</span>
+    <span class="tag">Gestão de Projetos</span>
+    <span class="tag">Cooperação Internacional</span>
+  </div>
+</div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     PROJECTS
+============================================= -->
+<section id="projetos">
+  <a class="section-anchor" id="anchor-projetos"></a>
+  <div class="section-wrap">
+    <div class="section-label">
+      <span data-pt="Portfólio" data-en="Portfolio">Portfólio</span>
+    </div>
+    <h2 class="section-title"
+        data-pt="Projetos e Iniciativas"
+        data-en="Projects & Initiatives">Projetos e Iniciativas</h2>
+    <p class="section-sub"
+       data-pt="Seleção de projetos desenvolvidos em parceria com organismos nacionais e internacionais."
+       data-en="Selection of projects developed in partnership with national and international organizations.">
+      Seleção de projetos desenvolvidos em parceria com organismos nacionais e internacionais.
+    </p>
+
+    <div class="projects-grid" id="projects-grid">
+      <!-- filled by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     PUBLICATIONS
+============================================= -->
+<section id="publicacoes">
+  <a class="section-anchor" id="anchor-publicacoes"></a>
+  <div class="section-wrap">
+    <div class="section-label">
+      <span data-pt="Pesquisa" data-en="Research">Pesquisa</span>
+    </div>
+    <div style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+      <h2 class="section-title" style="margin-bottom:0"
+          data-pt="Publicações"
+          data-en="Publications">Publicações</h2>
+      <button class="share-section-btn" onclick="shareSection('publicacoes')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        <span data-pt="Compartilhar" data-en="Share">Compartilhar</span>
+      </button>
+    </div>
+    <div class="pub-list" id="pub-list">
+      <!-- filled by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     VIDEOS
+============================================= -->
+<section id="videos">
+  <a class="section-anchor" id="anchor-videos"></a>
+  <div class="section-wrap">
+    <div class="section-label">
+      <span data-pt="Palestras" data-en="Talks">Palestras</span>
+    </div>
+    <div style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+      <h2 class="section-title" style="margin-bottom:0"
+          data-pt="Vídeos e Palestras"
+          data-en="Videos & Talks">Vídeos e Palestras</h2>
+      <button class="share-section-btn" onclick="shareSection('videos')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        <span data-pt="Compartilhar" data-en="Share">Compartilhar</span>
+      </button>
+    </div>
+    <div class="videos-grid" id="videos-grid">
+      <!-- filled by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Rodrigo Ferraz · <a href="mailto:ferraz.rodrigo89@gmail.com">ferraz.rodrigo89@gmail.com</a></p>
+</footer>
+
+</div><!-- /page-content -->
+
+<script>
+(function() {
+// =============================================
+// DATA
+// =============================================
+
+var TIMELINE_DATA = [
+  { year: 1948, cat: "Mídia", tipo: { pt: "Rádio educativa", en: "Educational Radio" }, meio: { pt: "Extensão rural tradicional", en: "Traditional Rural Extension" }, text: { pt: "Primeiras experiências de rádio educativa rural no Brasil (Rádio Rural de Lavras/MG).", en: "First rural educational radio experiences in Brazil (Rádio Rural de Lavras/MG)." }, link: "https://ufla.br/noticias/institucional/14732-radio-universitaria-da-ufla-completa-70-anos-de-extensao-e-educacao" },
+  { year: 1956, cat: "Política Pública", tipo: { pt: "Política pública", en: "Public Policy" }, meio: { pt: "Institucionalização", en: "Institutionalization" }, text: { pt: "Criação da ABCAR, institucionalizando a ATER no Brasil.", en: "Creation of ABCAR, institutionalizing rural extension (ATER) in Brazil." }, link: "https://www.gov.br/agricultura/pt-br/assuntos/ater/historico" },
+  { year: 1960, cat: "Mídia", tipo: { pt: "Rádio", en: "Radio" }, meio: { pt: "Comunicação de massa", en: "Mass Communication" }, text: { pt: "Expansão de programas de rádio agrícolas regionais por serviços estaduais de ATER.", en: "Expansion of regional agricultural radio programs by state ATER services." } },
+  { year: 1970, cat: "Mídia", tipo: { pt: "Rádio", en: "Radio" }, meio: { pt: "Rede institucional", en: "Institutional Network" }, text: { pt: "Consolidação das redes estaduais de rádio rural (Emater, Epagri, etc.).", en: "Consolidation of state rural radio networks (Emater, Epagri, etc.)." } },
+  { year: 1980, cat: "Mídia", tipo: { pt: "Televisão", en: "Television" }, meio: { pt: "Comunicação audiovisual", en: "Audiovisual Communication" }, text: { pt: "Início da extensão rural via televisão; lançamento do programa Globo Rural.", en: "Start of rural extension via television; launch of the Globo Rural program." }, link: "https://g1.globo.com/economia/agronegocios/globo-rural/" },
+  { year: 1980, cat: "Mídia", tipo: { pt: "Rádio", en: "Radio" }, meio: { pt: "Educomunicação", en: "Educommunication" }, text: { pt: "EPAGRI e outras instituições adotam radionovelas e programas educativos rurais.", en: "EPAGRI and other institutions adopt radio dramas and rural educational programs." } },
+  { year: 1990, cat: "Internet", tipo: { pt: "Internet", en: "Internet" }, meio: { pt: "Primeira digitalização da comunicação rural", en: "First Digitalization of Rural Communication" }, text: { pt: "Chegada da internet e surgimento dos primeiros portais agropecuários e boletins online.", en: "Arrival of the internet and emergence of first agricultural portals and online bulletins." } },
+  { year: 1995, cat: "Tecnologia", tipo: { pt: "Geotecnologia", en: "Geotechnology" }, meio: { pt: "Agricultura de precisão", en: "Precision Agriculture" }, text: { pt: "Introdução do GPS e SIG na agricultura de precisão.", en: "Introduction of GPS and GIS in precision agriculture." }, link: "https://www.embrapa.br/agricultura-de-precisao" },
+  { year: 2000, cat: "Tecnologia", tipo: { pt: "Plataformas digitais", en: "Digital Platforms" }, meio: { pt: "Gestão de dados", en: "Data Management" }, text: { pt: "Consolidação de plataformas digitais de gestão agrícola e sensores de campo.", en: "Consolidation of digital agricultural management platforms and field sensors." } },
+  { year: 2005, cat: "Extensão Digital", tipo: { pt: "Extensão digital", en: "Digital Extension" }, meio: { pt: "Educação online", en: "Online Education" }, text: { pt: "Início dos programas de e-Extension em universidades e agências internacionais.", en: "Start of e-Extension programs at universities and international agencies." }, link: "https://www.fao.org/e-agriculture/en" },
+  { year: 2008, cat: "Mobile", tipo: { pt: "Telefonia móvel", en: "Mobile Telephony" }, meio: { pt: "Comunicação digital", en: "Digital Communication" }, text: { pt: "Uso de SMS para comunicação técnica entre extensionistas e agricultores.", en: "Use of SMS for technical communication between extension agents and farmers." } },
+  { year: 2010, cat: "Extensão Digital", tipo: { pt: "Plataformas digitais", en: "Digital Platforms" }, meio: { pt: "Extensão pública", en: "Public Extension" }, text: { pt: "Primeiras plataformas digitais estaduais e privadas de ATER no Brasil (Epagri, Emater).", en: "First state and private digital ATER platforms in Brazil (Epagri, Emater)." } },
+  { year: 2011, cat: "Tecnologia", tipo: { pt: "Consolidação de discurso técnico", en: "Technical Discourse Consolidation" }, meio: { pt: "Sistematização conceitual", en: "Conceptual Systematization" }, text: { pt: "Publicação de capítulo sobre inovação tecnológica em agricultura de precisão.", en: "Publication of chapter on technological innovation in precision agriculture." } },
+  { year: 2011, cat: "Internacional", tipo: { pt: "Mobile Extension", en: "Mobile Extension" }, meio: { pt: "Ciência comportamental", en: "Behavioral Science" }, text: { pt: "Fundação do Precision Agriculture for Development (PAD) por Michael Kremer (Prêmio Nobel 2019).", en: "Foundation of Precision Agriculture for Development (PAD) by Michael Kremer (Nobel Prize 2019)." }, link: "https://precisionag.org/" },
+  { year: 2013, cat: "Política Pública", tipo: { pt: "Portal digital", en: "Digital Portal" }, meio: { pt: "Governo eletrônico", en: "E-Government" }, text: { pt: "Lançamento do Portal e-Campo da Embrapa, marco da ATER digital pública no Brasil.", en: "Launch of Embrapa's e-Campo Portal, milestone of public digital ATER in Brazil." }, link: "https://www.embrapa.br/e-campo" },
+  { year: 2015, cat: "Mobile", tipo: { pt: "Mídias sociais", en: "Social Media" }, meio: { pt: "Comunicação horizontal", en: "Horizontal Communication" }, text: { pt: "Uso massivo de WhatsApp e redes sociais por extensionistas e produtores.", en: "Mass use of WhatsApp and social media by extension agents and producers." } },
+  { year: 2016, cat: "Tecnologia", tipo: { pt: "Startup", en: "Startup" }, meio: { pt: "ATER digital", en: "Digital ATER" }, text: { pt: "Fundação da startup brasileira ManejeBem, especializada em ATER digital.", en: "Foundation of Brazilian startup ManejeBem, specialized in digital ATER." }, link: "https://manejebem.com/" },
+  { year: 2017, cat: "Tecnologia", tipo: { pt: "Plataforma digital", en: "Digital Platform" }, meio: { pt: "Rastreabilidade", en: "Traceability" }, text: { pt: "Instituto Biosistêmico lança a plataforma Agrotrace, para rastreabilidade e monitoramento agropecuário.", en: "Instituto Biosistêmico launches Agrotrace platform for agricultural traceability and monitoring." }, link: "https://www.agrotrace.com.br/portal-agrotrace" },
+  { year: 2018, cat: "Tecnologia", tipo: { pt: "Startup", en: "Startup" }, meio: { pt: "Inovação tecnológica", en: "Technological Innovation" }, text: { pt: "Consolidação de startups agtech brasileiras (ManejeBem, Agrotools, Solinftec).", en: "Consolidation of Brazilian agtech startups (ManejeBem, Agrotools, Solinftec)." } },
+  { year: 2018, cat: "Política Pública", tipo: { pt: "Governo digital", en: "Digital Government" }, meio: { pt: "Extensão pública", en: "Public Extension" }, text: { pt: "Criação de plataformas públicas de ATER digital, como Epagri Mob e Emater Digital.", en: "Creation of public digital ATER platforms, such as Epagri Mob and Emater Digital." } },
+  { year: 2020, cat: "Política Pública", tipo: { pt: "Política pública", en: "Public Policy" }, meio: { pt: "Plataforma digital", en: "Digital Platform" }, text: { pt: "Lançamento do Programa ATER Digital pelo MAPA.", en: "Launch of the ATER Digital Program by MAPA." }, link: "https://www.gov.br/agricultura/pt-br/assuntos/noticias/mapa-lanca-programa-ater-digital" },
+  { year: 2020, cat: "Tecnologia", tipo: { pt: "Estratégia híbrida", en: "Hybrid Strategy" }, meio: { pt: "Adaptação tecnológica", en: "Technological Adaptation" }, text: { pt: "Pandemia de COVID-19 acelera modelos híbridos de ATER (presencial + digital).", en: "COVID-19 pandemic accelerates hybrid ATER models (in-person + digital)." } },
+  { year: 2021, cat: "Tecnologia", tipo: { pt: "Inteligência artificial", en: "Artificial Intelligence" }, meio: { pt: "Monitoramento agrícola", en: "Agricultural Monitoring" }, text: { pt: "Crescimento do uso de IA, big data e drones em sistemas de assistência técnica e monitoramento de lavouras.", en: "Growth in use of AI, big data and drones in technical assistance and crop monitoring." } },
+  { year: 2022, cat: "Internacional", tipo: { pt: "Ensino remoto", en: "Remote Learning" }, meio: { pt: "Cooperação institucional", en: "Institutional Cooperation" }, text: { pt: "Parcerias público-privadas e capacitações online (ANATER e SENAR).", en: "Public-private partnerships and online training (ANATER and SENAR)." } },
+  { year: 2022, cat: "Política Pública", tipo: { pt: "Edital público", en: "Public Tender" }, meio: { pt: "Serviços remotos", en: "Remote Services" }, text: { pt: "Editais da ANATER passam a prever formalmente produtos e serviços digitais.", en: "ANATER bids begin to formally include digital products and remote services." } },
+  { year: 2023, cat: "Internacional", tipo: { pt: "Plataforma digital", en: "Digital Platform" }, meio: { pt: "Cooperação internacional", en: "International Cooperation" }, text: { pt: "Criação de Hubs Digitais de ATER e inovação rural (como ATER+ Digital / IICA).", en: "Creation of Digital ATER Hubs and rural innovation (such as ATER+ Digital / IICA)." }, link: "https://agenciagov.ebc.com.br/noticias/202404/plataforma-ater-digital-disponibiliza-conteudos-on-line-para-tecnicos-extensionistas" },
+  { year: 2024, cat: "Internacional", tipo: { pt: "Plataforma digital", en: "Digital Platform" }, meio: { pt: "Educação remota", en: "Remote Education" }, text: { pt: "Embrapa coordena três hubs na Plataforma ATER+ Digital com conteúdos para extensionistas.", en: "Embrapa coordinates three hubs on the ATER+ Digital Platform with content for extension agents." } },
+  { year: 2024, cat: "Internacional", tipo: { pt: "Estratégia institucional", en: "Institutional Strategy" }, meio: { pt: "Planejamento estratégico", en: "Strategic Planning" }, text: { pt: "Inclusão da ATER Digital como estratégia do FIDA no COSOP Brasil 2025–2029.", en: "ATER Digital included in IFAD's Brazil COSOP 2025–2029 strategy." }, link: "https://www.ifad.org/en/w/countries/brazil" },
+  { year: 2024, cat: "Política Pública", tipo: { pt: "Política pública", en: "Public Policy" }, meio: { pt: "Financiamento", en: "Financing" }, text: { pt: "MDA vai investir R$ 19 milhões na ATER para cerca de 4.625 famílias.", en: "MDA to invest R$ 19 million in ATER for approximately 4,625 families." } },
+  { year: 2025, cat: "Internacional", tipo: { pt: "Implementação de projetos", en: "Project Implementation" }, meio: { pt: "Cooperação internacional", en: "International Cooperation" }, text: { pt: "Início dos primeiros projetos do FIDA que incorporam a ATER Digital (CompensAÇÃO e PSI).", en: "Start of first IFAD projects incorporating ATER Digital (CompensACTION and PSI)." }, link: "https://www.ifad.org/en/w/projects/2000004380" },
+  { year: 2025, cat: "Política Pública", tipo: { pt: "Iniciativa de digitalização", en: "Digitalization Initiative" }, meio: { pt: "Acesso a serviços públicos", en: "Access to Public Services" }, text: { pt: "Meu Imóvel Rural Digital — integração de dados georreferenciados e serviços digitais para agricultores familiares.", en: "Meu Imóvel Rural Digital — integration of georeferenced data and digital services for family farmers." }, link: "https://www.gov.br/gestao/pt-br/assuntos/meu-imovel-rural" }
+];
+
+
+var CAT_COLORS = {
+  "Mídia":          "#8B6914",
+  "Política Pública":"#2d6a32",
+  "Internet":       "#1a6b8a",
+  "Tecnologia":     "#6b3a8a",
+  "Extensão Digital":"#c47c2b",
+  "Mobile":         "#2a7a6b",
+  "Internacional":  "#1f4023"
+};
+
+var PROJECTS_DATA = [
+  {
+    org: "FIDA / IFAD",
+    title: { pt: "CompensAÇÃO — ATER Digital no Semiárido", en: "CompensACTION — Digital ATER in the Semiarid" },
+    desc: { pt: "Piloto de extensão rural digital, alcançando ~1.600 agricultores familiares no Nordeste com ferramentas ICT4D.", en: "Digital rural extension pilot reaching ~1,600 smallholder farmers in Northeast Brazil with ICT4D tools." },
+    link: "https://brasil.un.org/pt-br/307560-ferramenta-ajuda-conter-desinforma%C3%A7%C3%A3o-no-agro-e-fortalece-agricultores-no-sul-da-bahia",
+    color: "#1f4023"
+  },
+  {
+    org: "IICA",
+    title: { pt: "Programa ATER Digital — MAPA", en: "Digital ATER Program — MAPA" },
+    desc: { pt: "Coordenação da implementação do Programa de Extensão Rural Digital liderado pelo MAPA, incluindo o desenvolvimento da plataforma Ater+ Digital.", en: "Coordination of the Digital Rural Extension Program led by MAPA, including development of the Ater+ Digital platform." },
+    link: "https://www.atermaisdigital.cnptia.embrapa.br/",
+    color: "#2d6a32"
+  },
+  {
+    org: "FIDA / IFAD",
+    title: { pt: "Dom Helder Câmara III & Paulo Freire II", en: "Dom Helder Câmara III & Paulo Freire II" },
+    desc: { pt: "Contribuição ao design de projetos do portfólio FIDA Brasil na área de ICT4D, com missões de campo e elaboração de notas conceituais.", en: "Contribution to the design of IFAD Brazil portfolio projects in the ICT4D area, with field missions and preparation of concept notes." },
+    link: "https://www.ifad.org/en/w/countries/brazil",
+    color: "#c47c2b"
+  },
+  {
+    org: "REAF / MERCOSUL",
+    title: { pt: "Estratégias de Inovação em ATER no MERCOSUL", en: "ATER Innovation Strategies in MERCOSUR" },
+    desc: { pt: "Recomendações para inovar e fortalecer os serviços de extensão rural no MERCOSUL ampliado, com ênfase em tecnologias para extensionistas.", en: "Recommendations to innovate and strengthen rural extension services in expanded MERCOSUR, emphasizing technologies for extension agents." },
+    color: "#1a6b8a"
+  }
+];
+
+var PUBLICATIONS_DATA = [
+  {
+    year: 2025,
+    title: { pt: "Revisão Sistemática de Estudos Acadêmicos sobre Extensão Rural Digital (ATER) no Brasil", en: "Systematic Review of Academic Studies on Digital Rural Extension (ATER) in Brazil" },
+    venue: "Caderno Pedagógico, v. 22, pp. 1–22",
+    link: "https://ojs.studiespublicacoes.com.br/ojs/index.php/cadped/article/view/21330"
+  },
+  {
+    year: 2024,
+    title: { pt: "Parâmetros da ATER Digital no Brasil: Metodologias e Custos", en: "Digital ATER Parameters in Brazil: Methodologies and Costs" },
+    venue: "IFAD / UFV",
+    link: "https://aksaam.ufv.br/ToolSys/Download/Publicacao/182/283"
+  },
+  {
+    year: 2024,
+    title: { pt: "Percepções de Instituições Privadas sobre a ATER Digital", en: "Perceptions of Private Institutions on Digital ATER" },
+    venue: "62º Congresso da SOBER",
+    link: "https://www.even3.com.br/anais/62-congresso-da-sober-397784/818686/"
+  },
+  {
+    year: 2022,
+    title: { pt: "Caixa de Ferramentas para Inovação em Extensão Rural — REAF/MERCOSUL", en: "Toolbox for Innovation in Rural Extension — REAF/MERCOSUR" },
+    venue: "IICA / REAF",
+    link: null
+  }
+];
+
+var VIDEOS_DATA = [
+  {
+    title: { pt: "Parâmetros da ATER Digital no Brasil: Custos e Metodologia", en: "Digital ATER Parameters in Brazil: Costs and Methodology" },
+    ytid: "x5Itz6OJuoY",
+    link: "https://www.youtube.com/watch?v=x5Itz6OJuoY"
+  },
+  {
+    title: { pt: "O Papel dos Canais de Comunicação na Promoção de Inovações", en: "The Role of Communication Channels in Promoting Innovation" },
+    ytid: "I4oNUHecxRA",
+    link: "https://www.youtube.com/watch?v=I4oNUHecxRA"
+  },
+  {
+    title: { pt: "Inovação na Agricultura Familiar: Desafios e Oportunidades", en: "Innovation in Family Farming: Challenges and Opportunities" },
+    ytid: "U0a4yIoFCWU",
+    link: "https://www.youtube.com/watch?v=U0a4yIoFCWU"
+  },
+  {
+    title: { pt: "Plataforma ATER+ Digital: Conteúdos e Ferramentas para Extensionistas", en: "ATER+ Digital Platform: Content and Tools for Extension Agents" },
+    ytid: "tjCtdJCjyYI",
+    link: "https://www.youtube.com/watch?v=tjCtdJCjyYI"
+  }
+];
+
+// =============================================
+// LANGUAGE
+// =============================================
+var currentLang = 'pt';
+
+function setLang(lang) {
+  currentLang = lang;
+  document.getElementById('btn-pt').classList.toggle('active', lang === 'pt');
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+
+  // Update all [data-pt] / [data-en] elements
+  document.querySelectorAll('[data-pt]').forEach(function(el) {
+    if (el.tagName !== 'BUTTON' && el.tagName !== 'A') {
+      el.textContent = lang === 'pt' ? el.getAttribute('data-pt') : el.getAttribute('data-en');
+    } else {
+      // For interactive elements, update only text nodes
+      var span = el.querySelector('span[data-pt]');
+      if (!span) {
+        el.textContent = lang === 'pt' ? el.getAttribute('data-pt') : el.getAttribute('data-en');
+      }
+    }
+  });
+
+  // Re-render dynamic sections
+  renderTimeline();
+  renderProjects();
+  renderPublications();
+  renderVideos();
+  
+  localStorage.setItem('lang', lang);
+}
+
+window.setLang = setLang;
+
+// =============================================
+// TIMELINE RENDER
+// =============================================
+var activeFilter = 'all';
+
+function renderTimeline() {
+  var filters = document.getElementById('tl-filters');
+  var list = document.getElementById('tl-list');
+
+  // Filters
+  var cats = ['all'].concat(Object.keys(CAT_COLORS));
+  var filterLabels = {
+    all: { pt: 'Todos', en: 'All' }
+  };
+
+  filters.innerHTML = cats.map(function(cat) {
+    var label = cat === 'all' ? (currentLang === 'pt' ? 'Todos' : 'All') : cat;
+    return '<button class="filter-chip' + (activeFilter === cat ? ' active' : '') + '" data-cat="' + cat + '">' + label + '</button>';
+  }).join('');
+
+  filters.querySelectorAll('.filter-chip').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      activeFilter = this.getAttribute('data-cat');
+      renderTimeline();
+    });
+  });
+
+  // Items
+list.innerHTML = TIMELINE_DATA.map(function(item) {
+    var color = CAT_COLORS[item.cat] || '#666';
+    var hidden = activeFilter !== 'all' && activeFilter !== item.cat;
+
+    var tipoLabel = currentLang === 'pt' ? item.tipo.pt : item.tipo.en;
+    var meioLabel = currentLang === 'pt' ? item.meio.pt : item.meio.en;
+
+    var linkHtml = item.link
+      ? '<a href="' + item.link + '" target="_blank" class="tl-link">↗ ' + (currentLang === 'pt' ? 'Ver referência' : 'See reference') + '</a>'
+      : '';
+
+    return '<div class="tl-item' + (hidden ? ' hidden' : '') + '">' +
+      '<div class="tl-card" style="border-left-color:' + color + '">' +
+        '<div class="tl-meta">' +
+          '<span class="tl-year">' + item.year + '</span>' +
+          '<span class="tl-cat-badge" style="background:' + color + '">' + item.cat + '</span>' +
+        '</div>' +
+        '<div class="tl-text">' + item.text[currentLang] + '</div>' +
+        '<div class="tl-tags">' +
+          '<span class="tl-tag" data-filter-tipo="' + item.tipo.pt + '">' + tipoLabel + '</span>' +
+          '<span class="tl-tag" data-filter-meio="' + item.meio.pt + '">' + meioLabel + '</span>' +
+        '</div>' +
+        linkHtml +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  list.querySelectorAll('.tl-tag').forEach(function(tag) {
+    tag.addEventListener('click', function() {
+      var tipoPt = this.getAttribute('data-filter-tipo');
+      var meioPt = this.getAttribute('data-filter-meio');
+      if (tipoPt) {
+        var match = TIMELINE_DATA.find(function(d) { return d.tipo.pt === tipoPt; });
+        if (match) { activeFilter = match.cat; renderTimeline(); }
+      }
+      if (meioPt) {
+        var match = TIMELINE_DATA.find(function(d) { return d.meio.pt === meioPt; });
+        if (match) { activeFilter = match.cat; renderTimeline(); }
+      }
+    });
+  });
+}
+
+// =============================================
+// PROJECTS RENDER
+// =============================================
+function renderProjects() {
+  var grid = document.getElementById('projects-grid');
+  grid.innerHTML = PROJECTS_DATA.map(function(p) {
+    var href = p.link ? 'href="' + p.link + '" target="_blank"' : '';
+    return '<a class="project-card" ' + href + '>' +
+      '<div class="project-card-thumb" style="background:' + p.color + '">' +
+        '<span class="thumb-label">' + p.org + '</span>' +
+        '<div class="thumb-accent"></div>' +
+      '</div>' +
+      '<div class="project-card-body">' +
+        '<div class="project-card-org">' + p.org + '</div>' +
+        '<div class="project-card-title">' + p.title[currentLang] + '</div>' +
+        '<div class="project-card-desc">' + p.desc[currentLang] + '</div>' +
+      '</div>' +
+    '</a>';
+  }).join('');
+}
+
+// =============================================
+// PUBLICATIONS RENDER
+// =============================================
+function renderPublications() {
+  var list = document.getElementById('pub-list');
+  list.innerHTML = PUBLICATIONS_DATA.map(function(p) {
+    var linkHtml = p.link
+      ? '<a href="' + p.link + '" target="_blank" class="pub-link">↗ ' + (currentLang === 'pt' ? 'Acessar publicação' : 'Access publication') + '</a>'
+      : '';
+    return '<div class="pub-item">' +
+      '<div class="pub-year">' + p.year + '</div>' +
+      '<div class="pub-body">' +
+        '<div class="pub-title">' + p.title[currentLang] + '</div>' +
+        '<div class="pub-meta">' + p.venue + '</div>' +
+        linkHtml +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+// =============================================
+// VIDEOS RENDER
+// =============================================
+function renderVideos() {
+  var grid = document.getElementById('videos-grid');
+  grid.innerHTML = VIDEOS_DATA.map(function(v) {
+    var thumb = 'https://img.youtube.com/vi/' + v.ytid + '/mqdefault.jpg';
+    return '<a class="video-card" href="' + v.link + '" target="_blank">' +
+      '<div class="video-thumb">' +
+        '<img src="' + thumb + '" alt="" loading="lazy">' +
+        '<div class="video-play"><div class="video-play-btn">' +
+          '<svg width="14" height="16" viewBox="0 0 14 16" fill="white"><polygon points="0,0 14,8 0,16"/></svg>' +
+        '</div></div>' +
+      '</div>' +
+      '<div class="video-body"><div class="video-title">' + v.title[currentLang] + '</div></div>' +
+    '</a>';
+  }).join('');
+}
+
+// =============================================
+// SHARE SECTION
+// =============================================
+function shareSection(section) {
+  var url = window.location.origin + window.location.pathname + '#' + section;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url);
+  }
+  var toast = document.getElementById('share-toast');
+  toast.textContent = currentLang === 'pt' ? 'Link copiado! ' + url : 'Link copied! ' + url;
+  toast.classList.add('show');
+  setTimeout(function() { toast.classList.remove('show'); }, 3000);
+}
+window.shareSection = shareSection;
+
+// =============================================
+// NAV MOBILE
+// =============================================
+function toggleMenu() {
+  document.getElementById('nav-links').classList.toggle('open');
+}
+window.toggleMenu = toggleMenu;
+
+// Close menu on anchor click
+document.querySelectorAll('.nav-anchor').forEach(function(a) {
+  a.addEventListener('click', function() {
+    document.getElementById('nav-links').classList.remove('open');
+  });
+});
+
+// Active nav on scroll
+var sections = ['hero','mapa','timeline','sobre','projetos','publicacoes','videos'];
+window.addEventListener('scroll', function() {
+  var scrollY = window.scrollY + 80;
+  var current = 'hero';
+  sections.forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el && el.offsetTop <= scrollY) current = id;
+  });
+  document.querySelectorAll('.nav-anchor').forEach(function(a) {
+    a.classList.toggle('active', a.getAttribute('data-section') === current);
+  });
+});
+
+// =============================================
+// MAP (D3)
+// =============================================
+var loadScript = function(url, cb) {
+  var s = document.createElement('script');
+  s.src = url;
+  s.onload = cb;
+  document.head.appendChild(s);
+};
+
+loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js', function() {
+
+  var zoom, mapSvg, zoomGroup;
+
+  function drawMap() {
+    var container = document.getElementById('mapa_d3');
+    d3.select(container).selectAll('*').remove();
+
+    var isMobile = window.innerWidth < 600;
+    var wd = isMobile ? 600 : 900;
+    var ht = isMobile ? 560 : 660;
+
+    mapSvg = d3.select(container)
+      .append('svg')
+      .attr('id', 'svg_mapa')
+      .attr('viewBox', '0 0 ' + wd + ' ' + ht)
+      .attr('width', '100%')
+      .attr('height', ht)
+      .attr('preserveAspectRatio', 'xMinYMin');
+
+    zoomGroup = mapSvg.append('g').attr('id', 'zoom-group');
+
+    zoom = d3.zoom()
+      .scaleExtent([1, 8])
+      .on('zoom', function(event) {
+        zoomGroup.attr('transform', event.transform);
+      });
+
+    mapSvg.call(zoom);
+
+    var ttip = d3.select('body').append('ttip').attr('class', 'tooltip').style('opacity', 0);
+
+    var projection = d3.geoMercator()
+      .center([-52, -15])
+      .scale(isMobile ? 680 : 760)
+      .translate([wd / 2, ht / 2]);
+
+    var path = d3.geoPath().projection(projection);
+
+    // Color scale similar to IFAD map
+    var projectColors = {
+      "Procase II":         "#1f4023",
+      "Paulo Freire II":    "#2d6a32",
+      "Dom Helder Câmara III": "#c47c2b",
+      "Parceiros da Mata":  "#1a6b8a",
+      "Pró-Semiárido":      "#6b3a8a",
+      "Sertão Vivo":        "#8B6914",
+      "Piauí Sustentável":  "#2a7a6b",
+      "CompensAÇÃO":        "#8a2a2a"
+    };
+Promise.all([
+  d3.json("https://storage.googleapis.com/projeto-graficos/ifad2025/mapas/munic.geojson?v91"),
+  d3.json("https://storage.googleapis.com/projeto-graficos/ifad2025/mapas/state.geojson"),
+  d3.csv("https://storage.googleapis.com/projeto-graficos/ifad2025/mapas/indicadores.csv")
+]).then(function(results) {
+  var geojsonMunic = results[0];
+  var geojsonState = results[1];
+  var indicadores = results[2];
+
+  var currentIndicador = indicadores[0].indicador;
+
+  // Popular seletor
+  var selector = document.getElementById('map-indicator-selector');
+  indicadores.forEach(function(ind) {
+    var opt = document.createElement('option');
+    opt.value = ind.indicador;
+    opt.textContent = ind.indicador;
+    selector.appendChild(opt);
+  });
+
+  selector.addEventListener('change', function() {
+    currentIndicador = this.value;
+    updateMap();
+  });
+
+  function getIndicadorMeta(nome) {
+    return indicadores.find(function(d) { return d.indicador === nome; });
+  }
+
+  function parseIntervalos(str) {
+    return str.split(',').map(function(s) { return +s.trim(); });
+  }
+
+var MAP_COLORS = ['#fdf8f0','#e8d9b8','#d4ba80','#c09848','#8a6a20','#5a4210','#2e2008'];
+
+  function updateMap() {
+    var meta = getIndicadorMeta(currentIndicador);
+    var breaks = parseIntervalos(meta.intervalos);
+    var isPct = meta.mensuracao === 'percentual';
+
+    var colorScale = d3.scaleThreshold()
+      .domain(breaks.slice(1, -1))
+      .range(MAP_COLORS);
+
+    // Atualizar legenda
+    var legendWrap = document.getElementById('map-legend-wrap');
+    legendWrap.innerHTML = '';
+    for (var i = 0; i < breaks.length - 1; i++) {
+      var lo = breaks[i];
+      var hi = breaks[i + 1];
+      var fmt = function(v) {
+        if (isPct) return Math.round(v * 100) + '%';
+        return v >= 1000 ? (v / 1000).toFixed(0) + 'k' : v;
+      };
+      var label = fmt(lo) + '–' + fmt(hi);
+      var div = document.createElement('div');
+      div.className = 'map-legend-item';
+      div.style.backgroundColor = MAP_COLORS[i];
+      div.style.color = i < 2 ? '#333' : 'white';
+      div.textContent = label;
+      legendWrap.appendChild(div);
+    }
+
+    // Atualizar fonte
+    var fonteEl = document.getElementById('map-fonte');
+  if (fonteEl) fonteEl.textContent = (currentLang === 'pt' ? 'Fonte: ' : 'Source: ') + meta.fonte;
+
+    // Atualizar cores
+    zoomGroup.selectAll('path.municipio')
+      .style('fill', function(d) {
+        var val = d.properties[currentIndicador];
+        if (val === null || val === undefined) return '#e0ddd5';
+        return colorScale(+val);
+      });
+  }
+
+  // Renderizar municípios
+  zoomGroup.selectAll('path.municipio')
+    .data(geojsonMunic.features)
+    .enter().append('path')
+    .attr('class', 'municipio')
+    .attr('d', path)
+    .style('stroke', '#ccc')
+    .style('stroke-width', 0.15)
+    .style('fill', '#e0ddd5')
+    .on('mouseover', function(event, d) {
+      d3.select(event.currentTarget).style('opacity', 0.75);
+      var val = d.properties[currentIndicador];
+      var meta = getIndicadorMeta(currentIndicador);
+      var isPct = meta && meta.mensuracao === 'percentual';
+      var valFmt = (val === null || val === undefined)
+        ? '—'
+        : isPct
+          ? (val * 100).toFixed(1) + '%'
+          : (+val).toLocaleString('pt-BR');
+      ttip.style('opacity', 1)
+        .style('left', (event.pageX + 12) + 'px')
+        .style('top', (event.pageY - 20) + 'px')
+        .html('<strong>' + d.properties.municipio + ' (' + d.properties.uf + ')</strong><br>' + currentIndicador + ': ' + valFmt);
+    })
+    .on('mouseout', function() {
+      d3.select(this).style('opacity', 1);
+      ttip.style('opacity', 0);
+    });
+
+  zoomGroup.selectAll('path.estado')
+    .data(geojsonState.features)
+    .enter().append('path')
+    .attr('class', 'estado')
+    .attr('d', path)
+    .style('fill', 'none')
+    .style('stroke', '#666')
+    .style('stroke-width', 0.6)
+    .style('pointer-events', 'none');
+
+  // zoom controls
+  document.getElementById('zoom-in').onclick = function() {
+    mapSvg.transition().call(zoom.scaleBy, 1.5);
+  };
+  document.getElementById('zoom-out').onclick = function() {
+    mapSvg.transition().call(zoom.scaleBy, 0.67);
+  };
+  document.getElementById('zoom-reset').onclick = function() {
+    mapSvg.transition().duration(750).call(zoom.transform, d3.zoomIdentity);
+  };
+
+  updateMap();
+});
+}
+
+drawMap();
+window.addEventListener('resize', function() {
+  drawMap();
+});
+});
+
+// =============================================
+// INIT
+// =============================================
+var savedLang = localStorage.getItem('lang') || 'pt';
+setLang(savedLang);
+
+// Handle deep link on load
+var hash = window.location.hash;
+if (hash) {
+  setTimeout(function() {
+    var el = document.querySelector(hash);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }, 500);
+}
+
+})();
+</script>
+</body>
+</html>

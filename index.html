@@ -689,20 +689,11 @@ box-shadow: 0 1px 0 var(--c-amber);
       position: relative;
     }
 
-    .about-photo-placeholder {
-      width: 100%;
-      aspect-ratio: 3/4;
-      background: var(--c-bg-alt);
-      border: 2px solid var(--c-border);
-      border-radius: 4px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      color: var(--c-ink-muted);
-      font-size: 13px;
-    }
+    .about-photo {
+  width: 100%;
+  border-radius: 4px;
+  display: block;
+}
 
     .about-photo-placeholder svg {
       opacity: 0.3;
@@ -1169,9 +1160,13 @@ box-shadow: 0 1px 0 var(--c-amber);
     </div>
     <h1 class="hero-name">Rodrigo<br><em>Ferraz</em></h1>
     <p class="hero-desc" 
-       data-pt="  Especialista em Gestão de Projetos, com sólida atuação em inovação e inclusão digital, e  foco em Tecnologias da Informação e Comunicação para o Desenvolvimento (ICT4D), aplicadas a sistemas sociais no contexto do desenvolvimento agrícola.  "
-       data-en="Project Management Specialist with a strong background in innovation and digital inclusion, focusing on Information and Communication Technologies for Development (ICT4D) applied to social systems in the context of agricultural development.">
-   Especialista em Gestão de Projetos, com sólida atuação em inovação e inclusão digital, e  foco em Tecnologias da Informação e Comunicação para o Desenvolvimento (ICT4D), aplicadas a sistemas sociais no contexto do desenvolvimento agrícola.  
+       data-pt="Site desenvolvido pelo agrônomo e pesquisador Rodrigo Ferraz. Reúne análises e iniciativas em ICT4D (Tecnologias da Informação e Comunicação para o Desenvolvimento), com foco em soluções digitais aplicadas à ATER e na promoção da inovação nos sistemas agroalimentares."
+       data-en="This site was developed by agronomist and researcher Rodrigo Ferraz. It brings together analyses and initiatives in ICT4D (Information and Communication Technologies for Development), focusing on digital solutions applied to ATER (Technical Assistance and Rural Extension) and the promotion of innovation in agri-food systems.">
+Site desenvolvido pelo agrônomo e pesquisador Rodrigo Ferraz. Reúne análises e iniciativas em ICT4D (Tecnologias da Informação e Comunicação para o Desenvolvimento), com foco em soluções digitais aplicadas à ATER e na promoção da inovação nos sistemas agroalimentares.</p>
+<p class="hero-desc" 
+       data-pt="Aqui, é possível acessar uma linha do tempo com os principais marcos da inovação tecnológica na extensão rural brasileira, além de indicadores, projetos e publicações acadêmicas sobre o tema. O objetivo é contribuir para o fortalecimento de capacidades e promoção da transformação digital no meio rural."
+       data-en="Here you can access a timeline highlighting the main milestones of technological innovation in Brazilian rural extension, as well as indicators, projects, and academic publications on the subject. The goal is to contribute to strengthening capacities and promoting digital transformation in rural areas.">
+Aqui, é possível acessar uma linha do tempo com os principais marcos da inovação tecnológica na extensão rural brasileira, além de indicadores, projetos e publicações acadêmicas sobre o tema. O objetivo é contribuir para o fortalecimento de capacidades e promoção da transformação digital no meio rural.
     </p>
     <div class="hero-ctas">
       <a href="#sobre" class="btn-primary" data-pt="Sobre mim" data-en="About me">Sobre mim</a>
@@ -1267,12 +1262,9 @@ data-en="Socioeconomic and climate indicators by municipality. Select a variable
 
     <div class="about-grid">
       <div>
-        <div class="about-photo-wrap">
-          <div class="about-photo-placeholder">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-            <span data-pt="Rodrigo Ferraz" data-en="Rodrigo Ferraz">Rodrigo Ferraz</span>
-          </div>
-        </div>
+       <div class="about-photo-wrap">
+  <img src="img/foto.jpg" alt="Rodrigo Ferraz" class="about-photo">
+</div>
         <div class="about-links">
           <a href="https://www.linkedin.com/in/rodrigo-ferraz-840a50a0/" target="_blank" class="about-link-btn">
             <div class="link-icon">

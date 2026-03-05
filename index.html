@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rodrigo Ferraz — ICT4D & Rural Development</title>
+  <title>ICT4D Brazil — Rodrigo Ferraz</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
@@ -520,18 +520,20 @@ box-shadow: 0 1px 0 var(--c-amber);
       border-color: var(--c-green-dark);
     }
 
+    /* Timeline centralizada */
     .timeline-list {
       position: relative;
-      padding-left: 28px;
+      padding: 0 0 20px 0;
     }
 
     .timeline-list::before {
       content: '';
       position: absolute;
-      left: 6px;
-      top: 6px;
-      bottom: 6px;
+      left: 50%;
+      top: 0;
+      bottom: 0;
       width: 2px;
+      transform: translateX(-50%);
       background: linear-gradient(to bottom, var(--c-amber), var(--c-green));
     }
 
@@ -562,25 +564,43 @@ box-shadow: 0 1px 0 var(--c-amber);
       background: rgba(196,124,43,0.07);
     }
 
-
     .tl-item {
       position: relative;
-      margin-bottom: 28px;
+      display: flex;
+      justify-content: flex-end;
+      padding-right: calc(50% + 28px);
+      margin-bottom: 24px;
       transition: opacity 0.3s;
     }
 
     .tl-item.hidden { display: none; }
 
+    /* Itens ímpares: card à esquerda */
+    .tl-item:nth-child(odd) {
+      justify-content: flex-end;
+      padding-right: calc(50% + 28px);
+      padding-left: 0;
+    }
+
+    /* Itens pares: card à direita */
+    .tl-item:nth-child(even) {
+      justify-content: flex-start;
+      padding-left: calc(50% + 28px);
+      padding-right: 0;
+    }
+
+    /* Ponto central */
     .tl-item::before {
       content: '';
       position: absolute;
-      left: -24px;
-      top: 8px;
-      width: 10px;
-      height: 10px;
+      left: calc(50% - 6px);
+      top: 10px;
+      width: 12px;
+      height: 12px;
       border-radius: 50%;
       border: 2px solid var(--c-cream);
       background: var(--c-amber);
+      z-index: 1;
       transition: transform 0.2s;
     }
 
@@ -593,12 +613,22 @@ box-shadow: 0 1px 0 var(--c-amber);
       padding: 14px 18px;
       border-radius: 0 4px 4px 0;
       transition: box-shadow 0.2s, transform 0.2s;
+      width: 100%;
+    }
+
+    /* Card à direita: borda direita */
+    .tl-item:nth-child(even) .tl-card {
+      border-left: 1px solid var(--c-border);
+      border-right: 3px solid var(--c-amber);
+      border-radius: 4px 0 0 4px;
     }
 
     .tl-item:hover .tl-card {
       box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-      transform: translateX(3px);
     }
+
+    .tl-item:nth-child(odd):hover .tl-card  { transform: translateX(-3px); }
+    .tl-item:nth-child(even):hover .tl-card { transform: translateX(3px); }
 
     .tl-meta {
       display: flex;
@@ -645,8 +675,60 @@ box-shadow: 0 1px 0 var(--c-amber);
     .tl-link:hover { color: var(--c-amber); }
 
     /* =============================================
-   MAP SELECTOR & FONTE
+   GEO LEVEL BUTTONS
 ============================================= */
+.geo-level-btns {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.geo-btn {
+  font-family: var(--f-sans);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 7px 16px;
+  border: 1.5px solid var(--c-border);
+  border-radius: 4px;
+  background: var(--c-cream);
+  color: var(--c-ink-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.geo-btn:hover:not(:disabled) {
+  border-color: var(--c-green);
+  color: var(--c-green-dark);
+}
+
+.geo-btn.active {
+  background: var(--c-green-dark);
+  border-color: var(--c-green-dark);
+  color: white;
+}
+
+.geo-btn.disabled,
+.geo-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.coming-soon {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--c-amber);
+  color: white;
+  padding: 1px 6px;
+  border-radius: 10px;
+}
+
+/* MAP SELECTOR & FONTE */
 .map-indicator-selector {
   font-family: var(--f-sans);
   font-size: 13px;
@@ -667,6 +749,23 @@ box-shadow: 0 1px 0 var(--c-amber);
   margin-top: 10px;
   text-align: right;
 }
+
+.map-chart-label {
+  font-family: var(--f-sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--c-ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 20px 0 8px;
+}
+
+#map-chart {
+  width: 100%;
+  min-height: 160px;
+}
+
+#map-chart svg text { font-family: var(--f-sans); }
 
 @media (max-width: 600px) {
   .map-indicator-selector {
@@ -1073,6 +1172,24 @@ box-shadow: 0 1px 0 var(--c-amber);
     /* =============================================
        RESPONSIVE
     ============================================= */
+    /* Intro text da timeline */
+    .tl-intro {
+      margin-bottom: 28px;
+      padding: 20px 24px;
+      background: var(--c-cream);
+      border-left: 3px solid var(--c-amber);
+      border-radius: 0 4px 4px 0;
+    }
+
+    .tl-intro p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--c-ink-muted);
+      margin-bottom: 10px;
+    }
+
+    .tl-intro p:last-child { margin-bottom: 0; }
+
     @media (max-width: 768px) {
       :root { --section-gap: 60px; }
 
@@ -1120,6 +1237,34 @@ box-shadow: 0 1px 0 var(--c-amber);
       .map-legend-item { flex: 0 0 calc(33.333% - 2px); }
 
       .share-section-btn { float: none; display: none; }
+
+      /* Timeline mobile: coluna única à direita */
+      .timeline-list::before {
+        left: 6px;
+      }
+
+      .tl-item,
+      .tl-item:nth-child(odd),
+      .tl-item:nth-child(even) {
+        justify-content: flex-start;
+        padding-left: 28px;
+        padding-right: 0;
+      }
+
+      .tl-item::before {
+        left: 1px;
+      }
+
+      .tl-item:nth-child(even) .tl-card {
+        border-left: 3px solid var(--c-amber);
+        border-right: 1px solid var(--c-border);
+        border-radius: 0 4px 4px 0;
+      }
+
+      .tl-item:nth-child(odd):hover .tl-card,
+      .tl-item:nth-child(even):hover .tl-card {
+        transform: translateX(3px);
+      }
     }
   </style>
 </head>
@@ -1127,7 +1272,7 @@ box-shadow: 0 1px 0 var(--c-amber);
 
 <!-- NAVIGATION -->
 <nav id="main-nav">
-  <a href="#hero" class="nav-logo">Rodrigo <span>Ferraz</span></a>
+  <a href="#hero" class="nav-logo">ICT4D <span>Brazil</span></a>
   <div class="nav-links" id="nav-links">
     <a href="#mapa" data-section="mapa" class="nav-anchor" data-pt="Mapa" data-en="Map">Mapa</a>
     <a href="#timeline" data-section="timeline" class="nav-anchor" data-pt="Linha do Tempo" data-en="Timeline">Linha do Tempo</a>
@@ -1158,7 +1303,7 @@ box-shadow: 0 1px 0 var(--c-amber);
     <div class="hero-tag" data-pt="Consultor Internacional · ICT4D · Extensão Rural · Engenheiro Agrônomo" data-en="International Consultant · ICT4D · Rural Extension · Agronomist">
       Consultor Internacional · ICT4D · Extensão Rural · Engenheiro Agrônomo
     </div>
-    <h1 class="hero-name">Rodrigo<br><em>Ferraz</em></h1>
+    <h1 class="hero-name">ICT4D<br><em>Brazil</em></h1>
     <p class="hero-desc" 
        data-pt="Site desenvolvido pelo agrônomo e pesquisador Rodrigo Ferraz. Reúne análises e iniciativas em ICT4D (Tecnologias da Informação e Comunicação para o Desenvolvimento), com foco em soluções digitais aplicadas à ATER e na promoção da inovação nos sistemas agroalimentares."
        data-en="This site was developed by agronomist and researcher Rodrigo Ferraz. It brings together analyses and initiatives in ICT4D (Information and Communication Technologies for Development), focusing on digital solutions applied to ATER (Technical Assistance and Rural Extension) and the promotion of innovation in agri-food systems.">
@@ -1186,19 +1331,26 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
     </div>
     <div style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
       <h2 class="section-title" style="margin-bottom:0" 
-          data-pt="Indicadores ATER no Brasil" 
-          data-en="ATER Indicators in Brazil">Indicadores ATER no Brasil</h2>
+          data-pt="Evolução de indicadores ATER e Digitalização no Brasil" 
+          data-en="Evolution of ATER and Digitalization Indicators in Brazil">Indicadores ATER no Brasil</h2>
       <button class="share-section-btn" onclick="shareSection('mapa')">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
         <span data-pt="Compartilhar" data-en="Share">Compartilhar</span>
       </button>
     </div>
     <p class="section-sub" 
-      data-pt="Indicadores socioeconômicos e climáticos por município. Selecione a variável para explorar o mapa"
-data-en="Socioeconomic and climate indicators by municipality. Select a variable to explore the map">
-      Indicadores socioeconômicos e climáticos por município. Selecione a variável para explorar o mapa
+      data-pt="Indicadores por nível geográfico. Selecione a variável para explorar o mapa"
+      data-en="Indicators by geographic level. Select a variable to explore the map">
+      Indicadores por nível geográfico. Selecione a variável para explorar o mapa
     </p>
-<select id="map-indicator-selector" class="map-indicator-selector"></select>
+
+    <div class="geo-level-btns" id="geo-level-btns">
+      <button class="geo-btn active" data-level="municipio" data-pt="Município" data-en="Municipality">Município</button>
+      <button class="geo-btn disabled" data-level="uf" data-pt="Unidade federativa (em breve)" data-en="State (coming soon)" disabled>Unidade federativa <span class="coming-soon">em breve</span></button>
+      <button class="geo-btn" data-level="regiao" data-pt="Região" data-en="Region">Região</button>
+    </div>
+
+    <select id="map-indicator-selector" class="map-indicator-selector"></select>
     <!-- Legend (filled by JS) -->
     <div class="map-legend-wrap" id="map-legend-wrap"></div>
 
@@ -1210,8 +1362,17 @@ data-en="Socioeconomic and climate indicators by municipality. Select a variable
       <button class="zoom-btn" id="zoom-reset" title="Reset zoom" style="font-size:14px">⟲</button>
     </div>
     <p id="map-fonte" class="map-fonte"></p>
+
+    <div id="map-chart-wrap">
+      <p class="map-chart-label" id="map-chart-label"></p>
+      <div id="map-chart"></div>
+    </div>
   </div>
 </section>
+
+
+
+
 
 <!-- =============================================
      TIMELINE
@@ -1236,6 +1397,17 @@ data-en="Socioeconomic and climate indicators by municipality. Select a variable
        data-en="Key milestones of technological innovation in Brazilian rural extension, from 1948 to the present.">
       Principais marcos da inovação tecnológica na extensão rural brasileira, de 1948 ao presente.
     </p>
+
+    <div class="tl-intro">
+      <p data-pt="Abaixo é apresentada uma linha do tempo sobre a evolução histórica da ATER no Brasil, destacando os principais marcos de inovação tecnológica, digitalização, comunicação e institucionalização do setor entre 1948 e 2026."
+         data-en="Below is a timeline of the historical evolution of rural extension (ATER) in Brazil, highlighting the main milestones of technological innovation, digitalization, communication and institutional development between 1948 and 2026.">
+        Abaixo é apresentada uma linha do tempo sobre a evolução histórica da ATER no Brasil, destacando os principais marcos de inovação tecnológica, digitalização, comunicação e institucionalização do setor entre 1948 e 2026.
+      </p>
+      <p data-pt="Essa trajetória evidencia a transição e a integração de metodologias presenciais e analógicas, baseadas na comunicação tradicional e nos meios de massa, para modelos híbridos e digitais que incorporam plataformas on-line, inteligência artificial e sensores. Além disso, demonstra a evolução institucional e o fortalecimento das estratégias de cooperação internacional, refletindo o compromisso de instituições públicas e privadas com a inovação, a inclusão digital e o fortalecimento da agricultura familiar."
+         data-en="This trajectory reveals the transition and integration from in-person and analog methodologies — based on traditional communication and mass media — toward hybrid and digital models that incorporate online platforms, artificial intelligence, and sensors. It also demonstrates institutional evolution and the strengthening of international cooperation strategies, reflecting the commitment of public and private institutions to innovation, digital inclusion, and the strengthening of family farming.">
+        Essa trajetória evidencia a transição e a integração de metodologias presenciais e analógicas, baseadas na comunicação tradicional e nos meios de massa, para modelos híbridos e digitais que incorporam plataformas on-line, inteligência artificial e sensores. Além disso, demonstra a evolução institucional e o fortalecimento das estratégias de cooperação internacional, refletindo o compromisso de instituições públicas e privadas com a inovação, a inclusão digital e o fortalecimento da agricultura familiar.
+      </p>
+    </div>
 
     <div class="timeline-filters" id="tl-filters">
       <!-- filled by JS -->
@@ -1407,7 +1579,6 @@ var TIMELINE_DATA = [
   { year: 2005, cat: "Extensão Digital", tipo: { pt: "Extensão digital", en: "Digital Extension" }, meio: { pt: "Educação online", en: "Online Education" }, text: { pt: "Início dos programas de e-Extension em universidades e agências internacionais.", en: "Start of e-Extension programs at universities and international agencies." }, link: "https://www.fao.org/e-agriculture/en" },
   { year: 2008, cat: "Mobile", tipo: { pt: "Telefonia móvel", en: "Mobile Telephony" }, meio: { pt: "Comunicação digital", en: "Digital Communication" }, text: { pt: "Uso de SMS para comunicação técnica entre extensionistas e agricultores.", en: "Use of SMS for technical communication between extension agents and farmers." } },
   { year: 2010, cat: "Extensão Digital", tipo: { pt: "Plataformas digitais", en: "Digital Platforms" }, meio: { pt: "Extensão pública", en: "Public Extension" }, text: { pt: "Primeiras plataformas digitais estaduais e privadas de ATER no Brasil (Epagri, Emater).", en: "First state and private digital ATER platforms in Brazil (Epagri, Emater)." } },
-  { year: 2011, cat: "Tecnologia", tipo: { pt: "Consolidação de discurso técnico", en: "Technical Discourse Consolidation" }, meio: { pt: "Sistematização conceitual", en: "Conceptual Systematization" }, text: { pt: "Publicação de capítulo sobre inovação tecnológica em agricultura de precisão.", en: "Publication of chapter on technological innovation in precision agriculture." } },
   { year: 2011, cat: "Internacional", tipo: { pt: "Mobile Extension", en: "Mobile Extension" }, meio: { pt: "Ciência comportamental", en: "Behavioral Science" }, text: { pt: "Fundação do Precision Agriculture for Development (PAD) por Michael Kremer (Prêmio Nobel 2019).", en: "Foundation of Precision Agriculture for Development (PAD) by Michael Kremer (Nobel Prize 2019)." }, link: "https://precisionag.org/" },
   { year: 2013, cat: "Política Pública", tipo: { pt: "Portal digital", en: "Digital Portal" }, meio: { pt: "Governo eletrônico", en: "E-Government" }, text: { pt: "Lançamento do Portal e-Campo da Embrapa, marco da ATER digital pública no Brasil.", en: "Launch of Embrapa's e-Campo Portal, milestone of public digital ATER in Brazil." }, link: "https://www.embrapa.br/e-campo" },
   { year: 2015, cat: "Mobile", tipo: { pt: "Mídias sociais", en: "Social Media" }, meio: { pt: "Comunicação horizontal", en: "Horizontal Communication" }, text: { pt: "Uso massivo de WhatsApp e redes sociais por extensionistas e produtores.", en: "Mass use of WhatsApp and social media by extension agents and producers." } },
@@ -1421,7 +1592,6 @@ var TIMELINE_DATA = [
   { year: 2022, cat: "Internacional", tipo: { pt: "Ensino remoto", en: "Remote Learning" }, meio: { pt: "Cooperação institucional", en: "Institutional Cooperation" }, text: { pt: "Parcerias público-privadas e capacitações online (ANATER e SENAR).", en: "Public-private partnerships and online training (ANATER and SENAR)." } },
   { year: 2022, cat: "Política Pública", tipo: { pt: "Edital público", en: "Public Tender" }, meio: { pt: "Serviços remotos", en: "Remote Services" }, text: { pt: "Editais da ANATER passam a prever formalmente produtos e serviços digitais.", en: "ANATER bids begin to formally include digital products and remote services." } },
   { year: 2023, cat: "Internacional", tipo: { pt: "Plataforma digital", en: "Digital Platform" }, meio: { pt: "Cooperação internacional", en: "International Cooperation" }, text: { pt: "Criação de Hubs Digitais de ATER e inovação rural (como ATER+ Digital / IICA).", en: "Creation of Digital ATER Hubs and rural innovation (such as ATER+ Digital / IICA)." }, link: "https://agenciagov.ebc.com.br/noticias/202404/plataforma-ater-digital-disponibiliza-conteudos-on-line-para-tecnicos-extensionistas" },
-  { year: 2024, cat: "Internacional", tipo: { pt: "Plataforma digital", en: "Digital Platform" }, meio: { pt: "Educação remota", en: "Remote Education" }, text: { pt: "Embrapa coordena três hubs na Plataforma ATER+ Digital com conteúdos para extensionistas.", en: "Embrapa coordinates three hubs on the ATER+ Digital Platform with content for extension agents." } },
   { year: 2024, cat: "Internacional", tipo: { pt: "Estratégia institucional", en: "Institutional Strategy" }, meio: { pt: "Planejamento estratégico", en: "Strategic Planning" }, text: { pt: "Inclusão da ATER Digital como estratégia do FIDA no COSOP Brasil 2025–2029.", en: "ATER Digital included in IFAD's Brazil COSOP 2025–2029 strategy." }, link: "https://www.ifad.org/en/w/countries/brazil" },
   { year: 2024, cat: "Política Pública", tipo: { pt: "Política pública", en: "Public Policy" }, meio: { pt: "Financiamento", en: "Financing" }, text: { pt: "MDA vai investir R$ 19 milhões na ATER para cerca de 4.625 famílias.", en: "MDA to invest R$ 19 million in ATER for approximately 4,625 families." } },
   { year: 2025, cat: "Internacional", tipo: { pt: "Implementação de projetos", en: "Project Implementation" }, meio: { pt: "Cooperação internacional", en: "International Cooperation" }, text: { pt: "Início dos primeiros projetos do FIDA que incorporam a ATER Digital (CompensAÇÃO e PSI).", en: "Start of first IFAD projects incorporating ATER Digital (CompensACTION and PSI)." }, link: "https://www.ifad.org/en/w/projects/2000004380" },
@@ -1549,6 +1719,21 @@ function setLang(lang) {
   renderVideos();
   
   localStorage.setItem('lang', lang);
+
+  // Atualizar botões de nível geográfico
+  document.querySelectorAll('.geo-btn[data-pt]').forEach(function(btn) {
+    var txt = lang === 'pt' ? btn.getAttribute('data-pt') : btn.getAttribute('data-en');
+    // Preservar o span.coming-soon se existir
+    var span = btn.querySelector('.coming-soon');
+    if (span) {
+      btn.childNodes[0].textContent = (lang === 'pt' ? 'Unidade federativa ' : 'State ');
+      span.textContent = lang === 'pt' ? 'em breve' : 'coming soon';
+    } else {
+      btn.textContent = txt;
+    }
+  });
+
+  if (window._updateMapFonte) window._updateMapFonte();
 }
 
 window.setLang = setLang;
@@ -1741,10 +1926,26 @@ var loadScript = function(url, cb) {
 loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js', function() {
 
   var zoom, mapSvg, zoomGroup;
+  var currentGeoLevel = 'municipio'; // 'municipio' | 'regiao'
+  var geojsonMunicGlobal, geojsonStateGlobal, indicadoresGlobal, regiaoDataGlobal;
+  var ttip;
+
+  // Botões de nível geográfico
+  document.querySelectorAll('.geo-btn:not(:disabled)').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.geo-btn').forEach(function(b) { b.classList.remove('active'); });
+      this.classList.add('active');
+      currentGeoLevel = this.getAttribute('data-level');
+      populateSelector();
+      drawMapLevel();
+    });
+  });
 
   function drawMap() {
     var container = document.getElementById('mapa_d3');
     d3.select(container).selectAll('*').remove();
+    // Remover tooltip anterior
+    d3.selectAll('ttip.tooltip').remove();
 
     var isMobile = window.innerWidth < 600;
     var wd = isMobile ? 600 : 900;
@@ -1768,7 +1969,7 @@ loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js', function
 
     mapSvg.call(zoom);
 
-    var ttip = d3.select('body').append('ttip').attr('class', 'tooltip').style('opacity', 0);
+    ttip = d3.select('body').append('ttip').attr('class', 'tooltip').style('opacity', 0);
 
     var projection = d3.geoMercator()
       .center([-52, -15])
@@ -1777,62 +1978,99 @@ loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js', function
 
     var path = d3.geoPath().projection(projection);
 
-    // Color scale similar to IFAD map
-    var projectColors = {
-      "Procase II":         "#1f4023",
-      "Paulo Freire II":    "#2d6a32",
-      "Dom Helder Câmara III": "#c47c2b",
-      "Parceiros da Mata":  "#1a6b8a",
-      "Pró-Semiárido":      "#6b3a8a",
-      "Sertão Vivo":        "#8B6914",
-      "Piauí Sustentável":  "#2a7a6b",
-      "CompensAÇÃO":        "#8a2a2a"
-    };
-Promise.all([
-  d3.json("https://storage.googleapis.com/projeto-graficos/ifad2025/mapas/munic.geojson?v91"),
-  d3.json("https://storage.googleapis.com/projeto-graficos/ifad2025/mapas/state.geojson"),
-  d3.csv("https://storage.googleapis.com/projeto-graficos/ifad2025/mapas/indicadores.csv")
-]).then(function(results) {
-  var geojsonMunic = results[0];
-  var geojsonState = results[1];
-  var indicadores = results[2];
+    var MAP_COLORS = ['#fdf8f0','#e8d9b8','#d4ba80','#c09848','#8a6a20','#5a4210','#2e2008'];
 
-  var currentIndicador = indicadores[0].indicador;
+    Promise.all([
+      d3.json("https://storage.googleapis.com/projeto-graficos/ifad2025/mapas/munic.geojson?v91"),
+      d3.json("https://storage.googleapis.com/projeto-graficos/ifad2025/mapas/state.geojson"),
+      d3.csv("https://storage.googleapis.com/projeto-graficos/ifad2025/mapas/indicadores.csv"),
+      d3.csv("https://storage.googleapis.com/projeto-graficos/ifad2025/mapas/indicadores_regiao.csv")
+    ]).then(function(results) {
+      geojsonMunicGlobal  = results[0];
+      geojsonStateGlobal  = results[1];
+      indicadoresGlobal   = results[2];
+      regiaoDataGlobal    = results[3];
 
-  // Popular seletor
-  var selector = document.getElementById('map-indicator-selector');
-  indicadores.forEach(function(ind) {
-    var opt = document.createElement('option');
-    opt.value = ind.indicador;
-    opt.textContent = ind.indicador;
-    selector.appendChild(opt);
-  });
+      populateSelector();
+      drawMapLevel();
 
-  selector.addEventListener('change', function() {
-    currentIndicador = this.value;
-    updateMap();
-  });
+      // Zoom controls
+      document.getElementById('zoom-in').onclick = function() {
+        mapSvg.transition().call(zoom.scaleBy, 1.5);
+      };
+      document.getElementById('zoom-out').onclick = function() {
+        mapSvg.transition().call(zoom.scaleBy, 0.67);
+      };
+      document.getElementById('zoom-reset').onclick = function() {
+        mapSvg.transition().duration(750).call(zoom.transform, d3.zoomIdentity);
+      };
+    });
 
-  function getIndicadorMeta(nome) {
-    return indicadores.find(function(d) { return d.indicador === nome; });
+    // Salvar path/projection para reusar
+    drawMap._path = path;
+    drawMap._MAP_COLORS = MAP_COLORS;
   }
 
-  function parseIntervalos(str) {
-    return str.split(',').map(function(s) { return +s.trim(); });
+  function populateSelector() {
+    var selector = document.getElementById('map-indicator-selector');
+    selector.innerHTML = '';
+
+    if (currentGeoLevel === 'municipio' && indicadoresGlobal) {
+      indicadoresGlobal.forEach(function(ind) {
+        var opt = document.createElement('option');
+        opt.value = ind.indicador;
+        opt.textContent = ind.indicador;
+        selector.appendChild(opt);
+      });
+    } else if (currentGeoLevel === 'regiao' && regiaoDataGlobal) {
+      // Pegar indicadores únicos do CSV de região
+      var indicadoresRegiao = [];
+      regiaoDataGlobal.forEach(function(row) {
+        if (indicadoresRegiao.indexOf(row.indicador) === -1) {
+          indicadoresRegiao.push(row.indicador);
+        }
+      });
+      indicadoresRegiao.forEach(function(ind) {
+        var opt = document.createElement('option');
+        opt.value = ind;
+        opt.textContent = ind;
+        selector.appendChild(opt);
+      });
+    }
+
+    // Remover listener antigo e adicionar novo
+    var newSelector = selector.cloneNode(true);
+    selector.parentNode.replaceChild(newSelector, selector);
+    newSelector.addEventListener('change', function() {
+      drawMapLevel();
+    });
   }
 
-var MAP_COLORS = ['#fdf8f0','#e8d9b8','#d4ba80','#c09848','#8a6a20','#5a4210','#2e2008'];
+  function getSelectedIndicador() {
+    var selector = document.getElementById('map-indicator-selector');
+    return selector ? selector.value : null;
+  }
 
-  function updateMap() {
-    var meta = getIndicadorMeta(currentIndicador);
-    var breaks = parseIntervalos(meta.intervalos);
-    var isPct = meta.mensuracao === 'percentual';
+  function drawMapLevel() {
+    if (!geojsonMunicGlobal) return;
+    if (currentGeoLevel === 'municipio') {
+      renderMunicipios();
+    } else if (currentGeoLevel === 'regiao') {
+      renderRegioes();
+    }
+  }
 
+  function getBreaksAndColors(metaRow) {
+    var MAP_COLORS = ['#fdf8f0','#e8d9b8','#d4ba80','#c09848','#8a6a20','#5a4210','#2e2008'];
+    var breaks = metaRow.intervalos.split(',').map(function(s) { return +s.trim(); });
     var colorScale = d3.scaleThreshold()
       .domain(breaks.slice(1, -1))
       .range(MAP_COLORS);
+    var isPct = metaRow.mensuracao === 'percentual';
+    return { breaks: breaks, colorScale: colorScale, isPct: isPct, MAP_COLORS: MAP_COLORS };
+  }
 
-    // Atualizar legenda
+  function updateLegend(breaks, MAP_COLORS, isPct) {
     var legendWrap = document.getElementById('map-legend-wrap');
     legendWrap.innerHTML = '';
     for (var i = 0; i < breaks.length - 1; i++) {
@@ -1842,86 +2080,432 @@ var MAP_COLORS = ['#fdf8f0','#e8d9b8','#d4ba80','#c09848','#8a6a20','#5a4210','#
         if (isPct) return Math.round(v * 100) + '%';
         return v >= 1000 ? (v / 1000).toFixed(0) + 'k' : v;
       };
-      var label = fmt(lo) + '–' + fmt(hi);
       var div = document.createElement('div');
       div.className = 'map-legend-item';
       div.style.backgroundColor = MAP_COLORS[i];
       div.style.color = i < 2 ? '#333' : 'white';
-      div.textContent = label;
+      div.textContent = fmt(lo) + '–' + fmt(hi);
       legendWrap.appendChild(div);
     }
+  }
 
-    // Atualizar fonte
+  function renderMunicipios() {
+    var currentIndicador = getSelectedIndicador();
+    if (!currentIndicador || !indicadoresGlobal) return;
+
+    var meta = indicadoresGlobal.find(function(d) { return d.indicador === currentIndicador; });
+    if (!meta) return;
+
+    var cfg = getBreaksAndColors(meta);
+    updateLegend(cfg.breaks, cfg.MAP_COLORS, cfg.isPct);
+
     var fonteEl = document.getElementById('map-fonte');
-  if (fonteEl) fonteEl.textContent = (currentLang === 'pt' ? 'Fonte: ' : 'Source: ') + meta.fonte;
+    if (fonteEl) fonteEl.textContent = (currentLang === 'pt' ? 'Fonte: ' : 'Source: ') + meta.fonte;
 
-    // Atualizar cores
+    var path = drawMap._path;
+
+    // Limpar e redesenhar
+    zoomGroup.selectAll('path.municipio').remove();
+    zoomGroup.selectAll('path.estado').remove();
+
     zoomGroup.selectAll('path.municipio')
+      .data(geojsonMunicGlobal.features)
+      .enter().append('path')
+      .attr('class', 'municipio')
+      .attr('d', path)
+      .style('stroke', '#ccc')
+      .style('stroke-width', 0.15)
       .style('fill', function(d) {
         var val = d.properties[currentIndicador];
         if (val === null || val === undefined) return '#e0ddd5';
-        return colorScale(+val);
+        return cfg.colorScale(+val);
+      })
+      .on('mouseover', function(event, d) {
+        d3.select(event.currentTarget).style('opacity', 0.75);
+        var val = d.properties[currentIndicador];
+        var valFmt = (val === null || val === undefined)
+          ? '—'
+          : cfg.isPct
+            ? (val * 100).toFixed(1) + '%'
+            : (+val).toLocaleString('pt-BR');
+        ttip.style('opacity', 1)
+          .style('left', (event.pageX + 12) + 'px')
+          .style('top', (event.pageY - 20) + 'px')
+          .html('<strong>' + d.properties.municipio + ' (' + d.properties.uf + ')</strong><br>' + currentIndicador + ': ' + valFmt);
+      })
+      .on('mouseout', function() {
+        d3.select(this).style('opacity', 1);
+        ttip.style('opacity', 0);
       });
+
+    zoomGroup.selectAll('path.estado')
+      .data(geojsonStateGlobal.features)
+      .enter().append('path')
+      .attr('class', 'estado')
+      .attr('d', path)
+      .style('fill', 'none')
+      .style('stroke', '#666')
+      .style('stroke-width', 0.6)
+      .style('pointer-events', 'none');
+
+    // Histograma — setTimeout para garantir que o DOM pintou antes de medir largura
+    setTimeout(function() { renderHistograma(currentIndicador, meta, cfg); }, 50);
   }
 
-  // Renderizar municípios
-  zoomGroup.selectAll('path.municipio')
-    .data(geojsonMunic.features)
-    .enter().append('path')
-    .attr('class', 'municipio')
-    .attr('d', path)
-    .style('stroke', '#ccc')
-    .style('stroke-width', 0.15)
-    .style('fill', '#e0ddd5')
-    .on('mouseover', function(event, d) {
-      d3.select(event.currentTarget).style('opacity', 0.75);
-      var val = d.properties[currentIndicador];
-      var meta = getIndicadorMeta(currentIndicador);
-      var isPct = meta && meta.mensuracao === 'percentual';
-      var valFmt = (val === null || val === undefined)
-        ? '—'
-        : isPct
-          ? (val * 100).toFixed(1) + '%'
-          : (+val).toLocaleString('pt-BR');
-      ttip.style('opacity', 1)
-        .style('left', (event.pageX + 12) + 'px')
-        .style('top', (event.pageY - 20) + 'px')
-        .html('<strong>' + d.properties.municipio + ' (' + d.properties.uf + ')</strong><br>' + currentIndicador + ': ' + valFmt);
-    })
-    .on('mouseout', function() {
-      d3.select(this).style('opacity', 1);
-      ttip.style('opacity', 0);
+  function renderRegioes() {
+    if (!regiaoDataGlobal || !geojsonStateGlobal) return;
+    var currentIndicador = getSelectedIndicador();
+    if (!currentIndicador) return;
+
+    // Filtrar dados da região selecionada, excluindo TOTAL e Área
+    var dadosRegiao = regiaoDataGlobal.filter(function(row) {
+      return row.indicador === currentIndicador &&
+        row.regiao !== 'TOTAL' && row.regiao !== 'Urbana' && row.regiao !== 'Rural';
     });
 
-  zoomGroup.selectAll('path.estado')
-    .data(geojsonState.features)
-    .enter().append('path')
-    .attr('class', 'estado')
-    .attr('d', path)
-    .style('fill', 'none')
-    .style('stroke', '#666')
-    .style('stroke-width', 0.6)
-    .style('pointer-events', 'none');
+    if (dadosRegiao.length === 0) return;
 
-  // zoom controls
-  document.getElementById('zoom-in').onclick = function() {
-    mapSvg.transition().call(zoom.scaleBy, 1.5);
-  };
-  document.getElementById('zoom-out').onclick = function() {
-    mapSvg.transition().call(zoom.scaleBy, 0.67);
-  };
-  document.getElementById('zoom-reset').onclick = function() {
-    mapSvg.transition().duration(750).call(zoom.transform, d3.zoomIdentity);
-  };
+    var meta = dadosRegiao[0];
+    var valores = dadosRegiao.map(function(d) { return +d.valor; });
+    var minVal = d3.min(valores);
+    var maxVal = d3.max(valores);
 
-  updateMap();
-});
-}
+    var MAP_COLORS = ['#fdf8f0','#e8d9b8','#d4ba80','#c09848','#8a6a20','#5a4210','#2e2008'];
+    var colorScale = d3.scaleLinear()
+      .domain([minVal, maxVal])
+      .range([MAP_COLORS[1], MAP_COLORS[5]]);
 
-drawMap();
-window.addEventListener('resize', function() {
+    var isPct = meta.mensuracao === 'percentual';
+
+    // Mapa nome região CSV → valor
+    var regiaoMap = {};
+    dadosRegiao.forEach(function(row) { regiaoMap[row.regiao] = +row.valor; });
+
+    // Mapeamento: primeiro dígito do ibge2 → nome da região no CSV
+    var ibgeRegiaoMap = {
+      '1': 'Norte',
+      '2': 'Nordeste',
+      '3': 'Sudeste',
+      '4': 'Sul',
+      '5': 'Centro-Oeste'
+    };
+
+    function getRegiaoByIbge(props) {
+      // Tentar ibge2 (código do estado, 2 dígitos)
+      var ibge2 = String(props.ibge2 || props.CD_UF || props.coduf || '');
+      if (ibge2) {
+        var regiao = ibgeRegiaoMap[ibge2.charAt(0)];
+        if (regiao) return regiao;
+      }
+      // Fallback: nome direto
+      return props.regiao || props.NM_REGIAO || '';
+    }
+
+    var path = drawMap._path;
+
+    zoomGroup.selectAll('path.municipio').remove();
+    zoomGroup.selectAll('path.estado').remove();
+    zoomGroup.selectAll('path.regiao').remove();
+
+    zoomGroup.selectAll('path.regiao')
+      .data(geojsonStateGlobal.features)
+      .enter().append('path')
+      .attr('class', 'regiao')
+      .attr('d', path)
+      .style('stroke', '#fff')
+      .style('stroke-width', 0.8)
+      .style('fill', function(d) {
+        var nomeRegiao = getRegiaoByIbge(d.properties);
+        var val = regiaoMap[nomeRegiao];
+        if (val === undefined) return '#e0ddd5';
+        return colorScale(val);
+      })
+      .on('mouseover', function(event, d) {
+        d3.select(event.currentTarget).style('opacity', 0.75);
+        var nomeRegiao = getRegiaoByIbge(d.properties);
+        var nomeEstado = d.properties.estado || d.properties.NM_UF || d.properties.nome || '';
+        var val = regiaoMap[nomeRegiao];
+        var valFmt = val === undefined ? '—'
+          : isPct ? (val * 100).toFixed(1) + '%'
+          : val.toLocaleString('pt-BR');
+        ttip.style('opacity', 1)
+          .style('left', (event.pageX + 12) + 'px')
+          .style('top', (event.pageY - 20) + 'px')
+          .html('<strong>' + (nomeEstado || nomeRegiao) + '</strong>' +
+            (nomeEstado ? '<br><em>' + nomeRegiao + '</em>' : '') +
+            '<br>' + currentIndicador + ': ' + valFmt);
+      })
+      .on('mouseout', function() {
+        d3.select(this).style('opacity', 1);
+        ttip.style('opacity', 0);
+      });
+
+    // Legenda gradiente simples
+    var legendWrap = document.getElementById('map-legend-wrap');
+    legendWrap.innerHTML = '';
+    var fmt = function(v) { return isPct ? (v * 100).toFixed(0) + '%' : v.toLocaleString('pt-BR'); };
+    [minVal, (minVal + maxVal) / 2, maxVal].forEach(function(v, i) {
+      var div = document.createElement('div');
+      div.className = 'map-legend-item';
+      div.style.backgroundColor = colorScale(v);
+      div.style.color = i === 0 ? '#333' : 'white';
+      div.textContent = fmt(v);
+      legendWrap.appendChild(div);
+    });
+
+    var fonteEl = document.getElementById('map-fonte');
+    if (fonteEl) fonteEl.textContent = (currentLang === 'pt' ? 'Fonte: ' : 'Source: ') + (meta.fonte || 'CETIC (2023)');
+
+    // Barras regionais — passar todos os dados para incluir TOTAL/Urbana/Rural
+    renderBarrasRegiao(dadosRegiao, currentIndicador, isPct, regiaoDataGlobal);
+  }
+
+  // =============================================
+  // HISTOGRAMA (nível município)
+  // =============================================
+  function renderHistograma(indicador, meta, cfg) {
+    var container = document.getElementById('map-chart');
+    if (!container) return;
+
+    var valores = geojsonMunicGlobal.features
+      .map(function(f) { return f.properties[indicador]; })
+      .filter(function(v) { return v !== null && v !== undefined && v !== '' && !isNaN(+v); })
+      .map(function(v) { return +v; });
+
+    if (valores.length === 0) { container.innerHTML = ''; return; }
+
+    var isPct = cfg.isPct;
+    var breaks = cfg.breaks; // inclui min e max
+    var MAP_COLORS = cfg.MAP_COLORS;
+
+    // Atualizar label
+    var labelEl = document.getElementById('map-chart-label');
+    if (labelEl) labelEl.textContent = indicador;
+
+    // Usar as categorias da legenda como bins fixos
+    var numCats = breaks.length - 1;
+    var catData = [];
+    for (var i = 0; i < numCats; i++) {
+      var lo = breaks[i], hi = breaks[i + 1];
+      var count = valores.filter(function(v) { return v >= lo && (i === numCats - 1 ? v <= hi : v < hi); }).length;
+      var fmt = function(v) {
+        if (isPct) return Math.round(v * 100) + '%';
+        return v >= 1000000 ? (v / 1000000).toFixed(1) + 'M' : v >= 1000 ? (v / 1000).toFixed(0) + 'k' : v;
+      };
+      catData.push({
+        label: fmt(lo) + '–' + fmt(hi),
+        count: count,
+        color: MAP_COLORS[i],
+        lo: lo, hi: hi
+      });
+    }
+
+    // Dimensões
+    var w = 0, el = container;
+    while (el && w < 100) { w = el.offsetWidth; el = el.parentElement; }
+    if (w < 100) w = 700;
+
+    var marginH = { top: 24, right: 16, bottom: 60, left: 52 };
+    var innerW = w - marginH.left - marginH.right;
+    var barW = Math.max(8, innerW / numCats - 4);
+    var h = 200;
+    var innerH = h - marginH.top - marginH.bottom;
+
+    d3.select(container).selectAll('*').remove();
+
+    var svg = d3.select(container).append('svg')
+      .attr('width', '100%')
+      .attr('viewBox', '0 0 ' + w + ' ' + h)
+      .attr('preserveAspectRatio', 'xMinYMin');
+
+    var g = svg.append('g').attr('transform', 'translate(' + marginH.left + ',' + marginH.top + ')');
+
+    var xScale = d3.scaleBand()
+      .domain(catData.map(function(d) { return d.label; }))
+      .range([0, innerW])
+      .padding(0.15);
+
+    var yScale = d3.scaleLinear()
+      .domain([0, d3.max(catData, function(d) { return d.count; })])
+      .range([innerH, 0])
+      .nice();
+
+    // Barras
+    g.selectAll('rect')
+      .data(catData)
+      .enter().append('rect')
+      .attr('x', function(d) { return xScale(d.label); })
+      .attr('width', xScale.bandwidth())
+      .attr('y', function(d) { return yScale(d.count); })
+      .attr('height', function(d) { return innerH - yScale(d.count); })
+      .attr('fill', function(d) { return d.color; })
+      .attr('rx', 2);
+
+    // Rótulos de contagem sobre as barras
+    g.selectAll('.count-label')
+      .data(catData)
+      .enter().append('text')
+      .attr('class', 'count-label')
+      .attr('x', function(d) { return xScale(d.label) + xScale.bandwidth() / 2; })
+      .attr('y', function(d) { return yScale(d.count) - 5; })
+      .attr('text-anchor', 'middle')
+      .attr('font-family', 'DM Sans, sans-serif')
+      .attr('font-size', '13px')
+      .attr('font-weight', '500')
+      .attr('fill', '#1c1c1c')
+      .text(function(d) { return d.count > 0 ? d.count.toLocaleString('pt-BR') : ''; });
+
+    // Eixo X — labels das categorias
+    g.append('g')
+      .attr('transform', 'translate(0,' + innerH + ')')
+      .call(d3.axisBottom(xScale).tickSize(0))
+      .selectAll('text')
+      .attr('font-family', 'DM Sans, sans-serif')
+      .attr('font-size', '13px')
+      .attr('fill', '#6b6b5e')
+      .attr('dy', '1.2em');
+
+    // Eixo Y
+    g.append('g')
+      .call(d3.axisLeft(yScale).ticks(4).tickFormat(function(v) {
+        return v >= 1000 ? (v / 1000).toFixed(0) + 'k' : v;
+      }))
+      .selectAll('text')
+      .attr('font-family', 'DM Sans, sans-serif')
+      .attr('font-size', '13px')
+      .attr('fill', '#6b6b5e');
+
+    g.selectAll('.domain').attr('stroke', '#d4cdc0');
+    g.selectAll('.tick line').attr('stroke', '#d4cdc0');
+
+    // Rótulo eixo Y
+    g.append('text')
+      .attr('transform', 'rotate(-90)')
+      .attr('x', -innerH / 2)
+      .attr('y', -42)
+      .attr('text-anchor', 'middle')
+      .attr('font-family', 'DM Sans, sans-serif')
+      .attr('font-size', '12px')
+      .attr('fill', '#6b6b5e')
+      .text(currentLang === 'pt' ? 'nº de municípios' : 'no. of municipalities');
+  }
+
+  // =============================================
+  // BARRAS REGIONAIS
+  // =============================================
+  function renderBarrasRegiao(dadosRegiao, indicador, isPct, regiaoDataAll) {
+    var container = document.getElementById('map-chart');
+    if (!container) return;
+
+    // Atualizar label
+    var labelEl = document.getElementById('map-chart-label');
+    if (labelEl) labelEl.textContent = indicador;
+
+    d3.select(container).selectAll('*').remove();
+
+    var fmt = function(v) {
+      if (isPct) return (v * 100).toFixed(1) + '%';
+      return v >= 1000000 ? (v / 1000000).toFixed(1) + 'M' : v >= 1000 ? (v / 1000).toFixed(0) + 'k' : v.toLocaleString('pt-BR');
+    };
+
+    // Montar lista completa: Regiões + separador + TOTAL, Urbana, Rural
+    var regioes = dadosRegiao.slice().sort(function(a, b) { return +b.valor - +a.valor; });
+
+    var extras = (regiaoDataAll || []).filter(function(row) {
+      return row.indicador === indicador &&
+        (row.regiao === 'TOTAL' || row.regiao === 'Urbana' || row.regiao === 'Rural');
+    }).sort(function(a, b) {
+      var ordem = { 'TOTAL': 0, 'Urbana': 1, 'Rural': 2 };
+      return ordem[a.regiao] - ordem[b.regiao];
+    });
+
+    var todos = regioes.concat(extras);
+
+    var w = 0, el = container;
+    while (el && w < 100) { w = el.offsetWidth; el = el.parentElement; }
+    if (w < 100) w = 700;
+
+    var marginB = { top: 10, right: 70, bottom: 10, left: 110 };
+    var rowH = 30;
+    var gap = 6;
+    var sepH = 16; // altura do separador entre regiões e totais
+    var innerH = todos.length * (rowH + gap) + sepH;
+    var h = innerH + marginB.top + marginB.bottom;
+    var innerW = w - marginB.left - marginB.right;
+
+    var svg = d3.select(container).append('svg')
+      .attr('width', '100%')
+      .attr('viewBox', '0 0 ' + w + ' ' + h)
+      .attr('preserveAspectRatio', 'xMinYMin');
+
+    var g = svg.append('g').attr('transform', 'translate(' + marginB.left + ',' + marginB.top + ')');
+
+    var maxVal = d3.max(todos, function(d) { return +d.valor; });
+    var x = d3.scaleLinear().domain([0, maxVal]).range([0, innerW]);
+
+    var colorRegioes = d3.scaleLinear()
+      .domain([0, maxVal])
+      .range(['#e8d9b8', '#5a4210']);
+
+    var colorExtras = { 'TOTAL': '#2d6a32', 'Urbana': '#4a8c50', 'Rural': '#8ab890' };
+
+    // Desenhar regiões
+    regioes.forEach(function(d, i) {
+      var y = i * (rowH + gap);
+      g.append('rect')
+        .attr('x', 0).attr('y', y)
+        .attr('width', x(+d.valor)).attr('height', rowH)
+        .attr('fill', colorRegioes(+d.valor)).attr('rx', 2);
+      g.append('text')
+        .attr('x', -6).attr('y', y + rowH / 2)
+        .attr('text-anchor', 'end').attr('dominant-baseline', 'middle')
+        .attr('font-family', 'DM Sans, sans-serif').attr('font-size', '13px').attr('fill', '#1c1c1c')
+        .text(d.regiao);
+      g.append('text')
+        .attr('x', x(+d.valor) + 6).attr('y', y + rowH / 2)
+        .attr('dominant-baseline', 'middle')
+        .attr('font-family', 'DM Sans, sans-serif').attr('font-size', '13px').attr('font-weight', '500').attr('fill', '#1c1c1c')
+        .text(fmt(+d.valor));
+    });
+
+    // Linha separadora
+    var sepY = regioes.length * (rowH + gap) + gap;
+    g.append('line')
+      .attr('x1', -marginB.left + 10).attr('x2', innerW)
+      .attr('y1', sepY + sepH / 2).attr('y2', sepY + sepH / 2)
+      .attr('stroke', '#d4cdc0').attr('stroke-dasharray', '3,3');
+
+    // Desenhar TOTAL / Urbana / Rural
+    extras.forEach(function(d, i) {
+      var y = regioes.length * (rowH + gap) + sepH + i * (rowH + gap);
+      g.append('rect')
+        .attr('x', 0).attr('y', y)
+        .attr('width', x(+d.valor)).attr('height', rowH)
+        .attr('fill', colorExtras[d.regiao] || '#888').attr('rx', 2);
+      g.append('text')
+        .attr('x', -6).attr('y', y + rowH / 2)
+        .attr('text-anchor', 'end').attr('dominant-baseline', 'middle')
+        .attr('font-family', 'DM Sans, sans-serif').attr('font-size', '13px').attr('fill', '#1c1c1c')
+        .text(d.regiao);
+      g.append('text')
+        .attr('x', x(+d.valor) + 6).attr('y', y + rowH / 2)
+        .attr('dominant-baseline', 'middle')
+        .attr('font-family', 'DM Sans, sans-serif').attr('font-size', '13px').attr('font-weight', '500').attr('fill', '#1c1c1c')
+        .text(fmt(+d.valor));
+    });
+  }
+
   drawMap();
-});
+  window.addEventListener('resize', function() { drawMap(); });
+
+  window._updateMapFonte = function() {
+    var currentIndicador = getSelectedIndicador();
+    if (!currentIndicador || !indicadoresGlobal) return;
+    var meta = indicadoresGlobal.find(function(d) { return d.indicador === currentIndicador; });
+    if (!meta) return;
+    var fonteEl = document.getElementById('map-fonte');
+    if (fonteEl) fonteEl.textContent = (currentLang === 'pt' ? 'Fonte: ' : 'Source: ') + meta.fonte;
+  };
 });
 
 // =============================================
@@ -1929,16 +2513,6 @@ window.addEventListener('resize', function() {
 // =============================================
 var savedLang = localStorage.getItem('lang') || 'pt';
 setLang(savedLang);
-
-// Handle deep link on load
-var hash = window.location.hash;
-if (hash) {
-  setTimeout(function() {
-    var el = document.querySelector(hash);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  }, 500);
-}
-
 })();
 </script>
 </body>

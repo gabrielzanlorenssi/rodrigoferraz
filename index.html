@@ -673,6 +673,9 @@ box-shadow: 0 1px 0 var(--c-amber);
     }
 
     .tl-link:hover { color: var(--c-amber); }
+    .tl-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+    .tl-tag-n1 { background: rgba(0,0,0,0.07); color: #444; font-size: 11px; }
+    .tl-tag-n2 { background: rgba(196,124,43,0.14); color: #7a4e10; font-size: 11px; }
 
     /* =============================================
    GEO LEVEL BUTTONS
@@ -1567,37 +1570,295 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
 // =============================================
 
 var TIMELINE_DATA = [
-  { year: 1948, cat: "Mídia", tipo: { pt: "Rádio educativa", en: "Educational Radio" }, meio: { pt: "Extensão rural tradicional", en: "Traditional Rural Extension" }, text: { pt: "Primeiras experiências de rádio educativa rural no Brasil (Rádio Rural de Lavras/MG).", en: "First rural educational radio experiences in Brazil (Rádio Rural de Lavras/MG)." }, link: "https://ufla.br/noticias/institucional/14732-radio-universitaria-da-ufla-completa-70-anos-de-extensao-e-educacao" },
-  { year: 1956, cat: "Política Pública", tipo: { pt: "Política pública", en: "Public Policy" }, meio: { pt: "Institucionalização", en: "Institutionalization" }, text: { pt: "Criação da ABCAR, institucionalizando a ATER no Brasil.", en: "Creation of ABCAR, institutionalizing rural extension (ATER) in Brazil." }, link: "https://www.gov.br/agricultura/pt-br/assuntos/ater/historico" },
-  { year: 1960, cat: "Mídia", tipo: { pt: "Rádio", en: "Radio" }, meio: { pt: "Comunicação de massa", en: "Mass Communication" }, text: { pt: "Expansão de programas de rádio agrícolas regionais por serviços estaduais de ATER.", en: "Expansion of regional agricultural radio programs by state ATER services." } },
-  { year: 1970, cat: "Mídia", tipo: { pt: "Rádio", en: "Radio" }, meio: { pt: "Rede institucional", en: "Institutional Network" }, text: { pt: "Consolidação das redes estaduais de rádio rural (Emater, Epagri, etc.).", en: "Consolidation of state rural radio networks (Emater, Epagri, etc.)." } },
-  { year: 1980, cat: "Mídia", tipo: { pt: "Televisão", en: "Television" }, meio: { pt: "Comunicação audiovisual", en: "Audiovisual Communication" }, text: { pt: "Início da extensão rural via televisão; lançamento do programa Globo Rural.", en: "Start of rural extension via television; launch of the Globo Rural program." }, link: "https://g1.globo.com/economia/agronegocios/globo-rural/" },
-  { year: 1980, cat: "Mídia", tipo: { pt: "Rádio", en: "Radio" }, meio: { pt: "Educomunicação", en: "Educommunication" }, text: { pt: "EPAGRI e outras instituições adotam radionovelas e programas educativos rurais.", en: "EPAGRI and other institutions adopt radio dramas and rural educational programs." } },
-  { year: 1990, cat: "Internet", tipo: { pt: "Internet", en: "Internet" }, meio: { pt: "Primeira digitalização da comunicação rural", en: "First Digitalization of Rural Communication" }, text: { pt: "Chegada da internet e surgimento dos primeiros portais agropecuários e boletins online.", en: "Arrival of the internet and emergence of first agricultural portals and online bulletins." } },
-  { year: 1995, cat: "Tecnologia", tipo: { pt: "Geotecnologia", en: "Geotechnology" }, meio: { pt: "Agricultura de precisão", en: "Precision Agriculture" }, text: { pt: "Introdução do GPS e SIG na agricultura de precisão.", en: "Introduction of GPS and GIS in precision agriculture." }, link: "https://www.embrapa.br/agricultura-de-precisao" },
-  { year: 2000, cat: "Tecnologia", tipo: { pt: "Plataformas digitais", en: "Digital Platforms" }, meio: { pt: "Gestão de dados", en: "Data Management" }, text: { pt: "Consolidação de plataformas digitais de gestão agrícola e sensores de campo.", en: "Consolidation of digital agricultural management platforms and field sensors." } },
-  { year: 2005, cat: "Extensão Digital", tipo: { pt: "Extensão digital", en: "Digital Extension" }, meio: { pt: "Educação online", en: "Online Education" }, text: { pt: "Início dos programas de e-Extension em universidades e agências internacionais.", en: "Start of e-Extension programs at universities and international agencies." }, link: "https://www.fao.org/e-agriculture/en" },
-  { year: 2008, cat: "Mobile", tipo: { pt: "Telefonia móvel", en: "Mobile Telephony" }, meio: { pt: "Comunicação digital", en: "Digital Communication" }, text: { pt: "Uso de SMS para comunicação técnica entre extensionistas e agricultores.", en: "Use of SMS for technical communication between extension agents and farmers." } },
-  { year: 2010, cat: "Extensão Digital", tipo: { pt: "Plataformas digitais", en: "Digital Platforms" }, meio: { pt: "Extensão pública", en: "Public Extension" }, text: { pt: "Primeiras plataformas digitais estaduais e privadas de ATER no Brasil (Epagri, Emater).", en: "First state and private digital ATER platforms in Brazil (Epagri, Emater)." } },
-  { year: 2011, cat: "Internacional", tipo: { pt: "Mobile Extension", en: "Mobile Extension" }, meio: { pt: "Ciência comportamental", en: "Behavioral Science" }, text: { pt: "Fundação do Precision Agriculture for Development (PAD) por Michael Kremer (Prêmio Nobel 2019).", en: "Foundation of Precision Agriculture for Development (PAD) by Michael Kremer (Nobel Prize 2019)." }, link: "https://precisionag.org/" },
-  { year: 2013, cat: "Política Pública", tipo: { pt: "Portal digital", en: "Digital Portal" }, meio: { pt: "Governo eletrônico", en: "E-Government" }, text: { pt: "Lançamento do Portal e-Campo da Embrapa, marco da ATER digital pública no Brasil.", en: "Launch of Embrapa's e-Campo Portal, milestone of public digital ATER in Brazil." }, link: "https://www.embrapa.br/e-campo" },
-  { year: 2015, cat: "Mobile", tipo: { pt: "Mídias sociais", en: "Social Media" }, meio: { pt: "Comunicação horizontal", en: "Horizontal Communication" }, text: { pt: "Uso massivo de WhatsApp e redes sociais por extensionistas e produtores.", en: "Mass use of WhatsApp and social media by extension agents and producers." } },
-  { year: 2016, cat: "Tecnologia", tipo: { pt: "Startup", en: "Startup" }, meio: { pt: "ATER digital", en: "Digital ATER" }, text: { pt: "Fundação da startup brasileira ManejeBem, especializada em ATER digital.", en: "Foundation of Brazilian startup ManejeBem, specialized in digital ATER." }, link: "https://manejebem.com/" },
-  { year: 2017, cat: "Tecnologia", tipo: { pt: "Plataforma digital", en: "Digital Platform" }, meio: { pt: "Rastreabilidade", en: "Traceability" }, text: { pt: "Instituto Biosistêmico lança a plataforma Agrotrace, para rastreabilidade e monitoramento agropecuário.", en: "Instituto Biosistêmico launches Agrotrace platform for agricultural traceability and monitoring." }, link: "https://www.agrotrace.com.br/portal-agrotrace" },
-  { year: 2018, cat: "Tecnologia", tipo: { pt: "Startup", en: "Startup" }, meio: { pt: "Inovação tecnológica", en: "Technological Innovation" }, text: { pt: "Consolidação de startups agtech brasileiras (ManejeBem, Agrotools, Solinftec).", en: "Consolidation of Brazilian agtech startups (ManejeBem, Agrotools, Solinftec)." } },
-  { year: 2018, cat: "Política Pública", tipo: { pt: "Governo digital", en: "Digital Government" }, meio: { pt: "Extensão pública", en: "Public Extension" }, text: { pt: "Criação de plataformas públicas de ATER digital, como Epagri Mob e Emater Digital.", en: "Creation of public digital ATER platforms, such as Epagri Mob and Emater Digital." } },
-  { year: 2020, cat: "Política Pública", tipo: { pt: "Política pública", en: "Public Policy" }, meio: { pt: "Plataforma digital", en: "Digital Platform" }, text: { pt: "Lançamento do Programa ATER Digital pelo MAPA.", en: "Launch of the ATER Digital Program by MAPA." }, link: "https://www.gov.br/agricultura/pt-br/assuntos/noticias/mapa-lanca-programa-ater-digital" },
-  { year: 2020, cat: "Tecnologia", tipo: { pt: "Estratégia híbrida", en: "Hybrid Strategy" }, meio: { pt: "Adaptação tecnológica", en: "Technological Adaptation" }, text: { pt: "Pandemia de COVID-19 acelera modelos híbridos de ATER (presencial + digital).", en: "COVID-19 pandemic accelerates hybrid ATER models (in-person + digital)." } },
-  { year: 2021, cat: "Tecnologia", tipo: { pt: "Inteligência artificial", en: "Artificial Intelligence" }, meio: { pt: "Monitoramento agrícola", en: "Agricultural Monitoring" }, text: { pt: "Crescimento do uso de IA, big data e drones em sistemas de assistência técnica e monitoramento de lavouras.", en: "Growth in use of AI, big data and drones in technical assistance and crop monitoring." } },
-  { year: 2022, cat: "Internacional", tipo: { pt: "Ensino remoto", en: "Remote Learning" }, meio: { pt: "Cooperação institucional", en: "Institutional Cooperation" }, text: { pt: "Parcerias público-privadas e capacitações online (ANATER e SENAR).", en: "Public-private partnerships and online training (ANATER and SENAR)." } },
-  { year: 2022, cat: "Política Pública", tipo: { pt: "Edital público", en: "Public Tender" }, meio: { pt: "Serviços remotos", en: "Remote Services" }, text: { pt: "Editais da ANATER passam a prever formalmente produtos e serviços digitais.", en: "ANATER bids begin to formally include digital products and remote services." } },
-  { year: 2023, cat: "Internacional", tipo: { pt: "Plataforma digital", en: "Digital Platform" }, meio: { pt: "Cooperação internacional", en: "International Cooperation" }, text: { pt: "Criação de Hubs Digitais de ATER e inovação rural (como ATER+ Digital / IICA).", en: "Creation of Digital ATER Hubs and rural innovation (such as ATER+ Digital / IICA)." }, link: "https://agenciagov.ebc.com.br/noticias/202404/plataforma-ater-digital-disponibiliza-conteudos-on-line-para-tecnicos-extensionistas" },
-  { year: 2024, cat: "Internacional", tipo: { pt: "Estratégia institucional", en: "Institutional Strategy" }, meio: { pt: "Planejamento estratégico", en: "Strategic Planning" }, text: { pt: "Inclusão da ATER Digital como estratégia do FIDA no COSOP Brasil 2025–2029.", en: "ATER Digital included in IFAD's Brazil COSOP 2025–2029 strategy." }, link: "https://www.ifad.org/en/w/countries/brazil" },
-  { year: 2024, cat: "Política Pública", tipo: { pt: "Política pública", en: "Public Policy" }, meio: { pt: "Financiamento", en: "Financing" }, text: { pt: "MDA vai investir R$ 19 milhões na ATER para cerca de 4.625 famílias.", en: "MDA to invest R$ 19 million in ATER for approximately 4,625 families." } },
-  { year: 2025, cat: "Internacional", tipo: { pt: "Implementação de projetos", en: "Project Implementation" }, meio: { pt: "Cooperação internacional", en: "International Cooperation" }, text: { pt: "Início dos primeiros projetos do FIDA que incorporam a ATER Digital (CompensAÇÃO e PSI).", en: "Start of first IFAD projects incorporating ATER Digital (CompensACTION and PSI)." }, link: "https://www.ifad.org/en/w/projects/2000004380" },
-  { year: 2025, cat: "Política Pública", tipo: { pt: "Iniciativa de digitalização", en: "Digitalization Initiative" }, meio: { pt: "Acesso a serviços públicos", en: "Access to Public Services" }, text: { pt: "Meu Imóvel Rural Digital — integração de dados georreferenciados e serviços digitais para agricultores familiares.", en: "Meu Imóvel Rural Digital — integration of georeferenced data and digital services for family farmers." }, link: "https://www.gov.br/gestao/pt-br/assuntos/meu-imovel-rural" }
+  {
+    year: 1948, cat: "Mídia",
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
+    canal: { pt: "Mídias de Massa", en: "Mass Media" },
+    tipo: { pt: "Rádio educativa", en: "Educational Radio" },
+    meio: { pt: "Extensão rural tradicional", en: "Traditional Rural Extension" },
+    text: { pt: "Primeiras experiências de rádio educativa rural no Brasil (Rádio Rural de Lavras/MG).", en: "First rural educational radio experiences in Brazil (Rádio Rural de Lavras/MG)." },
+    links: ["https://ufla.br/noticias/institucional/14732-radio-universitaria-da-ufla-completa-70-anos-de-extensao-e-educacao","https://www.ccta.ufpb.br/editoraccta/contents/titulos/comunicacao/radios-universitarias-experiencias-e-perspectivas/livro-1ebook.pdf","https://sumarios.org/artigo/o-r%C3%A1dio-e-educa%C3%A7%C3%A3o-rural-no-rio-grande-do-sul-1940-1960"]
+  },
+  {
+    year: 1948, cat: "Política Pública",
+    natureza: { pt: "Políticas Públicas e Estratégias Governamentais", en: "Public Policies and Government Strategies" },
+    canal: null,
+    tipo: { pt: "Política pública", en: "Public Policy" },
+    meio: { pt: "Institucionalização", en: "Institutionalization" },
+    text: { pt: "Criação da Associação de Crédito e Assistência Rural (ABCAR), institucionalizando a ATER no Brasil.", en: "Creation of ABCAR (Association for Rural Credit and Assistance), institutionalizing ATER in Brazil." },
+    links: ["https://www.gov.br/agricultura/pt-br/assuntos/ater/historico","https://portalantigo.ipea.gov.br/agencia/images/stories/PDFs/TDs/td_2343.pdf","https://tidsskrift.dk/dialogos/article/view/128044"]
+  },
+  {
+    year: 1960, cat: "Mídia",
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
+    canal: { pt: "Mídias de Massa", en: "Mass Media" },
+    tipo: { pt: "Rádio", en: "Radio" },
+    meio: { pt: "Comunicação de massa", en: "Mass Communication" },
+    text: { pt: "Expansão de programas de rádio agrícolas regionais por serviços estaduais de ATER.", en: "Expansion of regional agricultural radio programs by state ATER services." },
+    links: ["https://www.epagri.sc.gov.br/","https://www12.senado.leg.br/publicacoes/estudos-legislativos/tipos-de-estudos/textos-para-discussao/td-48-extensao-rural-no-brasil-uma-abordagem-historica-da-legislacao","https://periodicos.ufsm.br/extensaorural/article/view/35930/pdf"]
+  },
+  {
+    year: 1970, cat: "Mídia",
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
+    canal: { pt: "Mídias de Massa", en: "Mass Media" },
+    tipo: { pt: "Rádio", en: "Radio" },
+    meio: { pt: "Rede institucional", en: "Institutional Network" },
+    text: { pt: "Consolidação das redes estaduais de rádio rural (Emater, Epagri, etc.).", en: "Consolidation of state rural radio networks (Emater, Epagri, etc.)." },
+    links: ["https://www.epagri.sc.gov.br/","https://periodicos.ufsm.br/extensaorural/article/view/35930/pdf"]
+  },
+  {
+    year: 1980, cat: "Mídia",
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
+    canal: { pt: "Mídias de Massa", en: "Mass Media" },
+    tipo: { pt: "Televisão", en: "Television" },
+    meio: { pt: "Comunicação audiovisual", en: "Audiovisual Communication" },
+    text: { pt: "Início da extensão rural via televisão, com programas técnicos e de campo; uso institucional de mídia visual na agricultura.", en: "Start of rural extension via television, with technical field programs; institutional use of visual media in agriculture." },
+    links: ["https://g1.globo.com/economia/agronegocios/globo-rural/","https://www.ruraltectv.com.br/documentos/Aspectoshist%C3%B3ricosdaExtens%C3%A3oRuralnoBrasileemSantaCatarinaEPAGRI.pdf","https://www.revistarazonypalabra.org/index.php/ryp/article/view/810/820","https://revista.fct.unesp.br/index.php/formacao/article/view/9067/6817"]
+  },
+  {
+    year: 1980, cat: "Mídia",
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
+    canal: { pt: "Mídias de Massa", en: "Mass Media" },
+    tipo: { pt: "Televisão / Jornalismo agro", en: "Television / Agro Journalism" },
+    meio: { pt: "Jornalismo agro", en: "Agricultural Journalism" },
+    text: { pt: "Lançamento do programa Globo Rural, marco na popularização da informação agropecuária por televisão, consolidando o acesso remoto ao conhecimento técnico no meio rural.", en: "Launch of Globo Rural, a landmark in the popularization of agricultural information via television, consolidating remote access to technical knowledge in rural areas." },
+    links: ["https://g1.globo.com/economia/agronegocios/globo-rural/","https://www.scielo.br/j/ld/a/9X4k9gMHLdCGJJbqPV8W9QB/?format=html&lang=pt","https://revista.fct.unesp.br/index.php/formacao/article/view/9067/6817"]
+  },
+  {
+    year: 1980, cat: "Mídia",
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
+    canal: { pt: "Mídias de Massa", en: "Mass Media" },
+    tipo: { pt: "Rádio", en: "Radio" },
+    meio: { pt: "Educomunicação", en: "Educommunication" },
+    text: { pt: "EPAGRI e outras instituições adotam radionovelas e programas educativos rurais.", en: "EPAGRI and other institutions adopt radio dramas and rural educational programs." },
+    links: ["https://www.epagri.sc.gov.br/","https://www.iesp.edu.br/sistema/uploads/arquivos/portais-pesquisa/aspectos-historicos-da-extensao-rural-no-brasil-e-em-santa-catarina.pdf"]
+  },
+  {
+    year: 1990, cat: "Política Pública",
+    natureza: { pt: "Fortalecimento Institucional Público e Privado", en: "Public and Private Institutional Strengthening" },
+    canal: null,
+    tipo: { pt: "Fortalecimento institucional", en: "Institutional Strengthening" },
+    meio: { pt: "Institucionalização", en: "Institutionalization" },
+    text: { pt: "Criação da Asbraer (Associação Brasileira das Entidades Estaduais de Assistência Técnica e Extensão Rural).", en: "Creation of Asbraer (Brazilian Association of State Rural Extension Entities)." },
+    links: ["http://www.tede2.ufrpe.br:8080/tede2/bitstream/tede2/6047/2/Bruno%20de%20Oliveira%20Andrade.pdf","https://www.asbraer.org.br/gestao.html"]
+  },
+  {
+    year: 1990, cat: "Internet",
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
+    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms" },
+    tipo: { pt: "Internet", en: "Internet" },
+    meio: { pt: "Primeira digitalização da comunicação rural", en: "First Digitalization of Rural Communication" },
+    text: { pt: "Chegada da internet e surgimento dos primeiros portais agropecuários e boletins online.", en: "Arrival of the internet and emergence of first agricultural portals and online bulletins." },
+    links: ["https://www.embrapa.br/agencia-de-informacao-tecnologica","https://revista.fatectq.edu.br/interfacetecnologica/en/article/view/1761/1001"]
+  },
+  {
+    year: 1995, cat: "Tecnologia",
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
+    canal: { pt: "Tecnologias Digitais e de Automação", en: "Digital and Automation Technologies" },
+    tipo: { pt: "Geotecnologia", en: "Geotechnology" },
+    meio: { pt: "Agricultura de precisão", en: "Precision Agriculture" },
+    text: { pt: "Introdução do GPS e SIG na agricultura de precisão.", en: "Introduction of GPS and GIS in precision agriculture." },
+    links: ["https://www.embrapa.br/agricultura-de-precisao","https://revistatecie.crea-pr.org.br/index.php/revista/article/view/907/704","https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/908112/1/sustent.pdf"]
+  },
+  {
+    year: 2000, cat: "Tecnologia",
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
+    canal: { pt: "Tecnologias Digitais e de Automação", en: "Digital and Automation Technologies" },
+    tipo: { pt: "Plataformas digitais", en: "Digital Platforms" },
+    meio: { pt: "Gestão de dados", en: "Data Management" },
+    text: { pt: "Consolidação de plataformas digitais de gestão agrícola e sensores de campo.", en: "Consolidation of digital agricultural management platforms and field sensors." },
+    links: ["https://www.embrapa.br/agricultura-de-precisao","https://revistacultivar.com.br/index.php/artigos/a-digitalizacao-da-agricultura","https://scientificelectronicarchives.org/index.php/SEA/article/view/1520/1577"]
+  },
+  {
+    year: 2005, cat: "Extensão Digital",
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
+    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms" },
+    tipo: { pt: "Extensão digital", en: "Digital Extension" },
+    meio: { pt: "Educação online", en: "Online Education" },
+    text: { pt: "Início dos programas de e-Extension em universidades e agências internacionais.", en: "Start of e-Extension programs at universities and international agencies." },
+    links: ["https://www.fao.org/e-agriculture/en","https://periodicos.uniarp.edu.br/index.php/juridico/article/view/3379/1635","https://revistas.uepg.br/index.php/conexao/article/view/23274","https://ap.fftc.org.tw/article/761"]
+  },
+  {
+    year: 2008, cat: "Mobile",
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
+    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms" },
+    tipo: { pt: "Telefonia móvel", en: "Mobile Telephony" },
+    meio: { pt: "Comunicação digital", en: "Digital Communication" },
+    text: { pt: "Uso de SMS para comunicação técnica entre extensionistas e agricultores.", en: "Use of SMS for technical communication between extension agents and farmers." },
+    links: ["https://precisionag.org/"]
+  },
+  {
+    year: 2010, cat: "Extensão Digital",
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
+    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms" },
+    tipo: { pt: "Plataformas digitais", en: "Digital Platforms" },
+    meio: { pt: "Extensão pública", en: "Public Extension" },
+    text: { pt: "Primeiras plataformas digitais estaduais e privadas de ATER no Brasil (Epagri, Emater).", en: "First state and private digital ATER platforms in Brazil (Epagri, Emater)." },
+    links: ["https://www.epagri.sc.gov.br/servicos/","https://www.interacoes.ucdb.br/interacoes/article/view/4788/3158","https://drive.google.com/file/d/1PfMQKhy4RYwyl42xcVCO2DFUC30f9dYR/view"]
+  },
+  {
+    year: 2011, cat: "Internacional",
+    natureza: { pt: "Fortalecimento Institucional Público e Privado", en: "Public and Private Institutional Strengthening" },
+    canal: null,
+    tipo: { pt: "Mobile Extension", en: "Mobile Extension" },
+    meio: { pt: "Ciência comportamental", en: "Behavioral Science" },
+    text: { pt: "Fundação do Precision Agriculture for Development (PAD) por Michael Kremer (Prêmio Nobel 2019) — marco de extensão digital via celular.", en: "Foundation of Precision Agriculture for Development (PAD) by Michael Kremer (Nobel Prize 2019) — landmark of digital mobile extension." },
+    links: ["https://precisionag.org/","https://www.givewell.org/international/technical/programs/precision-agriculture-for-development","https://en.everybodywiki.com/Precision_Agriculture_for_Development"]
+  },
+  {
+    year: 2013, cat: "Política Pública",
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
+    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms" },
+    tipo: { pt: "Portal digital", en: "Digital Portal" },
+    meio: { pt: "Governo eletrônico", en: "E-Government" },
+    text: { pt: "Lançamento do Portal e-Campo da Embrapa, marco da ATER digital pública no Brasil.", en: "Launch of Embrapa's e-Campo Portal, a landmark of public digital ATER in Brazil." },
+    links: ["https://www.embrapa.br/e-campo","https://ainfo.cnptia.embrapa.br/digital/bitstream/doc/1153499/1/Relatorio-Gerencial-2019-2023.pdf"]
+  },
+  {
+    year: 2015, cat: "Mobile",
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
+    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms" },
+    tipo: { pt: "Mídias sociais", en: "Social Media" },
+    meio: { pt: "Comunicação horizontal", en: "Horizontal Communication" },
+    text: { pt: "Uso massivo de WhatsApp e redes sociais por extensionistas e produtores.", en: "Mass use of WhatsApp and social media by extension agents and producers." },
+    links: ["https://www.startagro.agr.br/como-o-produtor-rural-usa-a-internet-smartphones-whatsapp-e-aplicativos/"]
+  },
+  {
+    year: 2016, cat: "Tecnologia",
+    natureza: { pt: "Fortalecimento Institucional Público e Privado", en: "Public and Private Institutional Strengthening" },
+    canal: null,
+    tipo: { pt: "Startup", en: "Startup" },
+    meio: { pt: "ATER digital", en: "Digital ATER" },
+    text: { pt: "Fundação da startup brasileira ManejeBem, especializada em ATER digital.", en: "Foundation of Brazilian startup ManejeBem, specialized in digital ATER." },
+    links: ["https://manejebem.com/","https://sistemabbrasil.org/empresas-b/manejebem/"]
+  },
+  {
+    year: 2017, cat: "Tecnologia",
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
+    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms" },
+    tipo: { pt: "Plataforma digital", en: "Digital Platform" },
+    meio: { pt: "Rastreabilidade", en: "Traceability" },
+    text: { pt: "Instituto Biosistêmico lança a plataforma Agrotrace para ações de ATER, rastreabilidade e monitoramento agropecuário.", en: "Instituto Biosistêmico launches the Agrotrace platform for ATER, traceability and agricultural monitoring." },
+    links: ["https://www.agrotrace.com.br/portal-agrotrace"]
+  },
+  {
+    year: 2018, cat: "Tecnologia",
+    natureza: { pt: "Fortalecimento Institucional Público e Privado", en: "Public and Private Institutional Strengthening" },
+    canal: null,
+    tipo: { pt: "Startup", en: "Startup" },
+    meio: { pt: "Inovação tecnológica", en: "Technological Innovation" },
+    text: { pt: "Consolidação de startups agtech brasileiras (ManejeBem, Agrotools, Solinftec).", en: "Consolidation of Brazilian agtech startups (ManejeBem, Agrotools, Solinftec)." },
+    links: ["https://www.agrotools.com.br","https://radaragtech.com.br/wp-content/uploads/2022/10/radaragtech-2019.pdf"]
+  },
+  {
+    year: 2018, cat: "Política Pública",
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
+    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms" },
+    tipo: { pt: "Governo digital", en: "Digital Government" },
+    meio: { pt: "Extensão pública", en: "Public Extension" },
+    text: { pt: "Criação de plataformas públicas de ATER digital, como Epagri Mob e Emater Digital.", en: "Creation of public digital ATER platforms, such as Epagri Mob and Emater Digital." },
+    links: ["https://www.epagri.sc.gov.br/"]
+  },
+  {
+    year: 2020, cat: "Política Pública",
+    natureza: { pt: "Políticas Públicas e Estratégias Governamentais", en: "Public Policies and Government Strategies" },
+    canal: null,
+    tipo: { pt: "Política pública", en: "Public Policy" },
+    meio: { pt: "Plataforma digital", en: "Digital Platform" },
+    text: { pt: "Lançamento do Programa ATER Digital pelo MAPA.", en: "Launch of the ATER Digital Program by MAPA." },
+    links: ["https://www.gov.br/agricultura/pt-br/assuntos/noticias/mapa-lanca-programa-ater-digital","https://www.atermaisdigital.cnptia.embrapa.br/"]
+  },
+  {
+    year: 2020, cat: "Tecnologia",
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
+    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms" },
+    tipo: { pt: "Estratégia híbrida", en: "Hybrid Strategy" },
+    meio: { pt: "Adaptação tecnológica", en: "Technological Adaptation" },
+    text: { pt: "Pandemia de COVID-19 acelera a adoção de modelos híbridos de ATER (combinação de atendimento presencial e digital).", en: "COVID-19 pandemic accelerates adoption of hybrid ATER models (combining in-person and digital service)." },
+    links: []
+  },
+  {
+    year: 2021, cat: "Tecnologia",
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
+    canal: { pt: "Tecnologias Digitais e de Automação", en: "Digital and Automation Technologies" },
+    tipo: { pt: "Inteligência artificial", en: "Artificial Intelligence" },
+    meio: { pt: "Monitoramento agrícola", en: "Agricultural Monitoring" },
+    text: { pt: "Crescimento no uso de inteligência artificial, big data e drones em sistemas de assistência técnica e monitoramento de lavouras.", en: "Growth in the use of artificial intelligence, big data and drones in technical assistance and crop monitoring systems." },
+    links: ["https://www.embrapa.br/busca-de-noticias/-/noticia/67664619/inteligencia-artificial-no-agronegocio","https://ainfo.cnptia.embrapa.br/digital/bitstream/doc/1170729/1/P-Inteligencia-artificial-aplicada-na.pdf"]
+  },
+  {
+    year: 2022, cat: "Internacional",
+    natureza: { pt: "Fortalecimento Institucional Público e Privado", en: "Public and Private Institutional Strengthening" },
+    canal: null,
+    tipo: { pt: "Ensino remoto", en: "Remote Learning" },
+    meio: { pt: "Cooperação institucional", en: "Institutional Cooperation" },
+    text: { pt: "Parcerias público-privadas e capacitações online (ANATER e SENAR).", en: "Public-private partnerships and online training programs (ANATER and SENAR)." },
+    links: ["https://www.sinterpa.com.br/single-post/anater-e-senar-lan%C3%A7am-novas-capacita%C3%A7%C3%B5es-online-e-gratuitas"]
+  },
+  {
+    year: 2022, cat: "Política Pública",
+    natureza: { pt: "Políticas Públicas e Estratégias Governamentais", en: "Public Policies and Government Strategies" },
+    canal: null,
+    tipo: { pt: "Edital público", en: "Public Tender" },
+    meio: { pt: "Serviços remotos", en: "Remote Services" },
+    text: { pt: "Editais da ANATER passam a prever formalmente produtos e serviços digitais/remotos.", en: "ANATER public tenders begin to formally include digital and remote products and services." },
+    links: ["https://www.anater.org/wp-content/uploads/2022/07/EDITAL-DE-CHAMAMENTO-PUBLICO-No-001-2022.pdf"]
+  },
+  {
+    year: 2023, cat: "Internacional",
+    natureza: { pt: "Fortalecimento Institucional Público e Privado", en: "Public and Private Institutional Strengthening" },
+    canal: null,
+    tipo: { pt: "Plataforma digital", en: "Digital Platform" },
+    meio: { pt: "Cooperação internacional", en: "International Cooperation" },
+    text: { pt: "Criação de Hubs Digitais de ATER e inovação rural (como ATER+ Digital / IICA).", en: "Creation of Digital ATER Hubs and rural innovation networks (such as ATER+ Digital / IICA)." },
+    links: ["https://agenciagov.ebc.com.br/noticias/202404/plataforma-ater-digital-disponibiliza-conteudos-on-line-para-tecnicos-extensionistas"]
+  },
+  {
+    year: 2024, cat: "Internacional",
+    natureza: { pt: "Políticas Públicas e Estratégias Governamentais", en: "Public Policies and Government Strategies" },
+    canal: null,
+    tipo: { pt: "Estratégia institucional", en: "Institutional Strategy" },
+    meio: { pt: "Planejamento estratégico", en: "Strategic Planning" },
+    text: { pt: "Inclusão da temática da ATER Digital como estratégia do FIDA no COSOP Brasil 2025–2029.", en: "ATER Digital included as a strategy in IFAD's Brazil COSOP 2025–2029." },
+    links: ["https://www.ifad.org/en/w/countries/brazil"]
+  },
+  {
+    year: 2024, cat: "Política Pública",
+    natureza: { pt: "Políticas Públicas e Estratégias Governamentais", en: "Public Policies and Government Strategies" },
+    canal: null,
+    tipo: { pt: "Política pública", en: "Public Policy" },
+    meio: { pt: "Financiamento", en: "Financing" },
+    text: { pt: "MDA investe R$ 19 milhões na ATER para cerca de 4.625 famílias, contemplando ATER Digital.", en: "MDA invests R$ 19 million in ATER for approximately 4,625 families, including Digital ATER." },
+    links: ["https://www.gov.br/mda/pt-br/noticias/2024/12/mda-vai-investir-r-19-milhoes-em-assistencia-tecnica-para-mais-de-4-mil-familias-de-agricultores-familiares"]
+  },
+  {
+    year: 2025, cat: "Internacional",
+    natureza: { pt: "Políticas Públicas e Estratégias Governamentais", en: "Public Policies and Government Strategies" },
+    canal: null,
+    tipo: { pt: "Implementação de projetos", en: "Project Implementation" },
+    meio: { pt: "Cooperação internacional", en: "International Cooperation" },
+    text: { pt: "Início dos primeiros projetos do FIDA que incorporam a temática da ATER Digital, como CompensAÇÃO e PSI.", en: "Start of the first IFAD projects incorporating Digital ATER, such as CompensACTION and PSI." },
+    links: ["https://www.ifad.org/en/w/projects/2000004380"]
+  },
+  {
+    year: 2025, cat: "Política Pública",
+    natureza: { pt: "Políticas Públicas e Estratégias Governamentais", en: "Public Policies and Government Strategies" },
+    canal: null,
+    tipo: { pt: "Iniciativa de digitalização", en: "Digitalization Initiative" },
+    meio: { pt: "Acesso a serviços públicos", en: "Access to Public Services" },
+    text: { pt: "Meu Imóvel Rural Digital — iniciativa que integra dados georreferenciados e serviços digitais para ampliar o acesso de agricultores familiares a políticas públicas e crédito rural.", en: "Meu Imóvel Rural Digital — initiative integrating georeferenced data and digital services to expand family farmers' access to public policies and rural credit." },
+    links: ["https://www.gov.br/gestao/pt-br/assuntos/meu-imovel-rural"]
+  },
+  {
+    year: 2026, cat: "Internacional",
+    natureza: { pt: "Políticas Públicas e Estratégias Governamentais", en: "Public Policies and Government Strategies" },
+    canal: null,
+    tipo: { pt: "Implementação de projetos", en: "Project Implementation" },
+    meio: { pt: "Cooperação internacional", en: "International Cooperation" },
+    text: { pt: "Início do Projeto Dom Helder Câmara III, que inclui ações de ATER Digital a serem implementadas em nível federal.", en: "Launch of the Dom Helder Câmara III Project, incorporating Digital ATER actions to be implemented at the federal level." },
+    links: []
+  }
 ];
-
 
 var CAT_COLORS = {
   "Mídia":          "#8B6914",
@@ -1772,10 +2033,26 @@ list.innerHTML = TIMELINE_DATA.map(function(item) {
 
     var tipoLabel = currentLang === 'pt' ? item.tipo.pt : item.tipo.en;
     var meioLabel = currentLang === 'pt' ? item.meio.pt : item.meio.en;
+    var naturezaLabel = item.natureza ? (currentLang === 'pt' ? item.natureza.pt : item.natureza.en) : '';
+    var canalLabel = item.canal ? (currentLang === 'pt' ? item.canal.pt : item.canal.en) : '';
 
-    var linkHtml = item.link
-      ? '<a href="' + item.link + '" target="_blank" class="tl-link">↗ ' + (currentLang === 'pt' ? 'Ver referência' : 'See reference') + '</a>'
-      : '';
+    // Links — suporta array (links) ou string legada (link)
+    var linksArr = item.links && item.links.length > 0 ? item.links
+      : (item.link ? [item.link] : []);
+    var linkHtml = '';
+    if (linksArr.length === 1) {
+      linkHtml = '<a href="' + linksArr[0] + '" target="_blank" class="tl-link">↗ ' + (currentLang === 'pt' ? 'Ver referência' : 'See reference') + '</a>';
+    } else if (linksArr.length > 1) {
+      linkHtml = linksArr.map(function(url, i) {
+        return '<a href="' + url + '" target="_blank" class="tl-link">↗ ' + (currentLang === 'pt' ? 'Referência' : 'Reference') + ' ' + (i + 1) + '</a>';
+      }).join(' ');
+    }
+
+    // Tags de classificação: natureza (Nível 1) + canal (Nível 2, se houver)
+    var tagsHtml = '<div class="tl-tags">';
+    if (naturezaLabel) tagsHtml += '<span class="tl-tag tl-tag-n1">' + naturezaLabel + '</span>';
+    if (canalLabel)    tagsHtml += '<span class="tl-tag tl-tag-n2">' + canalLabel + '</span>';
+    tagsHtml += '</div>';
 
     return '<div class="tl-item' + (hidden ? ' hidden' : '') + '">' +
       '<div class="tl-card" style="border-left-color:' + color + '">' +
@@ -1784,11 +2061,8 @@ list.innerHTML = TIMELINE_DATA.map(function(item) {
           '<span class="tl-cat-badge" style="background:' + color + '">' + item.cat + '</span>' +
         '</div>' +
         '<div class="tl-text">' + item.text[currentLang] + '</div>' +
-        '<div class="tl-tags">' +
-          '<span class="tl-tag" data-filter-tipo="' + item.tipo.pt + '">' + tipoLabel + '</span>' +
-          '<span class="tl-tag" data-filter-meio="' + item.meio.pt + '">' + meioLabel + '</span>' +
-        '</div>' +
-        linkHtml +
+        tagsHtml +
+        (linkHtml ? '<div class="tl-links">' + linkHtml + '</div>' : '') +
       '</div>' +
     '</div>';
   }).join('');

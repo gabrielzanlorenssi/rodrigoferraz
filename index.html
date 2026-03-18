@@ -1444,21 +1444,22 @@ table.cron-table {
 <section id="hero">
   <a class="section-anchor" id="anchor-hero"></a>
   <div class="hero-inner">
-    <div class="hero-tag" data-pt="Consultor Internacional · ICT4D · Extensão Rural · Engenheiro Agrônomo" data-en="International Consultant · ICT4D · Rural Extension · Agronomist">
-      Consultor Internacional · ICT4D · Extensão Rural · Engenheiro Agrônomo
+    <div class="hero-tag" data-pt="Inclusão digital · ICT4D · Extensão Rural · Inovação" data-en="Digital Inclusion · ICT4D · Rural Extension · Innovation">
+      Inclusão digital · ICT4D · Extensão Rural · Inovação
     </div>
     <h1 class="hero-name">ICT4D<br><em>Brazil</em></h1>
-    <p class="hero-desc" 
-       data-pt="Site desenvolvido pelo agrônomo e pesquisador Rodrigo Ferraz. Reúne análises e iniciativas em ICT4D (Tecnologias da Informação e Comunicação para o Desenvolvimento), com foco em soluções digitais aplicadas à ATER e na promoção da inovação nos sistemas agroalimentares."
-       data-en="This site was developed by agronomist and researcher Rodrigo Ferraz. It brings together analyses and initiatives in ICT4D (Information and Communication Technologies for Development), focusing on digital solutions applied to ATER (Technical Assistance and Rural Extension) and the promotion of innovation in agri-food systems.">
-Site desenvolvido pelo agrônomo e pesquisador Rodrigo Ferraz. Reúne análises e iniciativas em ICT4D (Tecnologias da Informação e Comunicação para o Desenvolvimento), com foco em soluções digitais aplicadas à ATER e na promoção da inovação nos sistemas agroalimentares.</p>
+<p class="hero-desc" id="hero-desc-pt">
+Site desenvolvido pelo agrônomo e pesquisador <strong style="font-weight:700;color:#fff;">Rodrigo Ferraz</strong>. Reúne análises e iniciativas em ICT4D (Tecnologias da Informação e Comunicação para o Desenvolvimento), com foco em soluções digitais aplicadas à ATER e na promoção da inovação nos sistemas agroalimentares.</p>
+
+<p class="hero-desc" id="hero-desc-en" style="display:none">
+This site was developed by agronomist and researcher <strong style="font-weight:700;color:#fff;">Rodrigo Ferraz</strong>. It brings together analyses and initiatives in ICT4D (Information and Communication Technologies for Development), focusing on digital solutions applied to ATER (Technical Assistance and Rural Extension) and the promotion of innovation in agri-food systems.</p>
 <p class="hero-desc" 
        data-pt="Aqui, é possível acessar uma linha do tempo com os principais marcos da inovação tecnológica na extensão rural brasileira, além de indicadores, projetos e publicações acadêmicas sobre o tema. O objetivo é contribuir para o fortalecimento de capacidades e promoção da transformação digital no meio rural."
        data-en="Here you can access a timeline highlighting the main milestones of technological innovation in Brazilian rural extension, as well as indicators, projects, and academic publications on the subject. The goal is to contribute to strengthening capacities and promoting digital transformation in rural areas.">
 Aqui, é possível acessar uma linha do tempo com os principais marcos da inovação tecnológica na extensão rural brasileira, além de indicadores, projetos e publicações acadêmicas sobre o tema. O objetivo é contribuir para o fortalecimento de capacidades e promoção da transformação digital no meio rural.
     </p>
     <div class="hero-ctas">
-      <a href="#sobre" class="btn-primary" data-pt="Sobre mim" data-en="About me">Sobre mim</a>
+      <a href="#sobre" class="btn-primary" data-pt="Sobre Rodrigo Ferraz" data-en="About Rodrigo Ferraz">Sobre mim</a>
       <a href="#projetos" class="btn-secondary" data-pt="Ver projetos" data-en="See projects">Ver projetos</a>
     </div>
   </div>
@@ -1529,8 +1530,8 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
     </div>
     <div style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
       <h2 class="section-title" style="margin-bottom:0"
-          data-pt="Digitalização da ATER no Brasil"
-          data-en="Digitalization of Rural Extension in Brazil">Digitalização da ATER no Brasil</h2>
+          data-pt="Linha do Tempo da Digitalização da ATER no Brasil"
+          data-en="Timeline of Digitalization of Rural Extension in Brazil">Digitalização da ATER no Brasil</h2>
       <button class="share-section-btn" onclick="shareSection('timeline')">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
         <span data-pt="Compartilhar" data-en="Share">Compartilhar</span>
@@ -2060,7 +2061,7 @@ var CRONOGRAMA_DATA = [
   { n: 13, ativ: { pt: "Atendimentos individuais virtuais de ATER (videochamada média de 20 minutos)",                  en: "Virtual individual ATER (avg. 20-min video call)" },         quant: 8,  meses: [[3,3],[5,11]], tipo: "virtual" },
   { n: 14, ativ: { pt: "Outras atividades coletivas de ATER (presenciais)",                                              en: "Other collective ATER activities (in-person)" },             quant: 2,  meses: [[6,6],[8,8]], tipo: "presencial" },
   { n: 15, ativ: { pt: "Atendimentos virtuais coletivos de ATER",                                                        en: "Virtual collective ATER services" },                         quant: 1,  meses: [[6,6],[9,10]], tipo: "virtual" },
-  { n: 16, ativ: { pt: "Atendimentos individuais virtuais de ATER (mensagens de cunho técnico produtivo semanais)",      en: "Virtual individual ATER (weekly technical messages)" },       quant: 32, meses: [[3,3],[5,12]], tipo: "virtual" },
+  { n: 16, ativ: { pt: "Atendimentos individuais virtuais de ATER (mensagens de cunho técnico produtivo semanais)",      en: "Virtual individual ATER (weekly technical messages)" },       quant: 52, meses: [[3,3],[5,12]], tipo: "virtual" },
   { n: 17, ativ: { pt: "Relatórios de Avaliação",                                                                        en: "Evaluation Reports" },                                        quant: 2,  meses: [[12,12]], tipo: "presencial" },
   { n: 18, ativ: { pt: "Encontro de divulgação de resultados",                                                           en: "Results dissemination meeting" },                             quant: 1,  meses: [[12,12]], tipo: "presencial" }
 ];
@@ -2070,18 +2071,16 @@ var cronFiltroAtivo = 'todos';
 window.filtrarCronograma = function(tipo) {
   cronFiltroAtivo = tipo;
 
-  // Atualizar botões da legenda
   document.querySelectorAll('#cron-legenda .cron-leg-item').forEach(function(el) {
     el.classList.toggle('active', el.getAttribute('data-tipo') === tipo);
   });
 
-  // Highlight nas linhas
   document.querySelectorAll('.cron-table tbody tr').forEach(function(tr) {
     var trTipo = tr.getAttribute('data-tipo');
     if (tipo === 'todos') {
-      tr.classList.remove('cron-dimmed');
+      tr.style.display = '';
     } else {
-      tr.classList.toggle('cron-dimmed', trTipo !== tipo);
+      tr.style.display = trTipo === tipo ? '' : 'none';
     }
   });
 };
@@ -2252,6 +2251,10 @@ function setLang(lang) {
       }
     }
   });
+
+  
+  document.getElementById('hero-desc-pt').style.display = lang === 'pt' ? '' : 'none';
+document.getElementById('hero-desc-en').style.display = lang === 'en' ? '' : 'none';
 
   // Re-render dynamic sections
   renderTimeline();
@@ -2583,47 +2586,46 @@ d3.csv("https://storage.googleapis.com/projeto-graficos/ifad2025/mapas/asbraer.c
     drawMap._MAP_COLORS = MAP_COLORS;
   }
 
-  function populateSelector() {
-    var selector = document.getElementById('map-indicator-selector');
-    selector.innerHTML = '';
+function populateSelector() {
+  var selector = document.getElementById('map-indicator-selector');
+  selector.innerHTML = '';
 
-    if (currentGeoLevel === 'municipio' && indicadoresGlobal) {
-      indicadoresGlobal.forEach(function(ind) {
-        var opt = document.createElement('option');
-        opt.value = ind.indicador;
-        opt.textContent = ind.indicador;
-        selector.appendChild(opt);
-      });
-    } else if (currentGeoLevel === 'uf') {
-      ['Total de extensionistas','% Ensino Médio','% Graduação','% Especialização','% Mestrado','% Doutorado'].forEach(function(ind) {
-        var opt = document.createElement('option');
-        opt.value = ind;
-        opt.textContent = ind;
-        selector.appendChild(opt);
-      });
-    } else if (currentGeoLevel === 'regiao' && regiaoDataGlobal) {
-      // Pegar indicadores únicos do CSV de região
-      var indicadoresRegiao = [];
-      regiaoDataGlobal.forEach(function(row) {
-        if (indicadoresRegiao.indexOf(row.indicador) === -1) {
-          indicadoresRegiao.push(row.indicador);
-        }
-      });
-      indicadoresRegiao.forEach(function(ind) {
-        var opt = document.createElement('option');
-        opt.value = ind;
-        opt.textContent = ind;
-        selector.appendChild(opt);
-      });
-    }
-
-    // Remover listener antigo e adicionar novo
-    var newSelector = selector.cloneNode(true);
-    selector.parentNode.replaceChild(newSelector, selector);
-    newSelector.addEventListener('change', function() {
-      drawMapLevel();
+  if (currentGeoLevel === 'municipio' && indicadoresGlobal) {
+    indicadoresGlobal.forEach(function(ind) {
+      if (ind.indicador.indexOf('Número de alertas') !== -1) return;
+      var opt = document.createElement('option');
+      opt.value = ind.indicador;
+      opt.textContent = ind.indicador;
+      selector.appendChild(opt);
+    });
+  } else if (currentGeoLevel === 'uf') {
+    ['Total de extensionistas','% Ensino Médio','% Graduação','% Especialização','% Mestrado','% Doutorado'].forEach(function(ind) {
+      var opt = document.createElement('option');
+      opt.value = ind;
+      opt.textContent = ind;
+      selector.appendChild(opt);
+    });
+  } else if (currentGeoLevel === 'regiao' && regiaoDataGlobal) {
+    var indicadoresRegiao = [];
+    regiaoDataGlobal.forEach(function(row) {
+      if (indicadoresRegiao.indexOf(row.indicador) === -1) {
+        indicadoresRegiao.push(row.indicador);
+      }
+    });
+    indicadoresRegiao.forEach(function(ind) {
+      var opt = document.createElement('option');
+      opt.value = ind;
+      opt.textContent = ind;
+      selector.appendChild(opt);
     });
   }
+
+  var newSelector = selector.cloneNode(true);
+  selector.parentNode.replaceChild(newSelector, selector);
+  newSelector.addEventListener('change', function() {
+    drawMapLevel();
+  });
+}
 
   function getSelectedIndicador() {
     var selector = document.getElementById('map-indicator-selector');
@@ -2670,12 +2672,13 @@ d3.csv("https://storage.googleapis.com/projeto-graficos/ifad2025/mapas/asbraer.c
     }
   }
 
-  function renderMunicipios() {
-    var currentIndicador = getSelectedIndicador();
-    if (!currentIndicador || !indicadoresGlobal) return;
+function renderMunicipios() {
+  var currentIndicador = getSelectedIndicador();
+  if (!currentIndicador || !indicadoresGlobal) return;
 
-    var meta = indicadoresGlobal.find(function(d) { return d.indicador === currentIndicador; });
-    if (!meta) return;
+  var meta = indicadoresGlobal.find(function(d) { return d.indicador === currentIndicador; });
+  if (!meta) return;
+
 
     var cfg = getBreaksAndColors(meta);
     updateLegend(cfg.breaks, cfg.MAP_COLORS, cfg.isPct);
@@ -2927,7 +2930,7 @@ d3.csv("https://storage.googleapis.com/projeto-graficos/ifad2025/mapas/asbraer.c
   var ibge2 = String(d.properties.ibge2 || '');
   var uf = ibge2ToUF[ibge2];
   var val = uf ? valoresPorUF[uf] : undefined;
-  if (val === undefined || val === 0) return '#e0ddd5';
+if (val === undefined || val === 0) return MAP_COLORS[0];
   return colorScale(val);
 })
       .on('mouseover', function(event, d) {

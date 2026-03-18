@@ -1329,7 +1329,7 @@ box-shadow: 0 1px 0 var(--c-amber);
 }
 
 .cronograma-wrap {
-  overflow-x: auto;
+  overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   border: 1px solid var(--c-border);
   border-radius: 10px;
@@ -1338,7 +1338,7 @@ box-shadow: 0 1px 0 var(--c-amber);
 
 table.cron-table {
   width: 100%;
-  min-width: 700px;
+  min-width: unset;
   border-collapse: collapse;
   font-family: var(--f-sans);
   font-size: 13px;
@@ -1348,7 +1348,7 @@ table.cron-table {
   background: var(--c-green-dark);
   color: #fff;
   font-weight: 500;
-  padding: 10px 8px;
+  padding: 8px 6px;
   text-align: center;
   white-space: nowrap;
   border-right: 1px solid rgba(255,255,255,0.1);
@@ -1357,12 +1357,18 @@ table.cron-table {
 .cron-table thead th:first-child {
   text-align: left;
   padding-left: 16px;
-  min-width: 300px;
+  min-width: unset;
 }
 
 .cron-table thead th:nth-child(2) {
   min-width: 48px;
+  max-width: 48px;
+  white-space: normal;
+  word-break: break-word;
+  font-size: 11px;
+  line-height: 1.3;
 }
+
 
 .cron-table tbody tr {
   border-bottom: 1px solid var(--c-border);
@@ -1374,7 +1380,7 @@ table.cron-table {
 .cron-table tbody tr.cron-dimmed { opacity: 0.2; }
 
 .cron-table td {
-  padding: 8px 6px;
+  padding: 4px 6px;
   vertical-align: middle;
   text-align: center;
   border-right: 1px solid var(--c-border);
@@ -1568,8 +1574,16 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
 <section id="cronograma">
   <a class="section-anchor" id="anchor-cronograma"></a>
   <div class="section-wrap">
-    <div class="section-label" data-pt="Cronograma ATER" data-en="Schedule ATER">Cronograma</div>
+    <div class="section-label" data-pt="Cronograma" data-en="Schedule">Cronograma</div>
     <h2 class="section-title" data-pt="Execução para serviços de ATER em formato híbrido" data-en="Execution schedule for hybrid ATER services">Execução para serviços de ATER em formato híbrido</h2>
+
+   <p class="section-desc" data-pt="O Quadro a seguir apresenta um cronograma para a implementação de serviços de ATER, organizado em diferentes atividades distribuídas ao longo de 12 meses. O cronograma inicia com etapas fundamentais, como reuniões de articulação com parceiros, oficina de letramento digital e mobilização dos beneficiários (agricultores, suas famílias e grupos de interesse comum), seguidas por diagnósticos e planejamento das ações coletivas e individuais." data-en="The following table presents a schedule for the implementation of ATER services, organized into different activities distributed over 12 months. The schedule begins with fundamental steps, such as coordination meetings with partners, a digital literacy workshop, and the mobilization of beneficiaries (farmers, their families, and groups with common interests), followed by diagnostics and planning of collective and individual actions.">O Quadro a seguir apresenta um cronograma para a implementação de serviços de ATER, organizado em diferentes atividades distribuídas ao longo de 12 meses. O cronograma inicia com etapas fundamentais, como reuniões de articulação com parceiros, oficina de letramento digital e mobilização dos beneficiários (agricultores, suas famílias e grupos de interesse comum), seguidas por diagnósticos e planejamento das ações coletivas e individuais.</p><br>
+
+<p class="section-desc" data-pt="As atividades incluem desde oficinas e cursos presenciais até atendimentos virtuais individuais e coletivos, culminando em relatórios de avaliação e divulgação de resultados. A proposta equilibra ações presenciais e remotas (destacadas em verde), garantindo flexibilidade e adaptação às necessidades dos agricultores." data-en="Activities range from in-person workshops and training courses to individual and collective virtual services, culminating in evaluation reports and dissemination of results. The proposal balances in-person and remote actions (highlighted in green), ensuring flexibility and adaptation to the needs of farmers.">As atividades incluem desde oficinas e cursos presenciais até atendimentos virtuais individuais e coletivos, culminando em relatórios de avaliação e divulgação de resultados. A proposta equilibra ações presenciais e remotas (destacadas em verde), garantindo flexibilidade e adaptação às necessidades dos agricultores.</p><br>
+
+<p class="section-desc" data-pt="Destaca-se ainda que outras opções de atendimento online poderiam ser incluídas nessa Proposta envolvendo por exemplo, a oferta de cursos EAD, voltados para temáticas socioprodutivas agropecuárias e outras demandas comunitárias, bem como a participação em lives promovidas pelas entidades de ATER responsáveis pelo atendimento aos produtores." data-en="It is also worth noting that other online service options could be included in this proposal, such as the offer of distance learning courses focused on agro-productive and community topics, as well as participation in live sessions promoted by the ATER entities responsible for serving producers.">Destaca-se ainda que outras opções de atendimento online poderiam ser incluídas nessa Proposta envolvendo por exemplo, a oferta de cursos EAD, voltados para temáticas socioprodutivas agropecuárias e outras demandas comunitárias, bem como a participação em lives promovidas pelas entidades de ATER responsáveis pelo atendimento aos produtores.</p><br>
+
+<p class="section-desc" data-pt="O Quadro mostra uma sugestão do número de atividades em 'Qtd.' e os meses em que devem ser realizadas" data-en="The table shows a suggested number of activities in 'Qty.' and the months in which they should be carried out"></p><br>
 
     <div class="cronograma-legenda" id="cron-legenda">
       <div class="cron-leg-item" data-tipo="todos" onclick="filtrarCronograma('todos')">
@@ -1589,9 +1603,10 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
       <table class="cron-table" id="cron-table"></table>
     </div>
 
-    <p class="map-fonte" style="margin-top:10px;" data-pt="Fonte: Modelo de execução ATER híbrida — IICA/FIDA." data-en="Source: Hybrid ATER execution model — IICA/IFAD.">Fonte: Modelo de execução ATER híbrida — IICA/FIDA.</p>
+    <p class="map-fonte" style="margin-top:10px;" data-pt="Fonte: elaborado por Rodrigo Ferraz." data-en="Source: elaborated by Rodrigo Ferraz.">Elaborado por Rodrigo Ferraz.</p>
   </div>
 </section>
+
 
 <!-- =============================================
      ABOUT
@@ -2089,15 +2104,24 @@ function renderCronograma() {
   var table = document.getElementById('cron-table');
   if (!table) return;
 
-  // Cabeçalho
-  var thead = '<thead><tr>' +
-    '<th>' + (currentLang === 'pt' ? 'Atividades' : 'Activities') + '</th>' +
-    '<th>' + (currentLang === 'pt' ? 'Qtd.' : 'Qty.') + '</th>';
+  var lblAtiv  = currentLang === 'pt' ? 'Atividades' : 'Activities';
+  var lblQnt = currentLang === 'pt' ? 'Qtd.' : 'Qty.';
+  var lblMeses = currentLang === 'pt' ? 'Meses' : 'Months';
+
+  // Cabeçalho com linha dupla
+  var thead = '<thead>' +
+'<tr>' +
+  '<th colspan="2" style="border-bottom:1px solid rgba(255,255,255,0.2);"></th>' +
+  '<th colspan="12" style="text-align:center;border-bottom:1px solid rgba(255,255,255,0.2);">' + lblMeses + '</th>' +
+'</tr>' +
+    '</tr>' +
+    '<tr>' +
+      '<th style="text-align:left;">' + lblAtiv + '</th>' +
+      '<th>' + lblQnt + '</th>';
   for (var m = 1; m <= 12; m++) {
     thead += '<th>' + m + '</th>';
   }
   thead += '</tr></thead>';
-
   // Corpo
   var tbody = '<tbody>';
   CRONOGRAMA_DATA.forEach(function(row) {
@@ -2109,9 +2133,9 @@ function renderCronograma() {
     });
 
     var ativLabel = currentLang === 'pt' ? row.ativ.pt : row.ativ.en;
-    var dimmed = cronFiltroAtivo !== 'todos' && row.tipo !== cronFiltroAtivo ? ' cron-dimmed' : '';
+    var display = (cronFiltroAtivo !== 'todos' && row.tipo !== cronFiltroAtivo) ? ' style="display:none"' : '';
 
-    tbody += '<tr data-tipo="' + row.tipo + '" class="' + dimmed + '">';
+    tbody += '<tr data-tipo="' + row.tipo + '"' + display + '>';
     tbody += '<td><span style="color:var(--c-ink-muted);margin-right:8px;font-size:11px;">' + row.n + '</span>' + ativLabel + '</td>';
     tbody += '<td class="cron-num">' + row.quant + '</td>';
 
@@ -2127,11 +2151,7 @@ function renderCronograma() {
   tbody += '</tbody>';
 
   table.innerHTML = thead + tbody;
-
-  // Reativar filtro atual após re-render
-  filtrarCronograma(cronFiltroAtivo);
 }
-
 
 var CAT_COLORS = {
   "Mídia":          "#8B6914",

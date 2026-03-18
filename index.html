@@ -484,199 +484,203 @@ box-shadow: 0 1px 0 var(--c-amber);
       user-select: none;
     }
 
-    /* =============================================
-       TIMELINE
-    ============================================= */
-    .timeline-filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 36px;
-    }
+   
+/* =============================================
+   TIMELINE
+============================================= */
+.timeline-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 36px;
+}
 
-    .filter-chip {
-      font-family: var(--f-sans);
-      font-size: 12px;
-      font-weight: 500;
-      padding: 6px 14px;
-      border-radius: 20px;
-      border: 1.5px solid var(--c-border);
-      background: transparent;
-      color: var(--c-ink-muted);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
+.filter-chip {
+  font-family: var(--f-sans);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1.5px solid var(--c-border);
+  background: transparent;
+  color: var(--c-ink-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
 
-    .filter-chip:hover,
-    .filter-chip.active {
-      border-color: var(--c-green);
-      color: var(--c-green-dark);
-      background: rgba(45,106,50,0.08);
-    }
+.filter-chip:hover,
+.filter-chip.active {
+  border-color: var(--c-green);
+  color: var(--c-green-dark);
+  background: rgba(45,106,50,0.08);
+}
 
-    .filter-chip.active {
-      background: var(--c-green-dark);
-      color: white;
-      border-color: var(--c-green-dark);
-    }
+.filter-chip.active {
+  background: var(--c-green-dark);
+  color: white;
+  border-color: var(--c-green-dark);
+}
 
-    /* Timeline centralizada */
-    .timeline-list {
-      position: relative;
-      padding: 0 0 20px 0;
-    }
+/* Timeline centralizada */
+.timeline-list {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 56px 1fr;
+  align-items: start;
+  padding: 0 0 20px 0;
+}
 
-    .timeline-list::before {
-      content: '';
-      position: absolute;
-      left: 50%;
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      transform: translateX(-50%);
-      background: linear-gradient(to bottom, var(--c-amber), var(--c-green));
-    }
+.timeline-list::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(to bottom, var(--c-amber), var(--c-green));
+  pointer-events: none;
+}
 
-    .tl-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 8px;
-    }
+.tl-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
 
-    .tl-tag {
-      font-family: var(--f-sans);
-      font-size: 11px;
-      font-weight: 500;
-      padding: 3px 9px;
-      border-radius: 10px;
-      background: var(--c-bg-alt);
-      border: 1px solid var(--c-border);
-      color: var(--c-ink-muted);
-      cursor: pointer;
-      transition: all 0.2s;
-      user-select: none;
-    }
+.tl-tag {
+  font-family: var(--f-sans);
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 9px;
+  border-radius: 10px;
+  background: var(--c-bg-alt);
+  border: 1px solid var(--c-border);
+  color: var(--c-ink-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+}
 
-    .tl-tag:hover {
-      border-color: var(--c-amber);
-      color: var(--c-amber);
-      background: rgba(196,124,43,0.07);
-    }
+.tl-tag:hover {
+  border-color: var(--c-amber);
+  color: var(--c-amber);
+  background: rgba(196,124,43,0.07);
+}
 
-    .tl-item {
-      position: relative;
-      display: flex;
-      justify-content: flex-end;
-      padding-right: calc(50% + 28px);
-      margin-bottom: 24px;
-      transition: opacity 0.3s;
-    }
+.tl-item {
+  position: relative;
+  margin-bottom: 20px;
+  transition: opacity 0.3s;
+}
 
-    .tl-item.hidden { display: none; }
+.tl-item.hidden { display: none; }
 
-    /* Itens ímpares: card à esquerda */
-    .tl-item:nth-child(odd) {
-      justify-content: flex-end;
-      padding-right: calc(50% + 28px);
-      padding-left: 0;
-    }
+/* Ímpares: coluna esquerda */
+.tl-item:nth-child(odd) {
+  grid-column: 1;
+}
 
-    /* Itens pares: card à direita */
-    .tl-item:nth-child(even) {
-      justify-content: flex-start;
-      padding-left: calc(50% + 28px);
-      padding-right: 0;
-    }
+/* Pares: coluna direita */
+.tl-item:nth-child(even) {
+  grid-column: 3;
+    margin-top: 50px;
+}
 
-    /* Ponto central */
-    .tl-item::before {
-      content: '';
-      position: absolute;
-      left: calc(50% - 6px);
-      top: 10px;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      border: 2px solid var(--c-cream);
-      background: var(--c-amber);
-      z-index: 1;
-      transition: transform 0.2s;
-    }
+/* Ponto central */
+.tl-item::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--c-cream);
+  background: var(--c-amber);
+  z-index: 1;
+  transition: transform 0.2s;
+}
 
-    .tl-item:hover::before { transform: scale(1.3); }
+.tl-item:nth-child(odd)::before  { right: -34px; left: auto; }
+.tl-item:nth-child(even)::before { left: -34px; right: auto; }
 
-    .tl-card {
-      background: var(--c-cream);
-      border: 1px solid var(--c-border);
-      border-left: 3px solid var(--c-amber);
-      padding: 14px 18px;
-      border-radius: 0 4px 4px 0;
-      transition: box-shadow 0.2s, transform 0.2s;
-      width: 100%;
-    }
+.tl-item:hover::before { transform: scale(1.3); }
 
-    /* Card à direita: borda direita */
-    .tl-item:nth-child(even) .tl-card {
-      border-left: 1px solid var(--c-border);
-      border-right: 3px solid var(--c-amber);
-      border-radius: 4px 0 0 4px;
-    }
+.tl-card {
+  background: var(--c-cream);
+  border: 1px solid var(--c-border);
+  border-left: 3px solid var(--c-amber);
+  padding: 14px 18px;
+  border-radius: 0 4px 4px 0;
+  transition: box-shadow 0.2s, transform 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
 
-    .tl-item:hover .tl-card {
-      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-    }
+/* Card à direita: borda direita */
+.tl-item:nth-child(even) .tl-card {
+  border-left: 1px solid var(--c-border);
+  border-right: 3px solid var(--c-amber);
+  border-radius: 4px 0 0 4px;
+}
 
-    .tl-item:nth-child(odd):hover .tl-card  { transform: translateX(-3px); }
-    .tl-item:nth-child(even):hover .tl-card { transform: translateX(3px); }
+.tl-item:hover .tl-card {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
 
-    .tl-meta {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 6px;
-    }
+.tl-item:nth-child(odd):hover .tl-card  { transform: translateX(-3px); }
+.tl-item:nth-child(even):hover .tl-card { transform: translateX(3px); }
 
-    .tl-year {
-      font-family: var(--f-serif);
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--c-amber);
-    }
+.tl-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
 
-    .tl-cat-badge {
-      font-family: var(--f-sans);
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 2px 8px;
-      border-radius: 10px;
-      color: white;
-    }
+.tl-year {
+  font-family: var(--f-serif);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--c-amber);
+}
 
-    .tl-text {
-      font-size: 14px;
-      line-height: 1.55;
-      color: var(--c-ink);
-    }
+.tl-cat-badge {
+  font-family: var(--f-sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 10px;
+  color: white;
+}
 
-    .tl-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 12px;
-      color: var(--c-green);
-      margin-top: 6px;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
+.tl-text {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--c-ink);
+}
 
-    .tl-link:hover { color: var(--c-amber); }
-    .tl-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
-    .tl-tag-n1 { background: rgba(0,0,0,0.07); color: #444; font-size: 11px; }
-    .tl-tag-n2 { background: rgba(196,124,43,0.14); color: #7a4e10; font-size: 11px; }
+.tl-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--c-green);
+  margin-top: 6px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
 
+.tl-link:hover { color: var(--c-amber); }
+.tl-img-wrap { margin-top: 12px; }
+.tl-img-wrap img { width: 100%; border-radius: 6px; display: block; }
+.tl-img-credit { font-size: 11px; color: var(--c-ink-muted); margin-top: 4px; font-style: italic; }
+.tl-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.tl-tag-n1 { background: rgba(0,0,0,0.07); color: #444; font-size: 11px; }
+.tl-tag-n2 { background: rgba(196,124,43,0.14); color: #7a4e10; font-size: 11px; }
     /* =============================================
    GEO LEVEL BUTTONS
 ============================================= */
@@ -1193,82 +1197,218 @@ box-shadow: 0 1px 0 var(--c-amber);
 
     .tl-intro p:last-child { margin-bottom: 0; }
 
-    @media (max-width: 768px) {
-      :root { --section-gap: 60px; }
+@media (max-width: 768px) {
+  :root { --section-gap: 60px; }
 
-      .nav-links { display: none; }
-      .nav-hamburger { display: flex; }
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
 
-      .nav-links.open {
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: var(--nav-h);
-        left: 0; right: 0;
-        background: var(--c-bg-dark);
-        padding: 12px 0 16px;
-        border-top: 1px solid rgba(255,255,255,0.1);
-        gap: 2px;
-      }
+  .nav-links.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: var(--nav-h);
+    left: 0; right: 0;
+    background: var(--c-bg-dark);
+    padding: 12px 0 16px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    gap: 2px;
+  }
 
-      .nav-links.open .nav-divider { display: none; }
-      .nav-links.open a { padding: 8px 24px; }
+  .nav-links.open .nav-divider { display: none; }
+  .nav-links.open a { padding: 8px 24px; }
 
-      .about-grid {
-        grid-template-columns: 1fr;
-      }
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
 
-      .about-photo-wrap {
-        display: flex;
-        gap: 16px;
-        align-items: flex-start;
-      }
+  .about-photo-wrap {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
 
-      .about-photo-placeholder {
-        width: 120px;
-        min-width: 120px;
-        aspect-ratio: 1;
-      }
+  .about-photo-placeholder {
+    width: 120px;
+    min-width: 120px;
+    aspect-ratio: 1;
+  }
 
-      .about-links {
-        flex-direction: row;
-        flex-wrap: wrap;
-        margin-top: 0;
-      }
+  .about-links {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 0;
+  }
 
-      .map-legend-wrap { flex-wrap: wrap; }
-      .map-legend-item { flex: 0 0 calc(33.333% - 2px); }
+  .map-legend-wrap { flex-wrap: wrap; }
+  .map-legend-item { flex: 0 0 calc(33.333% - 2px); }
 
-      .share-section-btn { float: none; display: none; }
+  .share-section-btn { float: none; display: none; }
 
-      /* Timeline mobile: coluna única à direita */
-      .timeline-list::before {
-        left: 6px;
-      }
+  /* Timeline mobile: coluna única */
+  .timeline-list {
+    display: block;
+  }
 
-      .tl-item,
-      .tl-item:nth-child(odd),
-      .tl-item:nth-child(even) {
-        justify-content: flex-start;
-        padding-left: 28px;
-        padding-right: 0;
-      }
+  .timeline-list::before {
+    left: 6px;
+  }
 
-      .tl-item::before {
-        left: 1px;
-      }
+  .tl-item,
+  .tl-item:nth-child(odd),
+  .tl-item:nth-child(even) {
+    grid-column: unset;
+    margin-bottom: 12px;
+    padding-left: 28px;
+    padding-right: 0;
+  }
 
-      .tl-item:nth-child(even) .tl-card {
-        border-left: 3px solid var(--c-amber);
-        border-right: 1px solid var(--c-border);
-        border-radius: 0 4px 4px 0;
-      }
+  .tl-item::before,
+  .tl-item:nth-child(odd)::before,
+  .tl-item:nth-child(even)::before {
+    left: 1px;
+    right: auto;
+  }
 
-      .tl-item:nth-child(odd):hover .tl-card,
-      .tl-item:nth-child(even):hover .tl-card {
-        transform: translateX(3px);
-      }
-    }
+  .tl-item:nth-child(even) .tl-card {
+    border-left: 3px solid var(--c-amber);
+    border-right: 1px solid var(--c-border);
+    border-radius: 0 4px 4px 0;
+  }
+
+  .tl-item:nth-child(odd):hover .tl-card,
+  .tl-item:nth-child(even):hover .tl-card {
+    transform: translateX(3px);
+  }
+}
+
+  /* =============================================
+   CRONOGRAMA
+============================================= */
+.cronograma-legenda {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.cron-leg-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--f-sans);
+  font-size: 13px;
+  color: var(--c-ink-muted);
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1.5px solid var(--c-border);
+  transition: all 0.2s;
+  user-select: none;
+}
+
+.cron-leg-item:hover,
+.cron-leg-item.active {
+  border-color: var(--c-green);
+  color: var(--c-green-dark);
+}
+
+.cron-leg-item.active {
+  background: var(--c-green-dark);
+  color: white;
+  border-color: var(--c-green-dark);
+}
+
+.cron-leg-item.active .cron-leg-dot { opacity: 0.8; }
+
+.cron-leg-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.cronograma-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--c-border);
+  border-radius: 10px;
+  background: var(--c-cream);
+}
+
+table.cron-table {
+  width: 100%;
+  min-width: 700px;
+  border-collapse: collapse;
+  font-family: var(--f-sans);
+  font-size: 13px;
+}
+
+.cron-table thead th {
+  background: var(--c-green-dark);
+  color: #fff;
+  font-weight: 500;
+  padding: 10px 8px;
+  text-align: center;
+  white-space: nowrap;
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+
+.cron-table thead th:first-child {
+  text-align: left;
+  padding-left: 16px;
+  min-width: 300px;
+}
+
+.cron-table thead th:nth-child(2) {
+  min-width: 48px;
+}
+
+.cron-table tbody tr {
+  border-bottom: 1px solid var(--c-border);
+  transition: background 0.15s, opacity 0.2s;
+}
+
+.cron-table tbody tr:last-child { border-bottom: none; }
+.cron-table tbody tr:hover { background: var(--c-bg-alt); }
+.cron-table tbody tr.cron-dimmed { opacity: 0.2; }
+
+.cron-table td {
+  padding: 8px 6px;
+  vertical-align: middle;
+  text-align: center;
+  border-right: 1px solid var(--c-border);
+  color: var(--c-ink-muted);
+}
+
+.cron-table td:first-child {
+  text-align: left;
+  padding-left: 16px;
+  color: var(--c-ink);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.cron-table td.cron-num {
+  font-weight: 600;
+  color: var(--c-ink-muted);
+  font-size: 12px;
+}
+
+.cron-table td:last-child { border-right: none; }
+
+.cron-cell {
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  margin: 0 auto;
+  display: block;
+}
+
+.cron-cell.presencial { background: #3ab5e0; }
+.cron-cell.virtual    { background: #6dbf5e; }
+
+
   </style>
 </head>
 <body>
@@ -1279,6 +1419,7 @@ box-shadow: 0 1px 0 var(--c-amber);
   <div class="nav-links" id="nav-links">
     <a href="#mapa" data-section="mapa" class="nav-anchor" data-pt="Mapa" data-en="Map">Mapa</a>
     <a href="#timeline" data-section="timeline" class="nav-anchor" data-pt="Linha do Tempo" data-en="Timeline">Linha do Tempo</a>
+    <a href="#cronograma" data-section="cronograma" class="nav-anchor" data-pt="Cronograma" data-en="Schedule">Cronograma</a>
     <a href="#sobre" data-section="sobre" class="nav-anchor" data-pt="Sobre" data-en="About">Sobre</a>
     <a href="#projetos" data-section="projetos" class="nav-anchor" data-pt="Projetos" data-en="Projects">Projetos</a>
     <a href="#publicacoes" data-section="publicacoes" class="nav-anchor" data-pt="Publicações" data-en="Publications">Publicações</a>
@@ -1349,7 +1490,7 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
 
     <div class="geo-level-btns" id="geo-level-btns">
       <button class="geo-btn active" data-level="municipio" data-pt="Município" data-en="Municipality">Município</button>
-      <button class="geo-btn disabled" data-level="uf" data-pt="Unidade federativa (em breve)" data-en="State (coming soon)" disabled>Unidade federativa <span class="coming-soon">em breve</span></button>
+      <button class="geo-btn" data-level="uf" data-pt="Unidade federativa" data-en="State">Unidade federativa</button>
       <button class="geo-btn" data-level="regiao" data-pt="Região" data-en="Region">Região</button>
     </div>
 
@@ -1419,6 +1560,35 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
     <div class="timeline-list" id="tl-list">
       <!-- filled by JS -->
     </div>
+  </div>
+</section>
+
+<!-- CRONOGRAMA -->
+<section id="cronograma">
+  <a class="section-anchor" id="anchor-cronograma"></a>
+  <div class="section-wrap">
+    <div class="section-label" data-pt="Cronograma ATER" data-en="Schedule ATER">Cronograma</div>
+    <h2 class="section-title" data-pt="Execução para serviços de ATER em formato híbrido" data-en="Execution schedule for hybrid ATER services">Execução para serviços de ATER em formato híbrido</h2>
+
+    <div class="cronograma-legenda" id="cron-legenda">
+      <div class="cron-leg-item" data-tipo="todos" onclick="filtrarCronograma('todos')">
+        <span data-pt="Todos" data-en="All">Todos</span>
+      </div>
+      <div class="cron-leg-item" data-tipo="presencial" onclick="filtrarCronograma('presencial')">
+        <div class="cron-leg-dot" style="background:#3ab5e0"></div>
+        <span data-pt="Presencial" data-en="In-person">Presencial</span>
+      </div>
+      <div class="cron-leg-item" data-tipo="virtual" onclick="filtrarCronograma('virtual')">
+        <div class="cron-leg-dot" style="background:#6dbf5e"></div>
+        <span data-pt="Virtual" data-en="Virtual">Virtual</span>
+      </div>
+    </div>
+
+    <div class="cronograma-wrap">
+      <table class="cron-table" id="cron-table"></table>
+    </div>
+
+    <p class="map-fonte" style="margin-top:10px;" data-pt="Fonte: Modelo de execução ATER híbrida — IICA/FIDA." data-en="Source: Hybrid ATER execution model — IICA/IFAD.">Fonte: Modelo de execução ATER híbrida — IICA/FIDA.</p>
   </div>
 </section>
 
@@ -1559,6 +1729,7 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
 <!-- FOOTER -->
 <footer>
   <p>© 2026 Rodrigo Ferraz · <a href="mailto:ferraz.rodrigo89@gmail.com">ferraz.rodrigo89@gmail.com</a></p>
+    <p data-pt="Gabriel Zanlorenssi (suporte técnico)" data-en="Gabriel Zanlorenssi (technical support)">Gabriel Zanlorenssi (suporte técnico) </p>
 </footer>
 
 </div><!-- /page-content -->
@@ -1622,6 +1793,8 @@ var TIMELINE_DATA = [
     tipo: { pt: "Televisão / Jornalismo agro", en: "Television / Agro Journalism" },
     meio: { pt: "Jornalismo agro", en: "Agricultural Journalism" },
     text: { pt: "Lançamento do programa Globo Rural, marco na popularização da informação agropecuária por televisão, consolidando o acesso remoto ao conhecimento técnico no meio rural.", en: "Launch of Globo Rural, a landmark in the popularization of agricultural information via television, consolidating remote access to technical knowledge in rural areas." },
+        img: "https://s2-memoriaglobo.glbimg.com/YJi58lT4QiDPOrTUdYEtDRvg3q4=/0x0:1912x1228/1600x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_ee6202d7f3f346a7a5d7affb807d8893/internal_photos/bs/2022/u/U/ChwdSuRnSRe334aEcgDA/globo-rural-carlos-nascimento-s-c3-a9rgio-roberto-ribeiro-olga-vasone-i0002074.jpg",
+    imgCredit: "Acervo/Globo.",
     links: ["https://g1.globo.com/economia/agronegocios/globo-rural/","https://www.scielo.br/j/ld/a/9X4k9gMHLdCGJJbqPV8W9QB/?format=html&lang=pt","https://revista.fct.unesp.br/index.php/formacao/article/view/9067/6817"]
   },
   {
@@ -1703,6 +1876,8 @@ var TIMELINE_DATA = [
     tipo: { pt: "Mobile Extension", en: "Mobile Extension" },
     meio: { pt: "Ciência comportamental", en: "Behavioral Science" },
     text: { pt: "Fundação do Precision Agriculture for Development (PAD) por Michael Kremer (Prêmio Nobel 2019) — marco de extensão digital via celular.", en: "Foundation of Precision Agriculture for Development (PAD) by Michael Kremer (Nobel Prize 2019) — landmark of digital mobile extension." },
+     img: "https://www.nobelprize.org/uploads/2018/10/na-kremer-award.jpg",
+    imgCredit: "Nobel Media/Nanaka Adachi.",
     links: ["https://precisionag.org/","https://www.givewell.org/international/technical/programs/precision-agriculture-for-development","https://en.everybodywiki.com/Precision_Agriculture_for_Development"]
   },
   {
@@ -1738,7 +1913,7 @@ var TIMELINE_DATA = [
     canal: { pt: "Plataformas Interativas", en: "Interactive Platforms" },
     tipo: { pt: "Plataforma digital", en: "Digital Platform" },
     meio: { pt: "Rastreabilidade", en: "Traceability" },
-    text: { pt: "Instituto Biosistêmico lança a plataforma Agrotrace para ações de ATER, rastreabilidade e monitoramento agropecuário.", en: "Instituto Biosistêmico launches the Agrotrace platform for ATER, traceability and agricultural monitoring." },
+    text: { pt: "Instituto Biosistêmico lança a plataforma Agrotrace, para ações de ATER rastreabilidade e monitoramento agropecuário.", en: "Instituto Biosistêmico launches the Agrotrace platform for agricultural extension, traceability, and monitoring actions in agriculture."},
     links: ["https://www.agrotrace.com.br/portal-agrotrace"]
   },
   {
@@ -1784,8 +1959,14 @@ var TIMELINE_DATA = [
     tipo: { pt: "Inteligência artificial", en: "Artificial Intelligence" },
     meio: { pt: "Monitoramento agrícola", en: "Agricultural Monitoring" },
     text: { pt: "Crescimento no uso de inteligência artificial, big data e drones em sistemas de assistência técnica e monitoramento de lavouras.", en: "Growth in the use of artificial intelligence, big data and drones in technical assistance and crop monitoring systems." },
+    img: "https://wp.technologyreview.com/wp-content/uploads/2016/07/fotolia88050102subscriptionmonthlym-7.jpg?fit=2160,1214",
+    imgCredit: "Fotolia/MIT Tech Review.",
     links: ["https://www.embrapa.br/busca-de-noticias/-/noticia/67664619/inteligencia-artificial-no-agronegocio","https://ainfo.cnptia.embrapa.br/digital/bitstream/doc/1170729/1/P-Inteligencia-artificial-aplicada-na.pdf"]
   },
+
+
+
+
   {
     year: 2022, cat: "Internacional",
     natureza: { pt: "Fortalecimento Institucional Público e Privado", en: "Public and Private Institutional Strengthening" },
@@ -1828,7 +2009,7 @@ var TIMELINE_DATA = [
     canal: null,
     tipo: { pt: "Política pública", en: "Public Policy" },
     meio: { pt: "Financiamento", en: "Financing" },
-    text: { pt: "MDA investe R$ 19 milhões na ATER para cerca de 4.625 famílias, contemplando ATER Digital.", en: "MDA invests R$ 19 million in ATER for approximately 4,625 families, including Digital ATER." },
+    text: { pt: "MDA investiu R$ 19 milhões na ATER para cerca de 4.625 famílias, contemplando ATER Digital.", en: "MDA invested R$ 19 million in ATER for approximately 4,625 families, including Digital ATER." },
     links: ["https://www.gov.br/mda/pt-br/noticias/2024/12/mda-vai-investir-r-19-milhoes-em-assistencia-tecnica-para-mais-de-4-mil-familias-de-agricultores-familiares"]
   },
   {
@@ -1846,7 +2027,7 @@ var TIMELINE_DATA = [
     canal: null,
     tipo: { pt: "Iniciativa de digitalização", en: "Digitalization Initiative" },
     meio: { pt: "Acesso a serviços públicos", en: "Access to Public Services" },
-    text: { pt: "Meu Imóvel Rural Digital — iniciativa que integra dados georreferenciados e serviços digitais para ampliar o acesso de agricultores familiares a políticas públicas e crédito rural.", en: "Meu Imóvel Rural Digital — initiative integrating georeferenced data and digital services to expand family farmers' access to public policies and rural credit." },
+    text: { pt: "Meu Imóvel Rural Digital – Iniciativa que integra dados georreferenciados e serviços digitais para ampliar o acesso de agricultores familiares a políticas públicas e crédito rural.", en: "Meu Imóvel Rural Digital — initiative integrating georeferenced data and digital services to expand family farmers' access to public policies and rural credit." },
     links: ["https://www.gov.br/gestao/pt-br/assuntos/meu-imovel-rural"]
   },
   {
@@ -1859,6 +2040,99 @@ var TIMELINE_DATA = [
     links: []
   }
 ];
+
+// =============================================
+// CRONOGRAMA DATA
+// =============================================
+var CRONOGRAMA_DATA = [
+  { n: 1,  ativ: { pt: "Reunião de articulação com organizações parceiras",                                              en: "Coordination meeting with partner organizations" },           quant: 1,  meses: [[1,1]], tipo: "presencial" },
+  { n: 2,  ativ: { pt: "Reunião de mobilização e seleção dos beneficiários",                                             en: "Beneficiary mobilization and selection meeting" },            quant: 1,  meses: [[1,1]], tipo: "presencial" },
+  { n: 3,  ativ: { pt: "Reunião virtual com organizações e entidades parceiras",                                         en: "Virtual meeting with partner organizations" },                quant: 1,  meses: [[1,1]], tipo: "virtual" },
+  { n: 4,  ativ: { pt: "Cadastro, diagnóstico e caracterização das famílias e propriedades",                             en: "Registration, diagnosis and characterization of families" },  quant: 1,  meses: [[2,3]], tipo: "presencial" },
+  { n: 5,  ativ: { pt: "Reunião de divulgação do diagnóstico e planejamento de atividades coletivas",                    en: "Diagnosis dissemination and collective planning meeting" },   quant: 1,  meses: [[3,3]], tipo: "presencial" },
+  { n: 6,  ativ: { pt: "Disponibilização de número de WhatsApp para informações gerais e dúvidas dos beneficiários",     en: "WhatsApp channel for general information and queries" },     quant: "-", meses: [[1,12]], tipo: "virtual" },
+  { n: 7,  ativ: { pt: "Planejamento das ações individuais",                                                             en: "Individual action planning" },                                quant: 1,  meses: [[3,3]], tipo: "presencial" },
+  { n: 8,  ativ: { pt: "Oficina de letramento e nivelamento digital das famílias agricultoras",                          en: "Digital literacy workshop for farming families" },            quant: 1,  meses: [[3,3]], tipo: "presencial" },
+  { n: 9,  ativ: { pt: "Oficinas e cursos de capacitação",                                                               en: "Training workshops and courses" },                            quant: 3,  meses: [[4,4],[6,6],[8,8]], tipo: "presencial" },
+  { n: 10, ativ: { pt: "Intercâmbios",                                                                                   en: "Exchange visits" },                                           quant: 2,  meses: [[5,5],[8,8]], tipo: "presencial" },
+  { n: 11, ativ: { pt: "Eventos coletivos virtuais de ATER",                                                             en: "Virtual collective ATER events" },                           quant: 1,  meses: [[9,9]], tipo: "virtual" },
+  { n: 12, ativ: { pt: "Atendimentos individuais de ATER (presenciais)",                                                 en: "Individual ATER services (in-person)" },                     quant: 3,  meses: [[4,4],[6,6],[10,10]], tipo: "presencial" },
+  { n: 13, ativ: { pt: "Atendimentos individuais virtuais de ATER (videochamada média de 20 minutos)",                  en: "Virtual individual ATER (avg. 20-min video call)" },         quant: 8,  meses: [[3,3],[5,11]], tipo: "virtual" },
+  { n: 14, ativ: { pt: "Outras atividades coletivas de ATER (presenciais)",                                              en: "Other collective ATER activities (in-person)" },             quant: 2,  meses: [[6,6],[8,8]], tipo: "presencial" },
+  { n: 15, ativ: { pt: "Atendimentos virtuais coletivos de ATER",                                                        en: "Virtual collective ATER services" },                         quant: 1,  meses: [[6,6],[9,10]], tipo: "virtual" },
+  { n: 16, ativ: { pt: "Atendimentos individuais virtuais de ATER (mensagens de cunho técnico produtivo semanais)",      en: "Virtual individual ATER (weekly technical messages)" },       quant: 32, meses: [[3,3],[5,12]], tipo: "virtual" },
+  { n: 17, ativ: { pt: "Relatórios de Avaliação",                                                                        en: "Evaluation Reports" },                                        quant: 2,  meses: [[12,12]], tipo: "presencial" },
+  { n: 18, ativ: { pt: "Encontro de divulgação de resultados",                                                           en: "Results dissemination meeting" },                             quant: 1,  meses: [[12,12]], tipo: "presencial" }
+];
+
+var cronFiltroAtivo = 'todos';
+
+window.filtrarCronograma = function(tipo) {
+  cronFiltroAtivo = tipo;
+
+  // Atualizar botões da legenda
+  document.querySelectorAll('#cron-legenda .cron-leg-item').forEach(function(el) {
+    el.classList.toggle('active', el.getAttribute('data-tipo') === tipo);
+  });
+
+  // Highlight nas linhas
+  document.querySelectorAll('.cron-table tbody tr').forEach(function(tr) {
+    var trTipo = tr.getAttribute('data-tipo');
+    if (tipo === 'todos') {
+      tr.classList.remove('cron-dimmed');
+    } else {
+      tr.classList.toggle('cron-dimmed', trTipo !== tipo);
+    }
+  });
+};
+
+function renderCronograma() {
+  var table = document.getElementById('cron-table');
+  if (!table) return;
+
+  // Cabeçalho
+  var thead = '<thead><tr>' +
+    '<th>' + (currentLang === 'pt' ? 'Atividades' : 'Activities') + '</th>' +
+    '<th>' + (currentLang === 'pt' ? 'Qtd.' : 'Qty.') + '</th>';
+  for (var m = 1; m <= 12; m++) {
+    thead += '<th>' + m + '</th>';
+  }
+  thead += '</tr></thead>';
+
+  // Corpo
+  var tbody = '<tbody>';
+  CRONOGRAMA_DATA.forEach(function(row) {
+    var ativos = {};
+    row.meses.forEach(function(intervalo) {
+      for (var m = intervalo[0]; m <= intervalo[1]; m++) {
+        ativos[m] = row.tipo;
+      }
+    });
+
+    var ativLabel = currentLang === 'pt' ? row.ativ.pt : row.ativ.en;
+    var dimmed = cronFiltroAtivo !== 'todos' && row.tipo !== cronFiltroAtivo ? ' cron-dimmed' : '';
+
+    tbody += '<tr data-tipo="' + row.tipo + '" class="' + dimmed + '">';
+    tbody += '<td><span style="color:var(--c-ink-muted);margin-right:8px;font-size:11px;">' + row.n + '</span>' + ativLabel + '</td>';
+    tbody += '<td class="cron-num">' + row.quant + '</td>';
+
+    for (var m = 1; m <= 12; m++) {
+      if (ativos[m]) {
+        tbody += '<td><span class="cron-cell ' + ativos[m] + '"></span></td>';
+      } else {
+        tbody += '<td></td>';
+      }
+    }
+    tbody += '</tr>';
+  });
+  tbody += '</tbody>';
+
+  table.innerHTML = thead + tbody;
+
+  // Reativar filtro atual após re-render
+  filtrarCronograma(cronFiltroAtivo);
+}
+
 
 var CAT_COLORS = {
   "Mídia":          "#8B6914",
@@ -1897,6 +2171,12 @@ var PROJECTS_DATA = [
     title: { pt: "Estratégias de Inovação em ATER no MERCOSUL", en: "ATER Innovation Strategies in MERCOSUR" },
     desc: { pt: "Recomendações para inovar e fortalecer os serviços de extensão rural no MERCOSUL ampliado, com ênfase em tecnologias para extensionistas.", en: "Recommendations to innovate and strengthen rural extension services in expanded MERCOSUR, emphasizing technologies for extension agents." },
     color: "#1a6b8a"
+  },
+  {
+      org: "ATER Digital",
+    title: { pt: "Ferramenta Interativa ATER (em breve)", en: "ATER Interactive Tool (coming soon)" },
+    desc: { pt: "A realidade da ATER. Insira seus dados e descubra, em números o tamanho do desafio da Assistência Técnica e Extensão Rural no Brasil", en: "The reality of ATER. Enter your data and discover, in numbers, the size of the challenge of Technical Assistance and Rural Extension in Brazil." },
+    color:  "#6b3a8a"
   }
 ];
 
@@ -1975,6 +2255,7 @@ function setLang(lang) {
 
   // Re-render dynamic sections
   renderTimeline();
+  renderCronograma();
   renderProjects();
   renderPublications();
   renderVideos();
@@ -2054,6 +2335,14 @@ list.innerHTML = TIMELINE_DATA.map(function(item) {
     if (canalLabel)    tagsHtml += '<span class="tl-tag tl-tag-n2">' + canalLabel + '</span>';
     tagsHtml += '</div>';
 
+    var imgHtml = '';
+    if (item.img) {
+      imgHtml = '<div class="tl-img-wrap">' +
+        '<img src="' + item.img + '" alt="" loading="lazy">' +
+        (item.imgCredit ? '<div class="tl-img-credit">' + item.imgCredit + '</div>' : '') +
+      '</div>';
+    }
+
     return '<div class="tl-item' + (hidden ? ' hidden' : '') + '">' +
       '<div class="tl-card" style="border-left-color:' + color + '">' +
         '<div class="tl-meta">' +
@@ -2061,6 +2350,7 @@ list.innerHTML = TIMELINE_DATA.map(function(item) {
           '<span class="tl-cat-badge" style="background:' + color + '">' + item.cat + '</span>' +
         '</div>' +
         '<div class="tl-text">' + item.text[currentLang] + '</div>' +
+        imgHtml +
         tagsHtml +
         (linkHtml ? '<div class="tl-links">' + linkHtml + '</div>' : '') +
       '</div>' +
@@ -2201,7 +2491,13 @@ loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js', function
 
   var zoom, mapSvg, zoomGroup;
   var currentGeoLevel = 'municipio'; // 'municipio' | 'regiao'
-  var geojsonMunicGlobal, geojsonStateGlobal, indicadoresGlobal, regiaoDataGlobal;
+
+  function fmtNum(v, lang) {
+    if (v >= 1000000) return (v / 1000000).toFixed(1).replace('.', lang === 'pt' ? ',' : '.') + (lang === 'pt' ? ' M' : 'M');
+    if (v >= 1000) return (v / 1000).toFixed(0) + (lang === 'pt' ? ' mil' : 'k');
+    return v;
+  }
+  var geojsonMunicGlobal, geojsonStateGlobal, indicadoresGlobal, regiaoDataGlobal, asbraerDataGlobal;
   var ttip;
 
   // Botões de nível geográfico
@@ -2258,12 +2554,14 @@ loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js', function
       d3.json("https://storage.googleapis.com/projeto-graficos/ifad2025/mapas/munic.geojson?v91"),
       d3.json("https://storage.googleapis.com/projeto-graficos/ifad2025/mapas/state.geojson"),
       d3.csv("https://storage.googleapis.com/projeto-graficos/ifad2025/mapas/indicadores.csv"),
-      d3.csv("https://storage.googleapis.com/projeto-graficos/ifad2025/mapas/indicadores_regiao.csv")
+      d3.csv("https://storage.googleapis.com/projeto-graficos/ifad2025/mapas/indicadores_regiao.csv"),
+d3.csv("https://storage.googleapis.com/projeto-graficos/ifad2025/mapas/asbraer.csv")
     ]).then(function(results) {
       geojsonMunicGlobal  = results[0];
       geojsonStateGlobal  = results[1];
       indicadoresGlobal   = results[2];
       regiaoDataGlobal    = results[3];
+      asbraerDataGlobal   = results[4];
 
       populateSelector();
       drawMapLevel();
@@ -2294,6 +2592,13 @@ loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js', function
         var opt = document.createElement('option');
         opt.value = ind.indicador;
         opt.textContent = ind.indicador;
+        selector.appendChild(opt);
+      });
+    } else if (currentGeoLevel === 'uf') {
+      ['Total de extensionistas','% Ensino Médio','% Graduação','% Especialização','% Mestrado','% Doutorado'].forEach(function(ind) {
+        var opt = document.createElement('option');
+        opt.value = ind;
+        opt.textContent = ind;
         selector.appendChild(opt);
       });
     } else if (currentGeoLevel === 'regiao' && regiaoDataGlobal) {
@@ -2331,6 +2636,8 @@ loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js', function
       renderMunicipios();
     } else if (currentGeoLevel === 'regiao') {
       renderRegioes();
+    } else if (currentGeoLevel === 'uf') {
+      renderUF();
     }
   }
 
@@ -2352,7 +2659,7 @@ loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js', function
       var hi = breaks[i + 1];
       var fmt = function(v) {
         if (isPct) return Math.round(v * 100) + '%';
-        return v >= 1000 ? (v / 1000).toFixed(0) + 'k' : v;
+        return fmtNum(v, currentLang);
       };
       var div = document.createElement('div');
       div.className = 'map-legend-item';
@@ -2534,6 +2841,125 @@ loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js', function
     renderBarrasRegiao(dadosRegiao, currentIndicador, isPct, regiaoDataGlobal);
   }
 
+  function renderUF() {
+
+    var ibge2ToUF = {
+  '11':'RO','12':'AC','13':'AM','14':'RR','15':'PA','16':'AP','17':'TO',
+  '21':'MA','22':'PI','23':'CE','24':'RN','25':'PB','26':'PE','27':'AL','28':'SE','29':'BA',
+  '31':'MG','32':'ES','33':'RJ','35':'SP',
+  '41':'PR','42':'SC','43':'RS',
+  '50':'MS','51':'MT','52':'GO','53':'DF'
+};
+
+
+    if (!asbraerDataGlobal || !geojsonStateGlobal) return;
+    var currentIndicador = getSelectedIndicador();
+    if (!currentIndicador) return;
+
+    var path = drawMap._path;
+    var MAP_COLORS = ['#fdf8f0','#e8d9b8','#d4ba80','#c09848','#8a6a20','#5a4210','#2e2008'];
+    var categorias = ['Ensino Médio','Graduação','Especialização','Mestrado','Doutorado'];
+
+    // Montar totais por UF
+    var totaisPorUF = {};
+    asbraerDataGlobal.forEach(function(row) {
+   var uf = row[''] || row['uf'] || row[Object.keys(row)[1]];
+      var ind = row['indicador'];
+      var qtd = +row['Quantidade'] || 0;
+      if (!uf) return;
+      if (!totaisPorUF[uf]) {
+        totaisPorUF[uf] = { total: 0 };
+        categorias.forEach(function(c) { totaisPorUF[uf][c] = 0; });
+      }
+      totaisPorUF[uf][ind] = (totaisPorUF[uf][ind] || 0) + qtd;
+      totaisPorUF[uf].total += qtd;
+    });
+
+  
+
+    var isPct = currentIndicador.indexOf('%') === 0;
+    var catName = isPct ? currentIndicador.replace('% ', '') : null;
+
+    var valoresPorUF = {};
+    Object.keys(totaisPorUF).forEach(function(uf) {
+      var d = totaisPorUF[uf];
+      valoresPorUF[uf] = isPct
+        ? (d.total > 0 ? (d[catName] || 0) / d.total : 0)
+        : d.total;
+    });
+
+    var valores = Object.values(valoresPorUF).filter(function(v) { return v > 0; });
+    var colorScale = d3.scaleQuantile()
+      .domain(valores)
+      .range(MAP_COLORS.slice(1));
+
+    // Legenda
+    var legendWrap = document.getElementById('map-legend-wrap');
+    legendWrap.innerHTML = '';
+    var quantiles = colorScale.quantiles();
+    var minVal = d3.min(valores), maxVal = d3.max(valores);
+    var breaks = [minVal].concat(quantiles).concat([maxVal]);
+   var fmtLeg = function(v) {
+  return isPct ? Math.round(v * 100) + '%' : Math.round(v).toLocaleString('pt-BR');
+};
+    for (var i = 0; i < breaks.length - 1; i++) {
+      var div = document.createElement('div');
+      div.className = 'map-legend-item';
+      div.style.backgroundColor = MAP_COLORS[i + 1];
+      div.style.color = i < 1 ? '#333' : 'white';
+      div.textContent = fmtLeg(breaks[i]) + '–' + fmtLeg(breaks[i + 1]);
+      legendWrap.appendChild(div);
+    }
+
+    zoomGroup.selectAll('path.municipio').remove();
+    zoomGroup.selectAll('path.estado').remove();
+    zoomGroup.selectAll('path.regiao').remove();
+    zoomGroup.selectAll('path.uf').remove();
+
+    zoomGroup.selectAll('path.uf')
+      .data(geojsonStateGlobal.features)
+      .enter().append('path')
+      .attr('class', 'uf')
+      .attr('d', path)
+      .style('stroke', '#fff')
+      .style('stroke-width', 0.8)
+   .style('fill', function(d) {
+  var ibge2 = String(d.properties.ibge2 || '');
+  var uf = ibge2ToUF[ibge2];
+  var val = uf ? valoresPorUF[uf] : undefined;
+  if (val === undefined || val === 0) return '#e0ddd5';
+  return colorScale(val);
+})
+      .on('mouseover', function(event, d) {
+        d3.select(event.currentTarget).style('opacity', 0.75);
+       var ibge2 = String(d.properties.ibge2 || '');
+var uf = ibge2ToUF[ibge2] || ibge2;
+var estado = d.properties.estado || d.properties.nome || d.properties.NM_UF || uf;
+        var estado = d.properties.estado || d.properties.nome || d.properties.NM_UF || uf;
+        var val = valoresPorUF[uf];
+        var valFmt = val === undefined ? '—'
+          : isPct ? Math.round(val * 100) + '%'
+          : fmtNum(val, currentLang) + ' extensionistas';
+        var d2 = totaisPorUF[uf];
+        var breakdown = d2 ? categorias.map(function(c) {
+          return '<br>' + c + ': ' + (d2[c] || 0);
+        }).join('') : '';
+        ttip.style('opacity', 1)
+          .style('left', (event.pageX + 12) + 'px')
+          .style('top', (event.pageY - 20) + 'px')
+          .html('<strong>' + estado + '</strong><br><em>' + currentIndicador + ': ' + valFmt + '</em>' + (isPct ? breakdown : ''));
+      })
+      .on('mouseout', function() {
+        d3.select(this).style('opacity', 1);
+        ttip.style('opacity', 0);
+      });
+
+    var fonteEl = document.getElementById('map-fonte');
+    if (fonteEl) fonteEl.textContent = (currentLang === 'pt' ? 'Fonte: ' : 'Source: ') + 'ASBRAER';
+
+    renderBarrasUF(totaisPorUF, currentIndicador, isPct, catName);
+  }
+
   // =============================================
   // HISTOGRAMA (nível município)
   // =============================================
@@ -2564,7 +2990,7 @@ loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js', function
       var count = valores.filter(function(v) { return v >= lo && (i === numCats - 1 ? v <= hi : v < hi); }).length;
       var fmt = function(v) {
         if (isPct) return Math.round(v * 100) + '%';
-        return v >= 1000000 ? (v / 1000000).toFixed(1) + 'M' : v >= 1000 ? (v / 1000).toFixed(0) + 'k' : v;
+        return fmtNum(v, currentLang);
       };
       catData.push({
         label: fmt(lo) + '–' + fmt(hi),
@@ -2642,7 +3068,7 @@ loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js', function
     // Eixo Y
     g.append('g')
       .call(d3.axisLeft(yScale).ticks(4).tickFormat(function(v) {
-        return v >= 1000 ? (v / 1000).toFixed(0) + 'k' : v;
+        return fmtNum(v, currentLang);
       }))
       .selectAll('text')
       .attr('font-family', 'DM Sans, sans-serif')
@@ -2679,7 +3105,7 @@ loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js', function
 
     var fmt = function(v) {
       if (isPct) return (v * 100).toFixed(1) + '%';
-      return v >= 1000000 ? (v / 1000000).toFixed(1) + 'M' : v >= 1000 ? (v / 1000).toFixed(0) + 'k' : v.toLocaleString('pt-BR');
+      return fmtNum(v, currentLang);
     };
 
     // Montar lista completa: Regiões + separador + TOTAL, Urbana, Rural
@@ -2766,6 +3192,66 @@ loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js', function
         .attr('dominant-baseline', 'middle')
         .attr('font-family', 'DM Sans, sans-serif').attr('font-size', '13px').attr('font-weight', '500').attr('fill', '#1c1c1c')
         .text(fmt(+d.valor));
+    });
+  }
+
+  function renderBarrasUF(totaisPorUF, indicador, isPct, catName) {
+    var container = document.getElementById('map-chart');
+    if (!container) return;
+
+    var labelEl = document.getElementById('map-chart-label');
+    if (labelEl) labelEl.textContent = indicador;
+
+    d3.select(container).selectAll('*').remove();
+
+    var categorias = ['Ensino Médio','Graduação','Especialização','Mestrado','Doutorado'];
+    var UFS_ORDER = ['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'];
+
+    var dados = UFS_ORDER.map(function(uf) {
+      var d = totaisPorUF[uf] || { total: 0 };
+      return {
+        uf: uf,
+        val: isPct ? (d.total > 0 ? (d[catName] || 0) / d.total : 0) : (d.total || 0)
+      };
+    }).filter(function(d) { return d.val > 0; })
+      .sort(function(a, b) { return b.val - a.val; });
+
+    var w = 0, el = container;
+    while (el && w < 100) { w = el.offsetWidth; el = el.parentElement; }
+    if (w < 100) w = 700;
+
+    var marginB = { top: 10, right: 70, bottom: 10, left: 50 };
+    var rowH = 24, gap = 4;
+    var h = dados.length * (rowH + gap) + marginB.top + marginB.bottom;
+    var innerW = w - marginB.left - marginB.right;
+
+    var svg = d3.select(container).append('svg')
+      .attr('width', '100%')
+      .attr('viewBox', '0 0 ' + w + ' ' + h)
+      .attr('preserveAspectRatio', 'xMinYMin');
+
+    var g = svg.append('g').attr('transform', 'translate(' + marginB.left + ',' + marginB.top + ')');
+
+    var maxVal = d3.max(dados, function(d) { return d.val; }) || 1;
+    var x = d3.scaleLinear().domain([0, maxVal]).range([0, innerW]);
+    var colorScale = d3.scaleLinear().domain([0, maxVal]).range(['#e8d9b8', '#5a4210']);
+    var fmt = function(v) {
+      return isPct ? Math.round(v * 100) + '%' : fmtNum(v, currentLang);
+    };
+
+    dados.forEach(function(d, i) {
+      var y = i * (rowH + gap);
+      g.append('rect').attr('x', 0).attr('y', y)
+        .attr('width', x(d.val)).attr('height', rowH)
+        .attr('fill', colorScale(d.val)).attr('rx', 2);
+      g.append('text').attr('x', -4).attr('y', y + rowH / 2)
+        .attr('text-anchor', 'end').attr('dominant-baseline', 'middle')
+        .attr('font-family', 'DM Sans, sans-serif').attr('font-size', '12px').attr('fill', '#1c1c1c')
+        .text(d.uf);
+      g.append('text').attr('x', x(d.val) + 5).attr('y', y + rowH / 2)
+        .attr('dominant-baseline', 'middle')
+        .attr('font-family', 'DM Sans, sans-serif').attr('font-size', '12px').attr('font-weight', '500').attr('fill', '#1c1c1c')
+        .text(fmt(d.val));
     });
   }
 

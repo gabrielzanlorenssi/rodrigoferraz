@@ -23,8 +23,8 @@
       --c-cream:      #fdf8f0;
       --c-border:     #d4cdc0;
       --c-red:        #8b2020;
-      --f-serif:  "Libre Baskerville", Georgia, serif;
-      --f-sans:   "DM Sans", system-ui, sans-serif;
+      --f-serif:  'Libre Baskerville', Georgia, serif;
+      --f-sans:   'DM Sans', system-ui, sans-serif;
       --nav-h: 56px;
       --max-w: 760px;
     }
@@ -38,11 +38,34 @@
     .nav-back { margin-left: auto; font-size: 13px; color: rgba(255,255,255,0.6); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
     .nav-back:hover { color: var(--c-amber-light); }
 
-    .hero { background: var(--c-bg-dark); padding: 64px 24px 56px; text-align: center; }
+    /* HERO COM IMAGEM */
+    .hero {
+      position: relative;
+      min-height: 420px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('https://agenciadenoticias.ibge.gov.br/images/agenciadenoticias/ibge/2017_11/CensoAGRO_EmCAMPO_RIO-DE-JANEIRO_not4.jpg');
+      background-size: cover;
+      background-position: center 40%;
+      filter: brightness(0.35);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      padding: 64px 24px 56px;
+      max-width: 640px;
+    }
     .hero-tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-amber-light); border: 1px solid rgba(232,168,74,0.35); border-radius: 20px; padding: 4px 14px; margin-bottom: 20px; }
     .hero h1 { font-family: var(--f-serif); font-size: clamp(28px, 5vw, 44px); color: #fff; line-height: 1.2; margin-bottom: 16px; }
     .hero h1 em { color: var(--c-amber-light); font-style: italic; }
-    .hero p { font-size: 16px; color: rgba(255,255,255,0.65); max-width: 540px; margin: 0 auto; line-height: 1.7; }
+    .hero-desc { font-size: 16px; color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 8px; }
+    .hero-credit { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 12px; }
 
     main { max-width: var(--max-w); margin: 0 auto; padding: 48px 24px 80px; }
 
@@ -59,6 +82,13 @@
     .field input::-webkit-outer-spin-button, .field input::-webkit-inner-spin-button { -webkit-appearance: none; }
     .field input:focus, .field select:focus { border-color: var(--c-green); }
     .field .hint { font-size: 11px; color: var(--c-ink-muted); }
+
+    /* Autocomplete município */
+    .municipio-wrap { position: relative; }
+    .municipio-dropdown { position: absolute; top: 100%; left: 0; right: 0; background: #fff; border: 1.5px solid var(--c-green); border-radius: 8px; max-height: 200px; overflow-y: auto; z-index: 50; box-shadow: 0 4px 16px rgba(0,0,0,0.1); display: none; }
+    .municipio-dropdown.open { display: block; }
+    .municipio-option { padding: 10px 14px; font-size: 14px; cursor: pointer; color: var(--c-ink); }
+    .municipio-option:hover { background: var(--c-bg-alt); }
 
     .slider-wrap { display: flex; flex-direction: column; gap: 8px; }
     .slider-row { display: flex; align-items: center; gap: 12px; }
@@ -124,6 +154,7 @@
       .resultado-hero { padding: 28px 20px; }
       .provocacoes { padding: 20px; }
       .narrativa { padding: 16px 18px; }
+      .hero { min-height: 340px; }
     }
     @media (max-width: 400px) {
       .cards-grid { grid-template-columns: 1fr; }
@@ -134,13 +165,17 @@
 
 <nav>
   <a href="index.html" class="nav-logo">ICT4D <span>Brazil</span></a>
-  <a href="index.html" class="nav-back">&#8592; Voltar ao site</a>
+  <a href="index.html" class="nav-back">← Voltar ao site</a>
 </nav>
 
 <div class="hero">
-  <div class="hero-tag">Ferramenta Interativa</div>
-  <h1>A realidade da <em>ATER</em></h1>
-  <p>Insira seus dados e descubra, em n&uacute;meros, o tamanho do desafio da Assist&ecirc;ncia T&eacute;cnica e Extens&atilde;o Rural no Brasil</p>
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Ferramenta Interativa</div>
+    <h1>A realidade da <em>ATER</em></h1>
+    <p class="hero-desc">Insira seus dados e descubra, em números, o tamanho do desafio da Assistência Técnica e Extensão Rural no Brasil</p>
+    <p class="hero-credit">Foto: Agência IBGE / Censo Agropecuário 2017</p>
+  </div>
 </div>
 
 <main>
@@ -148,33 +183,43 @@
   <div class="step-card" id="card-perfil">
     <div class="step-header">
       <div class="step-num">1</div>
-      <div class="step-title">Qual &eacute; o seu perfil?</div>
+      <div class="step-title">Qual é o seu perfil?</div>
     </div>
     <div class="perfil-btns" id="perfil-btns">
-      <div class="perfil-btn active" data-val="extensionista">Extensionista / T&eacute;cnico(a)</div>
-      <div class="perfil-btn" data-val="gestor">Gestor(a) p&uacute;blico(a)</div>
+      <div class="perfil-btn active" data-val="extensionista">Extensionista / Técnico(a)</div>
+      <div class="perfil-btn" data-val="gestor">Gestor(a) público(a)</div>
       <div class="perfil-btn" data-val="agricultor">Agricultor(a) familiar</div>
-      <div class="perfil-btn" data-val="pesquisador">Pesquisador(a) / Estudante</div>
     </div>
   </div>
 
   <div class="step-card">
     <div class="step-header">
       <div class="step-num">2</div>
-      <div class="step-title">Seu territ&oacute;rio de atua&ccedil;&atilde;o</div>
+      <div class="step-title">Seu território de atuação</div>
     </div>
     <div class="field-grid two">
       <div class="field">
-        <label>Agricultores familiares no munic&iacute;pio</label>
-        <input type="number" id="total_agricultores" placeholder="Ex: 2.500" min="1">
-        <span class="hint">Fonte sugerida: Censo Agropecu&aacute;rio 2017 (IBGE)</span>
+        <label>Município</label>
+        <div class="municipio-wrap">
+          <input type="text" id="municipio_input" placeholder="Digite o município..." autocomplete="off" oninput="filtrarMunicipios(this.value)">
+          <div class="municipio-dropdown" id="municipio-dropdown"></div>
+        </div>
+        <span class="hint">Dados do Censo Agropecuário 2017 (IBGE)</span>
       </div>
       <div class="field">
-        <label>T&eacute;cnicos da ATER p&uacute;blica dispon&iacute;veis</label>
+        <label>Estabelecimentos de agricultura familiar</label>
+        <input type="number" id="total_agricultores" placeholder="Ex: 2.500" min="1">
+        <span class="hint">Preenchido automaticamente ao selecionar o município. Pode editar.</span>
+      </div>
+    </div>
+    <div class="field-grid two" style="margin-top:16px;">
+      <div class="field">
+        <label>Técnicos da ATER pública disponíveis no município</label>
         <input type="number" id="total_tecnicos" placeholder="Ex: 4" min="1">
         <span class="hint">Dados da entidade estadual (Emater, Epagri, etc.)</span>
       </div>
     </div>
+    <p style="font-size:12px;color:var(--c-ink-muted);margin-top:12px;">Critério de cobertura: 1 técnico para cada 100 famílias (referência ATER pública)</p>
   </div>
 
   <div class="step-card">
@@ -185,21 +230,21 @@
     <div style="display:flex;flex-direction:column;gap:24px;">
 
       <div class="field slider-wrap">
-        <label>Visitas t&eacute;cnicas que voc&ecirc; realiza por m&ecirc;s</label>
+        <label>Visitas técnicas que você realiza por mês</label>
         <div class="slider-row">
           <input type="range" id="visitas_mes" min="5" max="80" step="5" value="20">
           <span class="slider-val" id="visitas_mes_val">20</span>
         </div>
-        <span class="hint">M&eacute;dia nacional: 20 a 30 visitas/m&ecirc;s por extensionista</span>
+        <span class="hint">Média nacional: 20 a 30 visitas/mês por extensionista</span>
       </div>
 
       <div class="field slider-wrap">
-        <label>Fam&iacute;lias sob sua responsabilidade</label>
+        <label>Famílias sob sua responsabilidade</label>
         <div class="slider-row">
           <input type="range" id="familias_resp" min="20" max="500" step="10" value="100">
           <span class="slider-val" id="familias_resp_val">100</span>
         </div>
-        <span class="hint">Refer&ecirc;ncia t&eacute;cnica: at&eacute; 60 fam&iacute;lias por t&eacute;cnico para ATER de qualidade</span>
+        <span class="hint">Referência técnica: até 100 famílias por técnico para ATER pública</span>
       </div>
 
       <div class="field-grid two">
@@ -211,21 +256,29 @@
           </div>
         </div>
         <div class="field slider-wrap">
-          <label>Deslocamento m&eacute;dio por visita (min)</label>
+          <label>Dias trabalhados por mês</label>
           <div class="slider-row">
-            <input type="range" id="desl_min" min="10" max="180" step="10" value="40">
-            <span class="slider-val" id="desl_min_val">40 min</span>
+            <input type="range" id="dias_mes" min="10" max="31" step="1" value="21">
+            <span class="slider-val" id="dias_mes_val">21</span>
           </div>
+        </div>
+      </div>
+
+      <div class="field slider-wrap">
+        <label>Deslocamento médio por visita (min)</label>
+        <div class="slider-row">
+          <input type="range" id="desl_min" min="10" max="180" step="10" value="40">
+          <span class="slider-val" id="desl_min_val">40 min</span>
         </div>
       </div>
 
       <div class="field-grid two">
         <div class="field">
-          <label>Dist&acirc;ncia m&eacute;dia entre propriedades (km)</label>
+          <label>Distância média entre propriedades (km)</label>
           <input type="number" id="dist_km" placeholder="Ex: 15" min="1" value="15">
         </div>
         <div class="field">
-          <label>Dura&ccedil;&atilde;o m&eacute;dia do atendimento (min)</label>
+          <label>Duração média do atendimento (min)</label>
           <input type="number" id="atend_min" placeholder="Ex: 60" min="10" value="60">
         </div>
       </div>
@@ -234,27 +287,27 @@
   </div>
 
   <div class="cta-wrap">
-    <button class="btn-calcular" onclick="calcular()">Calcular minha realidade &#x2192;</button>
+    <button class="btn-calcular" onclick="calcular()">Calcular minha realidade →</button>
   </div>
 
   <div id="resultado">
 
     <div class="resultado-hero">
-      <div class="rh-tag">Fam&iacute;lias por extensionista no munic&iacute;pio</div>
-      <div class="rh-num" id="rh-num">&#8212;</div>
-      <div class="rh-unit" id="rh-unit">fam&iacute;lias / t&eacute;cnico</div>
+      <div class="rh-tag" id="rh-tag">Famílias por extensionista no município</div>
+      <div class="rh-num" id="rh-num">—</div>
+      <div class="rh-unit" id="rh-unit">famílias / técnico</div>
     </div>
 
     <div class="cards-grid" id="cards-grid"></div>
 
     <div class="prop-bar-wrap">
-      <div class="pb-label">Como voc&ecirc; distribui o tempo de cada visita</div>
+      <div class="pb-label">Como você distribui o tempo de cada visita</div>
       <div class="prop-bar" id="prop-tempo-bar"></div>
       <div class="prop-bar-legend" id="prop-tempo-legend"></div>
     </div>
 
     <div class="provocacoes">
-      <h3>&#x1F4CB; O que os seus n&uacute;meros revelam</h3>
+      <h3>📋 O que os seus números revelam</h3>
       <div id="provocacoes-list"></div>
     </div>
 
@@ -264,7 +317,7 @@
 
     <div class="share-wrap">
       <p>Quer tentar com outros dados?</p>
-      <button class="btn-reiniciar" onclick="reiniciar()">&#x21BA; Recalcular</button>
+      <button class="btn-reiniciar" onclick="reiniciar()">↺ Recalcular</button>
     </div>
 
   </div>
@@ -272,68 +325,138 @@
 </main>
 
 <footer>
-  <p>Ferramenta desenvolvida por <a href="index.html">ICT4D Brazil</a> &middot; Dados de refer&ecirc;ncia: IBGE Censo Agropecu&aacute;rio 2017, ASBRAER, FAO.</p>
+  <p>Ferramenta desenvolvida por <a href="index.html">ICT4D Brazil</a> · Dados de referência: IBGE Censo Agropecuário 2017, ASBRAER, FAO.</p>
 </footer>
 
 <script>
 (function() {
 
+  // =============================================
+  // DADOS DE MUNICÍPIOS
+  // =============================================
+  var municipiosData = [];
+
+  fetch('https://storage.googleapis.com/projeto-graficos/ifad2025/mapas/estabelecimentos.csv')
+    .then(function(r) { return r.text(); })
+    .then(function(txt) {
+      var linhas = txt.trim().split('\n');
+      // Pula header
+      for (var i = 1; i < linhas.length; i++) {
+        var cols = linhas[i].split(';');
+        if (cols.length >= 3) {
+          municipiosData.push({
+            ibge7: cols[0].trim(),
+            municipio: cols[1].trim(),
+            total: parseInt(cols[2].trim()) || 0
+          });
+        }
+      }
+    })
+    .catch(function() {
+      console.warn('estabelecimentos.csv não disponível');
+    });
+
+  window.filtrarMunicipios = function(q) {
+    var dropdown = document.getElementById('municipio-dropdown');
+    if (!q || q.length < 2) { dropdown.classList.remove('open'); return; }
+    var norm = q.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    var matches = municipiosData.filter(function(m) {
+      return m.municipio.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').indexOf(norm) !== -1;
+    }).slice(0, 10);
+
+    if (matches.length === 0) { dropdown.classList.remove('open'); return; }
+    dropdown.innerHTML = matches.map(function(m) {
+      return '<div class="municipio-option" onclick="selecionarMunicipio(\'' +
+        m.municipio.replace(/'/g, "\\'") + '\',' + m.total + ')">' + m.municipio + '</div>';
+    }).join('');
+    dropdown.classList.add('open');
+  };
+
+  window.selecionarMunicipio = function(nome, total) {
+    document.getElementById('municipio_input').value = nome;
+    document.getElementById('total_agricultores').value = total;
+    document.getElementById('municipio-dropdown').classList.remove('open');
+  };
+
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.municipio-wrap')) {
+      document.getElementById('municipio-dropdown').classList.remove('open');
+    }
+  });
+
+  // =============================================
+  // SLIDERS
+  // =============================================
   var sliders = [
-    { id: "visitas_mes",   valId: "visitas_mes_val",   fmt: function(v) { return v; } },
-    { id: "familias_resp", valId: "familias_resp_val",  fmt: function(v) { return v; } },
-    { id: "horas_dia",     valId: "horas_dia_val",      fmt: function(v) { return v + "h"; } },
-    { id: "desl_min",      valId: "desl_min_val",       fmt: function(v) { return v + " min"; } }
+    { id: 'visitas_mes',   valId: 'visitas_mes_val',   fmt: function(v) { return v; } },
+    { id: 'familias_resp', valId: 'familias_resp_val',  fmt: function(v) { return v; } },
+    { id: 'horas_dia',     valId: 'horas_dia_val',      fmt: function(v) { return v + 'h'; } },
+    { id: 'dias_mes',      valId: 'dias_mes_val',       fmt: function(v) { return v; } },
+    { id: 'desl_min',      valId: 'desl_min_val',       fmt: function(v) { return v + ' min'; } }
   ];
   sliders.forEach(function(s) {
     var el = document.getElementById(s.id);
     var vl = document.getElementById(s.valId);
     function upd() { vl.textContent = s.fmt(el.value); }
-    el.addEventListener("input", upd);
+    el.addEventListener('input', upd);
     upd();
   });
 
-  var perfil = "extensionista";
-  document.querySelectorAll(".perfil-btn").forEach(function(btn) {
-    btn.addEventListener("click", function() {
-      document.querySelectorAll(".perfil-btn").forEach(function(b) { b.classList.remove("active"); });
-      btn.classList.add("active");
-      perfil = btn.getAttribute("data-val");
+  // =============================================
+  // PERFIL
+  // =============================================
+  var perfil = 'extensionista';
+  document.querySelectorAll('.perfil-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.perfil-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      perfil = btn.getAttribute('data-val');
     });
   });
 
+  // =============================================
+  // HELPERS
+  // =============================================
   function fmt(n, dec) {
-    if (isNaN(n) || !isFinite(n)) return "&#8212;";
-    return n.toLocaleString("pt-BR", { minimumFractionDigits: dec || 0, maximumFractionDigits: dec || 0 });
+    if (isNaN(n) || !isFinite(n)) return '—';
+    return n.toLocaleString('pt-BR', { minimumFractionDigits: dec || 0, maximumFractionDigits: dec || 0 });
   }
   function r1(n) { return Math.round(n * 10) / 10; }
 
   function card(label, num, unit, desc, tipo) {
-    return "<div class=\"stat-card " + (tipo || "") + "\">" +
-      "<div class=\"sc-label\">" + label + "</div>" +
-      "<div class=\"sc-num\">" + num + "<span style=\"font-size:14px;font-family:var(--f-sans);font-weight:400;color:var(--c-ink-muted);margin-left:4px;\">" + (unit || "") + "</span></div>" +
-      "<div class=\"sc-desc\">" + desc + "</div>" +
-      "</div>";
+    return '<div class="stat-card ' + (tipo || '') + '">' +
+      '<div class="sc-label">' + label + '</div>' +
+      '<div class="sc-num">' + num + '<span style="font-size:14px;font-family:var(--f-sans);font-weight:400;color:var(--c-ink-muted);margin-left:4px;">' + (unit || '') + '</span></div>' +
+      '<div class="sc-desc">' + desc + '</div>' +
+      '</div>';
   }
 
   function prov(icon, text) {
-    return "<div class=\"provocacao-item\">" +
-      "<div class=\"provocacao-icon\">" + icon + "</div>" +
-      "<div class=\"provocacao-text\">" + text + "</div>" +
-      "</div>";
+    return '<div class="provocacao-item">' +
+      '<div class="provocacao-icon">' + icon + '</div>' +
+      '<div class="provocacao-text">' + text + '</div>' +
+      '</div>';
   }
 
+  // =============================================
+  // CALCULAR
+  // =============================================
   window.calcular = function() {
-    var agric    = parseFloat(document.getElementById("total_agricultores").value) || 2500;
-    var tecs     = parseFloat(document.getElementById("total_tecnicos").value) || 4;
-    var visitMes = parseFloat(document.getElementById("visitas_mes").value);
-    var famResp  = parseFloat(document.getElementById("familias_resp").value);
-    var horasDia = parseFloat(document.getElementById("horas_dia").value);
-    var deslMin  = parseFloat(document.getElementById("desl_min").value);
-    var distKm   = parseFloat(document.getElementById("dist_km").value) || 15;
-    var atendMin = parseFloat(document.getElementById("atend_min").value) || 60;
+    var agric    = parseFloat(document.getElementById('total_agricultores').value) || 2500;
+    var tecs     = parseFloat(document.getElementById('total_tecnicos').value) || 4;
+    var visitMes = parseFloat(document.getElementById('visitas_mes').value);
+    var famResp  = parseFloat(document.getElementById('familias_resp').value);
+    var horasDia = parseFloat(document.getElementById('horas_dia').value);
+    var diasMes  = parseFloat(document.getElementById('dias_mes').value);
+    var deslMin  = parseFloat(document.getElementById('desl_min').value);
+    var distKm   = parseFloat(document.getElementById('dist_km').value) || 15;
+    var atendMin = parseFloat(document.getElementById('atend_min').value) || 60;
+
+    // Critério: 100 famílias por técnico (ATER pública)
+    var CRITERIO = 100;
 
     var famPorTec      = agric / tecs;
-    var tecNecessarios = Math.ceil(agric / 60);
+    var tecNecessarios = Math.ceil(agric / CRITERIO);
     var deficit        = Math.max(0, tecNecessarios - tecs);
     var mesesVisitar   = famResp / visitMes;
     var anosVisitar    = mesesVisitar / 12;
@@ -345,86 +468,129 @@
     var brasSpEquiv    = Math.round(kmAno / 1015);
     var visitDiaNec    = (agric * 1) / 365;
     var horasEstradaMes = (deslMin * visitMes) / 60;
-    var horasTrabalhoMes = horasDia * 22;
-    var visitasPorFamAno = (visitMes * 12) / famResp;
+    var horasTrabalhoMes = horasDia * diasMes;
 
-    document.getElementById("rh-num").textContent = fmt(Math.round(famPorTec));
-    document.getElementById("rh-unit").textContent = "fam\u00EDlias / t\u00E9cnico no munic\u00EDpio";
+    // Textos por perfil
+    var perfilNomes = {
+      extensionista: 'extensionista',
+      gestor: 'gestor(a) público(a)',
+      agricultor: 'agricultor(a) familiar'
+    };
+    var nomePerfil = perfilNomes[perfil] || 'profissional';
 
-    var alertaCarga  = famResp > 120;
+    // Ajustar tag do hero por perfil
+    var rhTag = {
+      extensionista: 'Famílias por extensionista no município',
+      gestor: 'Famílias por técnico no município',
+      agricultor: 'Estabelecimentos por técnico disponível'
+    };
+    document.getElementById('rh-tag').textContent = rhTag[perfil] || rhTag.extensionista;
+    document.getElementById('rh-num').textContent = fmt(Math.round(famPorTec));
+    document.getElementById('rh-unit').textContent = 'famílias / técnico no município';
+
+    // Cards
     var alertaVisita = mesesVisitar > 4;
+    var cards = '';
+    cards += card(
+      'Técnicos necessários',
+      fmt(tecNecessarios), '',
+      'Para cobrir o município (critério: 1 técnico por 100 famílias)',
+      deficit > 0 ? 'alert' : 'ok'
+    );
+    cards += card(
+      'Déficit de técnicos',
+      deficit > 0 ? fmt(deficit) : '0', '',
+      deficit > 0
+        ? 'Faltam ' + fmt(deficit) + ' técnico' + (deficit > 1 ? 's' : '') + ' no município.'
+        : 'Cobertura dentro do esperado.',
+      deficit > 0 ? 'alert' : 'ok'
+    );
+    cards += card(
+      'Intervalo entre visitas',
+      fmt(r1(mesesVisitar), 1), 'meses',
+      'Tempo para cada família receber 1 visita no ritmo atual.',
+      alertaVisita ? 'alert' : 'ok'
+    );
+    cards += card(
+      'Km rodados por ano',
+      fmt(Math.round(kmAno)), 'km',
+      'Equivale a Brasília–SP ' + fmt(brasSpEquiv) + ' vez' + (brasSpEquiv !== 1 ? 'es' : '') + '.',
+      ''
+    );
+    document.getElementById('cards-grid').innerHTML = cards;
 
-    var cards = "";
-    cards += card("T\u00E9cnicos necess\u00E1rios", fmt(tecNecessarios), "", "Para cobrir o munic\u00EDpio com qualidade (60 fam\u00EDlias/t\u00E9cnico)", deficit > 0 ? "alert" : "ok");
-    cards += card("D\u00E9ficit de t\u00E9cnicos", deficit > 0 ? fmt(deficit) : "0", "", deficit > 0 ? "Faltam " + fmt(deficit) + " t\u00E9cnico" + (deficit > 1 ? "s" : "") + " no munic\u00EDpio." : "Cobertura dentro do esperado.", deficit > 0 ? "alert" : "ok");
-    cards += card("Intervalo entre visitas", fmt(r1(mesesVisitar), 1), "meses", "Tempo para cada fam\u00EDlia receber 1 visita no ritmo atual.", alertaVisita ? "alert" : "ok");
-    cards += card("Km rodados por ano", fmt(Math.round(kmAno)), "km", "Equivale a Bras\u00EDlia&#x2013;SP " + fmt(brasSpEquiv) + " vez" + (brasSpEquiv !== 1 ? "es" : "") + ".", "");
-    document.getElementById("cards-grid").innerHTML = cards;
+    // Barra tempo
+    var barHtml = '';
+    barHtml += '<div class="pb-seg" style="width:' + r1(pctDesl) + '%;background:var(--c-amber);">' + (pctDesl > 10 ? Math.round(pctDesl) + '%' : '') + '</div>';
+    barHtml += '<div class="pb-seg" style="width:' + r1(pctAtend) + '%;background:var(--c-green);">' + (pctAtend > 10 ? Math.round(pctAtend) + '%' : '') + '</div>';
+    document.getElementById('prop-tempo-bar').innerHTML = barHtml;
+    document.getElementById('prop-tempo-legend').innerHTML =
+      '<div class="pbl-item"><div class="pbl-dot" style="background:var(--c-amber)"></div>Deslocamento (' + Math.round(pctDesl) + '%)</div>' +
+      '<div class="pbl-item"><div class="pbl-dot" style="background:var(--c-green)"></div>Atendimento (' + Math.round(pctAtend) + '%)</div>';
 
-    var barHtml = "";
-    barHtml += "<div class=\"pb-seg\" style=\"width:" + r1(pctDesl) + "%;background:var(--c-amber);\">" + (pctDesl > 10 ? Math.round(pctDesl) + "%" : "") + "</div>";
-    barHtml += "<div class=\"pb-seg\" style=\"width:" + r1(pctAtend) + "%;background:var(--c-green);\">" + (pctAtend > 10 ? Math.round(pctAtend) + "%" : "") + "</div>";
-    document.getElementById("prop-tempo-bar").innerHTML = barHtml;
-    document.getElementById("prop-tempo-legend").innerHTML =
-      "<div class=\"pbl-item\"><div class=\"pbl-dot\" style=\"background:var(--c-amber)\"></div>Deslocamento (" + Math.round(pctDesl) + "%)</div>" +
-      "<div class=\"pbl-item\"><div class=\"pbl-dot\" style=\"background:var(--c-green)\"></div>Atendimento (" + Math.round(pctAtend) + "%)</div>";
-
-    var provs = "";
+    // Provocações
+    var provs = '';
 
     if (mesesVisitar > 12) {
       var anoFut = new Date().getFullYear() + Math.ceil(anosVisitar);
-      provs += prov("&#x1F4C5;", "No ritmo atual, para visitar todas as <strong>" + fmt(famResp) + " fam\u00EDlias</strong> ao menos uma vez, voc\u00EA levaria <strong>" + fmt(Math.round(mesesVisitar)) + " meses</strong>. Um agricultor que come\u00E7a a ser atendido hoje s\u00F3 receber\u00E1 nova visita em <strong>" + anoFut + "</strong>.");
+      provs += prov('📅', 'No ritmo atual, para visitar todas as <strong>' + fmt(famResp) + ' famílias</strong> ao menos uma vez, você levaria <strong>' + fmt(Math.round(mesesVisitar)) + ' meses</strong>. Um agricultor que começa a ser atendido hoje só receberá nova visita em <strong>' + anoFut + '</strong>.');
     } else if (mesesVisitar > 4) {
-      provs += prov("&#x1F4C5;", "Cada fam\u00EDlia recebe uma visita a cada <strong>" + fmt(r1(mesesVisitar), 1) + " meses</strong> &#x2014; muita coisa pode acontecer na la\u00E7oura nesse intervalo.");
+      provs += prov('📅', 'Cada família recebe uma visita a cada <strong>' + fmt(r1(mesesVisitar), 1) + ' meses</strong> — muita coisa pode acontecer na lavoura nesse intervalo.');
     } else {
-      provs += prov("&#x2705;", "Cada fam\u00EDlia recebe uma visita a cada <strong>" + fmt(r1(mesesVisitar), 1) + " meses</strong> &#x2014; uma frequ\u00EAncia razo\u00E1vel de acompanhamento.");
+      provs += prov('✅', 'Cada família recebe uma visita a cada <strong>' + fmt(r1(mesesVisitar), 1) + ' meses</strong> — uma frequência razoável de acompanhamento.');
     }
 
-    provs += prov("&#x1F4CD;", "Para garantir <strong>1 visita por ano</strong> a cada agricultor familiar do munic\u00EDpio, seriam necess\u00E1rias <strong>" + fmt(r1(visitDiaNec), 1) + " visitas por dia</strong> &#x2014; com todos os " + fmt(tecs) + " t\u00E9cnico" + (tecs > 1 ? "s" : "") + " trabalhando inclusive nos finais de semana.");
+    provs += prov('📍', 'Para garantir <strong>1 visita por ano</strong> a cada agricultor familiar do município, seriam necessárias <strong>' + fmt(r1(visitDiaNec), 1) + ' visitas por dia</strong> — com todos os ' + fmt(tecs) + ' técnico' + (tecs > 1 ? 's' : '') + ' trabalhando inclusive nos finais de semana.');
 
     if (pctDesl > 40) {
-      provs += prov("&#x1F697;", "Voc\u00EA passa <strong>" + Math.round(pctDesl) + "% do tempo de cada visita</strong> se deslocando. Quase metade da sua ATER acontece antes de voc\u00EA chegar \u00E0 propriedade. S\u00E3o <strong>" + fmt(Math.round(horasEstradaMes)) + " horas na estrada por m\u00EAs</strong>.");
+      provs += prov('🚗', 'Você passa <strong>' + Math.round(pctDesl) + '% do tempo de cada visita</strong> se deslocando. Quase metade da sua ATER acontece antes de você chegar à propriedade. São <strong>' + fmt(Math.round(horasEstradaMes)) + ' horas na estrada por mês</strong>.');
     } else {
-      provs += prov("&#x1F697;", "Voc\u00EA passa <strong>" + Math.round(pctDesl) + "% do tempo de cada visita</strong> em deslocamento &#x2014; <strong>" + fmt(Math.round(horasEstradaMes)) + " horas por m\u00EAs</strong> na estrada. A infraestrutura vi\u00E1ria \u00E9 parte da sua ATER.");
+      provs += prov('🚗', 'Você passa <strong>' + Math.round(pctDesl) + '% do tempo de cada visita</strong> em deslocamento — <strong>' + fmt(Math.round(horasEstradaMes)) + ' horas por mês</strong> na estrada. A infraestrutura viária é parte da sua ATER.');
     }
 
-    provs += prov("&#x1F6E3;&#xFE0F;", "Em um ano voc\u00EA percorre aproximadamente <strong>" + fmt(Math.round(kmAno)) + " km</strong> &#x2014; o equivalente a ir de Bras\u00EDlia a S\u00E3o Paulo <strong>" + fmt(brasSpEquiv) + " vez" + (brasSpEquiv !== 1 ? "es" : "") + "</strong>.");
+    provs += prov('🛣️', 'Em um ano você percorre aproximadamente <strong>' + fmt(Math.round(kmAno)) + ' km</strong> — o equivalente a ir de Brasília a São Paulo <strong>' + fmt(brasSpEquiv) + ' vez' + (brasSpEquiv !== 1 ? 'es' : '') + '</strong>.');
 
-    if (famPorTec > 120) {
-      var mult = Math.ceil(famPorTec / 60);
-      provs += prov("&#x1F9D1;&#x200D;&#x1F91D;&#x200D;&#x1F9D1;", "Para cobrir as <strong>" + fmt(Math.round(famPorTec)) + " fam\u00EDlias</strong> por t\u00E9cnico no munic\u00EDpio com qualidade, seriam necess\u00E1rios <strong>" + mult + " extensionistas</strong> onde hoje h\u00E1 um &#x2014; cada t\u00E9cnico precisaria se multiplicar em <strong>" + mult + " pessoas</strong>.");
+    if (famPorTec > 150) {
+      var mult = Math.ceil(famPorTec / CRITERIO);
+      provs += prov('🧑‍🤝‍🧑', 'Para cobrir as <strong>' + fmt(Math.round(famPorTec)) + ' famílias</strong> por técnico no município com qualidade, seriam necessários <strong>' + mult + ' extensionistas</strong> onde hoje há um — cada técnico precisaria se multiplicar em <strong>' + mult + ' pessoas</strong>.');
     }
 
     if (deficit > 0) {
-      provs += prov("&#x1F4C9;", "O munic\u00EDpio precisa de <strong>mais " + fmt(deficit) + " t\u00E9cnico" + (deficit > 1 ? "s" : "") + "</strong> para atingir a cobertura m\u00EDnima recomendada &#x2014; um d\u00E9ficit de <strong>" + fmt(Math.round((deficit / tecNecessarios) * 100)) + "%</strong> da equipe necess\u00E1ria.");
+      provs += prov('📉', 'O município precisaria de <strong>mais ' + fmt(deficit) + ' técnico' + (deficit > 1 ? 's' : '') + '</strong> para atingir a cobertura mínima de 1 técnico por 100 famílias. Déficit de <strong>' + fmt(Math.round((deficit / tecNecessarios) * 100)) + '%</strong> da equipe necessária.');
     }
 
     if (mesesVisitar > 48) {
-      provs += prov("&#x26BD;", "Alguns produtores s\u00F3 receber\u00E3o nova visita t\u00E9cnica depois da <strong>pr\u00F3xima Copa do Mundo</strong> &#x2014; talvez da seguinte tamb\u00E9m.");
+      provs += prov('⚽', 'Alguns produtores só receberão nova visita técnica depois da <strong>próxima Copa do Mundo</strong> — talvez da seguinte também.');
     }
 
-    document.getElementById("provocacoes-list").innerHTML = provs;
+    document.getElementById('provocacoes-list').innerHTML = provs;
 
-    var nomes = { extensionista: "extensionista", gestor: "gestor(a) p\u00FAblico(a)", agricultor: "agricultor(a) familiar", pesquisador: "pesquisador(a)" };
-    var nomePerfil = nomes[perfil] || "profissional";
+    // Narrativa por perfil
+    var narrativaBase = 'Com base nos dados informados, como <strong>' + nomePerfil + '</strong>, ';
 
-    var narrativa = "Com base nos dados informados, como <strong>" + nomePerfil + "</strong>, voc\u00EA \u00E9 respons\u00E1vel por <strong>" + fmt(famResp) + " fam\u00EDlias</strong> e realiza <strong>" + fmt(visitMes) + " visitas por m\u00EAs</strong>, passando cerca de <strong>" + fmt(Math.round(horasEstradaMes)) + " horas</strong> por m\u00EAs na estrada. ";
-    if (mesesVisitar > 6) {
-      narrativa += "No ritmo atual, cada fam\u00EDlia recebe uma visita a cada <strong>" + fmt(Math.round(mesesVisitar)) + " meses</strong>. ";
+    if (perfil === 'agricultor') {
+      narrativaBase += 'o seu município conta com <strong>' + fmt(tecs) + ' técnico' + (tecs > 1 ? 's' : '') + '</strong> de ATER pública para <strong>' + fmt(agric) + ' famílias de agricultores</strong>. ';
+      narrativaBase += 'Isso significa que cada técnico precisa atender em média <strong>' + fmt(Math.round(famPorTec)) + ' famílias</strong> — quando o recomendado é no máximo 100. ';
+      narrativaBase += 'A qualidade do atendimento que você recebe depende de <strong>mais investimento público em extensão rural</strong>.';
+    } else {
+      narrativaBase += 'você é responsável por <strong>' + fmt(famResp) + ' famílias</strong> e realiza <strong>' + fmt(visitMes) + ' visitas por mês</strong>, passando cerca de <strong>' + fmt(Math.round(horasEstradaMes)) + ' horas</strong> por mês na estrada. ';
+      if (mesesVisitar > 6) {
+        narrativaBase += 'No ritmo atual, cada família recebe uma visita a cada <strong>' + fmt(Math.round(mesesVisitar)) + ' meses</strong>. ';
+      }
+      narrativaBase += 'No município, há <strong>' + fmt(tecs) + ' técnico' + (tecs > 1 ? 's' : '') + '</strong> para <strong>' + fmt(agric) + ' agricultores familiares</strong> — quando seriam necessários pelo menos <strong>' + fmt(tecNecessarios) + '</strong> (critério: 1 por 100 famílias). ';
+      narrativaBase += 'Fazer ATER de qualidade não depende apenas do extensionista: depende de <strong>estrutura, equipes e políticas públicas adequadas</strong>.';
     }
-    narrativa += "No munic\u00EDpio, h\u00E1 <strong>" + fmt(tecs) + " t\u00E9cnico" + (tecs > 1 ? "s" : "") + "</strong> para <strong>" + fmt(agric) + " agricultores familiares</strong> &#x2014; quando seriam necess\u00E1rios pelo menos <strong>" + fmt(tecNecessarios) + "</strong>. ";
-    narrativa += "Fazer ATER de qualidade n\u00E3o depende apenas do extensionista: depende de <strong>estrutura, equipes e pol\u00EDticas p\u00FAblicas adequadas</strong>.";
 
-    document.getElementById("narrativa-text").innerHTML = narrativa;
+    document.getElementById('narrativa-text').innerHTML = narrativaBase;
 
-    var r = document.getElementById("resultado");
-    r.classList.add("visible");
-    r.scrollIntoView({ behavior: "smooth", block: "start" });
+    var r = document.getElementById('resultado');
+    r.classList.add('visible');
+    r.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   window.reiniciar = function() {
-    document.getElementById("resultado").classList.remove("visible");
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    document.getElementById('resultado').classList.remove('visible');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
 })();

@@ -147,6 +147,14 @@
     footer { background: var(--c-bg-dark); color: rgba(255,255,255,0.45); font-size: 12px; text-align: center; padding: 20px 24px; }
     footer a { color: rgba(255,255,255,0.55); }
 
+    .perfil-btn-soon { opacity: 0.45; cursor: not-allowed; position: relative; }
+    .perfil-btn-soon:hover { background: var(--c-bg); color: var(--c-ink-muted); border-color: var(--c-border); }
+    .soon-badge { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; background: var(--c-amber); color: white; border-radius: 8px; padding: 1px 6px; margin-left: 6px; vertical-align: middle; }
+
+    .btn-modo-loc { margin-top: 20px; font-family: var(--f-sans); font-size: 13px; font-weight: 500; background: none; border: 1.5px dashed var(--c-border); border-radius: 8px; padding: 10px 16px; cursor: pointer; color: var(--c-ink-muted); width: 100%; text-align: left; transition: all 0.2s; }
+    .btn-modo-loc:hover { border-color: var(--c-green); color: var(--c-green-dark); background: rgba(45,106,50,0.04); }
+    .btn-modo-loc.ativo { border-color: var(--c-amber); color: var(--c-amber); background: rgba(196,124,43,0.05); }
+
     @media (max-width: 600px) {
       .step-card { padding: 20px; }
       .field-grid.two { grid-template-columns: 1fr; }
@@ -187,8 +195,8 @@
     </div>
     <div class="perfil-btns" id="perfil-btns">
       <div class="perfil-btn active" data-val="extensionista">Extensionista / Técnico(a)</div>
-      <div class="perfil-btn" data-val="gestor">Gestor(a) público(a)</div>
-      <div class="perfil-btn" data-val="agricultor">Agricultor(a) familiar</div>
+      <div class="perfil-btn perfil-btn-soon" title="Em breve">Gestor(a) público(a) <span class="soon-badge">em breve</span></div>
+      <div class="perfil-btn perfil-btn-soon" title="Em breve">Agricultor(a) familiar <span class="soon-badge">em breve</span></div>
     </div>
   </div>
 
@@ -197,29 +205,60 @@
       <div class="step-num">2</div>
       <div class="step-title">Seu território de atuação</div>
     </div>
-    <div class="field-grid two">
-      <div class="field">
-        <label>Município</label>
-        <div class="municipio-wrap">
-          <input type="text" id="municipio_input" placeholder="Digite o município..." autocomplete="off" oninput="filtrarMunicipios(this.value)">
-          <div class="municipio-dropdown" id="municipio-dropdown"></div>
+
+    <!-- Modo município (padrão) -->
+    <div id="modo-municipio">
+      <div class="field-grid two">
+        <div class="field">
+          <label>Município</label>
+          <div class="municipio-wrap">
+            <input type="text" id="municipio_input" placeholder="Digite o município..." autocomplete="off" oninput="filtrarMunicipios(this.value)">
+            <div class="municipio-dropdown" id="municipio-dropdown"></div>
+          </div>
+          <span class="hint">Dados do Censo Agropecuário 2017 (IBGE)</span>
         </div>
-        <span class="hint">Dados do Censo Agropecuário 2017 (IBGE)</span>
+        <div class="field">
+          <label>Estabelecimentos de agricultura familiar</label>
+          <input type="number" id="total_agricultores" placeholder="Ex: 2.500" min="1">
+          <span class="hint">Preenchido automaticamente ao selecionar o município. Pode editar.</span>
+        </div>
       </div>
-      <div class="field">
-        <label>Estabelecimentos de agricultura familiar</label>
-        <input type="number" id="total_agricultores" placeholder="Ex: 2.500" min="1">
-        <span class="hint">Preenchido automaticamente ao selecionar o município. Pode editar.</span>
+      <div class="field-grid two" style="margin-top:16px;">
+        <div class="field">
+          <label>Técnicos da ATER disponíveis no município</label>
+          <input type="number" id="total_tecnicos" placeholder="Ex: 4" min="1">
+          <span class="hint">Dados da entidade estadual (Emater, Epagri, etc.)</span>
+        </div>
       </div>
     </div>
-    <div class="field-grid two" style="margin-top:16px;">
-      <div class="field">
-        <label>Técnicos da ATER pública disponíveis no município</label>
-        <input type="number" id="total_tecnicos" placeholder="Ex: 4" min="1">
-        <span class="hint">Dados da entidade estadual (Emater, Epagri, etc.)</span>
+
+    <!-- Modo localidade (manual) -->
+    <div id="modo-localidade" style="display:none;">
+      <div class="field" style="margin-bottom:16px;">
+        <label>Nome da localidade</label>
+        <input type="text" id="localidade_nome" placeholder="Ex: Assentamento, Comunidade Rural, Município, Região...">
+        <span class="hint">Pode ser um assentamento, território, região ou qualquer recorte específico</span>
+      </div>
+      <div class="field-grid two">
+        <div class="field">
+          <label>Estabelecimentos / famílias atendidas</label>
+          <input type="number" id="total_agricultores_loc" placeholder="Ex: 350" min="1">
+          <span class="hint">Total de famílias no recorte escolhido</span>
+        </div>
+        <div class="field">
+          <label>Técnicos da ATER disponíveis</label>
+          <input type="number" id="total_tecnicos_loc" placeholder="Ex: 2" min="1">
+          <span class="hint">Técnicos que atendem essa localidade</span>
+        </div>
       </div>
     </div>
-    <p style="font-size:12px;color:var(--c-ink-muted);margin-top:12px;">Critério de cobertura: 1 técnico para cada 100 famílias (referência ATER pública)</p>
+
+    <!-- Botão alternar modo -->
+    <button class="btn-modo-loc" id="btn-modo" onclick="alternarModo()">
+       → Simular uma situação específica (assentamento, região ou outra localidade)
+    </button>
+
+
   </div>
 
   <div class="step-card">
@@ -244,7 +283,7 @@
           <input type="range" id="familias_resp" min="20" max="500" step="10" value="100">
           <span class="slider-val" id="familias_resp_val">100</span>
         </div>
-        <span class="hint">Referência técnica: até 100 famílias por técnico para ATER pública</span>
+        <span class="hint">Referência técnica: até 100 famílias por técnico para ATER</span>
       </div>
 
       <div class="field-grid two">
@@ -257,7 +296,7 @@
           <span class="hint">Tempo efetivo em visitas e atendimentos</span>
         </div>
         <div class="field slider-wrap">
-          <label>Horas de escritório/administrativo por dia</label>
+          <label>Escritório e outras atividades por dia</label>
           <div class="slider-row">
             <input type="range" id="horas_escritorio" min="0" max="8" step="0.5" value="3">
             <span class="slider-val" id="horas_escritorio_val">3h</span>
@@ -395,8 +434,23 @@
   });
 
   // =============================================
-  // SLIDERS
+  // MODO LOCALIDADE
   // =============================================
+  var modoLocalidade = false;
+
+  window.alternarModo = function() {
+    modoLocalidade = !modoLocalidade;
+    document.getElementById('modo-municipio').style.display = modoLocalidade ? 'none' : '';
+    document.getElementById('modo-localidade').style.display = modoLocalidade ? '' : 'none';
+    var btn = document.getElementById('btn-modo');
+    if (modoLocalidade) {
+      btn.textContent = '← Voltar para busca por município';
+      btn.classList.add('ativo');
+    } else {
+      btn.textContent = '📍 Simular uma situação específica — assentamento, região ou outra localidade';
+      btn.classList.remove('ativo');
+    }
+  };
   var sliders = [
     { id: 'visitas_mes',      valId: 'visitas_mes_val',      fmt: function(v) { return v; } },
     { id: 'familias_resp',    valId: 'familias_resp_val',    fmt: function(v) { return v; } },
@@ -453,8 +507,19 @@
   // CALCULAR
   // =============================================
   window.calcular = function() {
-    var agric    = parseFloat(document.getElementById('total_agricultores').value) || 2500;
-    var tecs     = parseFloat(document.getElementById('total_tecnicos').value) || 4;
+    // Ler dados do território conforme modo
+    var agric, tecs, nomeLocalidade, territ;
+    if (modoLocalidade) {
+      agric = parseFloat(document.getElementById('total_agricultores_loc').value) || 350;
+      tecs  = parseFloat(document.getElementById('total_tecnicos_loc').value) || 2;
+      nomeLocalidade = document.getElementById('localidade_nome').value.trim() || 'a localidade informada';
+      territ = 'a localidade';
+    } else {
+      agric = parseFloat(document.getElementById('total_agricultores').value) || 2500;
+      tecs  = parseFloat(document.getElementById('total_tecnicos').value) || 4;
+      nomeLocalidade = document.getElementById('municipio_input').value.trim() || 'o município';
+      territ = 'o município';
+    }
     var visitMes = parseFloat(document.getElementById('visitas_mes').value);
     var famResp  = parseFloat(document.getElementById('familias_resp').value);
     var horasCampo     = parseFloat(document.getElementById('horas_campo').value);
@@ -493,13 +558,13 @@
 
     // Ajustar tag do hero por perfil
     var rhTag = {
-      extensionista: 'Famílias por extensionista no município',
-      gestor: 'Famílias por técnico no município',
+      extensionista: 'Famílias por extensionista em ' + (modoLocalidade ? nomeLocalidade : 'o município'),
+      gestor: 'Famílias por técnico em ' + (modoLocalidade ? nomeLocalidade : 'o município'),
       agricultor: 'Estabelecimentos por técnico disponível'
     };
     document.getElementById('rh-tag').textContent = rhTag[perfil] || rhTag.extensionista;
     document.getElementById('rh-num').textContent = fmt(Math.round(famPorTec));
-    document.getElementById('rh-unit').textContent = 'famílias / técnico no município';
+    document.getElementById('rh-unit').textContent = 'famílias / técnico em ' + territ;
 
     // Cards
     var alertaVisita = mesesVisitar > 4;
@@ -507,14 +572,14 @@
     cards += card(
       'Técnicos necessários',
       fmt(tecNecessarios), '',
-      'Para cobrir o município (critério: 1 técnico por 100 famílias)',
+      'Para cobrir ' + territ + ' (critério: 1 técnico por 100 famílias)',
       deficit > 0 ? 'alert' : 'ok'
     );
     cards += card(
       'Déficit de técnicos',
       deficit > 0 ? fmt(deficit) : '0', '',
       deficit > 0
-        ? 'Faltam ' + fmt(deficit) + ' técnico' + (deficit > 1 ? 's' : '') + ' no município.'
+        ? 'Faltam ' + fmt(deficit) + ' técnico' + (deficit > 1 ? 's' : '') + ' em ' + territ + '.'
         : 'Cobertura dentro do esperado.',
       deficit > 0 ? 'alert' : 'ok'
     );
@@ -553,7 +618,7 @@
     document.getElementById('prop-tempo-legend').innerHTML =
       '<div class="pbl-item"><div class="pbl-dot" style="background:var(--c-amber)"></div>Deslocamento (' + Math.round(pctDeslBarra) + '%)</div>' +
       '<div class="pbl-item"><div class="pbl-dot" style="background:var(--c-green)"></div>Atendimento (' + Math.round(pctAtendBarra) + '%)</div>' +
-      '<div class="pbl-item"><div class="pbl-dot" style="background:var(--c-ink-muted);opacity:0.5"></div>Escritório (' + Math.round(pctEscrit) + '%)</div>';
+      '<div class="pbl-item"><div class="pbl-dot" style="background:var(--c-ink-muted);opacity:0.5"></div>Escritório e outras atividades (' + Math.round(pctEscrit) + '%)</div>';
 
     // Provocações
     var provs = '';
@@ -567,7 +632,7 @@
       provs += prov('✅', 'Cada família recebe uma visita a cada <strong>' + fmt(r1(mesesVisitar), 1) + ' meses</strong> — uma frequência razoável de acompanhamento.');
     }
 
-    provs += prov('📍', 'Para garantir <strong>1 visita por ano</strong> a cada agricultor familiar do município, seriam necessárias <strong>' + fmt(r1(visitDiaNec), 1) + ' visitas por dia</strong> — com todos os ' + fmt(tecs) + ' técnico' + (tecs > 1 ? 's' : '') + ' trabalhando inclusive nos finais de semana.');
+    provs += prov('📍', 'Para garantir <strong>1 visita por ano</strong> a cada agricultor familiar de ' + territ + ', seriam necessárias <strong>' + fmt(r1(visitDiaNec), 1) + ' visitas por dia</strong> — com todos os ' + fmt(tecs) + ' técnico' + (tecs > 1 ? 's' : '') + ' trabalhando inclusive nos finais de semana.');
 
     if (pctDesl > 40) {
       provs += prov('🚗', 'Você passa <strong>' + Math.round(pctDesl) + '% do tempo de cada visita</strong> se deslocando. Quase metade da sua ATER acontece antes de você chegar à propriedade. São <strong>' + fmt(Math.round(horasEstradaMes)) + ' horas na estrada por mês</strong>.');
@@ -579,11 +644,11 @@
 
     if (famPorTec > 150) {
       var mult = Math.ceil(famPorTec / CRITERIO);
-      provs += prov('🧑‍🤝‍🧑', 'Para cobrir as <strong>' + fmt(Math.round(famPorTec)) + ' famílias</strong> por técnico no município com qualidade, seriam necessários <strong>' + mult + ' extensionistas</strong> onde hoje há um — cada técnico precisaria se multiplicar em <strong>' + mult + ' pessoas</strong>.');
+      provs += prov('🧑‍🤝‍🧑', 'Para cobrir as <strong>' + fmt(Math.round(famPorTec)) + ' famílias</strong> por técnico em ' + territ + ' com qualidade, seriam necessários <strong>' + mult + ' extensionistas</strong> onde hoje há um — cada técnico precisaria se multiplicar em <strong>' + mult + ' pessoas</strong>.');
     }
 
     if (deficit > 0) {
-      provs += prov('📉', 'O município precisaria de <strong>mais ' + fmt(deficit) + ' técnico' + (deficit > 1 ? 's' : '') + '</strong> para atingir a cobertura mínima de 1 técnico por 100 famílias. Déficit de <strong>' + fmt(Math.round((deficit / tecNecessarios) * 100)) + '%</strong> da equipe necessária.');
+      provs += prov('📉', territ.charAt(0).toUpperCase() + territ.slice(1) + ' precisaria de <strong>mais ' + fmt(deficit) + ' técnico' + (deficit > 1 ? 's' : '') + '</strong> para atingir a cobertura mínima de 1 técnico por 100 famílias. Déficit de <strong>' + fmt(Math.round((deficit / tecNecessarios) * 100)) + '%</strong> da equipe necessária.');
     }
 
     if (mesesVisitar > 48) {

@@ -1414,6 +1414,81 @@ table.cron-table {
 .cron-cell.presencial { background: #3ab5e0; }
 .cron-cell.virtual    { background: #6dbf5e; }
 
+@media (max-width: 768px) {
+
+.cronograma-wrap {
+  overflow-x: auto;
+}
+
+  .cron-table thead th,
+.cron-table td {
+  padding: 4px 2px;
+}
+
+.cron-table thead th:first-child,
+.cron-table td:first-child {
+  padding-left: 8px;
+  min-width: 90px;
+  max-width: 120px;
+  font-size: 12px;
+}
+
+.cron-table thead th:nth-child(2),
+.cron-table td:nth-child(2) {
+  min-width: 28px;
+  max-width: 32px;
+  font-size: 11px;
+}
+
+.cron-cell {
+  width: 16px;
+  height: 16px;
+}
+
+.cron-table td:first-child,
+.cron-table thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+}
+
+.cron-table thead th:first-child {
+  background: var(--c-green-dark);
+}
+
+.cron-table tbody td:first-child {
+  background: var(--c-cream);
+}
+
+.cron-table tbody tr:hover td:first-child {
+  background: var(--c-bg-alt);
+}
+
+table.cron-table {
+  min-width: 560px;
+}
+.cronograma-wrap {
+  border-radius: 4px;
+}
+}
+
+.cron-scroll-hint {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .cron-scroll-hint {
+    display: block;
+    font-family: var(--f-sans);
+    font-size: 12px;
+    color: var(--c-ink-muted);
+    margin-bottom: 8px;
+    font-style: italic;
+  }
+}
+
+
+
 
   </style>
 </head>
@@ -1598,6 +1673,8 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
         <span data-pt="Virtual" data-en="Virtual">Virtual</span>
       </div>
     </div>
+
+    <p class="cron-scroll-hint" data-pt="Role para a direita para ver todos os meses" data-en="Scroll right to see all months">Role para a direita para ver todos os meses</p>
 
     <div class="cronograma-wrap">
       <table class="cron-table" id="cron-table"></table>
@@ -2516,11 +2593,12 @@ loadScript('https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js', function
   var zoom, mapSvg, zoomGroup;
   var currentGeoLevel = 'municipio'; // 'municipio' | 'regiao'
 
-  function fmtNum(v, lang) {
-    if (v >= 1000000) return (v / 1000000).toFixed(1).replace('.', lang === 'pt' ? ',' : '.') + (lang === 'pt' ? ' M' : 'M');
-    if (v >= 1000) return (v / 1000).toFixed(0) + (lang === 'pt' ? ' mil' : 'k');
-    return v;
-  }
+function fmtNum(v, lang) {
+  if (v >= 1000000) return (v / 1000000).toFixed(1).replace('.', lang === 'pt' ? ',' : '.');
+  if (v >= 1000) return (v / 1000).toFixed(0);
+  return v;
+}
+
   var geojsonMunicGlobal, geojsonStateGlobal, indicadoresGlobal, regiaoDataGlobal, asbraerDataGlobal;
   var ttip;
 

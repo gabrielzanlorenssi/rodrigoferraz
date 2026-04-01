@@ -95,6 +95,7 @@
     .slider-wrap { display: flex; flex-direction: column; gap: 8px; }
     .slider-row { display: flex; align-items: center; gap: 12px; }
     .slider-row input[type=range] { flex: 1; border: none; padding: 0; background: none; accent-color: var(--p-accent, var(--c-green)); cursor: pointer; height: 20px; }
+    #step-gestor .slider-row input[type=range] { background: #e8e0d4; border-radius: 4px; }
     .slider-val { font-size: 18px; font-weight: 600; color: var(--c-green-dark); min-width: 60px; text-align: right; }
 
     .perfil-btns { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -168,6 +169,8 @@
     .btn-modo-loc { margin-top: 20px; font-family: var(--f-sans); font-size: 13px; font-weight: 500; background: none; border: 1.5px dashed var(--c-border); border-radius: 8px; padding: 10px 16px; cursor: pointer; color: var(--c-ink-muted); width: 100%; text-align: left; transition: all 0.2s; }
     .btn-modo-loc:hover { border-color: var(--c-green); color: var(--c-green-dark); background: rgba(45,106,50,0.04); }
     .btn-modo-loc.ativo { border-color: var(--c-amber); color: var(--c-amber); background: rgba(196,124,43,0.05); }
+    .nivel-btn { font-family: var(--f-sans); font-size: 13px; font-weight: 500; border: 1.5px solid var(--c-border); border-radius: 20px; padding: 6px 16px; cursor: pointer; background: var(--c-bg); color: var(--c-ink-muted); transition: all 0.18s; }
+    .nivel-btn.active { background: var(--p-bg, var(--c-green-dark)); color: #fff; border-color: var(--p-bg, var(--c-green-dark)); }
 
 
     /* BLOCOS VISUAIS */
@@ -216,7 +219,7 @@
     .horas-dia-wrap { display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap; }
     .horas-track-wrap { flex: 1; min-width: 200px; }
     .horas-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-    .horas-bar-label { font-size: 12px; color: var(--c-ink-muted); width: 100px; text-align: right; flex-shrink: 0; }
+    .horas-bar-label { font-size: 12px; color: var(--c-ink-muted); width: 220px; text-align: right; flex-shrink: 0; line-height: 1.3; }
     .horas-bar-track { flex: 1; height: 14px; background: #e0ddd5; border-radius: 7px; overflow: hidden; }
     .horas-bar-fill { height: 100%; border-radius: 7px; transition: width 0.8s ease; }
     .horas-bar-val { font-size: 12px; font-weight: 600; color: var(--c-ink); width: 40px; }
@@ -281,6 +284,15 @@
       <div class="step-title">Seu território de atuação</div>
     </div>
 
+    <!-- Seletor de nível geográfico -->
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;" id="nivel-geo-btns">
+      <button class="nivel-btn active" data-nivel="municipio" onclick="selecionarNivel('municipio')">Município</button>
+      <button class="nivel-btn" data-nivel="uf" onclick="selecionarNivel('uf')">Estado (UF)</button>
+      <button class="nivel-btn" data-nivel="regiao" onclick="selecionarNivel('regiao')">Região</button>
+      <button class="nivel-btn" data-nivel="brasil" onclick="selecionarNivel('brasil')">Brasil</button>
+    </div>
+
+    <!-- Município -->
     <div id="modo-municipio">
       <div class="field-grid two">
         <div class="field">
@@ -306,6 +318,73 @@
       </div>
     </div>
 
+    <!-- Estado (UF) -->
+    <div id="modo-uf" style="display:none;">
+      <div class="field-grid two">
+        <div class="field">
+          <label>Estado</label>
+          <select id="uf_select" onchange="selecionarUF(this.value)">
+            <option value="">Selecione um estado...</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Estabelecimentos de agricultura familiar</label>
+          <input type="text" id="total_agricultores_uf" placeholder="—" inputmode="numeric" oninput="formatarMilhar(this)">
+          <span class="hint">Calculado automaticamente. Pode editar.</span>
+        </div>
+      </div>
+      <div class="field-grid two" style="margin-top:16px;">
+        <div class="field">
+          <label>Técnicos da ATER disponíveis no estado</label>
+          <input type="number" id="total_tecnicos_uf" placeholder="Ex: 200" min="1">
+        </div>
+      </div>
+    </div>
+
+    <!-- Região -->
+    <div id="modo-regiao" style="display:none;">
+      <div class="field-grid two">
+        <div class="field">
+          <label>Região</label>
+          <select id="regiao_select" onchange="selecionarRegiao(this.value)">
+            <option value="">Selecione uma região...</option>
+            <option value="1">Norte</option>
+            <option value="2">Nordeste</option>
+            <option value="3">Sudeste</option>
+            <option value="4">Sul</option>
+            <option value="5">Centro-Oeste</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Estabelecimentos de agricultura familiar</label>
+          <input type="text" id="total_agricultores_reg" placeholder="—" inputmode="numeric" oninput="formatarMilhar(this)">
+          <span class="hint">Calculado automaticamente. Pode editar.</span>
+        </div>
+      </div>
+      <div class="field-grid two" style="margin-top:16px;">
+        <div class="field">
+          <label>Técnicos da ATER disponíveis na região</label>
+          <input type="number" id="total_tecnicos_reg" placeholder="Ex: 1000" min="1">
+        </div>
+      </div>
+    </div>
+
+    <!-- Brasil -->
+    <div id="modo-brasil" style="display:none;">
+      <div class="field-grid two">
+        <div class="field">
+          <label>Estabelecimentos de agricultura familiar — Brasil</label>
+          <input type="text" id="total_agricultores_br" placeholder="—" inputmode="numeric" oninput="formatarMilhar(this)">
+          <span class="hint">Total nacional (Censo Agropecuário 2017). Pode editar.</span>
+        </div>
+        <div class="field">
+          <label>Técnicos da ATER disponíveis — Brasil</label>
+          <input type="number" id="total_tecnicos_br" placeholder="Ex: 20000" min="1">
+        </div>
+      </div>
+    </div>
+
+    <!-- Localidade manual -->
     <div id="modo-localidade" style="display:none;">
       <div class="field" style="margin-bottom:16px;">
         <label>Nome da localidade</label>
@@ -325,7 +404,7 @@
     </div>
 
     <button class="btn-modo-loc" id="btn-modo" onclick="alternarModo()">
-      📍 Simular uma situação específica — assentamento, região ou outra localidade
+      📍 Simular uma situação específica — assentamento ou outra localidade
     </button>
     <p style="font-size:12px;color:var(--c-ink-muted);margin-top:12px;">Critério de cobertura: 1 técnico para cada 100 famílias (referência ATER)</p>
   </div>
@@ -421,7 +500,7 @@
         </div>
         <div class="field">
           <label>Região do município</label>
-          <select id="regiao_gest">
+          <select id="regiao_gest" onchange="atualizarCustoRegiao()">
             <option value="5000">Sul / Sudeste / Centro-Oeste / Nordeste (R$ 5.000/família/ano)</option>
             <option value="5500">Norte (R$ 5.500/família/ano)</option>
           </select>
@@ -546,6 +625,92 @@
 (function() {
 
   // =============================================
+  // TABELAS IBGE — UF e REGIÃO
+  // =============================================
+  var UF_MAP = {
+    '11':'RO','12':'AC','13':'AM','14':'RR','15':'PA','16':'AP','17':'TO',
+    '21':'MA','22':'PI','23':'CE','24':'RN','25':'PB','26':'PE','27':'AL','28':'SE','29':'BA',
+    '31':'MG','32':'ES','33':'RJ','35':'SP',
+    '41':'PR','42':'SC','43':'RS',
+    '50':'MS','51':'MT','52':'GO','53':'DF'
+  };
+  var UF_NOME = {
+    'RO':'Rondônia','AC':'Acre','AM':'Amazonas','RR':'Roraima','PA':'Pará','AP':'Amapá','TO':'Tocantins',
+    'MA':'Maranhão','PI':'Piauí','CE':'Ceará','RN':'Rio Grande do Norte','PB':'Paraíba',
+    'PE':'Pernambuco','AL':'Alagoas','SE':'Sergipe','BA':'Bahia',
+    'MG':'Minas Gerais','ES':'Espírito Santo','RJ':'Rio de Janeiro','SP':'São Paulo',
+    'PR':'Paraná','SC':'Santa Catarina','RS':'Rio Grande do Sul',
+    'MS':'Mato Grosso do Sul','MT':'Mato Grosso','GO':'Goiás','DF':'Distrito Federal'
+  };
+  var REGIAO_MAP = {'1':'Norte','2':'Nordeste','3':'Sudeste','4':'Sul','5':'Centro-Oeste'};
+
+  var nivelGeo = 'municipio'; // 'municipio' | 'uf' | 'regiao' | 'brasil'
+  var agregados = {}; // calculados quando CSV carregar
+
+  function calcularAgregados() {
+    // Por UF: {sigla: {total: N}}
+    var porUF = {}, porRegiao = {}, totalBR = 0;
+    municipiosData.forEach(function(m) {
+      var ibge = String(m.ibge7).padStart(7, '0');
+      var uf2  = ibge.slice(0, 2);
+      var reg1 = ibge.slice(0, 1);
+      var sigla = UF_MAP[uf2] || uf2;
+      if (!porUF[sigla]) porUF[sigla] = 0;
+      porUF[sigla] += m.total;
+      if (!porRegiao[reg1]) porRegiao[reg1] = 0;
+      porRegiao[reg1] += m.total;
+      totalBR += m.total;
+    });
+    agregados = { porUF: porUF, porRegiao: porRegiao, totalBR: totalBR };
+
+    // Popular select de UF
+    var sel = document.getElementById('uf_select');
+    if (sel) {
+      var ufs = Object.keys(porUF).sort(function(a, b) {
+        return (UF_NOME[a] || a).localeCompare(UF_NOME[b] || b);
+      });
+      ufs.forEach(function(sigla) {
+        var opt = document.createElement('option');
+        opt.value = sigla;
+        opt.textContent = (UF_NOME[sigla] || sigla) + ' (' + sigla + ')';
+        sel.appendChild(opt);
+      });
+    }
+
+    // Preencher Brasil automaticamente
+    var brEl = document.getElementById('total_agricultores_br');
+    if (brEl) { brEl.value = parseInt(totalBR).toLocaleString('pt-BR'); brEl.dataset.raw = String(totalBR); }
+  }
+
+  window.selecionarNivel = function(nivel) {
+    nivelGeo = nivel;
+    document.querySelectorAll('.nivel-btn').forEach(function(b) {
+      b.classList.toggle('active', b.getAttribute('data-nivel') === nivel);
+    });
+    var modos = ['municipio','uf','regiao','brasil'];
+    modos.forEach(function(m) {
+      var el = document.getElementById('modo-' + m);
+      if (el) el.style.display = m === nivel ? '' : 'none';
+    });
+    // ocultar localidade ao trocar nível
+    if (modoLocalidade) alternarModo();
+  };
+
+  window.selecionarUF = function(sigla) {
+    if (!sigla || !agregados.porUF) return;
+    var total = agregados.porUF[sigla] || 0;
+    var el = document.getElementById('total_agricultores_uf');
+    if (el) { el.value = parseInt(total).toLocaleString('pt-BR'); el.dataset.raw = String(total); }
+  };
+
+  window.selecionarRegiao = function(codigo) {
+    if (!codigo || !agregados.porRegiao) return;
+    var total = agregados.porRegiao[codigo] || 0;
+    var el = document.getElementById('total_agricultores_reg');
+    if (el) { el.value = parseInt(total).toLocaleString('pt-BR'); el.dataset.raw = String(total); }
+  };
+
+  // =============================================
   // DADOS DE MUNICÍPIOS
   // =============================================
   var municipiosData = [];
@@ -565,6 +730,7 @@
         }
       }
     })
+    .then(function() { calcularAgregados(); })
     .catch(function() { console.warn('estabelecimentos.csv não disponível'); });
 
   window.filtrarMunicipios = function(q) {
@@ -728,18 +894,40 @@
   // =============================================
   // LER TERRITÓRIO
   // =============================================
+  window.atualizarCustoRegiao = function() {
+    var val = document.getElementById('regiao_gest').value;
+    document.getElementById('custo_tec').value = val;
+  };
+
   function lerTerritorio() {
     var agric, tecs, nomeLocalidade, territ;
     if (modoLocalidade) {
       agric = parseFloat(document.getElementById('total_agricultores_loc').value) || 350;
       tecs  = parseFloat(document.getElementById('total_tecnicos_loc').value) || 2;
       nomeLocalidade = document.getElementById('localidade_nome').value.trim() || '';
-      territ = nomeLocalidade ? nomeLocalidade : 'na localidade';
+      territ = nomeLocalidade || 'na localidade';
+    } else if (nivelGeo === 'uf') {
+      agric = lerCampoNumerico('total_agricultores_uf') || 0;
+      tecs  = parseFloat(document.getElementById('total_tecnicos_uf').value) || 0;
+      var siglaUF = document.getElementById('uf_select').value;
+      nomeLocalidade = siglaUF ? (UF_NOME[siglaUF] || siglaUF) : 'estado';
+      territ = 'em ' + nomeLocalidade;
+    } else if (nivelGeo === 'regiao') {
+      agric = lerCampoNumerico('total_agricultores_reg') || 0;
+      tecs  = parseFloat(document.getElementById('total_tecnicos_reg').value) || 0;
+      var codReg = document.getElementById('regiao_select').value;
+      nomeLocalidade = codReg ? ('Região ' + REGIAO_MAP[codReg]) : 'região';
+      territ = 'na ' + nomeLocalidade;
+    } else if (nivelGeo === 'brasil') {
+      agric = lerCampoNumerico('total_agricultores_br') || 0;
+      tecs  = parseFloat(document.getElementById('total_tecnicos_br').value) || 0;
+      nomeLocalidade = 'Brasil';
+      territ = 'no Brasil';
     } else {
       agric = lerCampoNumerico('total_agricultores') || 2500;
       tecs  = parseFloat(document.getElementById('total_tecnicos').value) || 4;
       nomeLocalidade = document.getElementById('municipio_input').value.trim() || '';
-      territ = nomeLocalidade ? nomeLocalidade : 'no município';
+      territ = nomeLocalidade ? 'em ' + nomeLocalidade : 'no município';
     }
     return { agric: agric, tecs: tecs, nome: nomeLocalidade || territ, territ: territ };
   }
@@ -755,18 +943,7 @@
     var erros = [];
 
     // Validar território
-    if (!modoLocalidade) {
-      var agVal = lerCampoNumerico('total_agricultores');
-      var tecVal = document.getElementById('total_tecnicos').value;
-      if (!agVal || agVal <= 0) {
-        marcarErro('total_agricultores', 'Informe o número de estabelecimentos');
-        erros.push('estabelecimentos');
-      }
-      if (!tecVal || parseFloat(tecVal) <= 0) {
-        marcarErro('total_tecnicos', 'Informe o número de técnicos disponíveis');
-        erros.push('tecnicos');
-      }
-    } else {
+    if (modoLocalidade) {
       var agLocVal = document.getElementById('total_agricultores_loc').value;
       var tecLocVal = document.getElementById('total_tecnicos_loc').value;
       if (!agLocVal || parseFloat(agLocVal) <= 0) {
@@ -895,9 +1072,9 @@
     vis += '</div>';
     vis += '</div>';
     vis += '<div class="horas-track-wrap">';
-    vis += '<div class="horas-bar-row"><div class="horas-bar-label">Campo (real)</div><div class="horas-bar-track"><div class="horas-bar-fill" style="width:' + Math.min(100, (horasCampo/16)*100) + '%;background:var(--c-green)"></div></div><div class="horas-bar-val">' + horasCampo + 'h</div></div>';
-    vis += '<div class="horas-bar-row"><div class="horas-bar-label">Escritório (real)</div><div class="horas-bar-track"><div class="horas-bar-fill" style="width:' + Math.min(100, (horasEscrit/16)*100) + '%;background:#aaa"></div></div><div class="horas-bar-val">' + horasEscrit + 'h</div></div>';
-    vis += '<div class="horas-bar-row"><div class="horas-bar-label">Necessário</div><div class="horas-bar-track"><div class="horas-bar-fill" style="width:' + Math.min(100, (horasDiaNecFmt/16)*100) + '%;background:var(--c-red)"></div></div><div class="horas-bar-val" style="color:var(--c-red)">' + fmt(horasDiaNecFmt,1) + 'h</div></div>';
+    vis += '<div class="horas-bar-row"><div class="horas-bar-label">Tempo de campo (real)</div><div class="horas-bar-track"><div class="horas-bar-fill" style="width:' + Math.min(100, (horasCampo/16)*100) + '%;background:var(--c-green)"></div></div><div class="horas-bar-val">' + horasCampo + 'h</div></div>';
+    vis += '<div class="horas-bar-row"><div class="horas-bar-label">Tempo de escritório (real)</div><div class="horas-bar-track"><div class="horas-bar-fill" style="width:' + Math.min(100, (horasEscrit/16)*100) + '%;background:#aaa"></div></div><div class="horas-bar-val">' + horasEscrit + 'h</div></div>';
+    vis += '<div class="horas-bar-row"><div class="horas-bar-label">Tempo total necessário para atender a demanda</div><div class="horas-bar-track"><div class="horas-bar-fill" style="width:' + Math.min(100, (horasDiaNecFmt/16)*100) + '%;background:var(--c-red)"></div></div><div class="horas-bar-val" style="color:var(--c-red)">' + fmt(horasDiaNecFmt,1) + 'h</div></div>';
     vis += '</div>';
     vis += '</div>';
     vis += '</div>';
@@ -935,7 +1112,7 @@
     vis += '<div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;">';
     vis += '<div style="flex:1;min-width:160px;">';
     vis += '<div class="vidas-num">' + mult + '</div>';
-    vis += '<div class="vidas-label">Você e os técnicos da sua região precisariam de <strong>' + mult + ' vida' + (mult > 1 ? 's' : '') + '</strong> para atender todos os ' + fmt(Math.round(famPorTec)) + ' agricultores por técnico com o quantitativo atual de profissionais.</div>';
+    vis += '<div class="vidas-label">Os técnicos da região precisariam de <strong>' + mult + ' vida' + (mult > 1 ? 's' : '') + '</strong> para atender todos os ' + fmt(Math.round(famPorTec)) + ' agricultores por técnico com o quantitativo atual de profissionais.</div>';
     vis += '</div>';
     vis += '<div class="vidas-bar-wrap" style="margin-top:16px;">';
     for (var i = 0; i < Math.min(mult, 10); i++) {
@@ -1129,7 +1306,7 @@
     vis += '<div class="vis-block-title">Quantas vidas o seu técnico precisaria ter?</div>';
     vis += '<div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;">';
     vis += '<div style="flex:1;min-width:160px;"><div class="vidas-num">' + vidas + '</div>';
-    vis += '<div class="vidas-label">Você e os técnicos da sua região precisariam de <strong>' + vidas + ' vida' + (vidas > 1 ? 's</strong>' : '</strong>') + ' para atender todos os produtores — são <strong>' + fmt(Math.round(famPorTec)) + ' famílias por técnico</strong>, quando o ideal é 100.</div></div>';
+    vis += '<div class="vidas-label">Os técnicos da região precisariam de <strong>' + vidas + ' vida' + (vidas > 1 ? 's</strong>' : '</strong>') + ' para atender todos os produtores — são <strong>' + fmt(Math.round(famPorTec)) + ' famílias por técnico</strong>, quando o ideal é 100.</div></div>';
     vis += '<div class="vidas-bar-wrap" style="margin-top:16px;">';
     for (var vi = 0; vi < Math.min(vidas, 10); vi++) {
       var op2 = vi === 0 ? '1' : '0.25';

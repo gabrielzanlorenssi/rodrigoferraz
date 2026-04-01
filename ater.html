@@ -71,8 +71,8 @@
 
     .step-card { background: var(--c-cream); border: 1px solid var(--c-border); border-radius: 12px; padding: 28px 32px; margin-bottom: 24px; }
     .step-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
-    .step-num { width: 32px; height: 32px; border-radius: 50%; background: var(--c-green-dark); color: #fff; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .step-title { font-family: var(--f-serif); font-size: 18px; color: var(--c-green-dark); line-height: 1.3; }
+    .step-num { width: 32px; height: 32px; border-radius: 50%; background: var(--p-bg, var(--c-green-dark)); color: #fff; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-title { font-family: var(--f-serif); font-size: 18px; color: var(--p-bg, var(--c-green-dark)); line-height: 1.3; }
 
     .field-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
     .field-grid.two { grid-template-columns: 1fr 1fr; }
@@ -82,6 +82,8 @@
     .field input::-webkit-outer-spin-button, .field input::-webkit-inner-spin-button { -webkit-appearance: none; }
     .field input:focus, .field select:focus { border-color: var(--c-green); }
     .field .hint { font-size: 11px; color: var(--c-ink-muted); }
+    .campo-invalido { border-color: var(--c-red) !important; background: #fff5f5 !important; }
+    .campo-erro { font-size: 11px; color: var(--c-red); font-weight: 600; margin-top: 4px; display: block; }
 
     /* Autocomplete município */
     .municipio-wrap { position: relative; }
@@ -92,7 +94,7 @@
 
     .slider-wrap { display: flex; flex-direction: column; gap: 8px; }
     .slider-row { display: flex; align-items: center; gap: 12px; }
-    .slider-row input[type=range] { flex: 1; border: none; padding: 0; background: none; accent-color: var(--c-green); cursor: pointer; }
+    .slider-row input[type=range] { flex: 1; border: none; padding: 0; background: none; accent-color: var(--p-accent, var(--c-green)); cursor: pointer; height: 20px; }
     .slider-val { font-size: 18px; font-weight: 600; color: var(--c-green-dark); min-width: 60px; text-align: right; }
 
     .perfil-btns { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -100,22 +102,32 @@
     .perfil-btn.active { background: var(--c-green-dark); color: #fff; border-color: var(--c-green-dark); }
 
     .cta-wrap { text-align: center; margin: 32px 0 0; }
-    .btn-calcular { font-family: var(--f-sans); font-size: 16px; font-weight: 600; background: var(--c-green); color: #fff; border: none; border-radius: 8px; padding: 14px 40px; cursor: pointer; transition: background 0.2s; }
-    .btn-calcular:hover { background: var(--c-green-dark); }
+    .btn-calcular { font-family: var(--f-sans); font-size: 16px; font-weight: 600; background: var(--p-accent, var(--c-green)); color: #fff; border: none; border-radius: 8px; padding: 14px 40px; cursor: pointer; transition: background 0.2s; }
+    .btn-calcular:hover { background: var(--p-bg, var(--c-green-dark)); }
 
     #resultado { display: none; margin-top: 40px; }
     #resultado.visible { display: block; }
 
-    .resultado-hero { background: var(--c-green-dark); border-radius: 16px; padding: 36px 32px; margin-bottom: 24px; text-align: center; }
+    /* Temas de perfil */
+    body.perfil-extensionista { --p-bg: #1f4023; --p-bg2: #162e18; --p-accent: #2d6a32; --p-light: #8ab890; --p-tag: #e8a84a; }
+    body.perfil-gestor         { --p-bg: #7a3a0a; --p-bg2: #5a2a06; --p-accent: #c47c2b; --p-light: #e8a84a; --p-tag: #fdf3e3; }
+    body.perfil-agricultor     { --p-bg: #3a1f5c; --p-bg2: #2a1440; --p-accent: #7c4db8; --p-light: #b48ee0; --p-tag: #e8d9f7; }
+
+    .perfil-btn[data-val="extensionista"].active { background: #1f4023; border-color: #1f4023; }
+    .perfil-btn[data-val="gestor"].active         { background: #7a3a0a; border-color: #7a3a0a; }
+    .perfil-btn[data-val="agricultor"].active      { background: #3a1f5c; border-color: #3a1f5c; }
+
+    .resultado-hero { background: var(--p-bg, var(--c-green-dark)); border-radius: 16px; padding: 36px 32px; margin-bottom: 24px; text-align: center; }
     .resultado-hero .rh-tag { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-amber-light); margin-bottom: 12px; }
     .resultado-hero .rh-num { font-family: var(--f-serif); font-size: clamp(52px, 10vw, 84px); color: #fff; line-height: 1; margin-bottom: 6px; }
     .resultado-hero .rh-unit { font-size: 14px; color: rgba(255,255,255,0.55); }
 
-    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
     .stat-card { background: var(--c-cream); border: 1px solid var(--c-border); border-radius: 12px; padding: 20px; position: relative; overflow: hidden; }
-    .stat-card::before { content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--c-amber); }
-    .stat-card.alert::before { background: var(--c-red); }
-    .stat-card.ok::before { background: var(--c-green-mid); }
+    .stat-card::before { display: none; }
+    .stat-card.alert { background: #fdf5f5; }
+    .stat-card.alert .sc-num { color: var(--c-red); }
+    .stat-card.ok .sc-num { color: var(--c-green); }
     .stat-card .sc-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-ink-muted); margin-bottom: 8px; }
     .stat-card .sc-num { font-family: var(--f-serif); font-size: 28px; font-weight: 700; color: var(--c-green-dark); line-height: 1; margin-bottom: 4px; }
     .stat-card .sc-desc { font-size: 13px; color: var(--c-ink-muted); line-height: 1.4; }
@@ -136,13 +148,15 @@
     .provocacao-text { font-size: 15px; line-height: 1.6; color: var(--c-ink); }
     .provocacao-text strong { color: var(--c-amber); }
 
-    .narrativa { border-left: 4px solid var(--c-amber); padding: 28px 32px; background: var(--c-cream); border-radius: 0 12px 12px 0; margin-bottom: 28px; }
-    .narrativa p { font-family: var(--f-serif); font-size: 17px; line-height: 2; color: var(--c-ink); font-style: italic; }
+    .narrativa { border-top: 2px solid var(--c-border); padding: 28px 32px; background: var(--c-cream); border-radius: 12px; margin-bottom: 28px; }
+    .narrativa p { font-family: var(--f-serif); font-size: 17px; line-height: 1.9; color: var(--c-ink); font-style: normal; }
 
-    .share-wrap { text-align: center; padding-top: 16px; }
-    .share-wrap p { font-size: 13px; color: var(--c-ink-muted); margin-bottom: 12px; }
+    .share-wrap { padding-top: 24px; border-top: 1px solid var(--c-border); margin-top: 8px; }
+    .share-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 0; }
     .btn-reiniciar { font-family: var(--f-sans); font-size: 14px; font-weight: 500; background: none; border: 1.5px solid var(--c-border); border-radius: 8px; padding: 10px 24px; cursor: pointer; color: var(--c-ink-muted); transition: all 0.2s; }
     .btn-reiniciar:hover { border-color: var(--c-green); color: var(--c-green); }
+    .btn-compartilhar { font-family: var(--f-sans); font-size: 14px; font-weight: 600; background: var(--c-green-dark); color: #fff; border: none; border-radius: 8px; padding: 10px 24px; cursor: pointer; transition: background 0.2s; }
+    .btn-compartilhar:hover { background: var(--c-green); }
 
     footer { background: var(--c-bg-dark); color: rgba(255,255,255,0.45); font-size: 12px; text-align: center; padding: 20px 24px; }
     footer a { color: rgba(255,255,255,0.55); }
@@ -154,6 +168,66 @@
     .btn-modo-loc { margin-top: 20px; font-family: var(--f-sans); font-size: 13px; font-weight: 500; background: none; border: 1.5px dashed var(--c-border); border-radius: 8px; padding: 10px 16px; cursor: pointer; color: var(--c-ink-muted); width: 100%; text-align: left; transition: all 0.2s; }
     .btn-modo-loc:hover { border-color: var(--c-green); color: var(--c-green-dark); background: rgba(45,106,50,0.04); }
     .btn-modo-loc.ativo { border-color: var(--c-amber); color: var(--c-amber); background: rgba(196,124,43,0.05); }
+
+
+    /* BLOCOS VISUAIS */
+    .vis-block { background: var(--c-cream); border: 1px solid var(--c-border); border-radius: 16px; padding: 28px 32px; margin-bottom: 20px; }
+    .vis-block-title { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-ink-muted); margin-bottom: 16px; }
+    .vis-block + .vis-block { margin-top: -8px; border-top-left-radius: 4px; border-top-right-radius: 4px; }
+    .vis-blocks-wrap { display: flex; flex-direction: column; gap: 0; }
+    .vis-blocks-wrap .vis-block { border-radius: 0; margin-bottom: 0; border-bottom: none; }
+    .vis-blocks-wrap .vis-block:first-child { border-radius: 16px 16px 0 0; }
+    .vis-blocks-wrap .vis-block:last-child { border-radius: 0 0 16px 16px; border-bottom: 1px solid var(--c-border); margin-bottom: 24px; }
+    .vis-blocks-wrap .vis-block-dark:last-child { border-bottom: none; }
+    .vis-block-dark { background: var(--p-bg, var(--c-green-dark)); color: #fff; }
+    .vis-block-dark .vis-block-title { color: rgba(255,255,255,0.5); }
+    .vis-block-amber { background: #fdf3e3; border-color: #f0d4a0; }
+
+    /* Donut */
+    .donut-wrap { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+    .donut-canvas-wrap { flex-shrink: 0; }
+    .donut-legend { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+    .donut-leg-item { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+    .donut-leg-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+    .donut-leg-pct { font-size: 22px; font-weight: 700; font-family: var(--f-serif); color: var(--c-green-dark); min-width: 52px; }
+    .donut-leg-label { font-size: 13px; color: var(--c-ink-muted); line-height: 1.3; }
+
+    /* Barra de déficit */
+    .deficit-track { height: 20px; background: #e0ddd5; border-radius: 10px; overflow: hidden; margin: 12px 0; position: relative; }
+    .deficit-fill { height: 100%; border-radius: 10px; transition: width 1s cubic-bezier(.4,0,.2,1); }
+    .deficit-nums { display: flex; justify-content: space-between; font-size: 13px; color: var(--c-ink-muted); margin-top: 4px; }
+
+    /* Mapa Brasil */
+    .mapa-brasil-wrap { display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap; }
+    .mapa-brasil-svg { flex-shrink: 0; }
+    .mapa-info { flex: 1; min-width: 160px; }
+    .mapa-num-big { font-family: var(--f-serif); font-size: 42px; font-weight: 700; color: var(--c-amber); line-height: 1; }
+    .mapa-num-label { font-size: 13px; color: var(--c-ink-muted); margin-top: 4px; line-height: 1.4; }
+    .mapa-equiv { margin-top: 16px; display: flex; flex-direction: column; gap: 6px; }
+    .mapa-equiv-item { font-size: 13px; color: var(--c-ink-muted); display: flex; align-items: center; gap: 8px; }
+
+    /* Vidas necessárias */
+    .vidas-num { font-family: var(--f-serif); font-size: 72px; font-weight: 700; color: #fff; line-height: 1; }
+    .vidas-label { font-size: 15px; color: rgba(255,255,255,0.65); margin-top: 8px; line-height: 1.5; }
+    .vidas-icons { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 16px; max-width: 400px; }
+    .vida-icon { font-size: 18px; line-height: 1; transition: opacity 0.3s; }
+
+    /* Horas por dia */
+    .horas-dia-wrap { display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap; }
+    .horas-track-wrap { flex: 1; min-width: 200px; }
+    .horas-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .horas-bar-label { font-size: 12px; color: var(--c-ink-muted); width: 100px; text-align: right; flex-shrink: 0; }
+    .horas-bar-track { flex: 1; height: 14px; background: #e0ddd5; border-radius: 7px; overflow: hidden; }
+    .horas-bar-fill { height: 100%; border-radius: 7px; transition: width 0.8s ease; }
+    .horas-bar-val { font-size: 12px; font-weight: 600; color: var(--c-ink); width: 40px; }
+    .horas-insight { font-family: var(--f-serif); font-size: 28px; font-weight: 700; color: var(--c-red); line-height: 1.1; margin-bottom: 4px; }
+    .horas-insight-label { font-size: 13px; color: var(--c-ink-muted); line-height: 1.4; }
+
+    @media (max-width: 600px) {
+      .vis-block { padding: 20px; }
+      .donut-wrap { flex-direction: column; align-items: flex-start; }
+      .mapa-brasil-wrap { flex-direction: column; }
+    }
 
     @media (max-width: 600px) {
       .step-card { padding: 20px; }
@@ -187,7 +261,7 @@
 </div>
 
 <main>
-
+  <!-- PASSO 1: PERFIL -->
   <div class="step-card" id="card-perfil">
     <div class="step-header">
       <div class="step-num">1</div>
@@ -195,18 +269,18 @@
     </div>
     <div class="perfil-btns" id="perfil-btns">
       <div class="perfil-btn active" data-val="extensionista">Extensionista / Técnico(a)</div>
-      <div class="perfil-btn perfil-btn-soon" title="Em breve">Gestor(a) público(a) <span class="soon-badge">em breve</span></div>
-      <div class="perfil-btn perfil-btn-soon" title="Em breve">Agricultor(a) familiar <span class="soon-badge">em breve</span></div>
+      <div class="perfil-btn" data-val="gestor">Gestor(a) público(a)</div>
+      <div class="perfil-btn" data-val="agricultor">Agricultor(a) familiar</div>
     </div>
   </div>
 
+  <!-- PASSO 2: TERRITÓRIO (comum a todos) -->
   <div class="step-card">
     <div class="step-header">
       <div class="step-num">2</div>
       <div class="step-title">Seu território de atuação</div>
     </div>
 
-    <!-- Modo município (padrão) -->
     <div id="modo-municipio">
       <div class="field-grid two">
         <div class="field">
@@ -219,7 +293,7 @@
         </div>
         <div class="field">
           <label>Estabelecimentos de agricultura familiar</label>
-          <input type="number" id="total_agricultores" placeholder="Ex: 2.500" min="1">
+          <input type="text" id="total_agricultores" placeholder="Ex: 2.500" inputmode="numeric" oninput="formatarMilhar(this)">
           <span class="hint">Preenchido automaticamente ao selecionar o município. Pode editar.</span>
         </div>
       </div>
@@ -232,36 +306,32 @@
       </div>
     </div>
 
-    <!-- Modo localidade (manual) -->
     <div id="modo-localidade" style="display:none;">
       <div class="field" style="margin-bottom:16px;">
         <label>Nome da localidade</label>
-        <input type="text" id="localidade_nome" placeholder="Ex: Assentamento, Comunidade Rural, Município, Região...">
+        <input type="text" id="localidade_nome" placeholder="Ex: Assentamento, Comunidade Rural, Região...">
         <span class="hint">Pode ser um assentamento, território, região ou qualquer recorte específico</span>
       </div>
       <div class="field-grid two">
         <div class="field">
-          <label>Estabelecimentos / famílias atendidas</label>
+          <label>Estabelecimentos / famílias</label>
           <input type="number" id="total_agricultores_loc" placeholder="Ex: 350" min="1">
-          <span class="hint">Total de famílias no recorte escolhido</span>
         </div>
         <div class="field">
           <label>Técnicos da ATER disponíveis</label>
           <input type="number" id="total_tecnicos_loc" placeholder="Ex: 2" min="1">
-          <span class="hint">Técnicos que atendem essa localidade</span>
         </div>
       </div>
     </div>
 
-    <!-- Botão alternar modo -->
     <button class="btn-modo-loc" id="btn-modo" onclick="alternarModo()">
-       → Simular uma situação específica (assentamento, região ou outra localidade)
+      📍 Simular uma situação específica — assentamento, região ou outra localidade
     </button>
-
-
+    <p style="font-size:12px;color:var(--c-ink-muted);margin-top:12px;">Critério de cobertura: 1 técnico para cada 100 famílias (referência ATER)</p>
   </div>
 
-  <div class="step-card">
+  <!-- PASSO 3: DADOS DO EXTENSIONISTA (só para extensionista) -->
+  <div class="step-card" id="step-extensionista">
     <div class="step-header">
       <div class="step-num">3</div>
       <div class="step-title">Sua rotina de trabalho</div>
@@ -335,38 +405,133 @@
     </div>
   </div>
 
+  <!-- PASSO 3: DADOS DO GESTOR -->
+  <div class="step-card" id="step-gestor" style="display:none;">
+    <div class="step-header">
+      <div class="step-num">3</div>
+      <div class="step-title">Dados da gestão</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:20px;">
+
+      <div class="field-grid two">
+        <div class="field">
+          <label>Custo médio mensal por técnico (R$)</label>
+          <input type="number" id="custo_tec" placeholder="Ex: 5.000" min="0" value="5000">
+          <span class="hint">Inclui salário, encargos e benefícios</span>
+        </div>
+        <div class="field">
+          <label>Região do município</label>
+          <select id="regiao_gest">
+            <option value="4500">Sul / Sudeste / Centro-Oeste / Nordeste (R$ 4.500/família/ano)</option>
+            <option value="5500">Norte (R$ 5.500/família/ano)</option>
+          </select>
+          <span class="hint">Referência de custo da ATER por família/ano</span>
+        </div>
+      </div>
+
+      <div class="field-grid two">
+        <div class="field">
+          <label>Meta de famílias a atender</label>
+          <input type="number" id="meta_familias" placeholder="Ex: 500" min="1">
+          <span class="hint">Quantas famílias pretende alcançar</span>
+        </div>
+        <div class="field slider-wrap">
+          <label>% do tempo em deslocamento</label>
+          <div class="slider-row">
+            <input type="range" id="pct_desl_gest" min="10" max="70" step="5" value="40">
+            <span class="slider-val" id="pct_desl_gest_val">40%</span>
+          </div>
+          <span class="hint">Média nacional: ~40% do tempo dos técnicos</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Km médio percorrido por técnico por mês</label>
+        <input type="number" id="km_tec_mes" placeholder="Ex: 600" min="0" value="600">
+        <span class="hint">Base para calcular desgaste de frota e infraestrutura</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PASSO 3: DADOS DO AGRICULTOR -->
+  <div class="step-card" id="step-agricultor" style="display:none;">
+    <div class="step-header">
+      <div class="step-num">3</div>
+      <div class="step-title">Sobre o atendimento que você recebe</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:20px;">
+
+      <div class="field">
+        <label>Com que frequência você recebe visita do técnico?</label>
+        <select id="freq_visita">
+          <option value="1">Uma vez por mês</option>
+          <option value="2">A cada 2 meses</option>
+          <option value="3" selected>A cada 3 meses</option>
+          <option value="6">A cada 6 meses</option>
+          <option value="12">Uma vez por ano</option>
+          <option value="0">Nunca recebi</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>O técnico que te atende é do seu município ou de fora?</label>
+        <select id="origem_tec">
+          <option value="municipio">Do próprio município</option>
+          <option value="fora">De outro município</option>
+          <option value="nao_sei">Não sei</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Você sente que o atendimento dura tempo suficiente?</label>
+        <select id="tempo_suf">
+          <option value="sim">Sim, é suficiente</option>
+          <option value="nao" selected>Não, poderia ser mais longo</option>
+          <option value="nunca">Nunca fui atendido(a)</option>
+        </select>
+      </div>
+
+    </div>
+  </div>
+
   <div class="cta-wrap">
-    <button class="btn-calcular" onclick="calcular()">Calcular minha realidade →</button>
+    <button class="btn-calcular" onclick="calcular()">Ver minha realidade →</button>
   </div>
 
   <div id="resultado">
 
+    <!-- HERO -->
     <div class="resultado-hero">
-      <div class="rh-tag" id="rh-tag">Famílias por extensionista no município</div>
+      <div class="rh-tag" id="rh-tag">Famílias por técnico</div>
       <div class="rh-num" id="rh-num">—</div>
       <div class="rh-unit" id="rh-unit">famílias / técnico</div>
     </div>
 
+    <!-- CARDS RESUMO -->
     <div class="cards-grid" id="cards-grid"></div>
 
-    <div class="prop-bar-wrap">
-      <div class="pb-label">Como você distribui o tempo de cada visita</div>
-      <div class="prop-bar" id="prop-tempo-bar"></div>
-      <div class="prop-bar-legend" id="prop-tempo-legend"></div>
-    </div>
+    <!-- BLOCOS VISUAIS (preenchidos por JS) -->
+    <div id="vis-blocks"></div>
 
-    <div class="provocacoes">
-      <h3>📋 O que os seus números revelam</h3>
-      <div id="provocacoes-list"></div>
-    </div>
-
+    <!-- NARRATIVA -->
     <div class="narrativa">
       <p id="narrativa-text"></p>
     </div>
 
+    <!-- COMPARTILHAR -->
     <div class="share-wrap">
-      <p>Quer tentar com outros dados?</p>
-      <button class="btn-reiniciar" onclick="reiniciar()">↺ Recalcular</button>
+      <div class="share-actions">
+        <button class="btn-compartilhar" id="btn-gerar-story" onclick="compartilharCard()">Gerar story</button>
+        <button class="btn-reiniciar" onclick="reiniciar()">↺ Recalcular</button>
+      </div>
+      <canvas id="share-canvas" style="display:none;"></canvas>
+      <div id="share-preview" style="display:none;margin-top:28px;">
+        <div id="stories-gallery" style="display:flex;justify-content:center;"></div>
+        <div style="display:flex;gap:10px;justify-content:center;margin-top:20px;">
+          <button class="btn-compartilhar" id="btn-share-final" onclick="compartilharOuBaixar()" style="background:var(--p-accent,var(--c-green));">Baixar PNG</button>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -389,7 +554,6 @@
     .then(function(r) { return r.text(); })
     .then(function(txt) {
       var linhas = txt.trim().split('\n');
-      // Pula header
       for (var i = 1; i < linhas.length; i++) {
         var cols = linhas[i].split(';');
         if (cols.length >= 3) {
@@ -401,9 +565,7 @@
         }
       }
     })
-    .catch(function() {
-      console.warn('estabelecimentos.csv não disponível');
-    });
+    .catch(function() { console.warn('estabelecimentos.csv não disponível'); });
 
   window.filtrarMunicipios = function(q) {
     var dropdown = document.getElementById('municipio-dropdown');
@@ -412,7 +574,6 @@
     var matches = municipiosData.filter(function(m) {
       return m.municipio.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').indexOf(norm) !== -1;
     }).slice(0, 10);
-
     if (matches.length === 0) { dropdown.classList.remove('open'); return; }
     dropdown.innerHTML = matches.map(function(m) {
       return '<div class="municipio-option" onclick="selecionarMunicipio(\'' +
@@ -423,13 +584,16 @@
 
   window.selecionarMunicipio = function(nome, total) {
     document.getElementById('municipio_input').value = nome;
-    document.getElementById('total_agricultores').value = total;
+    var agEl = document.getElementById('total_agricultores');
+    agEl.value = parseInt(total, 10).toLocaleString('pt-BR');
+    agEl.dataset.raw = String(total);
     document.getElementById('municipio-dropdown').classList.remove('open');
   };
 
   document.addEventListener('click', function(e) {
     if (!e.target.closest('.municipio-wrap')) {
-      document.getElementById('municipio-dropdown').classList.remove('open');
+      var dd = document.getElementById('municipio-dropdown');
+      if (dd) dd.classList.remove('open');
     }
   });
 
@@ -451,37 +615,93 @@
       btn.classList.remove('ativo');
     }
   };
+
+  // =============================================
+  // PERFIL — mostrar/ocultar step 3
+  // =============================================
+  // =============================================
+  // STORIES — paleta por perfil
+  // =============================================
+  var PERFIL_CORES = {
+    extensionista: { bg: '#1a2e1a', bg2: '#0f1e0f', accent: '#2d6a32', light: '#8ab890', tag: '#e8a84a', tagText: '#e8a84a' },
+    gestor:        { bg: '#5a2a06', bg2: '#3a1a02', accent: '#c47c2b', light: '#e8a84a', tag: '#fdf3e3', tagText: '#fdf3e3' },
+    agricultor:    { bg: '#2a1440', bg2: '#1a0c28', accent: '#7c4db8', light: '#b48ee0', tag: '#e8d9f7', tagText: '#e8d9f7' }
+  };
+
+  var perfil = 'extensionista';
+
+  function atualizarStep3() {
+    document.getElementById('step-extensionista').style.display = perfil === 'extensionista' ? '' : 'none';
+    document.getElementById('step-gestor').style.display        = perfil === 'gestor'        ? '' : 'none';
+    document.getElementById('step-agricultor').style.display    = perfil === 'agricultor'    ? '' : 'none';
+    document.body.className = document.body.className
+      .replace(/perfil-\S+/g, '').trim() + ' perfil-' + perfil;
+    var cor = PERFIL_CORES[perfil];
+    if (cor) {
+      var btns = document.querySelectorAll('.btn-compartilhar, .btn-calcular');
+      btns.forEach(function(b) { b.style.background = cor.accent; });
+    }
+  }
+
+  document.querySelectorAll('.perfil-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.perfil-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      perfil = btn.getAttribute('data-val');
+      atualizarStep3();
+    });
+  });
+
+  atualizarStep3();
+
+  // =============================================
+  // SLIDERS
+  // =============================================
   var sliders = [
     { id: 'visitas_mes',      valId: 'visitas_mes_val',      fmt: function(v) { return v; } },
     { id: 'familias_resp',    valId: 'familias_resp_val',    fmt: function(v) { return v; } },
     { id: 'horas_campo',      valId: 'horas_campo_val',      fmt: function(v) { return v + 'h'; } },
     { id: 'horas_escritorio', valId: 'horas_escritorio_val', fmt: function(v) { return v + 'h'; } },
     { id: 'dias_mes',         valId: 'dias_mes_val',         fmt: function(v) { return v; } },
-    { id: 'desl_min',         valId: 'desl_min_val',         fmt: function(v) { return v + ' min'; } }
+    { id: 'desl_min',         valId: 'desl_min_val',         fmt: function(v) { return v + ' min'; } },
+    { id: 'pct_desl_gest',    valId: 'pct_desl_gest_val',   fmt: function(v) { return v + '%'; } }
   ];
   sliders.forEach(function(s) {
     var el = document.getElementById(s.id);
+    if (!el) return;
     var vl = document.getElementById(s.valId);
-    function upd() { vl.textContent = s.fmt(el.value); }
+    function upd() { if (vl) vl.textContent = s.fmt(el.value); }
     el.addEventListener('input', upd);
     upd();
   });
 
   // =============================================
-  // PERFIL
-  // =============================================
-  var perfil = 'extensionista';
-  document.querySelectorAll('.perfil-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      document.querySelectorAll('.perfil-btn').forEach(function(b) { b.classList.remove('active'); });
-      btn.classList.add('active');
-      perfil = btn.getAttribute('data-val');
-    });
-  });
-
-  // =============================================
   // HELPERS
   // =============================================
+  function formatarMilhar(el) {
+    var raw = el.value.replace(/\D/g, '');
+    if (raw === '') { el.value = ''; return; }
+    el.value = parseInt(raw, 10).toLocaleString('pt-BR');
+    el.dataset.raw = raw;
+  }
+
+  function lerCampoNumerico(id) {
+    var el = document.getElementById(id);
+    if (!el) return 0;
+    var raw = el.dataset.raw || el.value.replace(/\D/g, '');
+    return parseFloat(raw) || 0;
+  }
+
+  function marcarErro(id, msg) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.classList.add('campo-invalido');
+    var err = document.createElement('span');
+    err.className = 'campo-erro';
+    err.textContent = msg;
+    el.parentNode.appendChild(err);
+  }
+
   function fmt(n, dec) {
     if (isNaN(n) || !isFinite(n)) return '—';
     return n.toLocaleString('pt-BR', { minimumFractionDigits: dec || 0, maximumFractionDigits: dec || 0 });
@@ -491,7 +711,9 @@
   function card(label, num, unit, desc, tipo) {
     return '<div class="stat-card ' + (tipo || '') + '">' +
       '<div class="sc-label">' + label + '</div>' +
-      '<div class="sc-num">' + num + '<span style="font-size:14px;font-family:var(--f-sans);font-weight:400;color:var(--c-ink-muted);margin-left:4px;">' + (unit || '') + '</span></div>' +
+      '<div class="sc-num">' + num +
+        '<span style="font-size:14px;font-family:var(--f-sans);font-weight:400;color:var(--c-ink-muted);margin-left:4px;">' + (unit || '') + '</span>' +
+      '</div>' +
       '<div class="sc-desc">' + desc + '</div>' +
       '</div>';
   }
@@ -504,200 +726,772 @@
   }
 
   // =============================================
-  // CALCULAR
+  // LER TERRITÓRIO
   // =============================================
-  window.calcular = function() {
-    // Ler dados do território conforme modo
+  function lerTerritorio() {
     var agric, tecs, nomeLocalidade, territ;
     if (modoLocalidade) {
       agric = parseFloat(document.getElementById('total_agricultores_loc').value) || 350;
       tecs  = parseFloat(document.getElementById('total_tecnicos_loc').value) || 2;
-      nomeLocalidade = document.getElementById('localidade_nome').value.trim() || 'a localidade informada';
-      territ = 'a localidade';
+      nomeLocalidade = document.getElementById('localidade_nome').value.trim() || '';
+      territ = nomeLocalidade ? nomeLocalidade : 'na localidade';
     } else {
-      agric = parseFloat(document.getElementById('total_agricultores').value) || 2500;
+      agric = lerCampoNumerico('total_agricultores') || 2500;
       tecs  = parseFloat(document.getElementById('total_tecnicos').value) || 4;
-      nomeLocalidade = document.getElementById('municipio_input').value.trim() || 'o município';
-      territ = 'o município';
+      nomeLocalidade = document.getElementById('municipio_input').value.trim() || '';
+      territ = nomeLocalidade ? nomeLocalidade : 'no município';
     }
-    var visitMes = parseFloat(document.getElementById('visitas_mes').value);
-    var famResp  = parseFloat(document.getElementById('familias_resp').value);
-    var horasCampo     = parseFloat(document.getElementById('horas_campo').value);
-    var horasEscrit    = parseFloat(document.getElementById('horas_escritorio').value);
-    var horasDia       = horasCampo + horasEscrit;
-    var diasMes        = parseFloat(document.getElementById('dias_mes').value);
-    var deslMin  = parseFloat(document.getElementById('desl_min').value);
-    var distKm   = parseFloat(document.getElementById('dist_km').value) || 15;
-    var atendMin = parseFloat(document.getElementById('atend_min').value) || 60;
+    return { agric: agric, tecs: tecs, nome: nomeLocalidade || territ, territ: territ };
+  }
 
-    // Critério: 100 famílias por técnico (ATER pública)
+  // =============================================
+  // CALCULAR
+  // =============================================
+  window.calcular = function() {
+    // Limpar erros anteriores
+    document.querySelectorAll('.campo-erro').forEach(function(el) { el.remove(); });
+    document.querySelectorAll('.campo-invalido').forEach(function(el) { el.classList.remove('campo-invalido'); });
+
+    var erros = [];
+
+    // Validar território
+    if (!modoLocalidade) {
+      var agVal = lerCampoNumerico('total_agricultores');
+      var tecVal = document.getElementById('total_tecnicos').value;
+      if (!agVal || agVal <= 0) {
+        marcarErro('total_agricultores', 'Informe o número de estabelecimentos');
+        erros.push('estabelecimentos');
+      }
+      if (!tecVal || parseFloat(tecVal) <= 0) {
+        marcarErro('total_tecnicos', 'Informe o número de técnicos disponíveis');
+        erros.push('tecnicos');
+      }
+    } else {
+      var agLocVal = document.getElementById('total_agricultores_loc').value;
+      var tecLocVal = document.getElementById('total_tecnicos_loc').value;
+      if (!agLocVal || parseFloat(agLocVal) <= 0) {
+        marcarErro('total_agricultores_loc', 'Informe o número de famílias');
+        erros.push('familias_loc');
+      }
+      if (!tecLocVal || parseFloat(tecLocVal) <= 0) {
+        marcarErro('total_tecnicos_loc', 'Informe o número de técnicos');
+        erros.push('tecnicos_loc');
+      }
+    }
+
+    // Validações por perfil
+    if (perfil === 'gestor') {
+      var custoVal = document.getElementById('custo_tec').value;
+      if (!custoVal || parseFloat(custoVal) <= 0) {
+        marcarErro('custo_tec', 'Informe o custo mensal por técnico');
+        erros.push('custo');
+      }
+    }
+
+    if (erros.length > 0) {
+      var primeiro = document.querySelector('.campo-invalido');
+      if (primeiro) primeiro.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    var t = lerTerritorio();
+    var agric = t.agric, tecs = t.tecs, territ = t.territ, nomeLoc = t.nome;
+
     var CRITERIO = 100;
-
     var famPorTec      = agric / tecs;
     var tecNecessarios = Math.ceil(agric / CRITERIO);
     var deficit        = Math.max(0, tecNecessarios - tecs);
-    var mesesVisitar   = famResp / visitMes;
-    var anosVisitar    = mesesVisitar / 12;
-    var minTotal       = deslMin + atendMin;
-    var pctDesl        = (deslMin / minTotal) * 100;
-    var pctAtend       = (atendMin / minTotal) * 100;
-    var kmMes          = distKm * 2 * visitMes;
-    var kmAno          = kmMes * 12;
-    var brasSpEquiv    = Math.round(kmAno / 1015);
-    var visitDiaNec    = (agric * 1) / 365;
-    var horasEstradaMes = (deslMin * visitMes) / 60;
-    var horasTrabalhoMes = horasDia * diasMes;
+    var pctDeficit     = Math.round((deficit / tecNecessarios) * 100);
 
-    // Textos por perfil
-    var perfilNomes = {
-      extensionista: 'extensionista',
-      gestor: 'gestor(a) público(a)',
-      agricultor: 'agricultor(a) familiar'
-    };
-    var nomePerfil = perfilNomes[perfil] || 'profissional';
-
-    // Ajustar tag do hero por perfil
-    var rhTag = {
-      extensionista: 'Famílias por extensionista em ' + (modoLocalidade ? nomeLocalidade : 'o município'),
-      gestor: 'Famílias por técnico em ' + (modoLocalidade ? nomeLocalidade : 'o município'),
-      agricultor: 'Estabelecimentos por técnico disponível'
-    };
-    document.getElementById('rh-tag').textContent = rhTag[perfil] || rhTag.extensionista;
     document.getElementById('rh-num').textContent = fmt(Math.round(famPorTec));
-    document.getElementById('rh-unit').textContent = 'famílias / técnico em ' + territ;
+    document.getElementById('rh-unit').textContent = 'famílias / técnico — ' + territ;
 
-    // Cards
-    var alertaVisita = mesesVisitar > 4;
-    var cards = '';
-    cards += card(
-      'Técnicos necessários',
-      fmt(tecNecessarios), '',
-      'Para cobrir ' + territ + ' (critério: 1 técnico por 100 famílias)',
-      deficit > 0 ? 'alert' : 'ok'
-    );
-    cards += card(
-      'Déficit de técnicos',
-      deficit > 0 ? fmt(deficit) : '0', '',
-      deficit > 0
-        ? 'Faltam ' + fmt(deficit) + ' técnico' + (deficit > 1 ? 's' : '') + ' em ' + territ + '.'
-        : 'Cobertura dentro do esperado.',
-      deficit > 0 ? 'alert' : 'ok'
-    );
-    cards += card(
-      'Intervalo entre visitas',
-      fmt(r1(mesesVisitar), 1), 'meses',
-      'Tempo para cada família receber 1 visita no ritmo atual.',
-      alertaVisita ? 'alert' : 'ok'
-    );
-    cards += card(
-      'Km rodados por ano',
-      fmt(Math.round(kmAno)), 'km',
-      'Equivale a Brasília–SP ' + fmt(brasSpEquiv) + ' vez' + (brasSpEquiv !== 1 ? 'es' : '') + '.',
-      ''
-    );
-    document.getElementById('cards-grid').innerHTML = cards;
-
-    // Barra tempo — 3 segmentos: deslocamento / atendimento / escritório
-    var horasCampoMes   = horasCampo * diasMes;
-    var horasEscritMes  = horasEscrit * diasMes;
-    var totalHorasMes   = horasDia * diasMes;
-    var pctEscrit       = (horasEscritMes / totalHorasMes) * 100;
-    var pctCampoTotal   = 100 - pctEscrit; // campo + deslocamento
-    // Dentro do tempo de campo: desl vs atendimento
-    var pctDeslDoCampo  = pctDesl; // já calculado sobre o tempo de cada visita
-
-    // Para a barra, reescalar: desl e atend são frações do tempo de campo
-    var pctDeslBarra   = r1(pctDeslDoCampo / 100 * pctCampoTotal);
-    var pctAtendBarra  = r1(pctCampoTotal - pctDeslBarra);
-
-    var barHtml = '';
-    barHtml += '<div class="pb-seg" style="width:' + pctDeslBarra + '%;background:var(--c-amber);">' + (pctDeslBarra > 8 ? Math.round(pctDeslBarra) + '%' : '') + '</div>';
-    barHtml += '<div class="pb-seg" style="width:' + pctAtendBarra + '%;background:var(--c-green);">' + (pctAtendBarra > 8 ? Math.round(pctAtendBarra) + '%' : '') + '</div>';
-    barHtml += '<div class="pb-seg" style="width:' + r1(pctEscrit) + '%;background:var(--c-ink-muted);opacity:0.5;">' + (pctEscrit > 8 ? Math.round(pctEscrit) + '%' : '') + '</div>';
-    document.getElementById('prop-tempo-bar').innerHTML = barHtml;
-    document.getElementById('prop-tempo-legend').innerHTML =
-      '<div class="pbl-item"><div class="pbl-dot" style="background:var(--c-amber)"></div>Deslocamento (' + Math.round(pctDeslBarra) + '%)</div>' +
-      '<div class="pbl-item"><div class="pbl-dot" style="background:var(--c-green)"></div>Atendimento (' + Math.round(pctAtendBarra) + '%)</div>' +
-      '<div class="pbl-item"><div class="pbl-dot" style="background:var(--c-ink-muted);opacity:0.5"></div>Escritório e outras atividades (' + Math.round(pctEscrit) + '%)</div>';
-
-    // Provocações
-    var provs = '';
-
-    if (mesesVisitar > 12) {
-      var anoFut = new Date().getFullYear() + Math.ceil(anosVisitar);
-      provs += prov('📅', 'No ritmo atual, para visitar todas as <strong>' + fmt(famResp) + ' famílias</strong> ao menos uma vez, você levaria <strong>' + fmt(Math.round(mesesVisitar)) + ' meses</strong>. Um agricultor que começa a ser atendido hoje só receberá nova visita em <strong>' + anoFut + '</strong>.');
-    } else if (mesesVisitar > 4) {
-      provs += prov('📅', 'Cada família recebe uma visita a cada <strong>' + fmt(r1(mesesVisitar), 1) + ' meses</strong> — muita coisa pode acontecer na lavoura nesse intervalo.');
-    } else {
-      provs += prov('✅', 'Cada família recebe uma visita a cada <strong>' + fmt(r1(mesesVisitar), 1) + ' meses</strong> — uma frequência razoável de acompanhamento.');
-    }
-
-    provs += prov('📍', 'Para garantir <strong>1 visita por ano</strong> a cada agricultor familiar de ' + territ + ', seriam necessárias <strong>' + fmt(r1(visitDiaNec), 1) + ' visitas por dia</strong> — com todos os ' + fmt(tecs) + ' técnico' + (tecs > 1 ? 's' : '') + ' trabalhando inclusive nos finais de semana.');
-
-    if (pctDesl > 40) {
-      provs += prov('🚗', 'Você passa <strong>' + Math.round(pctDesl) + '% do tempo de cada visita</strong> se deslocando. Quase metade da sua ATER acontece antes de você chegar à propriedade. São <strong>' + fmt(Math.round(horasEstradaMes)) + ' horas na estrada por mês</strong>.');
-    } else {
-      provs += prov('🚗', 'Você passa <strong>' + Math.round(pctDesl) + '% do tempo de cada visita</strong> em deslocamento — <strong>' + fmt(Math.round(horasEstradaMes)) + ' horas por mês</strong> na estrada. A infraestrutura viária é parte da sua ATER.');
-    }
-
-    provs += prov('🛣️', 'Em um ano você percorre aproximadamente <strong>' + fmt(Math.round(kmAno)) + ' km</strong> — o equivalente a ir de Brasília a São Paulo <strong>' + fmt(brasSpEquiv) + ' vez' + (brasSpEquiv !== 1 ? 'es' : '') + '</strong>.');
-
-    if (famPorTec > 150) {
-      var mult = Math.ceil(famPorTec / CRITERIO);
-      provs += prov('🧑‍🤝‍🧑', 'Para cobrir as <strong>' + fmt(Math.round(famPorTec)) + ' famílias</strong> por técnico em ' + territ + ' com qualidade, seriam necessários <strong>' + mult + ' extensionistas</strong> onde hoje há um — cada técnico precisaria se multiplicar em <strong>' + mult + ' pessoas</strong>.');
-    }
-
-    if (deficit > 0) {
-      provs += prov('📉', territ.charAt(0).toUpperCase() + territ.slice(1) + ' precisaria de <strong>mais ' + fmt(deficit) + ' técnico' + (deficit > 1 ? 's' : '') + '</strong> para atingir a cobertura mínima de 1 técnico por 100 famílias. Déficit de <strong>' + fmt(Math.round((deficit / tecNecessarios) * 100)) + '%</strong> da equipe necessária.');
-    }
-
-    if (mesesVisitar > 48) {
-      provs += prov('⚽', 'Alguns produtores só receberão nova visita técnica depois da <strong>próxima Copa do Mundo</strong> — talvez da seguinte também.');
-    }
-
-    document.getElementById('provocacoes-list').innerHTML = provs;
-
-    // Narrativa por perfil
-    var narrativaBase = '';
-
-    if (perfil === 'agricultor') {
-      narrativaBase = 'O seu município conta com <strong>' + fmt(tecs) + ' técnico' + (tecs > 1 ? 's' : '') + '</strong> de ATER pública para <strong>' + fmt(agric) + ' estabelecimentos de agricultura familiar</strong>. ';
-      narrativaBase += 'Isso significa que cada técnico precisaria atender em média <strong>' + fmt(Math.round(famPorTec)) + ' famílias</strong> — quando o recomendado é no máximo 100. ';
-      if (deficit > 0) {
-        narrativaBase += 'Para que você e seus vizinhos tivessem acesso a um serviço de extensão de qualidade, o município precisaria de pelo menos <strong>' + fmt(tecNecessarios) + ' técnicos</strong>. ';
-      }
-      narrativaBase += 'A qualidade da assistência técnica que você recebe depende de <strong>mais investimento público em extensão rural</strong>.';
-
+    if (perfil === 'extensionista') {
+      calcularExtensionista(agric, tecs, territ, nomeLoc, famPorTec, tecNecessarios, deficit, pctDeficit, CRITERIO);
     } else if (perfil === 'gestor') {
-      narrativaBase = 'Com base nos dados informados, o município conta com <strong>' + fmt(tecs) + ' técnico' + (tecs > 1 ? 's' : '') + '</strong> para <strong>' + fmt(agric) + ' estabelecimentos de agricultura familiar</strong>. ';
-      if (deficit > 0) {
-        narrativaBase += 'Para atingir a cobertura mínima recomendada (1 técnico por 100 famílias), seriam necessários <strong>' + fmt(tecNecessarios) + ' profissionais</strong> — um déficit de <strong>' + fmt(deficit) + '</strong>. ';
-      }
-      narrativaBase += 'No ritmo atual, cada família recebe assistência técnica a cada <strong>' + fmt(Math.round(mesesVisitar)) + ' meses</strong>. ';
-      narrativaBase += 'Ampliar a equipe e diversificar os canais de atendimento — incluindo ferramentas digitais — são caminhos para aumentar a cobertura sem ampliar proporcionalmente os custos.';
-
-    } else {
-      // extensionista (default)
-      narrativaBase = 'Com base nos dados informados, como <strong>extensionista</strong>, você é responsável por <strong>' + fmt(famResp) + ' famílias</strong> e realiza <strong>' + fmt(visitMes) + ' visitas por mês</strong>. ';
-      narrativaBase += 'Você passa cerca de <strong>' + fmt(Math.round(horasEstradaMes)) + ' horas por mês</strong> na estrada, além de <strong>' + fmt(Math.round(horasEscritMes)) + ' horas em atividades administrativas</strong>. ';
-      if (mesesVisitar > 4) {
-        narrativaBase += 'No ritmo atual, cada família recebe uma visita a cada <strong>' + fmt(Math.round(mesesVisitar)) + ' meses</strong>. ';
-      }
-      narrativaBase += 'No município, há <strong>' + fmt(tecs) + ' técnico' + (tecs > 1 ? 's' : '') + '</strong> para <strong>' + fmt(agric) + ' agricultores familiares</strong> — quando seriam necessários pelo menos <strong>' + fmt(tecNecessarios) + '</strong>. ';
-      narrativaBase += 'Fazer ATER de qualidade não depende apenas de você: depende de <strong>estrutura, equipes e políticas públicas adequadas</strong>.';
+      calcularGestor(agric, tecs, territ, nomeLoc, famPorTec, tecNecessarios, deficit, pctDeficit);
+    } else if (perfil === 'agricultor') {
+      calcularAgricultor(agric, tecs, territ, nomeLoc, famPorTec, tecNecessarios, deficit, pctDeficit);
     }
-
-    document.getElementById('narrativa-text').innerHTML = narrativaBase;
 
     var r = document.getElementById('resultado');
     r.classList.add('visible');
     r.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
+  // =============================================
+  // EXTENSIONISTA
+  // =============================================
+  function calcularExtensionista(agric, tecs, territ, nomeLoc, famPorTec, tecNecessarios, deficit, pctDeficit, CRITERIO) {
+    var visitMes    = parseFloat(document.getElementById('visitas_mes').value);
+    var famResp     = parseFloat(document.getElementById('familias_resp').value);
+    var horasCampo  = parseFloat(document.getElementById('horas_campo').value);
+    var horasEscrit = parseFloat(document.getElementById('horas_escritorio').value);
+    var horasDia    = horasCampo + horasEscrit;
+    var diasMes     = parseFloat(document.getElementById('dias_mes').value);
+    var deslMin     = parseFloat(document.getElementById('desl_min').value);
+    var distKm      = parseFloat(document.getElementById('dist_km').value) || 15;
+    var atendMin    = parseFloat(document.getElementById('atend_min').value) || 60;
+
+    var mesesVisitar    = famResp / visitMes;
+    var anosVisitar     = mesesVisitar / 12;
+    var minTotal        = deslMin + atendMin;
+    var pctDesl         = (deslMin / minTotal) * 100;
+    var pctAtend        = 100 - pctDesl;
+    var kmMes           = distKm * 2 * visitMes;
+    var kmAno           = kmMes * 12;
+    var brasSpEquiv     = Math.round(kmAno / 1015);
+    var horasEstradaMes = (deslMin * visitMes) / 60;
+    var horasEscritMes  = horasEscrit * diasMes;
+    var horasCampoMes   = horasCampo * diasMes;
+    var totalHorasMes   = horasDia * diasMes;
+    var pctEscrit       = (horasEscritMes / totalHorasMes) * 100;
+    var pctCampoTotal   = 100 - pctEscrit;
+    var pctDeslBarra    = r1(pctDesl / 100 * pctCampoTotal);
+    var pctAtendBarra   = r1(pctCampoTotal - pctDeslBarra);
+    var visitDiaNec     = agric / 365;
+    var horasDiaNec     = visitDiaNec * (minTotal / 60); // horas/dia p/ 1 visita/ano a todos
+    var vidas           = Math.ceil(famPorTec / 100);
+    var mult            = vidas;
+
+    document.getElementById('rh-tag').textContent = 'Famílias por extensionista — ' + territ;
+
+    // CARDS
+    var cards = '';
+    cards += card('Técnicos necessários', fmt(tecNecessarios), '', 'Para cobrir ' + territ + ' (1 técnico/100 famílias)', deficit > 0 ? 'alert' : 'ok');
+    cards += card('Déficit de técnicos', deficit > 0 ? fmt(deficit) : '0', '', deficit > 0 ? 'Faltam ' + fmt(deficit) + ' técnico' + (deficit > 1 ? 's' : '') + ' — déficit de ' + pctDeficit + '%.' : 'Cobertura dentro do esperado.', deficit > 0 ? 'alert' : 'ok');
+    cards += card('Intervalo entre visitas', fmt(r1(mesesVisitar), 1), 'meses', 'Tempo para cada família receber 1 visita.', mesesVisitar > 4 ? 'alert' : 'ok');
+    cards += card('Km rodados por ano', fmt(Math.round(kmAno)), 'km', 'Equivale a Brasília–SP ' + fmt(brasSpEquiv) + ' vez' + (brasSpEquiv !== 1 ? 'es' : '') + '.', '');
+    document.getElementById('cards-grid').innerHTML = cards;
+
+    // BLOCOS VISUAIS
+    var vis = '';
+
+    // 1. DONUT — distribuição do tempo por visita
+    vis += '<div class="vis-block">';
+    vis += '<div class="vis-block-title">Como você distribui o tempo de cada visita</div>';
+    vis += '<div class="donut-wrap">';
+    vis += '<div class="donut-canvas-wrap"><canvas id="donut-canvas" width="160" height="160"></canvas></div>';
+    vis += '<div class="donut-legend">';
+    vis += '<div class="donut-leg-item"><div class="donut-leg-dot" style="background:var(--c-amber)"></div><div><div class="donut-leg-pct" style="color:var(--c-amber)">' + Math.round(pctDeslBarra) + '%</div><div class="donut-leg-label">Deslocamento<br><strong>' + fmt(Math.round(horasEstradaMes)) + ' horas/mês</strong> na estrada</div></div></div>';
+    vis += '<div class="donut-leg-item"><div class="donut-leg-dot" style="background:var(--c-green)"></div><div><div class="donut-leg-pct" style="color:var(--c-green)">' + Math.round(pctAtendBarra) + '%</div><div class="donut-leg-label">Atendimento direto<br>na propriedade</div></div></div>';
+    if (horasEscrit > 0) {
+      vis += '<div class="donut-leg-item"><div class="donut-leg-dot" style="background:#aaa"></div><div><div class="donut-leg-pct" style="color:#888">' + Math.round(pctEscrit) + '%</div><div class="donut-leg-label">Escritório e<br>outras atividades</div></div></div>';
+    }
+    vis += '</div></div>';
+    vis += '<p style="font-size:13px;color:var(--c-ink-muted);margin-top:14px;border-top:1px solid var(--c-border);padding-top:12px;">A infraestrutura viária é parte da sua ATER. Cada minuto na estrada é um minuto a menos na lavoura.</p>';
+    vis += '</div>';
+
+    // 2. HORAS POR DIA — visitas necessárias e carga real
+    var horasDiaNecFmt = r1(horasDiaNec);
+    vis += '<div class="vis-block vis-block-amber">';
+    vis += '<div class="vis-block-title">Visitas necessárias para cobrir ' + territ + '</div>';
+    vis += '<div class="horas-dia-wrap">';
+    vis += '<div style="flex:1;min-width:180px;">';
+    vis += '<div class="horas-insight">' + fmt(r1(visitDiaNec), 1) + ' visitas/dia</div>';
+    vis += '<div class="horas-insight-label" style="color:var(--c-ink-muted)">Para garantir pelo menos 1 visita por ano a cada agricultor de ' + territ + ', seriam necessárias <strong>' + fmt(r1(visitDiaNec), 1) + ' visitas por dia</strong> — todos os ' + fmt(tecs) + ' técnico' + (tecs > 1 ? 's' : '') + ' trabalhando inclusive aos finais de semana.</div>';
+    vis += '<div style="margin-top:14px;padding-top:12px;border-top:1px solid #e0c88a;">';
+    vis += '<div style="font-size:13px;color:var(--c-ink-muted)">Ou seja, você teria que trabalhar pelo menos <strong style="color:var(--c-red);font-size:18px;">' + fmt(horasDiaNecFmt, 1) + ' horas por dia</strong>, todos os dias do ano.</div>';
+    vis += '</div>';
+    vis += '</div>';
+    vis += '<div class="horas-track-wrap">';
+    vis += '<div class="horas-bar-row"><div class="horas-bar-label">Campo (real)</div><div class="horas-bar-track"><div class="horas-bar-fill" style="width:' + Math.min(100, (horasCampo/16)*100) + '%;background:var(--c-green)"></div></div><div class="horas-bar-val">' + horasCampo + 'h</div></div>';
+    vis += '<div class="horas-bar-row"><div class="horas-bar-label">Escritório (real)</div><div class="horas-bar-track"><div class="horas-bar-fill" style="width:' + Math.min(100, (horasEscrit/16)*100) + '%;background:#aaa"></div></div><div class="horas-bar-val">' + horasEscrit + 'h</div></div>';
+    vis += '<div class="horas-bar-row"><div class="horas-bar-label">Necessário</div><div class="horas-bar-track"><div class="horas-bar-fill" style="width:' + Math.min(100, (horasDiaNecFmt/16)*100) + '%;background:var(--c-red)"></div></div><div class="horas-bar-val" style="color:var(--c-red)">' + fmt(horasDiaNecFmt,1) + 'h</div></div>';
+    vis += '</div>';
+    vis += '</div>';
+    vis += '</div>';
+
+    // 3. MAPA BRASIL — km percorridos
+    var nsEquiv = kmAno / 4394;
+    var nsEquivFmt = nsEquiv < 1 ? fmt(nsEquiv, 1) : fmt(Math.round(nsEquiv));
+    vis += '<div class="vis-block">';
+    vis += '<div class="vis-block-title">Distância percorrida em campo por ano</div>';
+    vis += '<div class="mapa-brasil-wrap">';
+    vis += '<div class="mapa-brasil-svg" style="position:relative;width:200px;height:240px;flex-shrink:0;">';
+    vis += '<img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Blank_Map_of_Brazil.svg" width="200" height="240" style="display:block;filter:saturate(0) opacity(0.3);" crossorigin="anonymous">';
+    vis += '<svg style="position:absolute;top:0;left:0;pointer-events:none;" width="200" height="240">';
+    vis += '<line x1="128" y1="130" x2="132" y2="160" stroke="#c47c2b" stroke-width="2" stroke-dasharray="4,3"/>';
+    vis += '<circle cx="128" cy="130" r="5" fill="#c47c2b" stroke="white" stroke-width="1.5"/>';
+    vis += '<text x="136" y="129" font-size="9" font-weight="bold" fill="#c47c2b" font-family="sans-serif">Brasília</text>';
+    vis += '<circle cx="132" cy="160" r="5" fill="#2d6a32" stroke="white" stroke-width="1.5"/>';
+    vis += '<text x="140" y="164" font-size="9" font-weight="bold" fill="#2d6a32" font-family="sans-serif">SP</text>';
+    vis += '</svg>';
+    vis += '</div>';
+    vis += '<div class="mapa-info">';
+    vis += '<div class="mapa-num-big">' + fmt(Math.round(kmAno)) + ' km</div>';
+    vis += '<div class="mapa-num-label">percorridos por ano em campo</div>';
+    vis += '<div class="mapa-equiv" style="margin-top:12px;">';
+    vis += '<div class="mapa-equiv-item"><span style="color:var(--c-amber);font-weight:600;">' + fmt(brasSpEquiv) + '×</span> o trajeto Brasília–São Paulo (1.015 km)</div>';
+    vis += '<div class="mapa-equiv-item"><span style="color:var(--c-amber);font-weight:600;">' + nsEquivFmt + '×</span> a extensão do Brasil de norte a sul (4.394 km)</div>';
+    vis += '</div>';
+    vis += '</div>';
+    vis += '</div>';
+    vis += '</div>';
+
+    // 4. VIDAS — análise de sobrecarga
+    vis += '<div class="vis-block vis-block-dark">';
+    vis += '<div class="vis-block-title">Quantas vidas seriam necessárias?</div>';
+    vis += '<div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;">';
+    vis += '<div style="flex:1;min-width:160px;">';
+    vis += '<div class="vidas-num">' + mult + '</div>';
+    vis += '<div class="vidas-label">Você e os técnicos da sua região precisariam de <strong>' + mult + ' vida' + (mult > 1 ? 's' : '') + '</strong> para atender todos os ' + fmt(Math.round(famPorTec)) + ' agricultores por técnico com o quantitativo atual de profissionais.</div>';
+    vis += '</div>';
+    vis += '<div class="vidas-bar-wrap" style="margin-top:16px;">';
+    for (var i = 0; i < Math.min(mult, 10); i++) {
+      var op = i === 0 ? '1' : '0.25';
+      vis += '<div style="display:inline-block;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,' + op + ');margin:3px;"></div>';
+    }
+    vis += '</div>';
+    vis += '</div>';
+    if (deficit > 0) {
+      vis += '<div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.15);font-size:13px;color:rgba(255,255,255,0.55);">';
+      vis += 'Para chegar a 1 vida por técnico — ou seja, uma carga humana — seriam necessários <strong style="color:var(--c-amber-light)">' + fmt(tecNecessarios) + ' técnicos</strong> em ' + territ + '. Hoje há ' + fmt(tecs) + '.';
+      vis += '</div>';
+    }
+    vis += '</div>';
+
+    document.getElementById('vis-blocks').innerHTML = '<div class="vis-blocks-wrap">' + vis + '</div>';
+
+    // Renderizar donut depois do DOM inserido
+    setTimeout(function() { desenharDonut(pctDeslBarra, pctAtendBarra, pctEscrit); }, 50);
+
+    // Narrativa
+    var narrativa = 'Como <strong>extensionista</strong>, você é responsável por <strong>' + fmt(famResp) + ' famílias</strong> e realiza <strong>' + fmt(visitMes) + ' visitas por mês</strong>. ';
+    narrativa += 'Você passa cerca de <strong>' + fmt(Math.round(horasEstradaMes)) + ' horas por mês</strong> na estrada, além de <strong>' + fmt(Math.round(horasEscritMes)) + ' horas</strong> em atividades administrativas. ';
+    if (mesesVisitar > 4) narrativa += 'No ritmo atual, cada família recebe uma visita a cada <strong>' + fmt(Math.round(mesesVisitar)) + ' meses</strong>. ';
+    narrativa += 'Em ' + territ + ' há <strong>' + fmt(tecs) + ' técnico' + (tecs > 1 ? 's' : '') + '</strong> para <strong>' + fmt(agric) + ' agricultores</strong> — quando seriam necessários pelo menos <strong>' + fmt(tecNecessarios) + '</strong>. ';
+    narrativa += 'Fazer ATER de qualidade não depende apenas de você: depende de <strong>estrutura, equipes e políticas públicas adequadas</strong>.';
+    document.getElementById('narrativa-text').innerHTML = narrativa;
+  }
+
+  // Donut canvas
+  function desenharDonut(pctDesl, pctAtend, pctEscrit) {
+    var canvas = document.getElementById('donut-canvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var cx = 80, cy = 80, r = 64, lw = 22;
+    ctx.clearRect(0, 0, 160, 160);
+    var segs = [
+      { pct: pctDesl, color: '#c47c2b' },
+      { pct: pctAtend, color: '#2d6a32' },
+      { pct: pctEscrit, color: '#aaaaaa' }
+    ];
+    var startAngle = -Math.PI / 2;
+    segs.forEach(function(s) {
+      if (s.pct <= 0) return;
+      var end = startAngle + (s.pct / 100) * 2 * Math.PI;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, startAngle, end);
+      ctx.lineWidth = lw;
+      ctx.strokeStyle = s.color;
+      ctx.stroke();
+      startAngle = end + 0.02;
+    });
+    // Centro limpo — sem número
+  }
+
+  // Mapa SVG do Brasil simplificado com linha Brasília–SP
+
+
+
+  // =============================================
+  // GESTOR
+  // =============================================
+  function calcularGestor(agric, tecs, territ, nomeLoc, famPorTec, tecNecessarios, deficit, pctDeficit) {
+    var custoTec     = parseFloat(document.getElementById('custo_tec').value) || 5000;
+    var custoPorFam  = parseFloat(document.getElementById('regiao_gest').value);
+    var metaFamilias = parseFloat(document.getElementById('meta_familias').value) || agric;
+    var pctDeslGest  = parseFloat(document.getElementById('pct_desl_gest').value);
+    var kmTecMes     = parseFloat(document.getElementById('km_tec_mes').value) || 600;
+
+    var custoTotalMes    = custoTec * tecs;
+    var custoEstradaMes  = custoTotalMes * (pctDeslGest / 100);
+    var custoAtendMes    = custoTotalMes - custoEstradaMes;
+    var kmTotalAno       = kmTecMes * tecs * 12;
+    var coberturaAtual   = Math.min(100, Math.round((tecs * 100 / tecNecessarios) * 100) / 100);
+    var familiasPorTecMes = agric / tecs;
+    var mesesVisitarGest = familiasPorTecMes / 20; // média 20 visitas/mês
+    var custoTotalAno    = custoPorFam * metaFamilias;
+    var tecNecMeta       = Math.ceil(metaFamilias / 100);
+
+    document.getElementById('rh-tag').textContent = 'Cobertura atual — ' + territ;
+    document.getElementById('rh-num').textContent = Math.round(coberturaAtual) + '%';
+    document.getElementById('rh-unit').textContent = 'das famílias com acesso a ATER (estimativa)';
+
+    var cards = '';
+    cards += card('Técnicos necessários', fmt(tecNecessarios), '', 'Para cobertura total (1 técnico por 100 famílias)', deficit > 0 ? 'alert' : 'ok');
+    cards += card('Déficit de pessoal', pctDeficit + '%', '', deficit > 0 ? 'Faltam ' + fmt(deficit) + ' profissionais para atingir a meta técnica.' : 'Equipe suficiente para a cobertura.', deficit > 0 ? 'alert' : 'ok');
+    cards += card('Custo na estrada/mês', 'R$ ' + fmt(Math.round(custoEstradaMes)), '', 'De cada R$ 1.000 em salários, R$ ' + fmt(Math.round(pctDeslGest * 10)) + ' são gastos em deslocamento.', pctDeslGest > 35 ? 'alert' : '');
+    cards += card('Km/ano (frota)', fmt(Math.round(kmTotalAno)), 'km', 'Desgaste total da frota municipal — ' + fmt(kmTecMes) + ' km/técnico/mês.', '');
+    document.getElementById('cards-grid').innerHTML = cards;
+
+    var vidas = Math.ceil(famPorTec / 100);
+    var vis = '';
+
+    // Barra de cobertura
+    vis += '<div class="vis-block">';
+    vis += '<div class="vis-block-title">Cobertura atual da equipe</div>';
+    vis += '<div style="margin-bottom:8px;display:flex;justify-content:space-between;"><span style="font-size:13px;color:var(--c-ink-muted)">Técnicos disponíveis: <strong>' + fmt(tecs) + '</strong></span><span style="font-size:13px;color:var(--c-ink-muted)">Necessários: <strong>' + fmt(tecNecessarios) + '</strong></span></div>';
+    vis += '<div class="deficit-track"><div class="deficit-fill" style="width:' + Math.min(100, coberturaAtual) + '%;background:' + (coberturaAtual >= 80 ? 'var(--c-green)' : coberturaAtual >= 50 ? 'var(--c-amber)' : 'var(--c-red)') + '"></div></div>';
+    vis += '<div class="deficit-nums"><span>' + Math.round(coberturaAtual) + '% coberto</span><span style="color:var(--c-red)">' + pctDeficit + '% déficit</span></div>';
+    vis += '<p style="font-size:13px;color:var(--c-ink-muted);margin-top:12px;">Para cumprir a meta técnica de 1 técnico por 100 famílias, seriam necessários <strong>' + fmt(tecNecessarios) + ' profissionais</strong>. Faltam <strong>' + fmt(deficit) + '</strong>.</p>';
+    vis += '</div>';
+
+    // Custo na estrada
+    vis += '<div class="vis-block vis-block-amber">';
+    vis += '<div class="vis-block-title">Onde vai o investimento?</div>';
+    vis += '<div class="horas-track-wrap">';
+    vis += '<div class="horas-bar-row"><div class="horas-bar-label">Atendimento</div><div class="horas-bar-track"><div class="horas-bar-fill" style="width:' + (100 - pctDeslGest) + '%;background:var(--c-green)"></div></div><div class="horas-bar-val">R$ ' + fmt(Math.round(custoAtendMes / 1000)) + 'k</div></div>';
+    vis += '<div class="horas-bar-row"><div class="horas-bar-label">Na estrada</div><div class="horas-bar-track"><div class="horas-bar-fill" style="width:' + pctDeslGest + '%;background:var(--c-amber)"></div></div><div class="horas-bar-val" style="color:var(--c-amber)">R$ ' + fmt(Math.round(custoEstradaMes / 1000)) + 'k</div></div>';
+    vis += '</div>';
+    vis += '<p style="font-size:13px;color:var(--c-ink-muted);margin-top:14px;border-top:1px solid #e0c88a;padding-top:12px;">De cada <strong>R$ 1.000</strong> investidos em salários, <strong style="color:var(--c-amber)">R$ ' + fmt(Math.round(pctDeslGest * 10)) + '</strong> são gastos em deslocamento — não em assistência direta. Melhorias na logística ampliam o retorno do investimento.</p>';
+    vis += '</div>';
+
+    // Vidas
+    vis += '<div class="vis-block vis-block-dark">';
+    vis += '<div class="vis-block-title">Quantas vidas seriam necessárias?</div>';
+    vis += '<div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;">';
+    vis += '<div style="flex:1;min-width:160px;"><div class="vidas-num">' + vidas + '</div>';
+    vis += '<div class="vidas-label">Para atender todos os agricultores com o quantitativo atual, cada técnico precisaria de <strong>' + vidas + ' vida' + (vidas > 1 ? 's</strong>.' : '</strong>.') + ' São <strong>' + fmt(Math.round(famPorTec)) + ' famílias por profissional</strong>.</div></div>';
+    vis += '<div class="vidas-bar-wrap" style="margin-top:16px;">';
+    for (var vi = 0; vi < Math.min(vidas, 10); vi++) {
+      var op2 = vi === 0 ? '1' : '0.25';
+      vis += '<div style="display:inline-block;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,' + op2 + ');margin:3px;"></div>';
+    }
+    vis += '</div></div>';
+    if (metaFamilias > agric * 0.5) {
+      vis += '<div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.15);font-size:13px;color:rgba(255,255,255,0.55);">Meta de ' + fmt(metaFamilias) + ' famílias: investimento estimado de <strong style="color:var(--c-amber-light)">R$ ' + fmt(Math.round(custoTotalAno)) + '/ano</strong> e equipe de <strong style="color:var(--c-amber-light)">' + fmt(tecNecMeta) + ' técnicos</strong>.</div>';
+    }
+    vis += '</div>';
+
+    document.getElementById('vis-blocks').innerHTML = '<div class="vis-blocks-wrap">' + vis + '</div>';
+
+    var narrativa = 'A gestão da ATER em <strong>' + nomeLoc + '</strong> conta com <strong>' + fmt(tecs) + ' técnico' + (tecs > 1 ? 's' : '') + '</strong> para atender <strong>' + fmt(agric) + ' famílias</strong>. ';
+    narrativa += 'Com a estrutura atual, o serviço alcança cobertura parcial: cada família recebe assistência a cada <strong>' + fmt(Math.round(mesesVisitarGest)) + ' meses</strong> em média. ';
+    narrativa += 'O deslocamento consome cerca de <strong>' + pctDeslGest + '%</strong> da jornada das equipes — melhorias em logística e infraestrutura viária podem ampliar significativamente o tempo de atendimento direto. ';
+    narrativa += 'Para atingir o padrão técnico recomendado, o município precisaria expandir a equipe em <strong>' + pctDeficit + '%</strong>. ';
+    narrativa += 'Investir em ATER é investir diretamente no PIB agropecuário local e na segurança alimentar.';
+    document.getElementById('narrativa-text').innerHTML = narrativa;
+  }
+
+  // =============================================
+  // AGRICULTOR
+  // =============================================
+  function calcularAgricultor(agric, tecs, territ, nomeLoc, famPorTec, tecNecessarios, deficit, pctDeficit) {
+    var freqVisita  = parseInt(document.getElementById('freq_visita').value);
+    var origemTec   = document.getElementById('origem_tec').value;
+    var tempoSuf    = document.getElementById('tempo_suf').value;
+
+    // Estimativas com base em médias nacionais para o técnico
+    var visitMesEstim   = 20;
+    var deslMinEstim    = 40;
+    var atendMinEstim   = 60;
+    var minTotalEstim   = deslMinEstim + atendMinEstim;
+    var horasEstradaMes = (deslMinEstim * visitMesEstim) / 60;
+    var mesesVisitar    = famPorTec / visitMesEstim;
+    var kmAnoEstim      = 15 * 2 * visitMesEstim * 12;
+    var brasSpEquiv     = Math.round(kmAnoEstim / 1015);
+
+    document.getElementById('rh-tag').textContent = 'Famílias por técnico — ' + territ;
+
+    var cards = '';
+    cards += card('Técnicos necessários', fmt(tecNecessarios), '', 'Para que você e seus vizinhos tenham ATER de qualidade', deficit > 0 ? 'alert' : 'ok');
+    cards += card('Déficit de técnicos', pctDeficit + '%', '', deficit > 0 ? 'Faltam ' + fmt(deficit) + ' profissionais em ' + territ + '.' : 'Cobertura adequada na região.', deficit > 0 ? 'alert' : 'ok');
+    var freqTexto = freqVisita === 0 ? 'Nunca' : (freqVisita === 1 ? '1 vez/mês' : '1 vez a cada ' + freqVisita + ' meses');
+    cards += card('Sua frequência de atendimento', freqTexto, '', tempoSuf === 'nao' ? 'E você sente que o tempo de atendimento é insuficiente.' : tempoSuf === 'nunca' ? 'Você nunca foi atendido(a).' : 'E você sente que o tempo é adequado.', freqVisita > 3 || tempoSuf !== 'sim' ? 'alert' : 'ok');
+    cards += card('Intervalo ideal vs. real', fmt(r1(mesesVisitar), 1) + ' meses', '', 'Tempo que o técnico levaria para visitar todas as famílias uma vez no ritmo atual.', mesesVisitar > 4 ? 'alert' : 'ok');
+    document.getElementById('cards-grid').innerHTML = cards;
+
+    var vidas = Math.ceil(famPorTec / 100);
+    var vis = '';
+
+    // Barra de espera
+    vis += '<div class="vis-block vis-block-amber">';
+    vis += '<div class="vis-block-title">A fila de espera pelo técnico</div>';
+    vis += '<div style="margin:12px 0;">';
+    vis += '<div class="horas-insight">' + fmt(r1(mesesVisitar), 1) + ' meses</div>';
+    vis += '<div class="horas-insight-label" style="color:var(--c-ink-muted)">é o intervalo médio para cada família receber uma visita — no ritmo atual dos técnicos de ' + territ + '.</div>';
+    vis += '</div>';
+    // barrinhas de meses
+    vis += '<div style="display:flex;gap:4px;margin-top:12px;">';
+    for (var m = 1; m <= 12; m++) {
+      var ativo = m <= Math.min(Math.round(mesesVisitar), 12);
+      vis += '<div style="flex:1;height:28px;border-radius:4px;background:' + (ativo ? 'var(--c-amber)' : '#e0ddd5') + ';display:flex;align-items:center;justify-content:center;font-size:9px;color:' + (ativo ? 'white' : '#999') + ';">' + m + '</div>';
+    }
+    vis += '</div>';
+    vis += '<div style="font-size:11px;color:var(--c-ink-muted);margin-top:6px;">Meses até receber uma visita (em laranja)</div>';
+    vis += '</div>';
+
+    // Vidas
+    vis += '<div class="vis-block vis-block-dark">';
+    vis += '<div class="vis-block-title">Quantas vidas o seu técnico precisaria ter?</div>';
+    vis += '<div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;">';
+    vis += '<div style="flex:1;min-width:160px;"><div class="vidas-num">' + vidas + '</div>';
+    vis += '<div class="vidas-label">Você e os técnicos da sua região precisariam de <strong>' + vidas + ' vida' + (vidas > 1 ? 's</strong>' : '</strong>') + ' para atender todos os produtores — são <strong>' + fmt(Math.round(famPorTec)) + ' famílias por técnico</strong>, quando o ideal é 100.</div></div>';
+    vis += '<div class="vidas-bar-wrap" style="margin-top:16px;">';
+    for (var vi = 0; vi < Math.min(vidas, 10); vi++) {
+      var op2 = vi === 0 ? '1' : '0.25';
+      vis += '<div style="display:inline-block;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,' + op2 + ');margin:3px;"></div>';
+    }
+    vis += '</div></div>';
+    vis += '<div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.15);font-size:13px;color:rgba(255,255,255,0.55);">Pelo parâmetro recomendado, o ideal é 1 técnico para até 100 famílias. ' + territ + ' tem um déficit de <strong style="color:var(--c-amber-light)">' + pctDeficit + '%</strong> de profissionais.</div>';
+    vis += '</div>';
+
+    // Origem do técnico — bloco extra se de fora
+    if (origemTec === 'fora') {
+      vis += '<div class="vis-block" style="border-color:var(--c-amber)">';
+      vis += '<div class="vis-block-title">Técnico de fora do município</div>';
+      vis += '<p style="font-size:14px;color:var(--c-ink)">Como o técnico que te atende vem de outro município, o tempo de deslocamento é ainda maior — o que reduz o tempo disponível para estar na sua propriedade e aumenta o custo operacional do serviço.</p>';
+      vis += '</div>';
+    }
+    if (tempoSuf === 'nao' || tempoSuf === 'nunca') {
+      vis += '<div class="vis-block" style="border-color:var(--c-red)">';
+      vis += '<div class="vis-block-title">Tempo de atendimento insuficiente</div>';
+      vis += '<p style="font-size:14px;color:var(--c-ink)">' + (tempoSuf === 'nunca' ? 'Você nunca foi atendido(a). Isso é mais comum do que parece: com a sobrecarga atual, muitos agricultores ficam anos sem receber uma única visita técnica.' : 'Você sente que o atendimento não dura tempo suficiente. Com ' + fmt(Math.round(famPorTec)) + ' famílias para atender, o técnico precisa reduzir o tempo em cada visita para conseguir cobrir todas. Isso é sobrecarga — não falta de dedicação.') + '</p>';
+      vis += '</div>';
+    }
+
+    document.getElementById('vis-blocks').innerHTML = '<div class="vis-blocks-wrap">' + vis + '</div>';
+
+    var narrativa = 'Para que <strong>você e sua família</strong> tenham ATER de qualidade em <strong>' + nomeLoc + '</strong>, o serviço precisaria de muito mais braços. ';
+    narrativa += 'Hoje, o técnico disponível está sobrecarregado, sendo responsável por <strong>' + fmt(Math.round(famPorTec)) + ' famílias</strong> — o que torna as visitas raras ';
+    narrativa += '(uma a cada <strong>' + fmt(r1(mesesVisitar), 1) + ' meses</strong>). ';
+    narrativa += 'Além disso, ele passa grande parte do dia na estrada para conseguir chegar até você. ';
+    narrativa += 'Ter ATER é um <strong>direito seu</strong> e um recurso essencial para melhorar sua renda; os números mostram que o serviço precisa de mais investimento e estrutura para que o apoio chegue à sua porteira com a frequência que sua lavoura exige.';
+    document.getElementById('narrativa-text').innerHTML = narrativa;
+  }
+
+  // =============================================
+  // REINICIAR
+  // =============================================
   window.reiniciar = function() {
     document.getElementById('resultado').classList.remove('visible');
+    document.getElementById('share-preview').style.display = 'none';
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  // =============================================
+  // COMPARTILHAR — gera card PNG via Canvas
+  // =============================================
+  var storyBlobs = [];
+
+  function desenharStory(ctx, W, H, cor, slideData) {
+    ctx.fillStyle = cor.bg;
+    ctx.fillRect(0, 0, W, H);
+
+    if (!slideData.narrativa) return;
+
+    var numEl  = document.getElementById('rh-num');
+    var unitEl = document.getElementById('rh-unit');
+    var numTxt  = numEl  ? numEl.textContent.trim() : '—';
+    var unitTxt = unitEl ? unitEl.textContent.trim().replace(/\s*—\s*/g, '') : '';
+
+    // ── TÍTULO 2 linhas ──
+    // Linha 1: "A Realidade da ATER"  Linha 2: "no Brasil"
+    var tFS = 88;
+    ctx.font = '700 ' + tFS + 'px "Libre Baskerville", Georgia, serif';
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'left';
+    ctx.fillText('A Realidade da', 70, 170);
+    ctx.fillText('ATER no Brasil', 70, 170 + 114); // 114 = tFS * 1.3
+
+    // ── LINHA DE COR ── 100px abaixo da linha 2 do título
+    var yLinha = 170 + 114 + 100;
+    ctx.fillStyle = cor.accent;
+    ctx.fillRect(70, yLinha, 90, 5);
+
+    // ── NÚMERO ── 150px abaixo da linha colorida
+    var yNum = yLinha + 190;
+    var numFontSize = numTxt.length > 5 ? 140 : numTxt.length > 3 ? 170 : 210;
+    ctx.font = '700 ' + numFontSize + 'px "Libre Baskerville", Georgia, serif';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(numTxt, 72, yNum);
+
+    // ── UNIDADE ──
+    ctx.font = '400 46px "DM Sans", sans-serif';
+    ctx.fillStyle = cor.light;
+    ctx.fillText(unitTxt, 72, yNum + 66);
+
+    // ── SEPARADOR ──
+    var yTexto = yNum + 140;
+    ctx.fillStyle = 'rgba(255,255,255,0.12)';
+    ctx.fillRect(70, yTexto - 25, W - 140, 1);
+
+    // ── TEXTO NARRATIVA COM NEGRITO INLINE ──
+    var texto = slideData.narrativa.replace(/\.\s*$/, ''); // remove ponto final
+    var fontSize = 46;
+    var lineH = fontSize * 1.55;
+    var maxTW = W - 140;
+
+    var tokens = [];
+    var regex = /<strong>(.*?)<\/strong>|([^<]+)/g;
+    var m;
+    while ((m = regex.exec(texto)) !== null) {
+      if (m[1] !== undefined) tokens.push({ bold: true,  text: m[1] });
+      if (m[2] !== undefined) tokens.push({ bold: false, text: m[2] });
+    }
+    if (tokens.length === 0) tokens = [{ bold: false, text: texto }];
+
+    var palavras = [];
+    tokens.forEach(function(tok) {
+      tok.text.split(' ').forEach(function(w) { if (w) palavras.push({ word: w, bold: tok.bold }); });
+    });
+
+    var linhas2 = [], linhaAtual = [], larguraAtual = 0;
+    palavras.forEach(function(pw) {
+      ctx.font = (pw.bold ? '700' : '400') + ' ' + fontSize + 'px "Libre Baskerville", Georgia, serif';
+      var space = larguraAtual > 0 ? ctx.measureText(' ').width : 0;
+      var wW = ctx.measureText(pw.word).width;
+      if (larguraAtual + space + wW > maxTW && linhaAtual.length > 0) {
+        linhas2.push(linhaAtual); linhaAtual = [pw]; larguraAtual = wW;
+      } else {
+        linhaAtual.push(pw); larguraAtual += space + wW;
+      }
+    });
+    if (linhaAtual.length > 0) linhas2.push(linhaAtual);
+
+    var y2 = yTexto + 10;
+    linhas2.forEach(function(linha) {
+      if (y2 > H - 200) return;
+      var x2 = 70;
+      linha.forEach(function(pw, idx) {
+        ctx.font = (pw.bold ? '700' : '400') + ' ' + fontSize + 'px "Libre Baskerville", Georgia, serif';
+        ctx.fillStyle = pw.bold ? '#ffffff' : 'rgba(255,255,255,0.82)';
+        ctx.textAlign = 'left';
+        if (idx > 0) {
+          ctx.font = '400 ' + fontSize + 'px "Libre Baskerville", Georgia, serif';
+          x2 += ctx.measureText(' ').width;
+          ctx.font = (pw.bold ? '700' : '400') + ' ' + fontSize + 'px "Libre Baskerville", Georgia, serif';
+        }
+        ctx.fillText(pw.word, x2, y2);
+        x2 += ctx.measureText(pw.word).width;
+      });
+      y2 += lineH;
+    });
+
+    // ── RODAPÉ ──
+    ctx.fillStyle = 'rgba(255,255,255,0.08)';
+    ctx.fillRect(0, H - 140, W, 140);
+    ctx.font = '400 38px "DM Sans", sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.6)';
+    ctx.textAlign = 'center';
+    ctx.fillText('ICT4D Brazil  ·  Rodrigo Ferraz  ·  ict4dbrazil.com', W / 2, H - 52);
+  }
+
+  function quebraTextoCanvas(ctx, texto, maxW) {
+    var palavras = texto.split(' ');
+    var linhas = [], atual = '';
+    palavras.forEach(function(p) {
+      var teste = atual ? atual + ' ' + p : p;
+      if (ctx.measureText(teste).width > maxW) { linhas.push(atual); atual = p; }
+      else { atual = teste; }
+    });
+    if (atual) linhas.push(atual);
+    return linhas;
+  }
+
+  function quebrarTexto(ctx, texto, maxW, fontSize) {
+    ctx.font = fontSize + 'px sans-serif';
+    var palavras = texto.split(' ');
+    var linhas = [], atual = '';
+    palavras.forEach(function(p) {
+      var teste = atual ? atual + ' ' + p : p;
+      if (ctx.measureText(teste).width > maxW) { linhas.push(atual); atual = p; }
+      else { atual = teste; }
+    });
+    if (atual) linhas.push(atual);
+    return linhas;
+  }
+
+  // =============================================
+  // GERAR SLIDES POR PERFIL
+  // =============================================
+  function gerarSlides() {
+    var cor = PERFIL_CORES[perfil] || PERFIL_CORES.extensionista;
+    var W = 1080, H = 1920;
+    var slides = [];
+
+    if (perfil === 'extensionista') {
+      var visitMes   = parseFloat(document.getElementById('visitas_mes').value);
+      var famResp    = parseFloat(document.getElementById('familias_resp').value);
+      var horasCampo = parseFloat(document.getElementById('horas_campo').value);
+      var horasEscrit= parseFloat(document.getElementById('horas_escritorio').value);
+      var horasDia   = horasCampo + horasEscrit;
+      var diasMes    = parseFloat(document.getElementById('dias_mes').value);
+      var deslMin    = parseFloat(document.getElementById('desl_min').value);
+      var atendMin   = parseFloat(document.getElementById('atend_min').value) || 60;
+      var distKm     = parseFloat(document.getElementById('dist_km').value) || 15;
+
+      var mesesVisitar = famResp / visitMes;
+      var minTotal     = deslMin + atendMin;
+      var pctDesl      = (deslMin / minTotal) * 100;
+      var pctAtend     = (atendMin / minTotal) * 100;
+      var totalH       = horasDia * diasMes;
+      var pctEscrit    = (horasEscrit * diasMes / totalH) * 100;
+      var kmAno        = distKm * 2 * visitMes * 12;
+      var brasSpEquiv  = Math.round(kmAno / 1015);
+      var horasEstrada = Math.round((deslMin * visitMes) / 60);
+      var vidas        = Math.ceil(parseFloat(document.getElementById('rh-num').textContent) / 100) || 1;
+      var visitDia     = (lerCampoNumerico('total_agricultores') || 2500) / 365;
+      var horasDiaNec  = Math.round(visitDia * (minTotal / 60) * 10) / 10;
+
+      var agric2       = modoLocalidade ? (parseFloat(document.getElementById('total_agricultores_loc').value) || 2500) : (lerCampoNumerico('total_agricultores') || 2500);
+      var tecs2        = parseFloat(document.getElementById(modoLocalidade ? 'total_tecnicos_loc' : 'total_tecnicos').value) || 4;
+      var tecNecessarios = Math.ceil(agric2 / 100);
+      var deficit      = Math.max(0, tecNecessarios - tecs2);
+      var famPorTec    = agric2 / tecs2;
+      var pctDeslBarra = r1(pctDesl / 100 * (100 - (horasEscrit * diasMes / (horasDia * diasMes)) * 100));
+      var pctCampoT    = 100 - pctEscrit;
+      pctDeslBarra     = r1(pctDesl / 100 * pctCampoT);
+      var pctAtendBarra = r1(pctCampoT - pctDeslBarra);
+      var horasEstradaMes = (deslMin * visitMes) / 60;
+      var visitDiaNec  = agric2 / 365;
+      var mesesV = Math.round(famResp / visitMes * 10) / 10;
+      slides = [
+        { tag: 'A realidade da ATER',
+          narrativa: (function() {
+            var loc = document.getElementById(modoLocalidade ? 'localidade_nome' : 'municipio_input').value || 'seu município';
+            var n = 'Como <strong>extensionista</strong>, você é responsável por <strong>' + fmt(famResp) + ' famílias</strong> e realiza <strong>' + fmt(visitMes) + ' visitas por mês</strong>. ';
+            n += 'Você passa cerca de <strong>' + fmt(Math.round(horasEstradaMes)) + ' horas por mês</strong> na estrada, além de <strong>' + fmt(Math.round(horasEscrit * diasMes)) + ' horas</strong> em atividades administrativas. ';
+            if (mesesVisitar > 4) n += 'No ritmo atual, cada família recebe uma visita a cada <strong>' + fmt(Math.round(mesesVisitar)) + ' meses</strong>. ';
+            n += 'Em ' + loc + ' há <strong>' + fmt(tecs2) + ' técnico' + (tecs2 > 1 ? 's' : '') + '</strong> para <strong>' + fmt(agric2) + ' agricultores</strong> — quando seriam necessários pelo menos <strong>' + fmt(tecNecessarios) + '</strong>. ';
+            n += 'Fazer ATER de qualidade não depende apenas de você: depende de <strong>estrutura, equipes e políticas públicas adequadas</strong>.';
+            return n;
+          })()
+        }
+      ];
+
+    } else if (perfil === 'gestor') {
+      var numEl = document.getElementById('rh-num');
+      var unitEl = document.getElementById('rh-unit');
+      var pctDeslGest = parseFloat(document.getElementById('pct_desl_gest').value);
+      var custoTec    = parseFloat(document.getElementById('custo_tec').value) || 5000;
+      var tecs        = parseFloat(document.getElementById('total_tecnicos').value) || 4;
+      var agric       = parseFloat(document.getElementById('total_agricultores').value) || 2500;
+      var tecNec      = Math.ceil(agric / 100);
+      var deficit     = Math.max(0, tecNec - tecs);
+      var pctDef      = Math.round((deficit / tecNec) * 100);
+      var custoTotal  = custoTec * tecs;
+      var custoEstrada= Math.round(custoTotal * pctDeslGest / 100);
+      var kmTecMes    = parseFloat(document.getElementById('km_tec_mes').value) || 600;
+      var kmAnoGest   = kmTecMes * tecs * 12;
+
+      var locGest = document.getElementById(modoLocalidade ? 'localidade_nome' : 'municipio_input').value || 'o município';
+      slides = [
+        { tag: 'A realidade da ATER',
+          narrativa: (function() {
+            var n = 'A gestão da ATER em <strong>' + locGest + '</strong> conta com <strong>' + fmt(tecs) + ' técnico' + (tecs > 1 ? 's</strong>' : '</strong>') + ' para atender <strong>' + fmt(agric) + ' famílias</strong>. ';
+            n += 'Para atingir a cobertura mínima recomendada, seriam necessários <strong>' + fmt(tecNec) + ' profissionais</strong> — um déficit de <strong>' + pctDef + '%</strong>. ';
+            n += 'O deslocamento consome cerca de <strong>' + pctDeslGest + '%</strong> da jornada das equipes — o equivalente a <strong>R$ ' + fmt(custoEstrada) + ' por mês</strong> gastos na estrada em vez de no atendimento direto. ';
+            n += 'Investir em ATER é investir diretamente no <strong>PIB agropecuário local</strong> e na <strong>segurança alimentar</strong>.';
+            return n;
+          })()
+        }
+      ];
+
+    } else { // agricultor
+      var famPorTec = parseFloat(document.getElementById('rh-num').textContent) || 0;
+      var vidas     = Math.ceil(famPorTec / 100) || 1;
+      var meses     = famPorTec > 0 ? Math.round(famPorTec / 20 * 10) / 10 : 0;
+      var agric2    = parseFloat(document.getElementById('total_agricultores').value) || 2500;
+      var tecs2     = parseFloat(document.getElementById('total_tecnicos').value) || 4;
+      var tecNec2   = Math.ceil(agric2 / 100);
+      var deficit2  = Math.max(0, tecNec2 - tecs2);
+      var pctDef2   = Math.round((deficit2 / tecNec2) * 100);
+
+      var locAgr = document.getElementById(modoLocalidade ? 'localidade_nome' : 'municipio_input').value || 'seu município';
+      slides = [
+        { tag: 'A realidade da ATER',
+          narrativa: (function() {
+            var n = 'Para que você e sua família tenham ATER de qualidade em <strong>' + locAgr + '</strong>, o serviço precisaria de muito mais braços. ';
+            n += 'Hoje, o técnico disponível é responsável por <strong>' + fmt(Math.round(famPorTec)) + ' famílias</strong> — quando o ideal é no máximo <strong>100</strong>. ';
+            n += 'Isso faz com que as visitas sejam raras: uma a cada <strong>' + fmt(meses, 1) + ' meses</strong>. ';
+            n += 'Ter ATER é um <strong>direito seu</strong>. Faltam <strong>' + fmt(deficit2) + ' técnicos</strong> para cobrir ' + locAgr + ' com qualidade — um déficit de <strong>' + pctDef2 + '%</strong>.';
+            return n;
+          })()
+        }
+      ];
+    }
+
+    return slides.map(function(s, i) {
+      return Object.assign({}, s, { num: i + 1, total: slides.length });
+    });
+  }
+
+  // =============================================
+  // COMPARTILHAR
+  // =============================================
+  window.compartilharCard = function() {
+    var gallery = document.getElementById('stories-gallery');
+    var cor = PERFIL_CORES[perfil] || PERFIL_CORES.extensionista;
+    var slides = gerarSlides();
+    var W = 1080, H = 1920;
+
+    storyBlobs = [];
+    gallery.innerHTML = '';
+
+    var fonteSerif = new FontFace('Libre Baskerville', "url(https://fonts.gstatic.com/s/librebaskerville/v14/kmKnZrc3Hgbbcjq75U4uslyuy4kn0pNeYRI4CN2V.woff2)");
+    var fonteSans  = new FontFace('DM Sans', "url(https://fonts.gstatic.com/s/dmsans/v11/rP2Hp2ywxg089UriOZQulHmzoJimAvkxnA.woff2)");
+
+    Promise.all([fonteSerif.load().catch(function(){return null;}), fonteSans.load().catch(function(){return null;})]).then(function(fontes) {
+      fontes.forEach(function(f) { if (f) document.fonts.add(f); });
+      renderizarSlides(slides, W, H, cor, gallery);
+    });
+  };
+
+  function renderizarSlides(slides, W, H, cor, gallery) {
+    var slide = slides[0];
+    if (!slide) return;
+    var canvas = document.createElement('canvas');
+    canvas.width = W; canvas.height = H;
+    var ctx = canvas.getContext('2d', { colorSpace: 'srgb' });
+    desenharStory(ctx, W, H, cor, slide);
+
+    var miniW = 270, miniH = 480;
+    var mini = document.createElement('canvas');
+    mini.width = miniW * 2; mini.height = miniH * 2;
+    mini.style.cssText = 'border-radius:16px;box-shadow:0 6px 24px rgba(0,0,0,0.2);display:block;margin:0 auto;width:' + miniW + 'px;height:' + miniH + 'px;';
+    var mCtx = mini.getContext('2d');
+    mCtx.drawImage(canvas, 0, 0, miniW * 2, miniH * 2);
+    gallery.appendChild(mini);
+
+    canvas.toBlob(function(blob) {
+      storyBlobs.push({ blob: blob, name: 'ater-story.png' });
+      var preview = document.getElementById('share-preview');
+      preview.style.display = 'block';
+      preview.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 'image/png');
+  }
+
+  window.compartilharOuBaixar = function() {
+    if (storyBlobs.length === 0) return;
+    var b = storyBlobs[0];
+    var url = URL.createObjectURL(b.blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = b.name;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
+  };
+
+  function roundRect(ctx, x, y, w, h, r) {
+    if (r === 0) { ctx.fillRect(x, y, w, h); return; }
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(x + r, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.closePath();
+  }
+
 
 })();
 </script>

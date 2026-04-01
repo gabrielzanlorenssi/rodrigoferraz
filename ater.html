@@ -269,8 +269,8 @@
     </div>
     <div class="perfil-btns" id="perfil-btns">
       <div class="perfil-btn active" data-val="extensionista">Extensionista / Técnico(a)</div>
-      <div class="perfil-btn" data-val="gestor">Gestor(a) público(a)</div>
       <div class="perfil-btn" data-val="agricultor">Agricultor(a) familiar</div>
+      <div class="perfil-btn" data-val="gestor">Gestor(a) público(a)</div>
     </div>
   </div>
 
@@ -415,14 +415,14 @@
 
       <div class="field-grid two">
         <div class="field">
-          <label>Custo médio mensal por técnico (R$)</label>
+          <label>Custo médio por família atendida (R$/ano)</label>
           <input type="number" id="custo_tec" placeholder="Ex: 5.000" min="0" value="5000">
-          <span class="hint">Inclui salário, encargos e benefícios</span>
+          <span class="hint">Referência: chamadas públicas ANATER</span>
         </div>
         <div class="field">
           <label>Região do município</label>
           <select id="regiao_gest">
-            <option value="4500">Sul / Sudeste / Centro-Oeste / Nordeste (R$ 4.500/família/ano)</option>
+            <option value="5000">Sul / Sudeste / Centro-Oeste / Nordeste (R$ 5.000/família/ano)</option>
             <option value="5500">Norte (R$ 5.500/família/ano)</option>
           </select>
           <span class="hint">Referência de custo da ATER por família/ano</span>
@@ -441,7 +441,7 @@
             <input type="range" id="pct_desl_gest" min="10" max="70" step="5" value="40">
             <span class="slider-val" id="pct_desl_gest_val">40%</span>
           </div>
-          <span class="hint">Média nacional: ~40% do tempo dos técnicos</span>
+
         </div>
       </div>
 
@@ -783,7 +783,7 @@
     if (perfil === 'gestor') {
       var custoVal = document.getElementById('custo_tec').value;
       if (!custoVal || parseFloat(custoVal) <= 0) {
-        marcarErro('custo_tec', 'Informe o custo mensal por técnico');
+        marcarErro('custo_tec', 'Informe o custo por família atendida');
         erros.push('custo');
       }
     }
@@ -999,20 +999,21 @@
   // GESTOR
   // =============================================
   function calcularGestor(agric, tecs, territ, nomeLoc, famPorTec, tecNecessarios, deficit, pctDeficit) {
-    var custoTec     = parseFloat(document.getElementById('custo_tec').value) || 5000;
+    var custoPorFamAno = parseFloat(document.getElementById('custo_tec').value) || 5000;
     var custoPorFam  = parseFloat(document.getElementById('regiao_gest').value);
     var metaFamilias = parseFloat(document.getElementById('meta_familias').value) || agric;
     var pctDeslGest  = parseFloat(document.getElementById('pct_desl_gest').value);
     var kmTecMes     = parseFloat(document.getElementById('km_tec_mes').value) || 600;
+    var custoTec     = custoPorFamAno; // alias para retrocompatibilidade
 
-    var custoTotalMes    = custoTec * tecs;
+    var custoTotalMes    = custoPorFamAno * agric / 12;
     var custoEstradaMes  = custoTotalMes * (pctDeslGest / 100);
     var custoAtendMes    = custoTotalMes - custoEstradaMes;
     var kmTotalAno       = kmTecMes * tecs * 12;
     var coberturaAtual   = Math.min(100, Math.round((tecs * 100 / tecNecessarios) * 100) / 100);
     var familiasPorTecMes = agric / tecs;
     var mesesVisitarGest = familiasPorTecMes / 20; // média 20 visitas/mês
-    var custoTotalAno    = custoPorFam * metaFamilias;
+    var custoTotalAno    = custoPorFamAno * metaFamilias;
     var tecNecMeta       = Math.ceil(metaFamilias / 100);
 
     document.getElementById('rh-tag').textContent = 'Cobertura atual — ' + territ;
@@ -1022,7 +1023,7 @@
     var cards = '';
     cards += card('Técnicos necessários', fmt(tecNecessarios), '', 'Para cobertura total (1 técnico por 100 famílias)', deficit > 0 ? 'alert' : 'ok');
     cards += card('Déficit de pessoal', pctDeficit + '%', '', deficit > 0 ? 'Faltam ' + fmt(deficit) + ' profissionais para atingir a meta técnica.' : 'Equipe suficiente para a cobertura.', deficit > 0 ? 'alert' : 'ok');
-    cards += card('Custo na estrada/mês', 'R$ ' + fmt(Math.round(custoEstradaMes)), '', 'De cada R$ 1.000 em salários, R$ ' + fmt(Math.round(pctDeslGest * 10)) + ' são gastos em deslocamento.', pctDeslGest > 35 ? 'alert' : '');
+    cards += card('Custo estimado na estrada/mês', 'R$ ' + fmt(Math.round(custoEstradaMes)), '', 'De cada R$ 1.000 investidos, R$ ' + fmt(Math.round(pctDeslGest * 10)) + ' são gastos em deslocamento — não em atendimento direto.', pctDeslGest > 35 ? 'alert' : '');
     cards += card('Km/ano (frota)', fmt(Math.round(kmTotalAno)), 'km', 'Desgaste total da frota municipal — ' + fmt(kmTecMes) + ' km/técnico/mês.', '');
     document.getElementById('cards-grid').innerHTML = cards;
 
@@ -1193,8 +1194,8 @@
     ctx.font = '700 ' + tFS + 'px "Libre Baskerville", Georgia, serif';
     ctx.fillStyle = '#ffffff';
     ctx.textAlign = 'left';
-    ctx.fillText('A Realidade da', 70, 170);
-    ctx.fillText('ATER no Brasil', 70, 170 + 114); // 114 = tFS * 1.3
+    ctx.fillText('A Realidade da ATER', 70, 170);
+    ctx.fillText('no Brasil', 70, 170 + 114); // 114 = tFS * 1.3
 
     // ── LINHA DE COR ── 100px abaixo da linha 2 do título
     var yLinha = 170 + 114 + 100;
@@ -1206,17 +1207,17 @@
     var numFontSize = numTxt.length > 5 ? 140 : numTxt.length > 3 ? 170 : 210;
     ctx.font = '700 ' + numFontSize + 'px "Libre Baskerville", Georgia, serif';
     ctx.fillStyle = '#ffffff';
-    ctx.fillText(numTxt, 72, yNum);
+    ctx.fillText(numTxt, 70, yNum);
 
     // ── UNIDADE ──
     ctx.font = '400 46px "DM Sans", sans-serif';
     ctx.fillStyle = cor.light;
-    ctx.fillText(unitTxt, 72, yNum + 66);
+    ctx.fillText(unitTxt, 70, yNum + 66);
 
     // ── SEPARADOR ──
     var yTexto = yNum + 140;
     ctx.fillStyle = 'rgba(255,255,255,0.12)';
-    ctx.fillRect(70, yTexto - 25, W - 140, 1);
+    ctx.fillRect(70, yTexto - 20, W - 140, 1);
 
     // ── TEXTO NARRATIVA COM NEGRITO INLINE ──
     var texto = slideData.narrativa.replace(/\.\s*$/, ''); // remove ponto final
@@ -1366,14 +1367,14 @@
       var numEl = document.getElementById('rh-num');
       var unitEl = document.getElementById('rh-unit');
       var pctDeslGest = parseFloat(document.getElementById('pct_desl_gest').value);
-      var custoTec    = parseFloat(document.getElementById('custo_tec').value) || 5000;
+      var custoTec    = parseFloat(document.getElementById('custo_tec').value) || 5000; var custoTotalMesS = custoTec * agric / 12; var custoEstradaS = Math.round(custoTotalMesS * pctDeslGest / 100);
       var tecs        = parseFloat(document.getElementById('total_tecnicos').value) || 4;
       var agric       = parseFloat(document.getElementById('total_agricultores').value) || 2500;
       var tecNec      = Math.ceil(agric / 100);
       var deficit     = Math.max(0, tecNec - tecs);
       var pctDef      = Math.round((deficit / tecNec) * 100);
       var custoTotal  = custoTec * tecs;
-      var custoEstrada= Math.round(custoTotal * pctDeslGest / 100);
+      var custoEstrada= Math.round(custoTec * agric / 12 * pctDeslGest / 100);
       var kmTecMes    = parseFloat(document.getElementById('km_tec_mes').value) || 600;
       var kmAnoGest   = kmTecMes * tecs * 12;
 

@@ -1494,20 +1494,23 @@ table.cron-table {
 </head>
 <body>
 
-<!-- NAVIGATION -->
+<!-- =============================================
+     NAVIGATION
+============================================= -->
 <nav id="main-nav">
   <a href="#hero" class="nav-logo">ICT4D <span>Brazil</span></a>
   <div class="nav-links" id="nav-links">
-    <a href="#mapa" data-section="mapa" class="nav-anchor" data-pt="Mapa" data-en="Map">Mapa</a>
-    <a href="#timeline" data-section="timeline" class="nav-anchor" data-pt="Linha do Tempo" data-en="Timeline">Linha do Tempo</a>
-    <a href="#cronograma" data-section="cronograma" class="nav-anchor" data-pt="Cronograma" data-en="Schedule">Cronograma</a>
-    <a href="#sobre" data-section="sobre" class="nav-anchor" data-pt="Sobre" data-en="About">Sobre</a>
-    <a href="#projetos" data-section="projetos" class="nav-anchor" data-pt="Projetos" data-en="Projects">Projetos</a>
-    <a href="#publicacoes" data-section="publicacoes" class="nav-anchor" data-pt="Publicações" data-en="Publications">Publicações</a>
-    <a href="#videos" data-section="videos" class="nav-anchor" data-pt="Vídeos" data-en="Videos">Vídeos</a>
+    <a href="#mapa" data-section="mapa" class="nav-anchor" data-pt="Mapa" data-en="Map" data-es="Mapa">Mapa</a>
+    <a href="#timeline" data-section="timeline" class="nav-anchor" data-pt="Linha do Tempo" data-en="Timeline" data-es="Línea de Tiempo">Linha do Tempo</a>
+    <a href="#cronograma" data-section="cronograma" class="nav-anchor" data-pt="Cronograma" data-en="Schedule" data-es="Cronograma">Cronograma</a>
+    <a href="#sobre" data-section="sobre" class="nav-anchor" data-pt="Sobre" data-en="About" data-es="Acerca de">Sobre</a>
+    <a href="#projetos" data-section="projetos" class="nav-anchor" data-pt="Projetos" data-en="Projects" data-es="Proyectos">Projetos</a>
+    <a href="#publicacoes" data-section="publicacoes" class="nav-anchor" data-pt="Publicações" data-en="Publications" data-es="Publicaciones">Publicações</a>
+    <a href="#videos" data-section="videos" class="nav-anchor" data-pt="Vídeos" data-en="Videos" data-es="Videos">Vídeos</a>
     <div class="nav-divider"></div>
     <button class="lang-btn active" id="btn-pt" onclick="setLang('pt')">PT</button>
     <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" id="btn-es" onclick="setLang('es')">ES</button>
   </div>
   <div class="nav-hamburger" id="nav-hamburger" onclick="toggleMenu()">
     <span></span><span></span><span></span>
@@ -1525,23 +1528,32 @@ table.cron-table {
 <section id="hero">
   <a class="section-anchor" id="anchor-hero"></a>
   <div class="hero-inner">
-    <div class="hero-tag" data-pt="Inclusão digital · ICT4D · Extensão Rural · Inovação" data-en="Digital Inclusion · ICT4D · Rural Extension · Innovation">
+    <div class="hero-tag"
+         data-pt="Inclusão digital · ICT4D · Extensão Rural · Inovação"
+         data-en="Digital Inclusion · ICT4D · Rural Extension · Innovation"
+         data-es="Inclusión digital · ICT4D · Extensión Rural · Innovación">
       Inclusão digital · ICT4D · Extensão Rural · Inovação
     </div>
     <h1 class="hero-name">ICT4D<br><em>Brazil</em></h1>
-<p class="hero-desc" id="hero-desc-pt">
+
+    <p class="hero-desc" id="hero-desc-pt">
 Site desenvolvido pelo agrônomo e pesquisador <strong style="font-weight:700;color:#fff;">Rodrigo Ferraz</strong>. Reúne análises e iniciativas em ICT4D (Tecnologias da Informação e Comunicação para o Desenvolvimento), com foco em soluções digitais aplicadas à ATER e na promoção da inovação nos sistemas agroalimentares.</p>
 
-<p class="hero-desc" id="hero-desc-en" style="display:none">
+    <p class="hero-desc" id="hero-desc-en" style="display:none">
 This site was developed by agronomist and researcher <strong style="font-weight:700;color:#fff;">Rodrigo Ferraz</strong>. It brings together analyses and initiatives in ICT4D (Information and Communication Technologies for Development), focusing on digital solutions applied to ATER (Technical Assistance and Rural Extension) and the promotion of innovation in agri-food systems.</p>
-<p class="hero-desc" 
+
+    <p class="hero-desc" id="hero-desc-es" style="display:none">
+Este sitio fue desarrollado por el agrónomo e investigador <strong style="font-weight:700;color:#fff;">Rodrigo Ferraz</strong>. Reúne análisis e iniciativas en ICT4D (Tecnologías de la Información y la Comunicación para el Desarrollo), con foco en soluciones digitales aplicadas a la ATER y en la promoción de la innovación en los sistemas agroalimentarios.</p>
+
+    <p class="hero-desc"
        data-pt="Aqui, é possível acessar uma linha do tempo com os principais marcos da inovação tecnológica na extensão rural brasileira, além de indicadores, projetos e publicações acadêmicas sobre o tema. O objetivo é contribuir para o fortalecimento de capacidades e promoção da transformação digital no meio rural."
-       data-en="Here you can access a timeline highlighting the main milestones of technological innovation in Brazilian rural extension, as well as indicators, projects, and academic publications on the subject. The goal is to contribute to strengthening capacities and promoting digital transformation in rural areas.">
+       data-en="Here you can access a timeline highlighting the main milestones of technological innovation in Brazilian rural extension, as well as indicators, projects, and academic publications on the subject. The goal is to contribute to strengthening capacities and promoting digital transformation in rural areas."
+       data-es="Aquí es posible acceder a una línea de tiempo con los principales hitos de la innovación tecnológica en la extensión rural brasileña, además de indicadores, proyectos y publicaciones académicas sobre el tema. El objetivo es contribuir al fortalecimiento de capacidades y a la promoción de la transformación digital en el medio rural.">
 Aqui, é possível acessar uma linha do tempo com os principais marcos da inovação tecnológica na extensão rural brasileira, além de indicadores, projetos e publicações acadêmicas sobre o tema. O objetivo é contribuir para o fortalecimento de capacidades e promoção da transformação digital no meio rural.
     </p>
     <div class="hero-ctas">
-      <a href="#sobre" class="btn-primary" data-pt="Sobre Rodrigo Ferraz" data-en="About Rodrigo Ferraz">Sobre mim</a>
-      <a href="#projetos" class="btn-secondary" data-pt="Ver projetos" data-en="See projects">Ver projetos</a>
+      <a href="#sobre" class="btn-primary" data-pt="Sobre Rodrigo Ferraz" data-en="About Rodrigo Ferraz" data-es="Sobre Rodrigo Ferraz">Sobre mim</a>
+      <a href="#projetos" class="btn-secondary" data-pt="Ver projetos" data-en="See projects" data-es="Ver proyectos">Ver projetos</a>
     </div>
   </div>
 </section>
@@ -1553,27 +1565,29 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
   <a class="section-anchor" id="anchor-mapa"></a>
   <div class="section-wrap">
     <div class="section-label">
-      <span data-pt="Atuação" data-en="Presence">Atuação</span>
+      <span data-pt="Atuação" data-en="Presence" data-es="Actuación">Atuação</span>
     </div>
     <div style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
-      <h2 class="section-title" style="margin-bottom:0" 
-          data-pt="Evolução de indicadores ATER e Digitalização no Brasil" 
-          data-en="Evolution of ATER and Digitalization Indicators in Brazil">Indicadores ATER no Brasil</h2>
+      <h2 class="section-title" style="margin-bottom:0"
+          data-pt="Evolução de indicadores ATER e Digitalização no Brasil"
+          data-en="Evolution of ATER and Digitalization Indicators in Brazil"
+          data-es="Evolución de indicadores ATER y Digitalización en Brasil">Indicadores ATER no Brasil</h2>
       <button class="share-section-btn" onclick="shareSection('mapa')">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-        <span data-pt="Compartilhar" data-en="Share">Compartilhar</span>
+        <span data-pt="Compartilhar" data-en="Share" data-es="Compartir">Compartilhar</span>
       </button>
     </div>
-    <p class="section-sub" 
+    <p class="section-sub"
       data-pt="Indicadores por nível geográfico. Selecione a variável para explorar o mapa"
-      data-en="Indicators by geographic level. Select a variable to explore the map">
+      data-en="Indicators by geographic level. Select a variable to explore the map"
+      data-es="Indicadores por nivel geográfico. Seleccione la variable para explorar el mapa">
       Indicadores por nível geográfico. Selecione a variável para explorar o mapa
     </p>
 
     <div class="geo-level-btns" id="geo-level-btns">
-      <button class="geo-btn active" data-level="municipio" data-pt="Município" data-en="Municipality">Município</button>
-      <button class="geo-btn" data-level="uf" data-pt="Unidade federativa" data-en="State">Unidade federativa</button>
-      <button class="geo-btn" data-level="regiao" data-pt="Região" data-en="Region">Região</button>
+      <button class="geo-btn active" data-level="municipio" data-pt="Município" data-en="Municipality" data-es="Municipio">Município</button>
+      <button class="geo-btn" data-level="uf" data-pt="Unidade federativa" data-en="State" data-es="Unidad federativa">Unidade federativa</button>
+      <button class="geo-btn" data-level="regiao" data-pt="Região" data-en="Region" data-es="Región">Região</button>
     </div>
 
     <select id="map-indicator-selector" class="map-indicator-selector"></select>
@@ -1596,10 +1610,6 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
   </div>
 </section>
 
-
-
-
-
 <!-- =============================================
      TIMELINE
 ============================================= -->
@@ -1607,31 +1617,35 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
   <a class="section-anchor" id="anchor-timeline"></a>
   <div class="section-wrap">
     <div class="section-label">
-      <span data-pt="Contexto Histórico" data-en="Historical Context">Contexto Histórico</span>
+      <span data-pt="Contexto Histórico" data-en="Historical Context" data-es="Contexto Histórico">Contexto Histórico</span>
     </div>
     <div style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
       <h2 class="section-title" style="margin-bottom:0"
           data-pt="Linha do Tempo da Digitalização da ATER no Brasil"
-          data-en="Timeline of Digitalization of Rural Extension in Brazil">Digitalização da ATER no Brasil</h2>
+          data-en="Timeline of Digitalization of Rural Extension in Brazil"
+          data-es="Línea de Tiempo de la Digitalización de la ATER en Brasil">Digitalização da ATER no Brasil</h2>
       <button class="share-section-btn" onclick="shareSection('timeline')">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-        <span data-pt="Compartilhar" data-en="Share">Compartilhar</span>
+        <span data-pt="Compartilhar" data-en="Share" data-es="Compartir">Compartilhar</span>
       </button>
     </div>
     <p class="section-sub"
        data-pt="Principais marcos da inovação tecnológica na extensão rural brasileira, de 1948 ao presente."
-       data-en="Key milestones of technological innovation in Brazilian rural extension, from 1948 to the present.">
+       data-en="Key milestones of technological innovation in Brazilian rural extension, from 1948 to the present."
+       data-es="Principales hitos de la innovación tecnológica en la extensión rural brasileña, de 1948 al presente.">
       Principais marcos da inovação tecnológica na extensão rural brasileira, de 1948 ao presente.
     </p>
 
     <div class="tl-intro">
       <p data-pt="Abaixo é apresentada uma linha do tempo sobre a evolução histórica da ATER no Brasil, destacando os principais marcos de inovação tecnológica, digitalização, comunicação e institucionalização do setor entre 1948 e 2026."
-         data-en="Below is a timeline of the historical evolution of rural extension (ATER) in Brazil, highlighting the main milestones of technological innovation, digitalization, communication and institutional development between 1948 and 2026.">
+         data-en="Below is a timeline of the historical evolution of rural extension (ATER) in Brazil, highlighting the main milestones of technological innovation, digitalization, communication and institutional development between 1948 and 2026."
+         data-es="A continuación se presenta una línea de tiempo sobre la evolución histórica de la ATER en Brasil, destacando los principales hitos de innovación tecnológica, digitalización, comunicación e institucionalización del sector entre 1948 y 2026.">
         Abaixo é apresentada uma linha do tempo sobre a evolução histórica da ATER no Brasil, destacando os principais marcos de inovação tecnológica, digitalização, comunicação e institucionalização do setor entre 1948 e 2026.
       </p>
       <p data-pt="Essa trajetória evidencia a transição e a integração de metodologias presenciais e analógicas, baseadas na comunicação tradicional e nos meios de massa, para modelos híbridos e digitais que incorporam plataformas on-line, inteligência artificial e sensores. Além disso, demonstra a evolução institucional e o fortalecimento das estratégias de cooperação internacional, refletindo o compromisso de instituições públicas e privadas com a inovação, a inclusão digital e o fortalecimento da agricultura familiar."
-         data-en="This trajectory reveals the transition and integration from in-person and analog methodologies — based on traditional communication and mass media — toward hybrid and digital models that incorporate online platforms, artificial intelligence, and sensors. It also demonstrates institutional evolution and the strengthening of international cooperation strategies, reflecting the commitment of public and private institutions to innovation, digital inclusion, and the strengthening of family farming.">
-        Essa trajetória evidencia a transição e a integração de metodologias presenciais e analógicas, baseadas na comunicação tradicional e nos meios de massa, para modelos híbridos e digitais que incorporam plataformas on-line, inteligência artificial e sensores. Além disso, demonstra a evolução institucional e o fortalecimento das estratégias de cooperação internacional, refletindo o compromisso de instituições públicas e privadas com a inovação, a inclusão digital e o fortalecimento da agricultura familiar.
+         data-en="This trajectory reveals the transition and integration from in-person and analog methodologies — based on traditional communication and mass media — toward hybrid and digital models that incorporate online platforms, artificial intelligence, and sensors. It also demonstrates institutional evolution and the strengthening of international cooperation strategies, reflecting the commitment of public and private institutions to innovation, digital inclusion, and the strengthening of family farming."
+         data-es="Esta trayectoria evidencia la transición e integración de metodologías presenciales y analógicas —basadas en la comunicación tradicional y los medios masivos— hacia modelos híbridos y digitales que incorporan plataformas en línea, inteligencia artificial y sensores. Además, demuestra la evolución institucional y el fortalecimiento de las estrategias de cooperación internacional, reflejando el compromiso de instituciones públicas y privadas con la innovación, la inclusión digital y el fortalecimiento de la agricultura familiar.">
+        Essa trajetória evidencia a transição e a integração de metodologías presenciais e analógicas, baseadas na comunicação tradicional e nos meios de massa, para modelos híbridos e digitais que incorporam plataformas on-line, inteligência artificial e sensores. Além disso, demonstra a evolução institucional e o fortalecimento das estratégias de cooperação internacional, refletindo o compromisso de instituições públicas e privadas com a inovação, a inclusão digital e o fortalecimento da agricultura familiar.
       </p>
     </div>
 
@@ -1649,41 +1663,61 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
 <section id="cronograma">
   <a class="section-anchor" id="anchor-cronograma"></a>
   <div class="section-wrap">
-    <div class="section-label" data-pt="Cronograma" data-en="Schedule">Cronograma</div>
-    <h2 class="section-title" data-pt="Execução para serviços de ATER em formato híbrido" data-en="Execution schedule for hybrid ATER services">Execução para serviços de ATER em formato híbrido</h2>
+    <div class="section-label" data-pt="Cronograma" data-en="Schedule" data-es="Cronograma">Cronograma</div>
+    <h2 class="section-title"
+        data-pt="Execução para serviços de ATER em formato híbrido"
+        data-en="Execution schedule for hybrid ATER services"
+        data-es="Ejecución para servicios de ATER en formato híbrido">Execução para serviços de ATER em formato híbrido</h2>
 
-   <p class="section-desc" data-pt="O Quadro a seguir apresenta um cronograma para a implementação de serviços de ATER, organizado em diferentes atividades distribuídas ao longo de 12 meses. O cronograma inicia com etapas fundamentais, como reuniões de articulação com parceiros, oficina de letramento digital e mobilização dos beneficiários (agricultores, suas famílias e grupos de interesse comum), seguidas por diagnósticos e planejamento das ações coletivas e individuais." data-en="The following table presents a schedule for the implementation of ATER services, organized into different activities distributed over 12 months. The schedule begins with fundamental steps, such as coordination meetings with partners, a digital literacy workshop, and the mobilization of beneficiaries (farmers, their families, and groups with common interests), followed by diagnostics and planning of collective and individual actions.">O Quadro a seguir apresenta um cronograma para a implementação de serviços de ATER, organizado em diferentes atividades distribuídas ao longo de 12 meses. O cronograma inicia com etapas fundamentais, como reuniões de articulação com parceiros, oficina de letramento digital e mobilização dos beneficiários (agricultores, suas famílias e grupos de interesse comum), seguidas por diagnósticos e planejamento das ações coletivas e individuais.</p><br>
+    <p class="section-desc"
+       data-pt="O Quadro a seguir apresenta um cronograma para a implementação de serviços de ATER, organizado em diferentes atividades distribuídas ao longo de 12 meses. O cronograma inicia com etapas fundamentais, como reuniões de articulação com parceiros, oficina de letramento digital e mobilização dos beneficiários (agricultores, suas famílias e grupos de interesse comum), seguidas por diagnósticos e planejamento das ações coletivas e individuais."
+       data-en="The following table presents a schedule for the implementation of ATER services, organized into different activities distributed over 12 months. The schedule begins with fundamental steps, such as coordination meetings with partners, a digital literacy workshop, and the mobilization of beneficiaries (farmers, their families, and groups with common interests), followed by diagnostics and planning of collective and individual actions."
+       data-es="El siguiente cuadro presenta un cronograma para la implementación de servicios de ATER, organizado en diferentes actividades distribuidas a lo largo de 12 meses. El cronograma comienza con etapas fundamentales, como reuniones de articulación con socios, taller de alfabetización digital y movilización de los beneficiarios (agricultores, sus familias y grupos de interés común), seguidas de diagnósticos y planificación de las acciones colectivas e individuales.">O Quadro a seguir apresenta um cronograma para a implementação de serviços de ATER, organizado em diferentes atividades distribuídas ao longo de 12 meses. O cronograma inicia com etapas fundamentais, como reuniões de articulação com parceiros, oficina de letramento digital e mobilização dos beneficiários (agricultores, suas famílias e grupos de interesse comum), seguidas por diagnósticos e planejamento das ações coletivas e individuais.</p><br>
 
-<p class="section-desc" data-pt="As atividades incluem desde oficinas e cursos presenciais até atendimentos virtuais individuais e coletivos, culminando em relatórios de avaliação e divulgação de resultados. A proposta equilibra ações presenciais e remotas (destacadas em verde), garantindo flexibilidade e adaptação às necessidades dos agricultores." data-en="Activities range from in-person workshops and training courses to individual and collective virtual services, culminating in evaluation reports and dissemination of results. The proposal balances in-person and remote actions (highlighted in green), ensuring flexibility and adaptation to the needs of farmers.">As atividades incluem desde oficinas e cursos presenciais até atendimentos virtuais individuais e coletivos, culminando em relatórios de avaliação e divulgação de resultados. A proposta equilibra ações presenciais e remotas (destacadas em verde), garantindo flexibilidade e adaptação às necessidades dos agricultores.</p><br>
+    <p class="section-desc"
+       data-pt="As atividades incluem desde oficinas e cursos presenciais até atendimentos virtuais individuais e coletivos, culminando em relatórios de avaliação e divulgação de resultados. A proposta equilibra ações presenciais e remotas (destacadas em verde), garantindo flexibilidade e adaptação às necessidades dos agricultores."
+       data-en="Activities range from in-person workshops and training courses to individual and collective virtual services, culminating in evaluation reports and dissemination of results. The proposal balances in-person and remote actions (highlighted in green), ensuring flexibility and adaptation to the needs of farmers."
+       data-es="Las actividades incluyen desde talleres y cursos presenciales hasta atenciones virtuales individuales y colectivas, culminando en informes de evaluación y difusión de resultados. La propuesta equilibra acciones presenciales y remotas (destacadas en verde), garantizando flexibilidad y adaptación a las necesidades de los agricultores.">As atividades incluem desde oficinas e cursos presenciais até atendimentos virtuais individuais e coletivos, culminando em relatórios de avaliação e divulgação de resultados. A proposta equilibra ações presenciais e remotas (destacadas em verde), garantindo flexibilidade e adaptação às necessidades dos agricultores.</p><br>
 
-<p class="section-desc" data-pt="Destaca-se ainda que outras opções de atendimento online poderiam ser incluídas nessa Proposta envolvendo por exemplo, a oferta de cursos EAD, voltados para temáticas socioprodutivas agropecuárias e outras demandas comunitárias, bem como a participação em lives promovidas pelas entidades de ATER responsáveis pelo atendimento aos produtores." data-en="It is also worth noting that other online service options could be included in this proposal, such as the offer of distance learning courses focused on agro-productive and community topics, as well as participation in live sessions promoted by the ATER entities responsible for serving producers.">Destaca-se ainda que outras opções de atendimento online poderiam ser incluídas nessa Proposta envolvendo por exemplo, a oferta de cursos EAD, voltados para temáticas socioprodutivas agropecuárias e outras demandas comunitárias, bem como a participação em lives promovidas pelas entidades de ATER responsáveis pelo atendimento aos produtores.</p><br>
+    <p class="section-desc"
+       data-pt="Destaca-se ainda que outras opções de atendimento online poderiam ser incluídas nessa Proposta envolvendo por exemplo, a oferta de cursos EAD, voltados para temáticas socioprodutivas agropecuárias e outras demandas comunitárias, bem como a participação em lives promovidas pelas entidades de ATER responsáveis pelo atendimento aos produtores."
+       data-en="It is also worth noting that other online service options could be included in this proposal, such as the offer of distance learning courses focused on agro-productive and community topics, as well as participation in live sessions promoted by the ATER entities responsible for serving producers."
+       data-es="Cabe destacar también que otras opciones de atención en línea podrían incluirse en esta Propuesta, como la oferta de cursos a distancia orientados a temáticas socioproductivas agropecuarias y otras demandas comunitarias, así como la participación en transmisiones en vivo promovidas por las entidades de ATER responsables de la atención a los productores.">Destaca-se ainda que outras opções de atendimento online poderiam ser incluídas nessa Proposta envolvendo por exemplo, a oferta de cursos EAD, voltados para temáticas socioprodutivas agropecuárias e outras demandas comunitárias, bem como a participação em lives promovidas pelas entidades de ATER responsáveis pelo atendimento aos produtores.</p><br>
 
-<p class="section-desc" data-pt="O Quadro mostra uma sugestão do número de atividades em 'Qtd.' e os meses em que devem ser realizadas" data-en="The table shows a suggested number of activities in 'Qty.' and the months in which they should be carried out"></p><br>
+    <p class="section-desc"
+       data-pt="O Quadro mostra uma sugestão do número de atividades em 'Qtd.' e os meses em que devem ser realizadas"
+       data-en="The table shows a suggested number of activities in 'Qty.' and the months in which they should be carried out"
+       data-es="El cuadro muestra una sugerencia del número de actividades en 'Cant.' y los meses en que deben realizarse"></p><br>
 
     <div class="cronograma-legenda" id="cron-legenda">
       <div class="cron-leg-item" data-tipo="todos" onclick="filtrarCronograma('todos')">
-        <span data-pt="Todos" data-en="All">Todos</span>
+        <span data-pt="Todos" data-en="All" data-es="Todos">Todos</span>
       </div>
       <div class="cron-leg-item" data-tipo="presencial" onclick="filtrarCronograma('presencial')">
         <div class="cron-leg-dot" style="background:#3ab5e0"></div>
-        <span data-pt="Presencial" data-en="In-person">Presencial</span>
+        <span data-pt="Presencial" data-en="In-person" data-es="Presencial">Presencial</span>
       </div>
       <div class="cron-leg-item" data-tipo="virtual" onclick="filtrarCronograma('virtual')">
         <div class="cron-leg-dot" style="background:#6dbf5e"></div>
-        <span data-pt="Virtual" data-en="Virtual">Virtual</span>
+        <span data-pt="Virtual" data-en="Virtual" data-es="Virtual">Virtual</span>
       </div>
     </div>
 
-    <p class="cron-scroll-hint" data-pt="Role para a direita para ver todos os meses" data-en="Scroll right to see all months">Role para a direita para ver todos os meses</p>
+    <p class="cron-scroll-hint"
+       data-pt="Role para a direita para ver todos os meses"
+       data-en="Scroll right to see all months"
+       data-es="Desplace hacia la derecha para ver todos los meses">Role para a direita para ver todos os meses</p>
 
     <div class="cronograma-wrap">
       <table class="cron-table" id="cron-table"></table>
     </div>
 
-    <p class="map-fonte" style="margin-top:10px;" data-pt="Fonte: elaborado por Rodrigo Ferraz." data-en="Source: elaborated by Rodrigo Ferraz.">Elaborado por Rodrigo Ferraz.</p>
+    <p class="map-fonte" style="margin-top:10px;"
+       data-pt="Fonte: elaborado por Rodrigo Ferraz."
+       data-en="Source: elaborated by Rodrigo Ferraz."
+       data-es="Fuente: elaborado por Rodrigo Ferraz.">Elaborado por Rodrigo Ferraz.</p>
   </div>
 </section>
-
 
 <!-- =============================================
      ABOUT
@@ -1692,17 +1726,18 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
   <a class="section-anchor" id="anchor-sobre"></a>
   <div class="section-wrap">
     <div class="section-label">
-      <span data-pt="Perfil" data-en="Profile">Perfil</span>
+      <span data-pt="Perfil" data-en="Profile" data-es="Perfil">Perfil</span>
     </div>
-    <h2 class="section-title" 
+    <h2 class="section-title"
         data-pt="Sobre Rodrigo Ferraz"
-        data-en="About Rodrigo Ferraz">Sobre Rodrigo Ferraz</h2>
+        data-en="About Rodrigo Ferraz"
+        data-es="Sobre Rodrigo Ferraz">Sobre Rodrigo Ferraz</h2>
 
     <div class="about-grid">
       <div>
-       <div class="about-photo-wrap">
-  <img src="img/foto.jpg" alt="Rodrigo Ferraz" class="about-photo">
-</div>
+        <div class="about-photo-wrap">
+          <img src="img/foto.jpg" alt="Rodrigo Ferraz" class="about-photo">
+        </div>
         <div class="about-links">
           <a href="https://www.linkedin.com/in/rodrigo-ferraz-840a50a0/" target="_blank" class="about-link-btn">
             <div class="link-icon">
@@ -1719,30 +1754,34 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
         </div>
       </div>
 
-<div class="about-text">
-  <p data-pt="Rodrigo Ferraz é Especialista em Gestão de Projetos, com sólida atuação em inovação e inclusão digital e foco em Tecnologias da Informação e Comunicação para o Desenvolvimento (ICT4D), aplicadas a sistemas sociais no contexto do desenvolvimento agrícola. É agrônomo, mestre em Ciências Sociais pela Universidade de Brasília (UnB) e doutorando em Administração, Estratégia Pública, Inovação e Marketing, também pela UnB."
-     data-en="Rodrigo Ferraz is a Project Management Specialist with extensive experience in digital innovation and inclusion, focused on Information and Communication Technologies for Development (ICT4D) applied to social systems in agricultural development contexts. He holds a degree in Agronomy, a Master's in Social Sciences from the University of Brasília (UnB), and is currently a PhD candidate in Public Strategy, Innovation and Marketing, also at UnB.">
-  </p>
-  <p data-pt="Possui ampla experiência na implementação e supervisão de iniciativas internacionais, tendo trabalhado no desenvolvimento e assessoramento de programas multilaterais com ênfase em atividades conduzidas na África, América Latina e Caribe e Nordeste do Brasil. Ao longo de mais de 10 anos, atuou no desenho e na gestão de projetos apoiados por BMGF, UK-DFID, UE, FIDA, BID, GEF, Banco Mundial, entre outras instituições."
-     data-en="He has extensive experience in the implementation and supervision of international initiatives, having worked on the development and advisory of multilateral programs with emphasis on activities carried out in Africa, Latin America and the Caribbean, and Northeast Brazil. Over more than 10 years, he has worked on the design and management of projects supported by BMGF, UK-DFID, EU, IFAD, IDB, GEF, World Bank, and other institutions.">
-  </p>
-  <p data-pt="Atualmente, coordena pelo IICA o Programa ATER Digital, lançado pelo Ministério da Agricultura, Pecuária e Abastecimento (MAPA) em 2020, que visa fortalecer o sistema brasileiro de extensão rural por meio de um modelo inovador de governança e do uso amplo das TICs. Atua também como consultor no FIDA, apoiando o desenho e a implementação de projetos da carteira brasileira, com foco em cooperação internacional, governança e redes."
-     data-en="Rodrigo Ferraz currently coordinates the ATER Digital Program at IICA, launched by Brazil's Ministry of Agriculture (MAPA) in 2020, which aims to strengthen the Brazilian rural extension system through an innovative governance model and the broad use of ICTs. He also works as a consultant at IFAD, supporting the design and implementation of projects within the Brazilian portfolio, with a focus on international cooperation, governance, and networks.">
-  </p>
-  <p data-pt="Publicou diversos trabalhos, artigos e livros — dois deles finalistas do Prêmio Jabuti em 2011 e 2016. Em 2022, recebeu o Prêmio de Mérito em Gestão na categoria Maturidade em Gestão, concedido pelo MAPA, em reconhecimento à gestão de projetos orientada para resultados."
-     data-en="He has published numerous works, articles and books — two of which were finalists for the Jabuti Prize in 2011 and 2016. In 2022, he received the Management Merit Award in the category of Management Maturity, granted by MAPA, in recognition of results-oriented project management.">
-  </p>
-  <div class="tag-list">
-    <span class="tag">ICT4D</span>
-    <span class="tag">ATER Digital</span>
-    <span class="tag">Extensão Rural</span>
-    <span class="tag">Agricultura Familiar</span>
-    <span class="tag">FIDA / IFAD</span>
-    <span class="tag">IICA</span>
-    <span class="tag">Gestão de Projetos</span>
-    <span class="tag">Cooperação Internacional</span>
-  </div>
-</div>
+      <div class="about-text">
+        <p data-pt="Rodrigo Ferraz é Especialista em Gestão de Projetos, com sólida atuação em inovação e inclusão digital e foco em Tecnologias da Informação e Comunicação para o Desenvolvimento (ICT4D), aplicadas a sistemas sociais no contexto do desenvolvimento agrícola. É agrônomo, mestre em Ciências Sociais pela Universidade de Brasília (UnB) e doutorando em Administração, Estratégia Pública, Inovação e Marketing, também pela UnB."
+           data-en="Rodrigo Ferraz is a Project Management Specialist with extensive experience in digital innovation and inclusion, focused on Information and Communication Technologies for Development (ICT4D) applied to social systems in agricultural development contexts. He holds a degree in Agronomy, a Master's in Social Sciences from the University of Brasília (UnB), and is currently a PhD candidate in Public Strategy, Innovation and Marketing, also at UnB."
+           data-es="Rodrigo Ferraz es Especialista en Gestión de Proyectos, con sólida experiencia en innovación e inclusión digital y foco en Tecnologías de la Información y la Comunicación para el Desarrollo (ICT4D), aplicadas a sistemas sociales en el contexto del desarrollo agrícola. Es agrónomo, máster en Ciencias Sociales por la Universidad de Brasília (UnB) y doctorando en Administración, Estrategia Pública, Innovación y Marketing, también en la UnB.">
+        </p>
+        <p data-pt="Possui ampla experiência na implementação e supervisão de iniciativas internacionais, tendo trabalhado no desenvolvimento e assessoramento de programas multilaterais com ênfase em atividades conduzidas na África, América Latina e Caribe e Nordeste do Brasil. Ao longo de mais de 10 anos, atuou no desenho e na gestão de projetos apoiados por BMGF, UK-DFID, UE, FIDA, BID, GEF, Banco Mundial, entre outras instituições."
+           data-en="He has extensive experience in the implementation and supervision of international initiatives, having worked on the development and advisory of multilateral programs with emphasis on activities carried out in Africa, Latin America and the Caribbean, and Northeast Brazil. Over more than 10 years, he has worked on the design and management of projects supported by BMGF, UK-DFID, EU, IFAD, IDB, GEF, World Bank, and other institutions."
+           data-es="Cuenta con amplia experiencia en la implementación y supervisión de iniciativas internacionales, habiendo trabajado en el desarrollo y asesoramiento de programas multilaterales con énfasis en actividades realizadas en África, América Latina y el Caribe y el Nordeste de Brasil. A lo largo de más de 10 años, participó en el diseño y la gestión de proyectos apoyados por BMGF, UK-DFID, UE, FIDA, BID, GEF, Banco Mundial, entre otras instituciones.">
+        </p>
+        <p data-pt="Atualmente, coordena pelo IICA o Programa ATER Digital, lançado pelo Ministério da Agricultura, Pecuária e Abastecimento (MAPA) em 2020, que visa fortalecer o sistema brasileiro de extensão rural por meio de um modelo inovador de governança e do uso amplo das TICs. Atua também como consultor no FIDA, apoiando o desenho e a implementação de projetos da carteira brasileira, com foco em cooperação internacional, governança e redes."
+           data-en="Rodrigo Ferraz currently coordinates the ATER Digital Program at IICA, launched by Brazil's Ministry of Agriculture (MAPA) in 2020, which aims to strengthen the Brazilian rural extension system through an innovative governance model and the broad use of ICTs. He also works as a consultant at IFAD, supporting the design and implementation of projects within the Brazilian portfolio, with a focus on international cooperation, governance, and networks."
+           data-es="Actualmente, coordina en el IICA el Programa ATER Digital, lanzado por el Ministerio de Agricultura, Ganadería y Abastecimiento (MAPA) en 2020, cuyo objetivo es fortalecer el sistema brasileño de extensión rural mediante un modelo innovador de gobernanza y el amplio uso de las TIC. También actúa como consultor en el FIDA, apoyando el diseño y la implementación de proyectos de la cartera brasileña, con foco en cooperación internacional, gobernanza y redes.">
+        </p>
+        <p data-pt="Publicou diversos trabalhos, artigos e livros — dois deles finalistas do Prêmio Jabuti em 2011 e 2016. Em 2022, recebeu o Prêmio de Mérito em Gestão na categoria Maturidade em Gestão, concedido pelo MAPA, em reconhecimento à gestão de projetos orientada para resultados."
+           data-en="He has published numerous works, articles and books — two of which were finalists for the Jabuti Prize in 2011 and 2016. In 2022, he received the Management Merit Award in the category of Management Maturity, granted by MAPA, in recognition of results-oriented project management."
+           data-es="Ha publicado diversos trabajos, artículos y libros — dos de ellos finalistas del Premio Jabuti en 2011 y 2016. En 2022, recibió el Premio de Mérito en Gestión en la categoría Madurez en Gestión, otorgado por el MAPA, en reconocimiento a la gestión de proyectos orientada a resultados.">
+        </p>
+        <div class="tag-list">
+          <span class="tag">ICT4D</span>
+          <span class="tag">ATER Digital</span>
+          <span class="tag">Extensão Rural</span>
+          <span class="tag">Agricultura Familiar</span>
+          <span class="tag">FIDA / IFAD</span>
+          <span class="tag">IICA</span>
+          <span class="tag">Gestão de Projetos</span>
+          <span class="tag">Cooperação Internacional</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -1754,14 +1793,16 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
   <a class="section-anchor" id="anchor-projetos"></a>
   <div class="section-wrap">
     <div class="section-label">
-      <span data-pt="Portfólio" data-en="Portfolio">Portfólio</span>
+      <span data-pt="Portfólio" data-en="Portfolio" data-es="Portafolio">Portfólio</span>
     </div>
     <h2 class="section-title"
         data-pt="Projetos e Iniciativas"
-        data-en="Projects & Initiatives">Projetos e Iniciativas</h2>
+        data-en="Projects & Initiatives"
+        data-es="Proyectos e Iniciativas">Projetos e Iniciativas</h2>
     <p class="section-sub"
        data-pt="Seleção de projetos desenvolvidos em parceria com organismos nacionais e internacionais."
-       data-en="Selection of projects developed in partnership with national and international organizations.">
+       data-en="Selection of projects developed in partnership with national and international organizations."
+       data-es="Selección de proyectos desarrollados en asociación con organismos nacionales e internacionales.">
       Seleção de projetos desenvolvidos em parceria com organismos nacionais e internacionais.
     </p>
 
@@ -1778,15 +1819,16 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
   <a class="section-anchor" id="anchor-publicacoes"></a>
   <div class="section-wrap">
     <div class="section-label">
-      <span data-pt="Pesquisa" data-en="Research">Pesquisa</span>
+      <span data-pt="Pesquisa" data-en="Research" data-es="Investigación">Pesquisa</span>
     </div>
     <div style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
       <h2 class="section-title" style="margin-bottom:0"
           data-pt="Publicações"
-          data-en="Publications">Publicações</h2>
+          data-en="Publications"
+          data-es="Publicaciones">Publicações</h2>
       <button class="share-section-btn" onclick="shareSection('publicacoes')">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-        <span data-pt="Compartilhar" data-en="Share">Compartilhar</span>
+        <span data-pt="Compartilhar" data-en="Share" data-es="Compartir">Compartilhar</span>
       </button>
     </div>
     <div class="pub-list" id="pub-list">
@@ -1802,15 +1844,16 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
   <a class="section-anchor" id="anchor-videos"></a>
   <div class="section-wrap">
     <div class="section-label">
-      <span data-pt="Palestras" data-en="Talks">Palestras</span>
+      <span data-pt="Palestras" data-en="Talks" data-es="Ponencias">Palestras</span>
     </div>
     <div style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
       <h2 class="section-title" style="margin-bottom:0"
           data-pt="Vídeos e Palestras"
-          data-en="Videos & Talks">Vídeos e Palestras</h2>
+          data-en="Videos & Talks"
+          data-es="Videos y Ponencias">Vídeos e Palestras</h2>
       <button class="share-section-btn" onclick="shareSection('videos')">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-        <span data-pt="Compartilhar" data-en="Share">Compartilhar</span>
+        <span data-pt="Compartilhar" data-en="Share" data-es="Compartir">Compartilhar</span>
       </button>
     </div>
     <div class="videos-grid" id="videos-grid">
@@ -1822,10 +1865,12 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
 <!-- FOOTER -->
 <footer>
   <p>© 2026 Rodrigo Ferraz · <a href="mailto:ferraz.rodrigo89@gmail.com">ferraz.rodrigo89@gmail.com</a></p>
-    <p data-pt="Gabriel Zanlorenssi (suporte técnico)" data-en="Gabriel Zanlorenssi (technical support)">Gabriel Zanlorenssi (suporte técnico) </p>
+  <p data-pt="Gabriel Zanlorenssi (suporte técnico)" data-en="Gabriel Zanlorenssi (technical support)" data-es="Gabriel Zanlorenssi (soporte técnico)">Gabriel Zanlorenssi (suporte técnico)</p>
 </footer>
 
 </div><!-- /page-content -->
+
+
 
 <script>
 (function() {
@@ -1836,327 +1881,324 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
 var TIMELINE_DATA = [
   {
     year: 1948, cat: "Mídia",
-    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
-    canal: { pt: "Mídias de Massa", en: "Mass Media" },
-    tipo: { pt: "Rádio educativa", en: "Educational Radio" },
-    meio: { pt: "Extensão rural tradicional", en: "Traditional Rural Extension" },
-    text: { pt: "Primeiras experiências de rádio educativa rural no Brasil (Rádio Rural de Lavras/MG).", en: "First rural educational radio experiences in Brazil (Rádio Rural de Lavras/MG)." },
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations", es: "Innovaciones en Comunicación y Tecnología" },
+    canal: { pt: "Mídias de Massa", en: "Mass Media", es: "Medios Masivos" },
+    tipo: { pt: "Rádio educativa", en: "Educational Radio", es: "Radio educativa" },
+    meio: { pt: "Extensão rural tradicional", en: "Traditional Rural Extension", es: "Extensión rural tradicional" },
+    text: { pt: "Primeiras experiências de rádio educativa rural no Brasil (Rádio Rural de Lavras/MG).", en: "First rural educational radio experiences in Brazil (Rádio Rural de Lavras/MG).", es: "Primeras experiencias de radio educativa rural en Brasil (Rádio Rural de Lavras/MG)." },
     links: ["https://ufla.br/noticias/institucional/14732-radio-universitaria-da-ufla-completa-70-anos-de-extensao-e-educacao","https://www.ccta.ufpb.br/editoraccta/contents/titulos/comunicacao/radios-universitarias-experiencias-e-perspectivas/livro-1ebook.pdf","https://sumarios.org/artigo/o-r%C3%A1dio-e-educa%C3%A7%C3%A3o-rural-no-rio-grande-do-sul-1940-1960"]
   },
   {
     year: 1948, cat: "Política Pública",
-    natureza: { pt: "Políticas Públicas e Estratégias Governamentais", en: "Public Policies and Government Strategies" },
+    natureza: { pt: "Políticas Públicas e Estratégias Governamentais", en: "Public Policies and Government Strategies", es: "Políticas Públicas y Estrategias Gubernamentales" },
     canal: null,
-    tipo: { pt: "Política pública", en: "Public Policy" },
-    meio: { pt: "Institucionalização", en: "Institutionalization" },
-    text: { pt: "Criação da Associação de Crédito e Assistência Rural (ABCAR), institucionalizando a ATER no Brasil.", en: "Creation of ABCAR (Association for Rural Credit and Assistance), institutionalizing ATER in Brazil." },
+    tipo: { pt: "Política pública", en: "Public Policy", es: "Política pública" },
+    meio: { pt: "Institucionalização", en: "Institutionalization", es: "Institucionalización" },
+    text: { pt: "Criação da Associação de Crédito e Assistência Rural (ABCAR), institucionalizando a ATER no Brasil.", en: "Creation of ABCAR (Association for Rural Credit and Assistance), institutionalizing ATER in Brazil.", es: "Creación de la ABCAR (Asociación de Crédito y Asistencia Rural), institucionalizando la ATER en Brasil." },
     links: ["https://www.gov.br/agricultura/pt-br/assuntos/ater/historico","https://portalantigo.ipea.gov.br/agencia/images/stories/PDFs/TDs/td_2343.pdf","https://tidsskrift.dk/dialogos/article/view/128044"]
   },
   {
     year: 1960, cat: "Mídia",
-    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
-    canal: { pt: "Mídias de Massa", en: "Mass Media" },
-    tipo: { pt: "Rádio", en: "Radio" },
-    meio: { pt: "Comunicação de massa", en: "Mass Communication" },
-    text: { pt: "Expansão de programas de rádio agrícolas regionais por serviços estaduais de ATER.", en: "Expansion of regional agricultural radio programs by state ATER services." },
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations", es: "Innovaciones en Comunicación y Tecnología" },
+    canal: { pt: "Mídias de Massa", en: "Mass Media", es: "Medios Masivos" },
+    tipo: { pt: "Rádio", en: "Radio", es: "Radio" },
+    meio: { pt: "Comunicação de massa", en: "Mass Communication", es: "Comunicación masiva" },
+    text: { pt: "Expansão de programas de rádio agrícolas regionais por serviços estaduais de ATER.", en: "Expansion of regional agricultural radio programs by state ATER services.", es: "Expansión de programas de radio agrícolas regionales por servicios estatales de ATER." },
     links: ["https://www.epagri.sc.gov.br/","https://www12.senado.leg.br/publicacoes/estudos-legislativos/tipos-de-estudos/textos-para-discussao/td-48-extensao-rural-no-brasil-uma-abordagem-historica-da-legislacao","https://periodicos.ufsm.br/extensaorural/article/view/35930/pdf"]
   },
   {
     year: 1970, cat: "Mídia",
-    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
-    canal: { pt: "Mídias de Massa", en: "Mass Media" },
-    tipo: { pt: "Rádio", en: "Radio" },
-    meio: { pt: "Rede institucional", en: "Institutional Network" },
-    text: { pt: "Consolidação das redes estaduais de rádio rural (Emater, Epagri, etc.).", en: "Consolidation of state rural radio networks (Emater, Epagri, etc.)." },
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations", es: "Innovaciones en Comunicación y Tecnología" },
+    canal: { pt: "Mídias de Massa", en: "Mass Media", es: "Medios Masivos" },
+    tipo: { pt: "Rádio", en: "Radio", es: "Radio" },
+    meio: { pt: "Rede institucional", en: "Institutional Network", es: "Red institucional" },
+    text: { pt: "Consolidação das redes estaduais de rádio rural (Emater, Epagri, etc.).", en: "Consolidation of state rural radio networks (Emater, Epagri, etc.).", es: "Consolidación de las redes estatales de radio rural (Emater, Epagri, etc.)." },
     links: ["https://www.epagri.sc.gov.br/","https://periodicos.ufsm.br/extensaorural/article/view/35930/pdf"]
   },
   {
     year: 1980, cat: "Mídia",
-    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
-    canal: { pt: "Mídias de Massa", en: "Mass Media" },
-    tipo: { pt: "Televisão", en: "Television" },
-    meio: { pt: "Comunicação audiovisual", en: "Audiovisual Communication" },
-    text: { pt: "Início da extensão rural via televisão, com programas técnicos e de campo; uso institucional de mídia visual na agricultura.", en: "Start of rural extension via television, with technical field programs; institutional use of visual media in agriculture." },
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations", es: "Innovaciones en Comunicación y Tecnología" },
+    canal: { pt: "Mídias de Massa", en: "Mass Media", es: "Medios Masivos" },
+    tipo: { pt: "Televisão", en: "Television", es: "Televisión" },
+    meio: { pt: "Comunicação audiovisual", en: "Audiovisual Communication", es: "Comunicación audiovisual" },
+    text: { pt: "Início da extensão rural via televisão, com programas técnicos e de campo; uso institucional de mídia visual na agricultura.", en: "Start of rural extension via television, with technical field programs; institutional use of visual media in agriculture.", es: "Inicio de la extensión rural por televisión, con programas técnicos y de campo; uso institucional de medios visuales en la agricultura." },
     links: ["https://g1.globo.com/economia/agronegocios/globo-rural/","https://www.ruraltectv.com.br/documentos/Aspectoshist%C3%B3ricosdaExtens%C3%A3oRuralnoBrasileemSantaCatarinaEPAGRI.pdf","https://www.revistarazonypalabra.org/index.php/ryp/article/view/810/820","https://revista.fct.unesp.br/index.php/formacao/article/view/9067/6817"]
   },
   {
     year: 1980, cat: "Mídia",
-    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
-    canal: { pt: "Mídias de Massa", en: "Mass Media" },
-    tipo: { pt: "Televisão / Jornalismo agro", en: "Television / Agro Journalism" },
-    meio: { pt: "Jornalismo agro", en: "Agricultural Journalism" },
-    text: { pt: "Lançamento do programa Globo Rural, marco na popularização da informação agropecuária por televisão, consolidando o acesso remoto ao conhecimento técnico no meio rural.", en: "Launch of Globo Rural, a landmark in the popularization of agricultural information via television, consolidating remote access to technical knowledge in rural areas." },
-        img: "https://s2-memoriaglobo.glbimg.com/YJi58lT4QiDPOrTUdYEtDRvg3q4=/0x0:1912x1228/1600x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_ee6202d7f3f346a7a5d7affb807d8893/internal_photos/bs/2022/u/U/ChwdSuRnSRe334aEcgDA/globo-rural-carlos-nascimento-s-c3-a9rgio-roberto-ribeiro-olga-vasone-i0002074.jpg",
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations", es: "Innovaciones en Comunicación y Tecnología" },
+    canal: { pt: "Mídias de Massa", en: "Mass Media", es: "Medios Masivos" },
+    tipo: { pt: "Televisão / Jornalismo agro", en: "Television / Agro Journalism", es: "Televisión / Periodismo agro" },
+    meio: { pt: "Jornalismo agro", en: "Agricultural Journalism", es: "Periodismo agrícola" },
+    text: { pt: "Lançamento do programa Globo Rural, marco na popularização da informação agropecuária por televisão, consolidando o acesso remoto ao conhecimento técnico no meio rural.", en: "Launch of Globo Rural, a landmark in the popularization of agricultural information via television, consolidating remote access to technical knowledge in rural areas.", es: "Lanzamiento del programa Globo Rural, hito en la popularización de la información agropecuaria por televisión, consolidando el acceso remoto al conocimiento técnico en el medio rural." },
+    img: "https://s2-memoriaglobo.glbimg.com/YJi58lT4QiDPOrTUdYEtDRvg3q4=/0x0:1912x1228/1600x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_ee6202d7f3f346a7a5d7affb807d8893/internal_photos/bs/2022/u/U/ChwdSuRnSRe334aEcgDA/globo-rural-carlos-nascimento-s-c3-a9rgio-roberto-ribeiro-olga-vasone-i0002074.jpg",
     imgCredit: "Acervo/Globo.",
     links: ["https://g1.globo.com/economia/agronegocios/globo-rural/","https://www.scielo.br/j/ld/a/9X4k9gMHLdCGJJbqPV8W9QB/?format=html&lang=pt","https://revista.fct.unesp.br/index.php/formacao/article/view/9067/6817"]
   },
   {
     year: 1980, cat: "Mídia",
-    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
-    canal: { pt: "Mídias de Massa", en: "Mass Media" },
-    tipo: { pt: "Rádio", en: "Radio" },
-    meio: { pt: "Educomunicação", en: "Educommunication" },
-    text: { pt: "EPAGRI e outras instituições adotam radionovelas e programas educativos rurais.", en: "EPAGRI and other institutions adopt radio dramas and rural educational programs." },
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations", es: "Innovaciones en Comunicación y Tecnología" },
+    canal: { pt: "Mídias de Massa", en: "Mass Media", es: "Medios Masivos" },
+    tipo: { pt: "Rádio", en: "Radio", es: "Radio" },
+    meio: { pt: "Educomunicação", en: "Educommunication", es: "Educomunicación" },
+    text: { pt: "EPAGRI e outras instituições adotam radionovelas e programas educativos rurais.", en: "EPAGRI and other institutions adopt radio dramas and rural educational programs.", es: "EPAGRI y otras instituciones adoptan radionovelas y programas educativos rurales." },
     links: ["https://www.epagri.sc.gov.br/","https://www.iesp.edu.br/sistema/uploads/arquivos/portais-pesquisa/aspectos-historicos-da-extensao-rural-no-brasil-e-em-santa-catarina.pdf"]
   },
   {
     year: 1990, cat: "Política Pública",
-    natureza: { pt: "Fortalecimento Institucional Público e Privado", en: "Public and Private Institutional Strengthening" },
+    natureza: { pt: "Fortalecimento Institucional Público e Privado", en: "Public and Private Institutional Strengthening", es: "Fortalecimiento Institucional Público y Privado" },
     canal: null,
-    tipo: { pt: "Fortalecimento institucional", en: "Institutional Strengthening" },
-    meio: { pt: "Institucionalização", en: "Institutionalization" },
-    text: { pt: "Criação da Asbraer (Associação Brasileira das Entidades Estaduais de Assistência Técnica e Extensão Rural).", en: "Creation of Asbraer (Brazilian Association of State Rural Extension Entities)." },
+    tipo: { pt: "Fortalecimento institucional", en: "Institutional Strengthening", es: "Fortalecimiento institucional" },
+    meio: { pt: "Institucionalização", en: "Institutionalization", es: "Institucionalización" },
+    text: { pt: "Criação da Asbraer (Associação Brasileira das Entidades Estaduais de Assistência Técnica e Extensão Rural).", en: "Creation of Asbraer (Brazilian Association of State Rural Extension Entities).", es: "Creación de la Asbraer (Asociación Brasileña de Entidades Estatales de Asistencia Técnica y Extensión Rural)." },
     links: ["http://www.tede2.ufrpe.br:8080/tede2/bitstream/tede2/6047/2/Bruno%20de%20Oliveira%20Andrade.pdf","https://www.asbraer.org.br/gestao.html"]
   },
   {
     year: 1990, cat: "Internet",
-    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
-    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms" },
-    tipo: { pt: "Internet", en: "Internet" },
-    meio: { pt: "Primeira digitalização da comunicação rural", en: "First Digitalization of Rural Communication" },
-    text: { pt: "Chegada da internet e surgimento dos primeiros portais agropecuários e boletins online.", en: "Arrival of the internet and emergence of first agricultural portals and online bulletins." },
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations", es: "Innovaciones en Comunicación y Tecnología" },
+    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms", es: "Plataformas Interactivas" },
+    tipo: { pt: "Internet", en: "Internet", es: "Internet" },
+    meio: { pt: "Primeira digitalização da comunicação rural", en: "First Digitalization of Rural Communication", es: "Primera digitalización de la comunicación rural" },
+    text: { pt: "Chegada da internet e surgimento dos primeiros portais agropecuários e boletins online.", en: "Arrival of the internet and emergence of first agricultural portals and online bulletins.", es: "Llegada de internet y surgimiento de los primeros portales agropecuarios y boletines en línea." },
     links: ["https://www.embrapa.br/agencia-de-informacao-tecnologica","https://revista.fatectq.edu.br/interfacetecnologica/en/article/view/1761/1001"]
   },
   {
     year: 1995, cat: "Tecnologia",
-    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
-    canal: { pt: "Tecnologias Digitais e de Automação", en: "Digital and Automation Technologies" },
-    tipo: { pt: "Geotecnologia", en: "Geotechnology" },
-    meio: { pt: "Agricultura de precisão", en: "Precision Agriculture" },
-    text: { pt: "Introdução do GPS e SIG na agricultura de precisão.", en: "Introduction of GPS and GIS in precision agriculture." },
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations", es: "Innovaciones en Comunicación y Tecnología" },
+    canal: { pt: "Tecnologias Digitais e de Automação", en: "Digital and Automation Technologies", es: "Tecnologías Digitales y de Automatización" },
+    tipo: { pt: "Geotecnologia", en: "Geotechnology", es: "Geotecnología" },
+    meio: { pt: "Agricultura de precisão", en: "Precision Agriculture", es: "Agricultura de precisión" },
+    text: { pt: "Introdução do GPS e SIG na agricultura de precisão.", en: "Introduction of GPS and GIS in precision agriculture.", es: "Introducción del GPS y SIG en la agricultura de precisión." },
     links: ["https://www.embrapa.br/agricultura-de-precisao","https://revistatecie.crea-pr.org.br/index.php/revista/article/view/907/704","https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/908112/1/sustent.pdf"]
   },
   {
     year: 2000, cat: "Tecnologia",
-    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
-    canal: { pt: "Tecnologias Digitais e de Automação", en: "Digital and Automation Technologies" },
-    tipo: { pt: "Plataformas digitais", en: "Digital Platforms" },
-    meio: { pt: "Gestão de dados", en: "Data Management" },
-    text: { pt: "Consolidação de plataformas digitais de gestão agrícola e sensores de campo.", en: "Consolidation of digital agricultural management platforms and field sensors." },
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations", es: "Innovaciones en Comunicación y Tecnología" },
+    canal: { pt: "Tecnologias Digitais e de Automação", en: "Digital and Automation Technologies", es: "Tecnologías Digitales y de Automatización" },
+    tipo: { pt: "Plataformas digitais", en: "Digital Platforms", es: "Plataformas digitales" },
+    meio: { pt: "Gestão de dados", en: "Data Management", es: "Gestión de datos" },
+    text: { pt: "Consolidação de plataformas digitais de gestão agrícola e sensores de campo.", en: "Consolidation of digital agricultural management platforms and field sensors.", es: "Consolidación de plataformas digitales de gestión agrícola y sensores de campo." },
     links: ["https://www.embrapa.br/agricultura-de-precisao","https://revistacultivar.com.br/index.php/artigos/a-digitalizacao-da-agricultura","https://scientificelectronicarchives.org/index.php/SEA/article/view/1520/1577"]
   },
   {
     year: 2005, cat: "Extensão Digital",
-    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
-    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms" },
-    tipo: { pt: "Extensão digital", en: "Digital Extension" },
-    meio: { pt: "Educação online", en: "Online Education" },
-    text: { pt: "Início dos programas de e-Extension em universidades e agências internacionais.", en: "Start of e-Extension programs at universities and international agencies." },
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations", es: "Innovaciones en Comunicación y Tecnología" },
+    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms", es: "Plataformas Interactivas" },
+    tipo: { pt: "Extensão digital", en: "Digital Extension", es: "Extensión digital" },
+    meio: { pt: "Educação online", en: "Online Education", es: "Educación en línea" },
+    text: { pt: "Início dos programas de e-Extension em universidades e agências internacionais.", en: "Start of e-Extension programs at universities and international agencies.", es: "Inicio de los programas de e-Extension en universidades y agencias internacionales." },
     links: ["https://www.fao.org/e-agriculture/en","https://periodicos.uniarp.edu.br/index.php/juridico/article/view/3379/1635","https://revistas.uepg.br/index.php/conexao/article/view/23274","https://ap.fftc.org.tw/article/761"]
   },
   {
     year: 2008, cat: "Mobile",
-    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
-    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms" },
-    tipo: { pt: "Telefonia móvel", en: "Mobile Telephony" },
-    meio: { pt: "Comunicação digital", en: "Digital Communication" },
-    text: { pt: "Uso de SMS para comunicação técnica entre extensionistas e agricultores.", en: "Use of SMS for technical communication between extension agents and farmers." },
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations", es: "Innovaciones en Comunicación y Tecnología" },
+    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms", es: "Plataformas Interactivas" },
+    tipo: { pt: "Telefonia móvel", en: "Mobile Telephony", es: "Telefonía móvil" },
+    meio: { pt: "Comunicação digital", en: "Digital Communication", es: "Comunicación digital" },
+    text: { pt: "Uso de SMS para comunicação técnica entre extensionistas e agricultores.", en: "Use of SMS for technical communication between extension agents and farmers.", es: "Uso de SMS para comunicación técnica entre extensionistas y agricultores." },
     links: ["https://precisionag.org/"]
   },
   {
     year: 2010, cat: "Extensão Digital",
-    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
-    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms" },
-    tipo: { pt: "Plataformas digitais", en: "Digital Platforms" },
-    meio: { pt: "Extensão pública", en: "Public Extension" },
-    text: { pt: "Primeiras plataformas digitais estaduais e privadas de ATER no Brasil (Epagri, Emater).", en: "First state and private digital ATER platforms in Brazil (Epagri, Emater)." },
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations", es: "Innovaciones en Comunicación y Tecnología" },
+    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms", es: "Plataformas Interactivas" },
+    tipo: { pt: "Plataformas digitais", en: "Digital Platforms", es: "Plataformas digitales" },
+    meio: { pt: "Extensão pública", en: "Public Extension", es: "Extensión pública" },
+    text: { pt: "Primeiras plataformas digitais estaduais e privadas de ATER no Brasil (Epagri, Emater).", en: "First state and private digital ATER platforms in Brazil (Epagri, Emater).", es: "Primeras plataformas digitales estatales y privadas de ATER en Brasil (Epagri, Emater)." },
     links: ["https://www.epagri.sc.gov.br/servicos/","https://www.interacoes.ucdb.br/interacoes/article/view/4788/3158","https://drive.google.com/file/d/1PfMQKhy4RYwyl42xcVCO2DFUC30f9dYR/view"]
   },
   {
     year: 2011, cat: "Internacional",
-    natureza: { pt: "Fortalecimento Institucional Público e Privado", en: "Public and Private Institutional Strengthening" },
+    natureza: { pt: "Fortalecimento Institucional Público e Privado", en: "Public and Private Institutional Strengthening", es: "Fortalecimiento Institucional Público y Privado" },
     canal: null,
-    tipo: { pt: "Mobile Extension", en: "Mobile Extension" },
-    meio: { pt: "Ciência comportamental", en: "Behavioral Science" },
-    text: { pt: "Fundação do Precision Agriculture for Development (PAD) por Michael Kremer (Prêmio Nobel 2019) — marco de extensão digital via celular.", en: "Foundation of Precision Agriculture for Development (PAD) by Michael Kremer (Nobel Prize 2019) — landmark of digital mobile extension." },
-     img: "https://www.nobelprize.org/uploads/2018/10/na-kremer-award.jpg",
+    tipo: { pt: "Mobile Extension", en: "Mobile Extension", es: "Extensión Móvil" },
+    meio: { pt: "Ciência comportamental", en: "Behavioral Science", es: "Ciencia del comportamiento" },
+    text: { pt: "Fundação do Precision Agriculture for Development (PAD) por Michael Kremer (Prêmio Nobel 2019) — marco de extensão digital via celular.", en: "Foundation of Precision Agriculture for Development (PAD) by Michael Kremer (Nobel Prize 2019) — landmark of digital mobile extension.", es: "Fundación de Precision Agriculture for Development (PAD) por Michael Kremer (Premio Nobel 2019) — hito de la extensión digital vía celular." },
+    img: "https://www.nobelprize.org/uploads/2018/10/na-kremer-award.jpg",
     imgCredit: "Nobel Media/Nanaka Adachi.",
     links: ["https://precisionag.org/","https://www.givewell.org/international/technical/programs/precision-agriculture-for-development","https://en.everybodywiki.com/Precision_Agriculture_for_Development"]
   },
   {
     year: 2013, cat: "Política Pública",
-    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
-    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms" },
-    tipo: { pt: "Portal digital", en: "Digital Portal" },
-    meio: { pt: "Governo eletrônico", en: "E-Government" },
-    text: { pt: "Lançamento do Portal e-Campo da Embrapa, marco da ATER digital pública no Brasil.", en: "Launch of Embrapa's e-Campo Portal, a landmark of public digital ATER in Brazil." },
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations", es: "Innovaciones en Comunicación y Tecnología" },
+    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms", es: "Plataformas Interactivas" },
+    tipo: { pt: "Portal digital", en: "Digital Portal", es: "Portal digital" },
+    meio: { pt: "Governo eletrônico", en: "E-Government", es: "Gobierno electrónico" },
+    text: { pt: "Lançamento do Portal e-Campo da Embrapa, marco da ATER digital pública no Brasil.", en: "Launch of Embrapa's e-Campo Portal, a landmark of public digital ATER in Brazil.", es: "Lanzamiento del Portal e-Campo de Embrapa, hito de la ATER digital pública en Brasil." },
     links: ["https://www.embrapa.br/e-campo","https://ainfo.cnptia.embrapa.br/digital/bitstream/doc/1153499/1/Relatorio-Gerencial-2019-2023.pdf"]
   },
   {
     year: 2015, cat: "Mobile",
-    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
-    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms" },
-    tipo: { pt: "Mídias sociais", en: "Social Media" },
-    meio: { pt: "Comunicação horizontal", en: "Horizontal Communication" },
-    text: { pt: "Uso massivo de WhatsApp e redes sociais por extensionistas e produtores.", en: "Mass use of WhatsApp and social media by extension agents and producers." },
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations", es: "Innovaciones en Comunicación y Tecnología" },
+    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms", es: "Plataformas Interactivas" },
+    tipo: { pt: "Mídias sociais", en: "Social Media", es: "Redes sociales" },
+    meio: { pt: "Comunicação horizontal", en: "Horizontal Communication", es: "Comunicación horizontal" },
+    text: { pt: "Uso massivo de WhatsApp e redes sociais por extensionistas e produtores.", en: "Mass use of WhatsApp and social media by extension agents and producers.", es: "Uso masivo de WhatsApp y redes sociales por extensionistas y productores." },
     links: ["https://www.startagro.agr.br/como-o-produtor-rural-usa-a-internet-smartphones-whatsapp-e-aplicativos/"]
   },
   {
     year: 2016, cat: "Tecnologia",
-    natureza: { pt: "Fortalecimento Institucional Público e Privado", en: "Public and Private Institutional Strengthening" },
+    natureza: { pt: "Fortalecimento Institucional Público e Privado", en: "Public and Private Institutional Strengthening", es: "Fortalecimiento Institucional Público y Privado" },
     canal: null,
-    tipo: { pt: "Startup", en: "Startup" },
-    meio: { pt: "ATER digital", en: "Digital ATER" },
-    text: { pt: "Fundação da startup brasileira ManejeBem, especializada em ATER digital.", en: "Foundation of Brazilian startup ManejeBem, specialized in digital ATER." },
+    tipo: { pt: "Startup", en: "Startup", es: "Startup" },
+    meio: { pt: "ATER digital", en: "Digital ATER", es: "ATER digital" },
+    text: { pt: "Fundação da startup brasileira ManejeBem, especializada em ATER digital.", en: "Foundation of Brazilian startup ManejeBem, specialized in digital ATER.", es: "Fundación de la startup brasileña ManejeBem, especializada en ATER digital." },
     links: ["https://manejebem.com/","https://sistemabbrasil.org/empresas-b/manejebem/"]
   },
   {
     year: 2017, cat: "Tecnologia",
-    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
-    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms" },
-    tipo: { pt: "Plataforma digital", en: "Digital Platform" },
-    meio: { pt: "Rastreabilidade", en: "Traceability" },
-    text: { pt: "Instituto Biosistêmico lança a plataforma Agrotrace, para ações de ATER rastreabilidade e monitoramento agropecuário.", en: "Instituto Biosistêmico launches the Agrotrace platform for agricultural extension, traceability, and monitoring actions in agriculture."},
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations", es: "Innovaciones en Comunicación y Tecnología" },
+    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms", es: "Plataformas Interactivas" },
+    tipo: { pt: "Plataforma digital", en: "Digital Platform", es: "Plataforma digital" },
+    meio: { pt: "Rastreabilidade", en: "Traceability", es: "Trazabilidad" },
+    text: { pt: "Instituto Biosistêmico lança a plataforma Agrotrace, para ações de ATER rastreabilidade e monitoramento agropecuário.", en: "Instituto Biosistêmico launches the Agrotrace platform for agricultural extension, traceability, and monitoring actions in agriculture.", es: "Instituto Biosistêmico lanza la plataforma Agrotrace para acciones de ATER, trazabilidad y monitoreo agropecuario." },
     links: ["https://www.agrotrace.com.br/portal-agrotrace"]
   },
   {
     year: 2018, cat: "Tecnologia",
-    natureza: { pt: "Fortalecimento Institucional Público e Privado", en: "Public and Private Institutional Strengthening" },
+    natureza: { pt: "Fortalecimento Institucional Público e Privado", en: "Public and Private Institutional Strengthening", es: "Fortalecimiento Institucional Público y Privado" },
     canal: null,
-    tipo: { pt: "Startup", en: "Startup" },
-    meio: { pt: "Inovação tecnológica", en: "Technological Innovation" },
-    text: { pt: "Consolidação de startups agtech brasileiras (ManejeBem, Agrotools, Solinftec).", en: "Consolidation of Brazilian agtech startups (ManejeBem, Agrotools, Solinftec)." },
+    tipo: { pt: "Startup", en: "Startup", es: "Startup" },
+    meio: { pt: "Inovação tecnológica", en: "Technological Innovation", es: "Innovación tecnológica" },
+    text: { pt: "Consolidação de startups agtech brasileiras (ManejeBem, Agrotools, Solinftec).", en: "Consolidation of Brazilian agtech startups (ManejeBem, Agrotools, Solinftec).", es: "Consolidación de startups agtech brasileñas (ManejeBem, Agrotools, Solinftec)." },
     links: ["https://www.agrotools.com.br","https://radaragtech.com.br/wp-content/uploads/2022/10/radaragtech-2019.pdf"]
   },
   {
     year: 2018, cat: "Política Pública",
-    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
-    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms" },
-    tipo: { pt: "Governo digital", en: "Digital Government" },
-    meio: { pt: "Extensão pública", en: "Public Extension" },
-    text: { pt: "Criação de plataformas públicas de ATER digital, como Epagri Mob e Emater Digital.", en: "Creation of public digital ATER platforms, such as Epagri Mob and Emater Digital." },
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations", es: "Innovaciones en Comunicación y Tecnología" },
+    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms", es: "Plataformas Interactivas" },
+    tipo: { pt: "Governo digital", en: "Digital Government", es: "Gobierno digital" },
+    meio: { pt: "Extensão pública", en: "Public Extension", es: "Extensión pública" },
+    text: { pt: "Criação de plataformas públicas de ATER digital, como Epagri Mob e Emater Digital.", en: "Creation of public digital ATER platforms, such as Epagri Mob and Emater Digital.", es: "Creación de plataformas públicas de ATER digital, como Epagri Mob y Emater Digital." },
     links: ["https://www.epagri.sc.gov.br/"]
   },
   {
     year: 2020, cat: "Política Pública",
-    natureza: { pt: "Políticas Públicas e Estratégias Governamentais", en: "Public Policies and Government Strategies" },
+    natureza: { pt: "Políticas Públicas e Estratégias Governamentais", en: "Public Policies and Government Strategies", es: "Políticas Públicas y Estrategias Gubernamentales" },
     canal: null,
-    tipo: { pt: "Política pública", en: "Public Policy" },
-    meio: { pt: "Plataforma digital", en: "Digital Platform" },
-    text: { pt: "Lançamento do Programa ATER Digital pelo MAPA.", en: "Launch of the ATER Digital Program by MAPA." },
+    tipo: { pt: "Política pública", en: "Public Policy", es: "Política pública" },
+    meio: { pt: "Plataforma digital", en: "Digital Platform", es: "Plataforma digital" },
+    text: { pt: "Lançamento do Programa ATER Digital pelo MAPA.", en: "Launch of the ATER Digital Program by MAPA.", es: "Lanzamiento del Programa ATER Digital por el MAPA." },
     links: ["https://www.gov.br/agricultura/pt-br/assuntos/noticias/mapa-lanca-programa-ater-digital","https://www.atermaisdigital.cnptia.embrapa.br/"]
   },
   {
     year: 2020, cat: "Tecnologia",
-    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
-    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms" },
-    tipo: { pt: "Estratégia híbrida", en: "Hybrid Strategy" },
-    meio: { pt: "Adaptação tecnológica", en: "Technological Adaptation" },
-    text: { pt: "Pandemia de COVID-19 acelera a adoção de modelos híbridos de ATER (combinação de atendimento presencial e digital).", en: "COVID-19 pandemic accelerates adoption of hybrid ATER models (combining in-person and digital service)." },
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations", es: "Innovaciones en Comunicación y Tecnología" },
+    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms", es: "Plataformas Interactivas" },
+    tipo: { pt: "Estratégia híbrida", en: "Hybrid Strategy", es: "Estrategia híbrida" },
+    meio: { pt: "Adaptação tecnológica", en: "Technological Adaptation", es: "Adaptación tecnológica" },
+    text: { pt: "Pandemia de COVID-19 acelera a adoção de modelos híbridos de ATER (combinação de atendimento presencial e digital).", en: "COVID-19 pandemic accelerates adoption of hybrid ATER models (combining in-person and digital service).", es: "La pandemia de COVID-19 acelera la adopción de modelos híbridos de ATER (combinación de atención presencial y digital)." },
     links: []
   },
   {
     year: 2021, cat: "Tecnologia",
-    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations" },
-    canal: { pt: "Tecnologias Digitais e de Automação", en: "Digital and Automation Technologies" },
-    tipo: { pt: "Inteligência artificial", en: "Artificial Intelligence" },
-    meio: { pt: "Monitoramento agrícola", en: "Agricultural Monitoring" },
-    text: { pt: "Crescimento no uso de inteligência artificial, big data e drones em sistemas de assistência técnica e monitoramento de lavouras.", en: "Growth in the use of artificial intelligence, big data and drones in technical assistance and crop monitoring systems." },
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations", es: "Innovaciones en Comunicación y Tecnología" },
+    canal: { pt: "Tecnologias Digitais e de Automação", en: "Digital and Automation Technologies", es: "Tecnologías Digitales y de Automatización" },
+    tipo: { pt: "Inteligência artificial", en: "Artificial Intelligence", es: "Inteligencia artificial" },
+    meio: { pt: "Monitoramento agrícola", en: "Agricultural Monitoring", es: "Monitoreo agrícola" },
+    text: { pt: "Crescimento no uso de inteligência artificial, big data e drones em sistemas de assistência técnica e monitoramento de lavouras.", en: "Growth in the use of artificial intelligence, big data and drones in technical assistance and crop monitoring systems.", es: "Crecimiento en el uso de inteligencia artificial, big data y drones en sistemas de asistencia técnica y monitoreo de cultivos." },
     img: "https://wp.technologyreview.com/wp-content/uploads/2016/07/fotolia88050102subscriptionmonthlym-7.jpg?fit=2160,1214",
     imgCredit: "Fotolia/MIT Tech Review.",
     links: ["https://www.embrapa.br/busca-de-noticias/-/noticia/67664619/inteligencia-artificial-no-agronegocio","https://ainfo.cnptia.embrapa.br/digital/bitstream/doc/1170729/1/P-Inteligencia-artificial-aplicada-na.pdf"]
   },
-
-
-
-
   {
     year: 2022, cat: "Internacional",
-    natureza: { pt: "Fortalecimento Institucional Público e Privado", en: "Public and Private Institutional Strengthening" },
+    natureza: { pt: "Fortalecimento Institucional Público e Privado", en: "Public and Private Institutional Strengthening", es: "Fortalecimiento Institucional Público y Privado" },
     canal: null,
-    tipo: { pt: "Ensino remoto", en: "Remote Learning" },
-    meio: { pt: "Cooperação institucional", en: "Institutional Cooperation" },
-    text: { pt: "Parcerias público-privadas e capacitações online (ANATER e SENAR).", en: "Public-private partnerships and online training programs (ANATER and SENAR)." },
+    tipo: { pt: "Ensino remoto", en: "Remote Learning", es: "Enseñanza remota" },
+    meio: { pt: "Cooperação institucional", en: "Institutional Cooperation", es: "Cooperación institucional" },
+    text: { pt: "Parcerias público-privadas e capacitações online (ANATER e SENAR).", en: "Public-private partnerships and online training programs (ANATER and SENAR).", es: "Alianzas público-privadas y capacitaciones en línea (ANATER y SENAR)." },
     links: ["https://www.sinterpa.com.br/single-post/anater-e-senar-lan%C3%A7am-novas-capacita%C3%A7%C3%B5es-online-e-gratuitas"]
   },
   {
     year: 2022, cat: "Política Pública",
-    natureza: { pt: "Políticas Públicas e Estratégias Governamentais", en: "Public Policies and Government Strategies" },
+    natureza: { pt: "Políticas Públicas e Estratégias Governamentais", en: "Public Policies and Government Strategies", es: "Políticas Públicas y Estrategias Gubernamentales" },
     canal: null,
-    tipo: { pt: "Edital público", en: "Public Tender" },
-    meio: { pt: "Serviços remotos", en: "Remote Services" },
-    text: { pt: "Editais da ANATER passam a prever formalmente produtos e serviços digitais/remotos.", en: "ANATER public tenders begin to formally include digital and remote products and services." },
+    tipo: { pt: "Edital público", en: "Public Tender", es: "Convocatoria pública" },
+    meio: { pt: "Serviços remotos", en: "Remote Services", es: "Servicios remotos" },
+    text: { pt: "Editais da ANATER passam a prever formalmente produtos e serviços digitais/remotos.", en: "ANATER public tenders begin to formally include digital and remote products and services.", es: "Las convocatorias de la ANATER comienzan a prever formalmente productos y servicios digitales/remotos." },
     links: ["https://www.anater.org/wp-content/uploads/2022/07/EDITAL-DE-CHAMAMENTO-PUBLICO-No-001-2022.pdf"]
   },
   {
     year: 2023, cat: "Internacional",
-    natureza: { pt: "Fortalecimento Institucional Público e Privado", en: "Public and Private Institutional Strengthening" },
+    natureza: { pt: "Fortalecimento Institucional Público e Privado", en: "Public and Private Institutional Strengthening", es: "Fortalecimiento Institucional Público y Privado" },
     canal: null,
-    tipo: { pt: "Plataforma digital", en: "Digital Platform" },
-    meio: { pt: "Cooperação internacional", en: "International Cooperation" },
-    text: { pt: "Criação de Hubs Digitais de ATER e inovação rural (como ATER+ Digital / IICA).", en: "Creation of Digital ATER Hubs and rural innovation networks (such as ATER+ Digital / IICA)." },
+    tipo: { pt: "Plataforma digital", en: "Digital Platform", es: "Plataforma digital" },
+    meio: { pt: "Cooperação internacional", en: "International Cooperation", es: "Cooperación internacional" },
+    text: { pt: "Criação de Hubs Digitais de ATER e inovação rural (como ATER+ Digital / IICA).", en: "Creation of Digital ATER Hubs and rural innovation networks (such as ATER+ Digital / IICA).", es: "Creación de Hubs Digitales de ATER e innovación rural (como ATER+ Digital / IICA)." },
     links: ["https://agenciagov.ebc.com.br/noticias/202404/plataforma-ater-digital-disponibiliza-conteudos-on-line-para-tecnicos-extensionistas"]
   },
   {
     year: 2024, cat: "Internacional",
-    natureza: { pt: "Políticas Públicas e Estratégias Governamentais", en: "Public Policies and Government Strategies" },
+    natureza: { pt: "Políticas Públicas e Estratégias Governamentais", en: "Public Policies and Government Strategies", es: "Políticas Públicas y Estrategias Gubernamentales" },
     canal: null,
-    tipo: { pt: "Estratégia institucional", en: "Institutional Strategy" },
-    meio: { pt: "Planejamento estratégico", en: "Strategic Planning" },
-    text: { pt: "Inclusão da temática da ATER Digital como estratégia do FIDA no COSOP Brasil 2025–2029.", en: "ATER Digital included as a strategy in IFAD's Brazil COSOP 2025–2029." },
+    tipo: { pt: "Estratégia institucional", en: "Institutional Strategy", es: "Estrategia institucional" },
+    meio: { pt: "Planejamento estratégico", en: "Strategic Planning", es: "Planificación estratégica" },
+    text: { pt: "Inclusão da temática da ATER Digital como estratégia do FIDA no COSOP Brasil 2025–2029.", en: "ATER Digital included as a strategy in IFAD's Brazil COSOP 2025–2029.", es: "Inclusión de la temática de ATER Digital como estrategia del FIDA en el COSOP Brasil 2025–2029." },
     links: ["https://www.ifad.org/en/w/countries/brazil"]
   },
   {
     year: 2024, cat: "Política Pública",
-    natureza: { pt: "Políticas Públicas e Estratégias Governamentais", en: "Public Policies and Government Strategies" },
+    natureza: { pt: "Políticas Públicas e Estratégias Governamentais", en: "Public Policies and Government Strategies", es: "Políticas Públicas y Estrategias Gubernamentales" },
     canal: null,
-    tipo: { pt: "Política pública", en: "Public Policy" },
-    meio: { pt: "Financiamento", en: "Financing" },
-    text: { pt: "MDA investiu R$ 19 milhões na ATER para cerca de 4.625 famílias, contemplando ATER Digital.", en: "MDA invested R$ 19 million in ATER for approximately 4,625 families, including Digital ATER." },
+    tipo: { pt: "Política pública", en: "Public Policy", es: "Política pública" },
+    meio: { pt: "Financiamento", en: "Financing", es: "Financiamiento" },
+    text: { pt: "MDA investiu R$ 19 milhões na ATER para cerca de 4.625 famílias, contemplando ATER Digital.", en: "MDA invested R$ 19 million in ATER for approximately 4,625 families, including Digital ATER.", es: "El MDA invirtió R$ 19 millones en ATER para aproximadamente 4.625 familias, contemplando la ATER Digital." },
     links: ["https://www.gov.br/mda/pt-br/noticias/2024/12/mda-vai-investir-r-19-milhoes-em-assistencia-tecnica-para-mais-de-4-mil-familias-de-agricultores-familiares"]
   },
   {
     year: 2025, cat: "Internacional",
-    natureza: { pt: "Políticas Públicas e Estratégias Governamentais", en: "Public Policies and Government Strategies" },
+    natureza: { pt: "Políticas Públicas e Estratégias Governamentais", en: "Public Policies and Government Strategies", es: "Políticas Públicas y Estrategias Gubernamentales" },
     canal: null,
-    tipo: { pt: "Implementação de projetos", en: "Project Implementation" },
-    meio: { pt: "Cooperação internacional", en: "International Cooperation" },
-    text: { pt: "Início dos primeiros projetos do FIDA que incorporam a temática da ATER Digital, como CompensAÇÃO e PSI.", en: "Start of the first IFAD projects incorporating Digital ATER, such as CompensACTION and PSI." },
+    tipo: { pt: "Implementação de projetos", en: "Project Implementation", es: "Implementación de proyectos" },
+    meio: { pt: "Cooperação internacional", en: "International Cooperation", es: "Cooperación internacional" },
+    text: { pt: "Início dos primeiros projetos do FIDA que incorporam a temática da ATER Digital, como CompensAÇÃO e PSI.", en: "Start of the first IFAD projects incorporating Digital ATER, such as CompensACTION and PSI.", es: "Inicio de los primeros proyectos del FIDA que incorporan la temática de ATER Digital, como CompensACCIÓN y PSI." },
     links: ["https://www.ifad.org/en/w/projects/2000004380"]
   },
   {
     year: 2025, cat: "Política Pública",
-    natureza: { pt: "Políticas Públicas e Estratégias Governamentais", en: "Public Policies and Government Strategies" },
+    natureza: { pt: "Políticas Públicas e Estratégias Governamentais", en: "Public Policies and Government Strategies", es: "Políticas Públicas y Estrategias Gubernamentales" },
     canal: null,
-    tipo: { pt: "Iniciativa de digitalização", en: "Digitalization Initiative" },
-    meio: { pt: "Acesso a serviços públicos", en: "Access to Public Services" },
-    text: { pt: "Meu Imóvel Rural Digital – Iniciativa que integra dados georreferenciados e serviços digitais para ampliar o acesso de agricultores familiares a políticas públicas e crédito rural.", en: "Meu Imóvel Rural Digital — initiative integrating georeferenced data and digital services to expand family farmers' access to public policies and rural credit." },
+    tipo: { pt: "Iniciativa de digitalização", en: "Digitalization Initiative", es: "Iniciativa de digitalización" },
+    meio: { pt: "Acesso a serviços públicos", en: "Access to Public Services", es: "Acceso a servicios públicos" },
+    text: { pt: "Meu Imóvel Rural Digital – Iniciativa que integra dados georreferenciados e serviços digitais para ampliar o acesso de agricultores familiares a políticas públicas e crédito rural.", en: "Meu Imóvel Rural Digital — initiative integrating georeferenced data and digital services to expand family farmers' access to public policies and rural credit.", es: "Meu Imóvel Rural Digital — iniciativa que integra datos georreferenciados y servicios digitales para ampliar el acceso de agricultores familiares a políticas públicas y crédito rural." },
     links: ["https://www.gov.br/gestao/pt-br/assuntos/meu-imovel-rural"]
   },
   {
     year: 2026, cat: "Internacional",
-    natureza: { pt: "Políticas Públicas e Estratégias Governamentais", en: "Public Policies and Government Strategies" },
+    natureza: { pt: "Políticas Públicas e Estratégias Governamentais", en: "Public Policies and Government Strategies", es: "Políticas Públicas y Estrategias Gubernamentales" },
     canal: null,
-    tipo: { pt: "Implementação de projetos", en: "Project Implementation" },
-    meio: { pt: "Cooperação internacional", en: "International Cooperation" },
-    text: { pt: "Início do Projeto Dom Helder Câmara III, que inclui ações de ATER Digital a serem implementadas em nível federal.", en: "Launch of the Dom Helder Câmara III Project, incorporating Digital ATER actions to be implemented at the federal level." },
+    tipo: { pt: "Implementação de projetos", en: "Project Implementation", es: "Implementación de proyectos" },
+    meio: { pt: "Cooperação internacional", en: "International Cooperation", es: "Cooperación internacional" },
+    text: { pt: "Início do Projeto Dom Helder Câmara III, que inclui ações de ATER Digital a serem implementadas em nível federal.", en: "Launch of the Dom Helder Câmara III Project, incorporating Digital ATER actions to be implemented at the federal level.", es: "Inicio del Proyecto Dom Helder Câmara III, que incluye acciones de ATER Digital a implementarse a nivel federal." },
     links: []
   }
 ];
-
 // =============================================
 // CRONOGRAMA DATA
 // =============================================
+
 var CRONOGRAMA_DATA = [
-  { n: 1,  ativ: { pt: "Reunião de articulação com organizações parceiras",                                              en: "Coordination meeting with partner organizations" },           quant: 1,  meses: [[1,1]], tipo: "presencial" },
-  { n: 2,  ativ: { pt: "Reunião de mobilização e seleção dos beneficiários",                                             en: "Beneficiary mobilization and selection meeting" },            quant: 1,  meses: [[1,1]], tipo: "presencial" },
-  { n: 3,  ativ: { pt: "Reunião virtual com organizações e entidades parceiras",                                         en: "Virtual meeting with partner organizations" },                quant: 1,  meses: [[1,1]], tipo: "virtual" },
-  { n: 4,  ativ: { pt: "Cadastro, diagnóstico e caracterização das famílias e propriedades",                             en: "Registration, diagnosis and characterization of families" },  quant: 1,  meses: [[2,3]], tipo: "presencial" },
-  { n: 5,  ativ: { pt: "Reunião de divulgação do diagnóstico e planejamento de atividades coletivas",                    en: "Diagnosis dissemination and collective planning meeting" },   quant: 1,  meses: [[3,3]], tipo: "presencial" },
-  { n: 6,  ativ: { pt: "Disponibilização de número de WhatsApp para informações gerais e dúvidas dos beneficiários",     en: "WhatsApp channel for general information and queries" },     quant: "-", meses: [[1,12]], tipo: "virtual" },
-  { n: 7,  ativ: { pt: "Planejamento das ações individuais",                                                             en: "Individual action planning" },                                quant: 1,  meses: [[3,3]], tipo: "presencial" },
-  { n: 8,  ativ: { pt: "Oficina de letramento e nivelamento digital das famílias agricultoras",                          en: "Digital literacy workshop for farming families" },            quant: 1,  meses: [[3,3]], tipo: "presencial" },
-  { n: 9,  ativ: { pt: "Oficinas e cursos de capacitação",                                                               en: "Training workshops and courses" },                            quant: 3,  meses: [[4,4],[6,6],[8,8]], tipo: "presencial" },
-  { n: 10, ativ: { pt: "Intercâmbios",                                                                                   en: "Exchange visits" },                                           quant: 2,  meses: [[5,5],[8,8]], tipo: "presencial" },
-  { n: 11, ativ: { pt: "Eventos coletivos virtuais de ATER",                                                             en: "Virtual collective ATER events" },                           quant: 1,  meses: [[9,9]], tipo: "virtual" },
-  { n: 12, ativ: { pt: "Atendimentos individuais de ATER (presenciais)",                                                 en: "Individual ATER services (in-person)" },                     quant: 3,  meses: [[4,4],[6,6],[10,10]], tipo: "presencial" },
-  { n: 13, ativ: { pt: "Atendimentos individuais virtuais de ATER (videochamada média de 20 minutos)",                  en: "Virtual individual ATER (avg. 20-min video call)" },         quant: 8,  meses: [[3,3],[5,11]], tipo: "virtual" },
-  { n: 14, ativ: { pt: "Outras atividades coletivas de ATER (presenciais)",                                              en: "Other collective ATER activities (in-person)" },             quant: 2,  meses: [[6,6],[8,8]], tipo: "presencial" },
-  { n: 15, ativ: { pt: "Atendimentos virtuais coletivos de ATER",                                                        en: "Virtual collective ATER services" },                         quant: 1,  meses: [[6,6],[9,10]], tipo: "virtual" },
-  { n: 16, ativ: { pt: "Atendimentos individuais virtuais de ATER (mensagens de cunho técnico produtivo semanais)",      en: "Virtual individual ATER (weekly technical messages)" },       quant: 52, meses: [[3,3],[5,12]], tipo: "virtual" },
-  { n: 17, ativ: { pt: "Relatórios de Avaliação",                                                                        en: "Evaluation Reports" },                                        quant: 2,  meses: [[12,12]], tipo: "presencial" },
-  { n: 18, ativ: { pt: "Encontro de divulgação de resultados",                                                           en: "Results dissemination meeting" },                             quant: 1,  meses: [[12,12]], tipo: "presencial" }
+  { n: 1,  ativ: { pt: "Reunião de articulação com organizações parceiras",                                              en: "Coordination meeting with partner organizations",           es: "Reunión de articulación con organizaciones socias" },                                              quant: 1,  meses: [[1,1]], tipo: "presencial" },
+  { n: 2,  ativ: { pt: "Reunião de mobilização e seleção dos beneficiários",                                             en: "Beneficiary mobilization and selection meeting",            es: "Reunión de movilización y selección de beneficiarios" },                                           quant: 1,  meses: [[1,1]], tipo: "presencial" },
+  { n: 3,  ativ: { pt: "Reunião virtual com organizações e entidades parceiras",                                         en: "Virtual meeting with partner organizations",                es: "Reunión virtual con organizaciones y entidades socias" },                                          quant: 1,  meses: [[1,1]], tipo: "virtual" },
+  { n: 4,  ativ: { pt: "Cadastro, diagnóstico e caracterização das famílias e propriedades",                             en: "Registration, diagnosis and characterization of families",  es: "Registro, diagnóstico y caracterización de las familias y propiedades" },                          quant: 1,  meses: [[2,3]], tipo: "presencial" },
+  { n: 5,  ativ: { pt: "Reunião de divulgação do diagnóstico e planejamento de atividades coletivas",                    en: "Diagnosis dissemination and collective planning meeting",   es: "Reunión de divulgación del diagnóstico y planificación de actividades colectivas" },               quant: 1,  meses: [[3,3]], tipo: "presencial" },
+  { n: 6,  ativ: { pt: "Disponibilização de número de WhatsApp para informações gerais e dúvidas dos beneficiários",     en: "WhatsApp channel for general information and queries",     es: "Disponibilización de número de WhatsApp para información general y consultas de beneficiarios" },  quant: "-", meses: [[1,12]], tipo: "virtual" },
+  { n: 7,  ativ: { pt: "Planejamento das ações individuais",                                                             en: "Individual action planning",                                es: "Planificación de las acciones individuales" },                                                        quant: 1,  meses: [[3,3]], tipo: "presencial" },
+  { n: 8,  ativ: { pt: "Oficina de letramento e nivelamento digital das famílias agricultoras",                          en: "Digital literacy workshop for farming families",            es: "Taller de alfabetización y nivelación digital de las familias agricultoras" },                      quant: 1,  meses: [[3,3]], tipo: "presencial" },
+  { n: 9,  ativ: { pt: "Oficinas e cursos de capacitação",                                                               en: "Training workshops and courses",                            es: "Talleres y cursos de capacitación" },                                                                 quant: 3,  meses: [[4,4],[6,6],[8,8]], tipo: "presencial" },
+  { n: 10, ativ: { pt: "Intercâmbios",                                                                                   en: "Exchange visits",                                           es: "Intercambios" },                                                                                      quant: 2,  meses: [[5,5],[8,8]], tipo: "presencial" },
+  { n: 11, ativ: { pt: "Eventos coletivos virtuais de ATER",                                                             en: "Virtual collective ATER events",                            es: "Eventos colectivos virtuales de ATER" },                                                              quant: 1,  meses: [[9,9]], tipo: "virtual" },
+  { n: 12, ativ: { pt: "Atendimentos individuais de ATER (presenciais)",                                                 en: "Individual ATER services (in-person)",                      es: "Atenciones individuales de ATER (presenciales)" },                                                    quant: 3,  meses: [[4,4],[6,6],[10,10]], tipo: "presencial" },
+  { n: 13, ativ: { pt: "Atendimentos individuais virtuais de ATER (videochamada média de 20 minutos)",                   en: "Virtual individual ATER (avg. 20-min video call)",          es: "Atenciones individuales virtuales de ATER (videollamada promedio de 20 minutos)" },                quant: 8,  meses: [[3,3],[5,11]], tipo: "virtual" },
+  { n: 14, ativ: { pt: "Outras atividades coletivas de ATER (presenciais)",                                              en: "Other collective ATER activities (in-person)",              es: "Otras actividades colectivas de ATER (presenciales)" },                                               quant: 2,  meses: [[6,6],[8,8]], tipo: "presencial" },
+  { n: 15, ativ: { pt: "Atendimentos virtuais coletivos de ATER",                                                        en: "Virtual collective ATER services",                          es: "Atenciones virtuales colectivas de ATER" },                                                           quant: 1,  meses: [[6,6],[9,10]], tipo: "virtual" },
+  { n: 16, ativ: { pt: "Atendimentos individuais virtuais de ATER (mensagens de cunho técnico produtivo semanais)",      en: "Virtual individual ATER (weekly technical messages)",       es: "Atenciones individuales virtuales de ATER (mensajes de carácter técnico-productivo semanales)" },  quant: 52, meses: [[3,3],[5,12]], tipo: "virtual" },
+  { n: 17, ativ: { pt: "Relatórios de Avaliação",                                                                        en: "Evaluation Reports",                                        es: "Informes de Evaluación" },                                                                            quant: 2,  meses: [[12,12]], tipo: "presencial" },
+  { n: 18, ativ: { pt: "Encontro de divulgação de resultados",                                                           en: "Results dissemination meeting",                             es: "Encuentro de divulgación de resultados" },                                                            quant: 1,  meses: [[12,12]], tipo: "presencial" }
 ];
+
 
 var cronFiltroAtivo = 'todos';
 
@@ -2181,9 +2223,9 @@ function renderCronograma() {
   var table = document.getElementById('cron-table');
   if (!table) return;
 
-  var lblAtiv  = currentLang === 'pt' ? 'Atividades' : 'Activities';
-  var lblQnt = currentLang === 'pt' ? 'Qtd.' : 'Qty.';
-  var lblMeses = currentLang === 'pt' ? 'Meses' : 'Months';
+var lblAtiv  = { pt: 'Atividades', en: 'Activities', es: 'Actividades' }[currentLang] || 'Activities';
+  var lblQnt   = { pt: 'Qtd.',       en: 'Qty.',       es: 'Cant.'       }[currentLang] || 'Qty.';
+  var lblMeses = { pt: 'Meses',      en: 'Months',     es: 'Meses'       }[currentLang] || 'Months';
 
   // Cabeçalho com linha dupla
   var thead = '<thead>' +
@@ -2209,7 +2251,7 @@ function renderCronograma() {
       }
     });
 
-    var ativLabel = currentLang === 'pt' ? row.ativ.pt : row.ativ.en;
+ var ativLabel = row.ativ[currentLang] || row.ativ.en;
     var display = (cronFiltroAtivo !== 'todos' && row.tipo !== cronFiltroAtivo) ? ' style="display:none"' : '';
 
     tbody += '<tr data-tipo="' + row.tipo + '"' + display + '>';
@@ -2240,65 +2282,77 @@ var CAT_COLORS = {
   "Internacional":  "#1f4023"
 };
 
+
+var CAT_LABELS = {
+  "Mídia":           { en: "Media",            es: "Medios" },
+  "Política Pública":{ en: "Public Policy",    es: "Política Pública" },
+  "Internet":        { en: "Internet",         es: "Internet" },
+  "Tecnologia":      { en: "Technology",       es: "Tecnología" },
+  "Extensão Digital":{ en: "Digital Extension",es: "Extensión Digital" },
+  "Mobile":          { en: "Mobile",           es: "Móvil" },
+  "Internacional":   { en: "International",    es: "Internacional" }
+};
+
 var PROJECTS_DATA = [
   {
     org: "FIDA / IFAD",
-    title: { pt: "CompensAÇÃO — ATER Digital no Semiárido", en: "CompensACTION — Digital ATER in the Semiarid" },
-    desc: { pt: "Piloto de extensão rural digital, alcançando ~1.600 agricultores familiares no Nordeste com ferramentas ICT4D.", en: "Digital rural extension pilot reaching ~1,600 smallholder farmers in Northeast Brazil with ICT4D tools." },
+    title: { pt: "CompensAÇÃO — ATER Digital no Semiárido", en: "CompensACTION — Digital ATER in the Semiarid", es: "CompensACCIÓN — ATER Digital en el Semiárido" },
+    desc: { pt: "Piloto de extensão rural digital, alcançando ~1.600 agricultores familiares no Nordeste com ferramentas ICT4D.", en: "Digital rural extension pilot reaching ~1,600 smallholder farmers in Northeast Brazil with ICT4D tools.", es: "Piloto de extensión rural digital, alcanzando a ~1.600 agricultores familiares en el Nordeste con herramientas ICT4D." },
     link: "https://brasil.un.org/pt-br/307560-ferramenta-ajuda-conter-desinforma%C3%A7%C3%A3o-no-agro-e-fortalece-agricultores-no-sul-da-bahia",
     color: "#1f4023"
   },
   {
     org: "IICA",
-    title: { pt: "Programa ATER Digital — MAPA", en: "Digital ATER Program — MAPA" },
-    desc: { pt: "Coordenação da implementação do Programa de Extensão Rural Digital liderado pelo MAPA, incluindo o desenvolvimento da plataforma Ater+ Digital.", en: "Coordination of the Digital Rural Extension Program led by MAPA, including development of the Ater+ Digital platform." },
+    title: { pt: "Programa ATER Digital — MAPA", en: "Digital ATER Program — MAPA", es: "Programa ATER Digital — MAPA" },
+    desc: { pt: "Coordenação da implementação do Programa de Extensão Rural Digital liderado pelo MAPA, incluindo o desenvolvimento da plataforma Ater+ Digital.", en: "Coordination of the Digital Rural Extension Program led by MAPA, including development of the Ater+ Digital platform.", es: "Coordinación de la implementación del Programa de Extensión Rural Digital liderado por el MAPA, incluyendo el desarrollo de la plataforma Ater+ Digital." },
     link: "https://www.atermaisdigital.cnptia.embrapa.br/",
     color: "#2d6a32"
   },
   {
     org: "FIDA / IFAD",
-    title: { pt: "Dom Helder Câmara III & Paulo Freire II", en: "Dom Helder Câmara III & Paulo Freire II" },
-    desc: { pt: "Contribuição ao design de projetos do portfólio FIDA Brasil na área de ICT4D, com missões de campo e elaboração de notas conceituais.", en: "Contribution to the design of IFAD Brazil portfolio projects in the ICT4D area, with field missions and preparation of concept notes." },
+    title: { pt: "Dom Helder Câmara III & Paulo Freire II", en: "Dom Helder Câmara III & Paulo Freire II", es: "Dom Helder Câmara III & Paulo Freire II" },
+    desc: { pt: "Contribuição ao design de projetos do portfólio FIDA Brasil na área de ICT4D, com missões de campo e elaboração de notas conceituais.", en: "Contribution to the design of IFAD Brazil portfolio projects in the ICT4D area, with field missions and preparation of concept notes.", es: "Contribución al diseño de proyectos de la cartera FIDA Brasil en el área de ICT4D, con misiones de campo y elaboración de notas conceptuales." },
     link: "https://www.ifad.org/en/w/countries/brazil",
     color: "#c47c2b"
   },
   {
     org: "REAF / MERCOSUL",
-    title: { pt: "Estratégias de Inovação em ATER no MERCOSUL", en: "ATER Innovation Strategies in MERCOSUR" },
-    desc: { pt: "Recomendações para inovar e fortalecer os serviços de extensão rural no MERCOSUL ampliado, com ênfase em tecnologias para extensionistas.", en: "Recommendations to innovate and strengthen rural extension services in expanded MERCOSUR, emphasizing technologies for extension agents." },
+    title: { pt: "Estratégias de Inovação em ATER no MERCOSUL", en: "ATER Innovation Strategies in MERCOSUR", es: "Estrategias de Innovación en ATER en el MERCOSUR" },
+    desc: { pt: "Recomendações para inovar e fortalecer os serviços de extensão rural no MERCOSUL ampliado, com ênfase em tecnologias para extensionistas.", en: "Recommendations to innovate and strengthen rural extension services in expanded MERCOSUR, emphasizing technologies for extension agents.", es: "Recomendaciones para innovar y fortalecer los servicios de extensión rural en el MERCOSUR ampliado, con énfasis en tecnologías para extensionistas." },
     color: "#1a6b8a"
   },
   {
-      org: "ATER Digital",
-    title: { pt: "Ferramenta Interativa ATER", en: "ATER Interactive Tool" },
-    desc: { pt: "A realidade da ATER. Insira seus dados e descubra, em números o tamanho do desafio da Assistência Técnica e Extensão Rural no Brasil", en: "The reality of ATER. Enter your data and discover, in numbers, the size of the challenge of Technical Assistance and Rural Extension in Brazil." },
-        link: "https://ict4dbrazil.com/ater",
-    color:  "#6b3a8a"
+    org: "ATER Digital",
+    title: { pt: "Ferramenta Interativa ATER", en: "ATER Interactive Tool", es: "Herramienta Interactiva ATER" },
+    desc: { pt: "A realidade da ATER. Insira seus dados e descubra, em números o tamanho do desafio da Assistência Técnica e Extensão Rural no Brasil", en: "The reality of ATER. Enter your data and discover, in numbers, the size of the challenge of Technical Assistance and Rural Extension in Brazil.", es: "La realidad de la ATER. Ingrese sus datos y descubra, en números, el tamaño del desafío de la Asistencia Técnica y Extensión Rural en Brasil." },
+    link: "https://ict4dbrazil.com/ater",
+    color: "#6b3a8a"
   }
 ];
+
 
 var PUBLICATIONS_DATA = [
   {
     year: 2025,
-    title: { pt: "Revisão Sistemática de Estudos Acadêmicos sobre Extensão Rural Digital (ATER) no Brasil", en: "Systematic Review of Academic Studies on Digital Rural Extension (ATER) in Brazil" },
+    title: { pt: "Revisão Sistemática de Estudos Acadêmicos sobre Extensão Rural Digital (ATER) no Brasil", en: "Systematic Review of Academic Studies on Digital Rural Extension (ATER) in Brazil", es: "Revisión Sistemática de Estudios Académicos sobre Extensión Rural Digital (ATER) en Brasil" },
     venue: "Caderno Pedagógico, v. 22, pp. 1–22",
     link: "https://ojs.studiespublicacoes.com.br/ojs/index.php/cadped/article/view/21330"
   },
   {
     year: 2024,
-    title: { pt: "Parâmetros da ATER Digital no Brasil: Metodologias e Custos", en: "Digital ATER Parameters in Brazil: Methodologies and Costs" },
+    title: { pt: "Parâmetros da ATER Digital no Brasil: Metodologias e Custos", en: "Digital ATER Parameters in Brazil: Methodologies and Costs", es: "Parámetros de la ATER Digital en Brasil: Metodologías y Costos" },
     venue: "IFAD / UFV",
     link: "https://aksaam.ufv.br/ToolSys/Download/Publicacao/182/283"
   },
   {
     year: 2024,
-    title: { pt: "Percepções de Instituições Privadas sobre a ATER Digital", en: "Perceptions of Private Institutions on Digital ATER" },
+    title: { pt: "Percepções de Instituições Privadas sobre a ATER Digital", en: "Perceptions of Private Institutions on Digital ATER", es: "Percepciones de Instituciones Privadas sobre la ATER Digital" },
     venue: "62º Congresso da SOBER",
     link: "https://www.even3.com.br/anais/62-congresso-da-sober-397784/818686/"
   },
   {
     year: 2022,
-    title: { pt: "Caixa de Ferramentas para Inovação em Extensão Rural — REAF/MERCOSUL", en: "Toolbox for Innovation in Rural Extension — REAF/MERCOSUR" },
+    title: { pt: "Caixa de Ferramentas para Inovação em Extensão Rural — REAF/MERCOSUL", en: "Toolbox for Innovation in Rural Extension — REAF/MERCOSUR", es: "Caja de Herramientas para la Innovación en Extensión Rural — REAF/MERCOSUR" },
     venue: "IICA / REAF",
     link: null
   }
@@ -2306,26 +2360,27 @@ var PUBLICATIONS_DATA = [
 
 var VIDEOS_DATA = [
   {
-    title: { pt: "Parâmetros da ATER Digital no Brasil: Custos e Metodologia", en: "Digital ATER Parameters in Brazil: Costs and Methodology" },
+    title: { pt: "Parâmetros da ATER Digital no Brasil: Custos e Metodologia", en: "Digital ATER Parameters in Brazil: Costs and Methodology", es: "Parámetros de la ATER Digital en Brasil: Costos y Metodología" },
     ytid: "x5Itz6OJuoY",
     link: "https://www.youtube.com/watch?v=x5Itz6OJuoY"
   },
   {
-    title: { pt: "O Papel dos Canais de Comunicação na Promoção de Inovações", en: "The Role of Communication Channels in Promoting Innovation" },
+    title: { pt: "O Papel dos Canais de Comunicação na Promoção de Inovações", en: "The Role of Communication Channels in Promoting Innovation", es: "El Papel de los Canales de Comunicación en la Promoción de Innovaciones" },
     ytid: "I4oNUHecxRA",
     link: "https://www.youtube.com/watch?v=I4oNUHecxRA"
   },
   {
-    title: { pt: "Inovação na Agricultura Familiar: Desafios e Oportunidades", en: "Innovation in Family Farming: Challenges and Opportunities" },
+    title: { pt: "Inovação na Agricultura Familiar: Desafios e Oportunidades", en: "Innovation in Family Farming: Challenges and Opportunities", es: "Innovación en la Agricultura Familiar: Desafíos y Oportunidades" },
     ytid: "U0a4yIoFCWU",
     link: "https://www.youtube.com/watch?v=U0a4yIoFCWU"
   },
   {
-    title: { pt: "Plataforma ATER+ Digital: Conteúdos e Ferramentas para Extensionistas", en: "ATER+ Digital Platform: Content and Tools for Extension Agents" },
+    title: { pt: "Plataforma ATER+ Digital: Conteúdos e Ferramentas para Extensionistas", en: "ATER+ Digital Platform: Content and Tools for Extension Agents", es: "Plataforma ATER+ Digital: Contenidos y Herramientas para Extensionistas" },
     ytid: "tjCtdJCjyYI",
     link: "https://www.youtube.com/watch?v=tjCtdJCjyYI"
   }
 ];
+
 
 // =============================================
 // LANGUAGE
@@ -2336,23 +2391,22 @@ function setLang(lang) {
   currentLang = lang;
   document.getElementById('btn-pt').classList.toggle('active', lang === 'pt');
   document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-es').classList.toggle('active', lang === 'es');
 
-  // Update all [data-pt] / [data-en] elements
+  // Update all [data-pt] / [data-en] / [data-es] elements
   document.querySelectorAll('[data-pt]').forEach(function(el) {
+    var txt = el.getAttribute('data-' + lang) || el.getAttribute('data-en');
     if (el.tagName !== 'BUTTON' && el.tagName !== 'A') {
-      el.textContent = lang === 'pt' ? el.getAttribute('data-pt') : el.getAttribute('data-en');
+      el.textContent = txt;
     } else {
-      // For interactive elements, update only text nodes
       var span = el.querySelector('span[data-pt]');
-      if (!span) {
-        el.textContent = lang === 'pt' ? el.getAttribute('data-pt') : el.getAttribute('data-en');
-      }
+      if (!span) el.textContent = txt;
     }
   });
 
-  
   document.getElementById('hero-desc-pt').style.display = lang === 'pt' ? '' : 'none';
-document.getElementById('hero-desc-en').style.display = lang === 'en' ? '' : 'none';
+  document.getElementById('hero-desc-en').style.display = lang === 'en' ? '' : 'none';
+  document.getElementById('hero-desc-es').style.display = lang === 'es' ? '' : 'none';
 
   // Re-render dynamic sections
   renderTimeline();
@@ -2360,17 +2414,18 @@ document.getElementById('hero-desc-en').style.display = lang === 'en' ? '' : 'no
   renderProjects();
   renderPublications();
   renderVideos();
-  
+
   localStorage.setItem('lang', lang);
 
   // Atualizar botões de nível geográfico
   document.querySelectorAll('.geo-btn[data-pt]').forEach(function(btn) {
-    var txt = lang === 'pt' ? btn.getAttribute('data-pt') : btn.getAttribute('data-en');
-    // Preservar o span.coming-soon se existir
+    var txt = btn.getAttribute('data-' + lang) || btn.getAttribute('data-en');
     var span = btn.querySelector('.coming-soon');
     if (span) {
-      btn.childNodes[0].textContent = (lang === 'pt' ? 'Unidade federativa ' : 'State ');
-      span.textContent = lang === 'pt' ? 'em breve' : 'coming soon';
+      var labels = { pt: 'Unidade federativa ', en: 'State ', es: 'Unidad federativa ' };
+      var soon   = { pt: 'em breve', en: 'coming soon', es: 'próximamente' };
+      btn.childNodes[0].textContent = labels[lang] || labels.en;
+      span.textContent = soon[lang] || soon.en;
     } else {
       btn.textContent = txt;
     }
@@ -2378,7 +2433,6 @@ document.getElementById('hero-desc-en').style.display = lang === 'en' ? '' : 'no
 
   if (window._updateMapFonte) window._updateMapFonte();
 }
-
 window.setLang = setLang;
 
 // =============================================
@@ -2397,7 +2451,9 @@ function renderTimeline() {
   };
 
   filters.innerHTML = cats.map(function(cat) {
-    var label = cat === 'all' ? (currentLang === 'pt' ? 'Todos' : 'All') : cat;
+var label = cat === 'all'
+      ? ({ pt: 'Todos', en: 'All', es: 'Todos' }[currentLang] || 'All')
+      : (currentLang === 'pt' ? cat : ((CAT_LABELS[cat] && CAT_LABELS[cat][currentLang]) || cat));
     return '<button class="filter-chip' + (activeFilter === cat ? ' active' : '') + '" data-cat="' + cat + '">' + label + '</button>';
   }).join('');
 
@@ -2422,13 +2478,16 @@ list.innerHTML = TIMELINE_DATA.map(function(item) {
     var linksArr = item.links && item.links.length > 0 ? item.links
       : (item.link ? [item.link] : []);
     var linkHtml = '';
+var lblRef  = { pt: 'Ver referência',  en: 'See reference',  es: 'Ver referencia'  }[currentLang] || 'See reference';
+    var lblRefN = { pt: 'Referência',      en: 'Reference',      es: 'Referencia'      }[currentLang] || 'Reference';
     if (linksArr.length === 1) {
-      linkHtml = '<a href="' + linksArr[0] + '" target="_blank" class="tl-link">↗ ' + (currentLang === 'pt' ? 'Ver referência' : 'See reference') + '</a>';
+      linkHtml = '<a href="' + linksArr[0] + '" target="_blank" class="tl-link">↗ ' + lblRef + '</a>';
     } else if (linksArr.length > 1) {
       linkHtml = linksArr.map(function(url, i) {
-        return '<a href="' + url + '" target="_blank" class="tl-link">↗ ' + (currentLang === 'pt' ? 'Referência' : 'Reference') + ' ' + (i + 1) + '</a>';
+        return '<a href="' + url + '" target="_blank" class="tl-link">↗ ' + lblRefN + ' ' + (i + 1) + '</a>';
       }).join(' ');
     }
+
 
     // Tags de classificação: natureza (Nível 1) + canal (Nível 2, se houver)
     var tagsHtml = '<div class="tl-tags">';
@@ -2448,7 +2507,7 @@ list.innerHTML = TIMELINE_DATA.map(function(item) {
       '<div class="tl-card" style="border-left-color:' + color + '">' +
         '<div class="tl-meta">' +
           '<span class="tl-year">' + item.year + '</span>' +
-          '<span class="tl-cat-badge" style="background:' + color + '">' + item.cat + '</span>' +
+          '<span class="tl-cat-badge" style="background:' + color + '">' + (currentLang === 'pt' ? item.cat : ((CAT_LABELS[item.cat] && CAT_LABELS[item.cat][currentLang]) || item.cat)) + '</span>' +
         '</div>' +
         '<div class="tl-text">' + item.text[currentLang] + '</div>' +
         imgHtml +
@@ -2488,8 +2547,8 @@ function renderProjects() {
       '</div>' +
       '<div class="project-card-body">' +
         '<div class="project-card-org">' + p.org + '</div>' +
-        '<div class="project-card-title">' + p.title[currentLang] + '</div>' +
-        '<div class="project-card-desc">' + p.desc[currentLang] + '</div>' +
+   '<div class="project-card-title">' + (p.title[currentLang] || p.title.en) + '</div>' +
+        '<div class="project-card-desc">' + (p.desc[currentLang] || p.desc.en) + '</div>' +
       '</div>' +
     '</a>';
   }).join('');
@@ -2543,7 +2602,8 @@ function shareSection(section) {
     navigator.clipboard.writeText(url);
   }
   var toast = document.getElementById('share-toast');
-  toast.textContent = currentLang === 'pt' ? 'Link copiado! ' + url : 'Link copied! ' + url;
+ var lblCopied = { pt: 'Link copiado! ', en: 'Link copied! ', es: '¡Enlace copiado! ' }[currentLang] || 'Link copied! ';
+  toast.textContent = lblCopied + url;
   toast.classList.add('show');
   setTimeout(function() { toast.classList.remove('show'); }, 3000);
 }
@@ -2783,7 +2843,8 @@ function renderMunicipios() {
     updateLegend(cfg.breaks, cfg.MAP_COLORS, cfg.isPct);
 
     var fonteEl = document.getElementById('map-fonte');
-    if (fonteEl) fonteEl.textContent = (currentLang === 'pt' ? 'Fonte: ' : 'Source: ') + meta.fonte;
+   var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] || 'Source: ';
+    if (fonteEl) fonteEl.textContent = lblFonte + meta.fonte;
 
     var path = drawMap._path;
 
@@ -3057,8 +3118,8 @@ var estado = d.properties.estado || d.properties.nome || d.properties.NM_UF || u
       });
 
     var fonteEl = document.getElementById('map-fonte');
-    if (fonteEl) fonteEl.textContent = (currentLang === 'pt' ? 'Fonte: ' : 'Source: ') + 'ASBRAER';
-
+var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] || 'Source: ';
+    if (fonteEl) fonteEl.textContent = lblFonte + 'ASBRAER';
     renderBarrasUF(totaisPorUF, currentIndicador, isPct, catName);
   }
 
@@ -3189,7 +3250,7 @@ var estado = d.properties.estado || d.properties.nome || d.properties.NM_UF || u
       .attr('font-family', 'DM Sans, sans-serif')
       .attr('font-size', '12px')
       .attr('fill', '#6b6b5e')
-      .text(currentLang === 'pt' ? 'nº de municípios' : 'no. of municipalities');
+  .text({ pt: 'nº de municípios', en: 'no. of municipalities', es: 'nº de municipios' }[currentLang] || 'no. of municipalities');
   }
 
   // =============================================
@@ -3366,7 +3427,8 @@ var estado = d.properties.estado || d.properties.nome || d.properties.NM_UF || u
     var meta = indicadoresGlobal.find(function(d) { return d.indicador === currentIndicador; });
     if (!meta) return;
     var fonteEl = document.getElementById('map-fonte');
-    if (fonteEl) fonteEl.textContent = (currentLang === 'pt' ? 'Fonte: ' : 'Source: ') + meta.fonte;
+    var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] || 'Source: ';
+    if (fonteEl) fonteEl.textContent = lblFonte + meta.fonte;
   };
 });
 

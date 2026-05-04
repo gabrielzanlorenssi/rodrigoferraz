@@ -156,9 +156,6 @@
     .btn-compartilhar { font-family: var(--f-sans); font-size: 14px; font-weight: 600; background: var(--c-green-dark); color: #fff; border: none; border-radius: 8px; padding: 10px 24px; cursor: pointer; transition: background 0.2s; }
     .btn-compartilhar:hover { background: var(--c-green); }
 
-    footer { background: var(--c-bg-dark); color: rgba(255,255,255,0.45); font-size: 12px; text-align: center; padding: 20px 24px; }
-    footer a { color: rgba(255,255,255,0.55); }
-
     .perfil-btn-soon { opacity: 0.45; cursor: not-allowed; position: relative; }
     .perfil-btn-soon:hover { background: var(--c-bg); color: var(--c-ink-muted); border-color: var(--c-border); }
     .soon-badge { font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; background: var(--c-amber); color: white; border-radius: 8px; padding: 1px 6px; margin-left: 6px; vertical-align: middle; }
@@ -216,6 +213,89 @@
     .horas-insight { font-family: var(--f-serif); font-size: 28px; font-weight: 700; color: var(--c-red); line-height: 1.1; margin-bottom: 4px; }
     .horas-insight-label { font-size: 13px; color: var(--c-ink-muted); line-height: 1.4; }
 
+    /* ---- METODOLOGIA ---- */
+    .metodologia {
+      background: var(--c-bg-alt);
+      border-top: 1px solid var(--c-border);
+      padding: 56px 24px 64px;
+    }
+    .metodologia-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+    .metodologia-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 32px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .metodologia-header h2 {
+      font-family: var(--f-serif);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--c-green-dark);
+      flex: 1;
+    }
+    .metodologia-toggle {
+      font-family: var(--f-sans);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--c-green);
+      flex-shrink: 0;
+      transition: color 0.2s;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .metodologia-header:hover .metodologia-toggle {
+      color: var(--c-green-dark);
+    }
+    .metodologia-body {
+      display: none;
+    }
+    .metodologia-body.open {
+      display: block;
+    }
+    .metodologia-intro {
+      font-size: 15px;
+      color: var(--c-ink-muted);
+      line-height: 1.75;
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .metodologia-item {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .metodologia-item:last-of-type {
+      border-bottom: none;
+    }
+    .metodologia-item-title {
+      font-family: var(--f-serif);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--c-green-dark);
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+    .metodologia-item p {
+      font-size: 14px;
+      color: var(--c-ink-muted);
+      line-height: 1.75;
+    }
+    .metodologia-creditos {
+      margin-top: 24px;
+      padding-top: 0;
+      font-size: 13px;
+      color: var(--c-ink-muted);
+      line-height: 1.6;
+    }
+    .metodologia-creditos strong {
+      color: var(--c-ink);
+    }
+
     @media (max-width: 600px) {
       .vis-block { padding: 20px; }
       .donut-wrap { flex-direction: column; align-items: flex-start; }
@@ -230,6 +310,7 @@
       .provocacoes { padding: 20px; }
       .narrativa { padding: 16px 18px; }
       .hero { min-height: 340px; }
+      .metodologia { padding: 40px 20px 48px; }
     }
     @media (max-width: 400px) {
       .cards-grid { grid-template-columns: 1fr; }
@@ -395,7 +476,7 @@
     <button class="btn-modo-loc" id="btn-modo" onclick="alternarModo()">
       📍 Simular uma situação específica — assentamento ou outra localidade
     </button>
-    <p style="font-size:12px;color:var(--c-ink-muted);margin-top:12px;">Critério de cobertura: 1 técnico para cada 100 famílias (referência ATER)</p>
+    <p style="font-size:12px;color:var(--c-ink-muted);margin-top:12px;">Critério de cobertura: 1 técnico para cada 100 famílias (parâmetro mínimo recomendado em serviços de ATER)</p>
   </div>
 
   <!-- PASSO 3: DADOS DO EXTENSIONISTA -->
@@ -499,7 +580,6 @@
 
       <div class="field-grid two">
         <div class="field">
-          <!-- ALTERAÇÃO 2: label e hint ajustados para deixar claro que é meta do técnico/programa -->
           <label>Meta de famílias do programa de ATER</label>
           <input type="number" id="meta_familias" placeholder="Ex: 500" min="1">
           <span class="hint">Total de famílias que o programa pretende atender — define o investimento necessário e o número de técnicos a contratar</span>
@@ -523,7 +603,6 @@
   </div>
 
   <!-- PASSO 3: DADOS DO AGRICULTOR -->
-  <!-- ALTERAÇÃO 1: removida a pergunta sobre origem do técnico -->
   <div class="step-card" id="step-agricultor" style="display:none;">
     <div class="step-header">
       <div class="step-num">3</div>
@@ -593,8 +672,66 @@
 
 </main>
 
-<footer>
-  <p>Ferramenta desenvolvida por <a href="index.html">Rodrigo Ferraz</a> e Gabriel Zanlorenssi · Dados de referência: IBGE Censo Agropecuário 2017, ASBRAER, FAO.</p>
+<!-- METODOLOGIA -->
+<section class="metodologia">
+  <div class="metodologia-inner">
+    <div class="metodologia-header" onclick="toggleMetodologia()">
+      <h2>Metodologia e fontes</h2>
+      <div class="metodologia-toggle" id="metodologia-toggle-icon">Ver menos</div>
+    </div>
+    <div class="metodologia-body open" id="metodologia-body">
+      <p class="metodologia-intro">A ferramenta foi desenvolvida para traduzir, de forma simples e interativa, os principais desafios da ATER no Brasil. A partir de dados estruturais e informações inseridas pelo usuário, a calculadora estima indicadores relacionados à cobertura do atendimento, carga de trabalho dos técnicos, tempo de deslocamento, frequência das visitas e volume potencial de investimento necessário para ampliar os serviços de ATER. Os resultados apresentados têm caráter ilustrativo e analítico, baseados em parâmetros médios e simplificações operacionais. A ferramenta não busca representar com precisão absoluta a realidade local, mas sim traduzir, de forma acessível, as relações entre demanda, capacidade e recursos na ATER. Os diferentes perfis (agricultor, extensionista e gestor) utilizam a mesma base de cálculo, mas apresentam os resultados com narrativas e indicadores adaptados a cada público, facilitando a compreensão e o uso.</p>
+
+      <div class="metodologia-item">
+        <div class="metodologia-item-title">Cobertura da ATER e número de estabelecimentos</div>
+        <p>As estimativas sobre o número de agricultores familiares têm como base o IBGE, a partir do Censo Agropecuário de 2017. Foram considerados os estabelecimentos classificados como de agricultura familiar, utilizados como proxy da demanda por ATER em diferentes recortes territoriais (município, estado, região ou Brasil). Com base nesse total e no número de técnicos disponíveis (informado pelo usuário), a ferramenta calcula a razão "famílias por técnico", indicador que expressa o nível de sobrecarga do sistema.</p>
+      </div>
+
+      <div class="metodologia-item">
+        <div class="metodologia-item-title">Número de técnicos de ATER</div>
+        <p>O número de técnicos é informado manualmente pelo usuário ou estimado com base em dados de entidades estaduais de ATER, como Emater e instituições congêneres, além de referências consolidadas por organizações como a ASBRAER. Esse valor é utilizado como denominador para calcular a capacidade de atendimento. A partir dessa relação, a ferramenta estima quantos técnicos seriam necessários para atender toda a demanda, considerando um parâmetro de cobertura mínimo recomendado (1 técnico para cada 100 famílias), e calcula o déficit de profissionais no território, tanto em termos absolutos quanto percentuais.</p>
+      </div>
+
+      <div class="metodologia-item">
+        <div class="metodologia-item-title">Relação técnico por famílias atendidas</div>
+        <p>A ferramenta adota como referência o parâmetro mínimo recomendado de 1 técnico para cada 100 famílias, conforme diversas diretrizes nacionais de ATER. Com base nisso, calcula-se o número necessário de técnicos dividindo o total de famílias por esse parâmetro. A diferença entre esse valor de referência e o número existente gera o indicador de déficit, em termos absolutos e percentuais. Esse mesmo parâmetro também é utilizado para construir mensagens comparativas e indicadores, como "quantas vezes mais técnicos seriam necessários".</p>
+      </div>
+
+      <div class="metodologia-item">
+        <div class="metodologia-item-title">Carga de trabalho e visitas técnicas</div>
+        <p>As estimativas consideram parâmetros médios de atuação, como o número de visitas mensais realizadas por extensionistas, geralmente entre 20 e 30. A ferramenta permite ajustar esses valores com base na realidade informada pelo usuário, incorporando variáveis como tempo de deslocamento, duração das visitas e número de famílias sob responsabilidade. Com isso, estima a capacidade mensal de atendimento por técnico, calcula quantas famílias podem ser atendidas no ritmo atual e projeta o número de visitas necessárias para cobrir toda a demanda. Quando essa capacidade é inferior à demanda, o sistema estima o esforço adicional necessário, incluindo métricas como visitas por dia e carga horária total necessária.</p>
+      </div>
+
+      <div class="metodologia-item">
+        <div class="metodologia-item-title">Frequência de atendimento e tempo de espera</div>
+        <p>Para o perfil de produtor, com base na relação entre número de famílias e capacidade de visitas, a ferramenta calcula o intervalo médio entre atendimentos por família. Esse indicador é expresso em meses e representa o tempo estimado para que todas as famílias recebam ao menos uma visita no ritmo atual. Esse cálculo considera o total de visitas possíveis por período dividido pelo total de famílias atendidas.</p>
+      </div>
+
+      <div class="metodologia-item">
+        <div class="metodologia-item-title">Tempo de deslocamento e uso do tempo</div>
+        <p>A partir do tempo médio de deslocamento, distância entre propriedades e distribuição da jornada de trabalho (campo vs. escritório), a ferramenta estima quanto do tempo do técnico é efetivamente dedicado ao atendimento direto e quanto é consumido por deslocamentos e atividades administrativas. Esses dados são utilizados para gerar indicadores percentuais e estimativas agregadas, como horas mensais na estrada e impacto sobre a eficiência do serviço.</p>
+      </div>
+
+      <div class="metodologia-item">
+        <div class="metodologia-item-title">Distância percorrida</div>
+        <p>Com base no número de visitas realizadas, distância média entre propriedades e dias trabalhados, a ferramenta estima a distância total percorrida por técnico ao longo do ano. Esse cálculo permite dimensionar custos indiretos, como logística e desgaste da infraestrutura, além de comunicar o esforço operacional envolvido na prestação do serviço.</p>
+      </div>
+
+      <div class="metodologia-item">
+        <div class="metodologia-item-title">Estimativas de investimento em ATER</div>
+        <p>Para o perfil de gestor, a ferramenta utiliza o custo médio por família atendida — com base em referências como chamadas públicas da ANATER para o ano de 2026 — e a meta de famílias a serem atendidas para estimar o volume total de investimento necessário. Esse valor é calculado multiplicando o custo médio pelo número de famílias, podendo ser ajustado conforme região e parâmetros operacionais, como tempo em deslocamento e intensidade do atendimento.</p>
+      </div>
+
+      <div class="metodologia-creditos">
+        <strong>Dados de referência:</strong> IBGE (Instituto Brasileiro de Geografia e Estatística), Censo Agropecuário 2017; ASBRAER (Associação Brasileira das Entidades Estaduais de Assistência Técnica e Extensão Rural); FAO (Organização das Nações Unidas para a Alimentação e a Agricultura); ANATER (Agência Nacional de Assistência Técnica e Extensão Rural).<br>
+        <strong>Créditos:</strong> Rodrigo Montalvão Ferraz e Gabriel Zanlorenssi.
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer style="background: var(--c-bg-dark); color: rgba(255,255,255,0.45); font-size: 12px; text-align: center; padding: 20px 24px;">
+  <p>Ferramenta desenvolvida por <a href="index.html" style="color:rgba(255,255,255,0.55);">Rodrigo Ferraz</a> e Gabriel Zanlorenssi · Dados de referência: IBGE Censo Agropecuário 2017, ASBRAER, FAO.</p>
 </footer>
 
 <script>
@@ -755,10 +892,7 @@
   };
 
   // =============================================
-  // PERFIL — cache de resultado por aba
-  // ALTERAÇÃO 3: salva estado da aba ao sair;
-  // limpa se a nova aba ainda não foi calculada;
-  // restaura se já foi calculada antes.
+  // PERFIL
   // =============================================
   var PERFIL_CORES = {
     extensionista: { bg: '#1a2e1a', bg2: '#0f1e0f', accent: '#2d6a32', light: '#8ab890', tag: '#e8a84a', tagText: '#e8a84a' },
@@ -767,8 +901,6 @@
   };
 
   var perfil = 'extensionista';
-
-  // Cache de resultado renderizado por perfil: null = nunca calculado
   var resultadoCache = { extensionista: null, gestor: null, agricultor: null };
 
   function salvarResultadoAtual(p) {
@@ -808,7 +940,6 @@
   }
 
   function atualizarStep3(perfilAnterior) {
-    // Salvar resultado da aba que está sendo deixada
     salvarResultadoAtual(perfilAnterior);
 
     document.getElementById('step-extensionista').style.display = perfil === 'extensionista' ? '' : 'none';
@@ -817,7 +948,6 @@
     document.body.className = document.body.className
       .replace(/perfil-\S+/g, '').trim() + ' perfil-' + perfil;
 
-    // Restaurar resultado da nova aba (ou limpar se nunca calculada)
     restaurarOuLimpar(perfil);
 
     var cor = PERFIL_CORES[perfil];
@@ -838,7 +968,6 @@
     });
   });
 
-  // Inicialização — sem perfil anterior
   atualizarStep3(perfil);
 
   // =============================================
@@ -1037,8 +1166,11 @@
     var pctCampoTotal   = 100 - pctEscrit;
     var pctDeslBarra    = r1(pctDesl / 100 * pctCampoTotal);
     var pctAtendBarra   = r1(pctCampoTotal - pctDeslBarra);
-    var visitDiaNec     = agric / 365;
+
+    // CORRECAO 2: dividir pelo total de tecnicos * 365, nao apenas 365
+    var visitDiaNec     = agric / (tecs * 365);
     var horasDiaNec     = visitDiaNec * (minTotal / 60);
+
     var vidas           = Math.ceil(famPorTec / 100);
     var mult            = vidas;
 
@@ -1075,7 +1207,7 @@
     vis += '<div class="horas-insight">' + fmt(r1(visitDiaNec), 1) + ' visitas/dia</div>';
     vis += '<div class="horas-insight-label" style="color:var(--c-ink-muted)">Para garantir pelo menos 1 visita por ano a cada agricultor de ' + territ + ', seriam necessárias <strong>' + fmt(r1(visitDiaNec), 1) + ' visitas por dia</strong> — todos os ' + fmt(tecs) + ' técnico' + (tecs > 1 ? 's' : '') + ' trabalhando inclusive aos finais de semana.</div>';
     vis += '<div style="margin-top:14px;padding-top:12px;border-top:1px solid #e0c88a;">';
-    vis += '<div style="font-size:13px;color:var(--c-ink-muted)">Ou seja, você teria que trabalhar pelo menos <strong style="color:var(--c-red);font-size:18px;">' + fmt(horasDiaNecFmt, 1) + ' horas por dia</strong>, todos os dias do ano.</div>';
+    vis += '<div style="font-size:13px;color:var(--c-ink-muted)">Ou seja, cada técnico teria que trabalhar pelo menos <strong style="color:var(--c-red);font-size:18px;">' + fmt(horasDiaNecFmt, 1) + ' horas por dia</strong>, todos os dias do ano.</div>';
     vis += '</div>';
     vis += '</div>';
     vis += '<div class="horas-track-wrap">';
@@ -1174,7 +1306,7 @@
   // =============================================
   function calcularGestor(agric, tecs, territ, nomeLoc, famPorTec, tecNecessarios, deficit, pctDeficit) {
     var custoPorFamAno = parseFloat(document.getElementById('custo_tec').value) || 5000;
-    var custoPorFam  = parseFloat(document.getElementById('regiao_gest').value);
+    // CORRECAO 1: removida variavel custoPorFam inutilizada
     var metaFamilias = parseFloat(document.getElementById('meta_familias').value) || agric;
     var pctDeslGest  = parseFloat(document.getElementById('pct_desl_gest').value);
     var kmTecMes     = parseFloat(document.getElementById('km_tec_mes').value) || 600;
@@ -1187,7 +1319,6 @@
     var coberturaAtual   = Math.min(100, Math.round((tecs * 100 / tecNecessarios) * 100) / 100);
     var familiasPorTecMes = agric / tecs;
     var mesesVisitarGest = familiasPorTecMes / 20;
-    // ALTERAÇÃO 2: meta é do programa — técnicos necessários para atingi-la
     var custoTotalAno    = custoPorFamAno * metaFamilias;
     var tecNecMeta       = Math.ceil(metaFamilias / 100);
 
@@ -1329,9 +1460,18 @@
   window.reiniciar = function() {
     document.getElementById('resultado').classList.remove('visible');
     document.getElementById('share-preview').style.display = 'none';
-    // Limpar cache da aba atual ao recalcular
     resultadoCache[perfil] = null;
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // =============================================
+  // METODOLOGIA — toggle
+  // =============================================
+  window.toggleMetodologia = function() {
+    var body = document.getElementById('metodologia-body');
+    var icon = document.getElementById('metodologia-toggle-icon');
+    var aberto = body.classList.toggle('open');
+    icon.textContent = aberto ? 'Ver menos' : 'Ver mais';
   };
 
   // =============================================
@@ -1451,7 +1591,7 @@
       var distKm     = parseFloat(document.getElementById('dist_km').value) || 15;
 
       var mesesVisitar = famResp / visitMes;
-      var agric2       = modoLocalidade ? (parseFloat(document.getElementById('total_agricultores_loc').value) || 2500) : (lerCampoNumerico('total_agricultores') || 2500);
+      var agric2       = modoLocalidade ? (lerCampoNumerico('total_agricultores_loc') || 2500) : (lerCampoNumerico('total_agricultores') || 2500);
       var tecs2        = parseFloat(document.getElementById(modoLocalidade ? 'total_tecnicos_loc' : 'total_tecnicos').value) || 4;
       var tecNecessarios = Math.ceil(agric2 / 100);
       var famPorTec    = agric2 / tecs2;
@@ -1495,11 +1635,12 @@
       }];
 
     } else {
-      var famPorTec = parseFloat(document.getElementById('rh-num').textContent) || 0;
+      // CORRECAO 3: calcular famPorTec diretamente dos inputs, sem ler do DOM
+      var agric2    = modoLocalidade ? (lerCampoNumerico('total_agricultores_loc') || 2500) : (lerCampoNumerico('total_agricultores') || 2500);
+      var tecs2     = parseFloat(document.getElementById(modoLocalidade ? 'total_tecnicos_loc' : 'total_tecnicos').value) || 4;
+      var famPorTec = tecs2 > 0 ? agric2 / tecs2 : 0;
       var vidas     = Math.ceil(famPorTec / 100) || 1;
       var meses     = famPorTec > 0 ? Math.round(famPorTec / 20 * 10) / 10 : 0;
-      var agric2    = parseFloat(document.getElementById('total_agricultores').value) || 2500;
-      var tecs2     = parseFloat(document.getElementById('total_tecnicos').value) || 4;
       var tecNec2   = Math.ceil(agric2 / 100);
       var deficit2  = Math.max(0, tecNec2 - tecs2);
       var pctDef2   = Math.round((deficit2 / tecNec2) * 100);

@@ -679,8 +679,18 @@ box-shadow: 0 1px 0 var(--c-amber);
 .tl-img-wrap img { width: 100%; border-radius: 6px; display: block; }
 .tl-img-credit { font-size: 11px; color: var(--c-ink-muted); margin-top: 4px; font-style: italic; }
 .tl-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
-.tl-tag-n1 { background: rgba(0,0,0,0.07); color: #444; font-size: 11px; }
-.tl-tag-n2 { background: rgba(196,124,43,0.14); color: #7a4e10; font-size: 11px; }
+.tl-filter-n1:hover,
+.tl-filter-n2:hover {
+  opacity: 0.85;
+}
+
+.tl-tag[data-filter] {
+  cursor: pointer;
+}
+
+.tl-tag[data-filter]:hover {
+  opacity: 0.75;
+}
     /* =============================================
    GEO LEVEL BUTTONS
 ============================================= */
@@ -2272,6 +2282,7 @@ var lblAtiv  = { pt: 'Atividades', en: 'Activities', es: 'Actividades' }[current
   table.innerHTML = thead + tbody;
 }
 
+// Cores por categoria (cat) — mantidas para o badge
 var CAT_COLORS = {
   "Mídia":          "#8B6914",
   "Política Pública":"#2d6a32",
@@ -2282,6 +2293,91 @@ var CAT_COLORS = {
   "Internacional":  "#1f4023"
 };
 
+var CAT_LABELS = {
+  "Mídia":           { en: "Media",            es: "Medios" },
+  "Política Pública":{ en: "Public Policy",    es: "Política Pública" },
+  "Internet":        { en: "Internet",         es: "Internet" },
+  "Tecnologia":      { en: "Technology",       es: "Tecnología" },
+  "Extensão Digital":{ en: "Digital Extension",es: "Extensión Digital" },
+  "Mobile":          { en: "Mobile",           es: "Móvil" },
+  "Internacional":   { en: "International",    es: "Internacional" }
+};
+
+// Nível 1 — Natureza do Marco
+// NÍVEL 1: Cores Frias e Institucionais (Estrutura/Governança)
+// Azul Profundo, Verde Floresta e Roxo Fechado.
+var N1_COLORS = {
+  "Políticas Públicas e Estratégias Governamentais": "#1B4332", // Verde escuro (Estado/Agricultura)
+  "Fortalecimento Institucional Público e Privado":  "#0D3B66", // Azul marinho (Institucional/Confiança)
+  "Inovações em Comunicação e Tecnologia":     "#480CA8" 
+};
+
+
+
+var N1_LABELS = {
+  "Políticas Públicas e Estratégias Governamentais": {
+    en: "Public Policies and Government Strategies",
+    es: "Políticas Públicas y Estrategias Gubernamentales"
+  },
+  "Fortalecimento Institucional Público e Privado": {
+    en: "Public and Private Institutional Strengthening",
+    es: "Fortalecimiento Institucional Público y Privado"
+  },
+  "Inovações em Comunicação e Tecnologia": {
+    en: "Communication and Technology Innovations",
+    es: "Innovaciones en Comunicación y Tecnología"
+  }
+};
+
+var N1_DESC = {
+  "Políticas Públicas e Estratégias Governamentais": {
+    pt: "Ações lideradas pelo poder público: programas governamentais, marcos legais, editais, investimentos e projetos financiados pelo Estado.",
+    en: "Actions led by government: programs, legal frameworks, public tenders, investments and state-funded projects.",
+    es: "Acciones lideradas por el sector público: programas gubernamentales, marcos legales, convocatorias, inversiones y proyectos financiados por el Estado."
+  },
+  "Fortalecimento Institucional Público e Privado": {
+    pt: "Criação, articulação e consolidação de instituições, associações, empresas e startups que estruturam o sistema de ATER.",
+    en: "Creation, articulation and consolidation of institutions, associations, companies and startups that structure the ATER system.",
+    es: "Creación, articulación y consolidación de instituciones, asociaciones, empresas y startups que estructuran el sistema de ATER."
+  },
+  "Inovações em Comunicação e Tecnologia": {
+    pt: "Novos meios, ferramentas, formatos e plataformas que ampliaram o alcance e a qualidade da assistência técnica e extensão rural.",
+    en: "New media, tools, formats and platforms that expanded the reach and quality of technical assistance and rural extension.",
+    es: "Nuevos medios, herramientas, formatos y plataformas que ampliaron el alcance y la calidad de la asistencia técnica y extensión rural."
+  }
+};
+
+// Nível 2 — Canal/Tecnologia
+var N2_COLORS = {
+  "Mídias de Massa":                    "#D4A373", // Bege escuro/Dourado (Remete ao rádio/papel antigo)
+  "Plataformas Interativas":            "#EE964B", // Laranja vibrante (Interação/Digital)
+  "Tecnologias Digitais e de Automação": "#ff4d44"  // Verde médio ou  (Amarelo queimado)
+};
+
+
+var N2_LABELS = {
+  "Mídias de Massa":                    { en: "Mass Media",                      es: "Medios Masivos" },
+  "Plataformas Interativas":            { en: "Interactive Platforms",            es: "Plataformas Interactivas" },
+  "Tecnologias Digitais e de Automação":{ en: "Digital and Automation Technologies", es: "Tecnologías Digitales y de Automatización" }
+};
+
+var N2_DESC = {
+  "Mídias de Massa": {
+    pt: "Canais de comunicação de um para muitos, com conteúdo centralizado e distribuído em larga escala. Ex: rádio educativo, televisão, radionovelas.",
+    en: "One-to-many communication channels, with centralized content distributed at large scale. E.g.: educational radio, television, radio dramas.",
+    es: "Canales de comunicación de uno a muchos, con contenido centralizado y distribuido a gran escala. Ej.: radio educativa, televisión, radionovelas."
+  },
+  "Plataformas Interativas": {
+    pt: "Ambientes com comunicação bidirecional, acesso sob demanda e interação entre extensionistas e agricultores. Ex: portais, aplicativos, WhatsApp, SMS.",
+    en: "Environments with two-way communication, on-demand access and interaction between agents and farmers. E.g.: portals, apps, WhatsApp, SMS.",
+    es: "Entornos con comunicación bidireccional, acceso bajo demanda e interacción entre extensionistas y agricultores. Ej.: portales, aplicaciones, WhatsApp, SMS."
+  },
+  "Tecnologias Digitais e de Automação": {
+    pt: "Ferramentas para coleta, processamento e análise de dados aplicadas ao monitoramento e gestão da produção. Ex: GPS, SIG, drones, IA, big data.",
+    en: "Tools for data collection, processing and analysis applied to production monitoring and management. E.g.: GPS, GIS, drones, AI, big data.",
+    es: "Herramientas para recolección, procesamiento y análisis de datos aplicadas al monitoreo y gestión de la producción. Ej.: GPS, SIG, drones, IA, big data."
+  }
+};
 
 var CAT_LABELS = {
   "Mídia":           { en: "Media",            es: "Medios" },
@@ -2438,100 +2534,110 @@ window.setLang = setLang;
 // =============================================
 // TIMELINE RENDER
 // =============================================
-var activeFilter = 'all';
+
+var activeN1 = 'all';
+var activeN2 = 'all';
 
 function renderTimeline() {
   var filters = document.getElementById('tl-filters');
   var list = document.getElementById('tl-list');
+  var labelAll = { pt: 'Todos', en: 'All', es: 'Todos' }[currentLang] || 'All';
 
-  // Filters
-  var cats = ['all'].concat(Object.keys(CAT_COLORS));
-  var filterLabels = {
-    all: { pt: 'Todos', en: 'All' }
-  };
+  // --- 1. RENDERIZAR FILTROS (Natureza e Canal) ---
+  var htmlFilters = '';
 
-  filters.innerHTML = cats.map(function(cat) {
-var label = cat === 'all'
-      ? ({ pt: 'Todos', en: 'All', es: 'Todos' }[currentLang] || 'All')
-      : (currentLang === 'pt' ? cat : ((CAT_LABELS[cat] && CAT_LABELS[cat][currentLang]) || cat));
-    return '<button class="filter-chip' + (activeFilter === cat ? ' active' : '') + '" data-cat="' + cat + '">' + label + '</button>';
-  }).join('');
-
-  filters.querySelectorAll('.filter-chip').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      activeFilter = this.getAttribute('data-cat');
-      renderTimeline();
-    });
+  // Linha Natureza
+  htmlFilters += '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;align-items:center;">';
+  htmlFilters += '<span style="font-family:var(--f-sans);font-size:11px;font-weight:700;text-transform:uppercase;color:var(--c-ink-muted);width:75px;">Natureza:</span>';
+  htmlFilters += '<button class="filter-chip' + (activeN1 === 'all' ? ' active' : '') + '" onclick="setTimelineFilter(\'n1\', \'all\')">' + labelAll + '</button>';
+  Object.keys(N1_COLORS).forEach(function(n1) {
+    var isActive = activeN1 === n1;
+    var label = currentLang === 'pt' ? n1 : (N1_LABELS[n1][currentLang] || n1);
+    htmlFilters += '<button class="filter-chip' + (isActive ? ' active' : '') + '" onclick="setTimelineFilter(\'n1\', \'' + n1 + '\')" style="border-color:' + N1_COLORS[n1] + ';' + (isActive ? 'background:' + N1_COLORS[n1] + ';color:white;' : 'color:' + N1_COLORS[n1] + ';') + '">' + label + '</button>';
   });
+  htmlFilters += '</div>';
 
-  // Items
-list.innerHTML = TIMELINE_DATA.map(function(item) {
-    var color = CAT_COLORS[item.cat] || '#666';
-    var hidden = activeFilter !== 'all' && activeFilter !== item.cat;
-
-    var tipoLabel = currentLang === 'pt' ? item.tipo.pt : item.tipo.en;
-    var meioLabel = currentLang === 'pt' ? item.meio.pt : item.meio.en;
-    var naturezaLabel = item.natureza ? (currentLang === 'pt' ? item.natureza.pt : item.natureza.en) : '';
-    var canalLabel = item.canal ? (currentLang === 'pt' ? item.canal.pt : item.canal.en) : '';
-
-    // Links — suporta array (links) ou string legada (link)
-    var linksArr = item.links && item.links.length > 0 ? item.links
-      : (item.link ? [item.link] : []);
-    var linkHtml = '';
-var lblRef  = { pt: 'Ver referência',  en: 'See reference',  es: 'Ver referencia'  }[currentLang] || 'See reference';
-    var lblRefN = { pt: 'Referência',      en: 'Reference',      es: 'Referencia'      }[currentLang] || 'Reference';
-    if (linksArr.length === 1) {
-      linkHtml = '<a href="' + linksArr[0] + '" target="_blank" class="tl-link">↗ ' + lblRef + '</a>';
-    } else if (linksArr.length > 1) {
-      linkHtml = linksArr.map(function(url, i) {
-        return '<a href="' + url + '" target="_blank" class="tl-link">↗ ' + lblRefN + ' ' + (i + 1) + '</a>';
-      }).join(' ');
-    }
-
-
-    // Tags de classificação: natureza (Nível 1) + canal (Nível 2, se houver)
-    var tagsHtml = '<div class="tl-tags">';
-    if (naturezaLabel) tagsHtml += '<span class="tl-tag tl-tag-n1">' + naturezaLabel + '</span>';
-    if (canalLabel)    tagsHtml += '<span class="tl-tag tl-tag-n2">' + canalLabel + '</span>';
-    tagsHtml += '</div>';
-
-    var imgHtml = '';
-    if (item.img) {
-      imgHtml = '<div class="tl-img-wrap">' +
-        '<img src="' + item.img + '" alt="" loading="lazy">' +
-        (item.imgCredit ? '<div class="tl-img-credit">' + item.imgCredit + '</div>' : '') +
-      '</div>';
-    }
-
-    return '<div class="tl-item' + (hidden ? ' hidden' : '') + '">' +
-      '<div class="tl-card" style="border-left-color:' + color + '">' +
-        '<div class="tl-meta">' +
-          '<span class="tl-year">' + item.year + '</span>' +
-          '<span class="tl-cat-badge" style="background:' + color + '">' + (currentLang === 'pt' ? item.cat : ((CAT_LABELS[item.cat] && CAT_LABELS[item.cat][currentLang]) || item.cat)) + '</span>' +
-        '</div>' +
-        '<div class="tl-text">' + item.text[currentLang] + '</div>' +
-        imgHtml +
-        tagsHtml +
-        (linkHtml ? '<div class="tl-links">' + linkHtml + '</div>' : '') +
-      '</div>' +
-    '</div>';
-  }).join('');
-
-  list.querySelectorAll('.tl-tag').forEach(function(tag) {
-    tag.addEventListener('click', function() {
-      var tipoPt = this.getAttribute('data-filter-tipo');
-      var meioPt = this.getAttribute('data-filter-meio');
-      if (tipoPt) {
-        var match = TIMELINE_DATA.find(function(d) { return d.tipo.pt === tipoPt; });
-        if (match) { activeFilter = match.cat; renderTimeline(); }
-      }
-      if (meioPt) {
-        var match = TIMELINE_DATA.find(function(d) { return d.meio.pt === meioPt; });
-        if (match) { activeFilter = match.cat; renderTimeline(); }
-      }
-    });
+  // Linha Canal
+  htmlFilters += '<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;">';
+  htmlFilters += '<span style="font-family:var(--f-sans);font-size:11px;font-weight:700;text-transform:uppercase;color:var(--c-ink-muted);width:75px;">Canal:</span>';
+  htmlFilters += '<button class="filter-chip' + (activeN2 === 'all' ? ' active' : '') + '" onclick="setTimelineFilter(\'n2\', \'all\')">' + labelAll + '</button>';
+  Object.keys(N2_COLORS).forEach(function(n2) {
+    var isActive = activeN2 === n2;
+    var label = currentLang === 'pt' ? n2 : (N2_LABELS[n2][currentLang] || n2);
+    htmlFilters += '<button class="filter-chip' + (isActive ? ' active' : '') + '" onclick="setTimelineFilter(\'n2\', \'' + n2 + '\')" style="border-color:' + N2_COLORS[n2] + ';' + (isActive ? 'background:' + N2_COLORS[n2] + ';color:white;' : 'color:' + N2_COLORS[n2] + ';') + '">' + label + '</button>';
   });
+  htmlFilters += '</div>';
+
+  filters.innerHTML = htmlFilters;
+
+  // --- 2. RENDERIZAR CARDS ---
+  list.innerHTML = TIMELINE_DATA.map(function(item) {
+    // Lógica de filtro combinado
+    var matchN1 = (activeN1 === 'all' || item.natureza.pt === activeN1);
+    var matchN2 = (activeN2 === 'all' || (item.canal && item.canal.pt === activeN2));
+    var hidden = !(matchN1 && matchN2);
+
+    // Definição de Cores
+    var cN1 = N1_COLORS[item.natureza.pt] || '#666';
+    var cN2 = item.canal ? (N2_COLORS[item.canal.pt] || '#ccc') : 'transparent';
+
+    // Links de Referência
+    var linksHtml = (item.links || []).map(function(url, i) {
+      var lbl = { pt: 'Referência', en: 'Reference', es: 'Referencia' }[currentLang];
+      return '<a href="' + url + '" target="_blank" class="tl-link">↗ ' + lbl + ' ' + (i + 1) + '</a>';
+    }).join(' ');
+
+    return '<div class="tl-item' + (hidden ? ' hidden' : '') + '">'
+      + '<div class="tl-card" style="border: 1px solid var(--c-border); border-radius: 6px; padding: 0; overflow: hidden; border-left: 1px solid var(--c-border); border-right: 1px solid var(--c-border);">'
+      
+      // BARRA DE CORES NO TOPO (Identificação Visual)
+      +   '<div style="display:flex; height: 5px; width: 100%;">'
+      +     '<div style="flex: 1; background:' + cN1 + '"></div>'
+      +     (item.canal ? '<div style="flex: 1; background:' + cN2 + '"></div>' : '<div style="flex: 1; background:' + cN1 + '"></div>')
+      +   '</div>'
+
+      // CONTEÚDO DO CARD
+      +   '<div style="padding: 18px;">'
+      
+      // DOTS COLORIDOS
+      +     '<div style="display:flex; gap:8px; margin-bottom:10px;">'
+      +       '<div title="Natureza" style="width:12px; height:12px; border-radius:50%; background:' + cN1 + '"></div>'
+      +       (item.canal ? '<div title="Canal" style="width:12px; height:12px; border-radius:50%; background:' + cN2 + '"></div>' : '')
+      +     '</div>'
+
+      // ANO (Colorido conforme Natureza)
+      +     '<div class="tl-meta"><span class="tl-year" style="color:' + cN1 + '; font-size: 20px; font-weight: 700;">' + item.year + '</span></div>'
+      
+      // TEXTO PRINCIPAL
+      +     '<div class="tl-text" style="font-weight: 500; margin-top: 8px; line-height: 1.5;">' + item.text[currentLang] + '</div>'
+      
+      // IMAGEM (se houver)
+      +     (item.img ? '<div class="tl-img-wrap"><img src="' + item.img + '" style="border-radius: 4px; margin-top: 12px; width: 100%;"></div>' : '')
+      
+      // TAGS (Natureza e Canal)
+      +     '<div class="tl-tags" style="margin-top: 15px; display: flex; flex-wrap: wrap; gap: 6px;">'
+      +       '<span class="tl-tag" style="background:' + cN1 + '10; color:' + cN1 + '; border: 1px solid ' + cN1 + '40; font-weight: 600; padding: 4px 8px; border-radius: 4px; font-size: 11px;">' + (currentLang === 'pt' ? item.natureza.pt : N1_LABELS[item.natureza.pt][currentLang]) + '</span>'
+      +       (item.canal ? '<span class="tl-tag" style="background:' + cN2 + '10; color:' + cN2 + '; border: 1px solid ' + cN2 + '40; font-weight: 600; padding: 4px 8px; border-radius: 4px; font-size: 11px;">' + (currentLang === 'pt' ? item.canal.pt : N2_LABELS[item.canal.pt][currentLang]) + '</span>' : '')
+      +     '</div>'
+      
+      // RODAPÉ COM LINKS
+      +     '<div class="tl-links" style="margin-top: 12px; border-top: 1px solid var(--c-border); padding-top: 10px; display: flex; gap: 10px; flex-wrap: wrap;">' + linksHtml + '</div>'
+      
+      +   '</div>'
+      + '</div>'
+      + '</div>';
+  }).join('');
 }
+
+// Função auxiliar global para troca de filtros
+window.setTimelineFilter = function(type, value) {
+  if (type === 'n1') activeN1 = value;
+  if (type === 'n2') activeN2 = value;
+  renderTimeline();
+};
+
+
+
 
 // =============================================
 // PROJECTS RENDER

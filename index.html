@@ -401,7 +401,7 @@ box-shadow: 0 1px 0 var(--c-amber);
 
     .section-label span {
       font-family: var(--f-sans);
-      font-size: 10px;
+      font-size: 12px;
       font-weight: 600;
       letter-spacing: 0.16em;
       text-transform: uppercase;
@@ -536,7 +536,7 @@ box-shadow: 0 1px 0 var(--c-amber);
   left: 50%;
   top: 0;
   bottom: 0;
-  width: 2px;
+  width: 3px;
   transform: translateX(-50%);
   background: linear-gradient(to bottom, var(--c-amber), var(--c-green));
   pointer-events: none;
@@ -592,9 +592,9 @@ box-shadow: 0 1px 0 var(--c-amber);
 .tl-item::before {
   content: '';
   position: absolute;
-  top: 14px;
-  width: 12px;
-  height: 12px;
+  top: 13px;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
   border: 2px solid var(--c-cream);
   background: var(--c-amber);
@@ -602,8 +602,8 @@ box-shadow: 0 1px 0 var(--c-amber);
   transition: transform 0.2s;
 }
 
-.tl-item:nth-child(odd)::before  { right: -34px; left: auto; }
-.tl-item:nth-child(even)::before { left: -34px; right: auto; }
+.tl-item:nth-child(odd)::before  { right: -36px; left: auto; }
+.tl-item:nth-child(even)::before { left: -36px; right: auto; }
 
 .tl-item:hover::before { transform: scale(1.3); }
 
@@ -1497,6 +1497,339 @@ table.cron-table {
   }
 }
 
+/* =============================================
+   PLANEJADOR E ETAPAS ATER
+   Ferramenta de decisão: responda às etapas e
+   gere um roteiro inicial para a instituição.
+============================================= */
+.planner-intro {
+  max-width: 620px;
+  margin-bottom: 28px;
+}
+.planner-intro p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--c-ink-muted);
+}
+
+/* Trilha de fases (stepper de topo) */
+.planner-phases {
+  display: flex;
+  gap: 0;
+  margin-bottom: 28px;
+  border: 1px solid var(--c-border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--c-cream);
+}
+.planner-phase-tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  border-right: 1px solid var(--c-border);
+  transition: background 0.2s;
+  text-align: left;
+  font-family: var(--f-sans);
+}
+.planner-phase-tab:last-child { border-right: none; }
+.planner-phase-tab:hover { background: var(--c-bg-alt); }
+.planner-phase-tab.active { background: var(--c-green-dark); }
+.planner-phase-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--c-bg-alt);
+  color: var(--c-green-dark);
+  font-family: var(--f-serif);
+  font-weight: 700;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+.planner-phase-tab.active .planner-phase-num {
+  background: var(--c-amber);
+  color: #fff;
+}
+.planner-phase-label {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+.planner-phase-label .pl-kicker {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-ink-muted);
+  font-weight: 700;
+}
+.planner-phase-tab.active .planner-phase-label .pl-kicker { color: rgba(255,255,255,0.7); }
+.planner-phase-label .pl-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--c-ink);
+}
+.planner-phase-tab.active .planner-phase-label .pl-name { color: #fff; }
+
+/* Corpo: painel de perguntas da fase ativa */
+.planner-body { margin-bottom: 24px; }
+.planner-phase-panel { display: none; }
+.planner-phase-panel.active { display: block; animation: plannerFade 0.3s ease; }
+@keyframes plannerFade {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.planner-q {
+  background: var(--c-cream);
+  border: 1px solid var(--c-border);
+  border-radius: 8px;
+  padding: 18px 20px;
+  margin-bottom: 16px;
+}
+.planner-q-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.planner-q-code {
+  font-family: var(--f-serif);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--c-amber);
+  flex-shrink: 0;
+}
+.planner-q-title {
+  font-family: var(--f-sans);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--c-green-dark);
+}
+.planner-q-sub {
+  font-size: 13px;
+  color: var(--c-ink-muted);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+.planner-q-hint {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--c-ink-muted);
+  background: var(--c-bg-alt);
+  border-radius: 10px;
+  padding: 2px 9px;
+  margin-bottom: 12px;
+}
+
+/* Opções (chips selecionáveis) */
+.planner-opts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.planner-opt {
+  font-family: var(--f-sans);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1.5px solid var(--c-border);
+  background: var(--c-bg);
+  color: var(--c-ink);
+  cursor: pointer;
+  transition: all 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  line-height: 1.3;
+  text-align: left;
+}
+.planner-opt:hover {
+  border-color: var(--c-green-mid);
+  background: rgba(45,106,50,0.06);
+}
+.planner-opt .planner-check {
+  width: 15px;
+  height: 15px;
+  border-radius: 4px;
+  border: 1.5px solid var(--c-border);
+  flex-shrink: 0;
+  position: relative;
+  transition: all 0.15s;
+}
+.planner-opt.radio .planner-check { border-radius: 50%; }
+.planner-opt.selected {
+  border-color: var(--c-green);
+  background: rgba(45,106,50,0.1);
+  color: var(--c-green-dark);
+}
+.planner-opt.selected .planner-check {
+  background: var(--c-green);
+  border-color: var(--c-green);
+}
+.planner-opt.selected .planner-check::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 4px;
+  height: 8px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.planner-opt.radio.selected .planner-check::after {
+  left: 3.5px; top: 3.5px;
+  width: 6px; height: 6px;
+  border: none; border-radius: 50%;
+  background: #fff; transform: none;
+}
+.planner-opt.neutral.selected {
+  border-color: var(--c-ink-muted);
+  background: rgba(107,107,94,0.12);
+  color: var(--c-ink-muted);
+}
+.planner-opt.neutral.selected .planner-check {
+  background: var(--c-ink-muted);
+  border-color: var(--c-ink-muted);
+}
+
+/* Navegação entre fases */
+.planner-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+.planner-progress-text {
+  font-size: 12px;
+  color: var(--c-ink-muted);
+  font-family: var(--f-sans);
+}
+.planner-nav-btns { display: flex; gap: 8px; }
+.planner-btn {
+  font-family: var(--f-sans);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 6px;
+  border: 1px solid var(--c-border);
+  background: var(--c-cream);
+  color: var(--c-ink);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.planner-btn:hover { background: var(--c-bg-alt); }
+.planner-btn.primary {
+  background: var(--c-green-dark);
+  border-color: var(--c-green-dark);
+  color: #fff;
+}
+.planner-btn.primary:hover { background: var(--c-green); }
+.planner-btn.accent {
+  background: var(--c-amber);
+  border-color: var(--c-amber);
+  color: #fff;
+}
+.planner-btn.accent:hover { background: var(--c-amber-light); }
+.planner-btn:disabled { opacity: 0.4; cursor: default; }
+
+/* Plano gerado */
+.planner-result {
+  display: none;
+  margin-top: 28px;
+  border: 1px solid var(--c-green-light);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--c-cream);
+}
+.planner-result.show { display: block; animation: plannerFade 0.4s ease; }
+.planner-result-head {
+  background: var(--c-green-dark);
+  color: #fff;
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.planner-result-head h3 {
+  font-family: var(--f-serif);
+  font-size: 19px;
+  font-weight: 700;
+  margin: 0;
+}
+.planner-result-head .pr-actions { display: flex; gap: 8px; }
+.planner-result-head .planner-btn {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.3);
+  color: #fff;
+}
+.planner-result-head .planner-btn:hover { background: rgba(255,255,255,0.22); }
+.planner-result-body { padding: 22px; }
+.planner-result-phase { margin-bottom: 22px; }
+.planner-result-phase:last-child { margin-bottom: 0; }
+.planner-result-phase h4 {
+  font-family: var(--f-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c-amber);
+  margin: 0 0 10px 0;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--c-border);
+}
+.planner-result-item {
+  margin-bottom: 12px;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.planner-result-item:last-child { margin-bottom: 0; }
+.planner-result-item .pri-q {
+  font-weight: 600;
+  color: var(--c-green-dark);
+}
+.planner-result-item .pri-a {
+  color: var(--c-ink);
+}
+.planner-result-item .pri-empty {
+  color: var(--c-ink-muted);
+  font-style: italic;
+}
+.planner-result-note {
+  margin-top: 18px;
+  padding: 14px 16px;
+  background: rgba(196,124,43,0.08);
+  border: 1px solid rgba(196,124,43,0.25);
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--c-ink);
+}
+
+@media (max-width: 768px) {
+  .planner-phases { flex-direction: column; }
+  .planner-phase-tab { border-right: none; border-bottom: 1px solid var(--c-border); }
+  .planner-phase-tab:last-child { border-bottom: none; }
+  .planner-nav { flex-direction: column-reverse; align-items: stretch; }
+  .planner-nav-btns { justify-content: space-between; }
+  .planner-progress-text { text-align: center; }
+}
+
+
 
 
 
@@ -1513,6 +1846,7 @@ table.cron-table {
     <a href="#mapa" data-section="mapa" class="nav-anchor" data-pt="Mapa" data-en="Map" data-es="Mapa">Mapa</a>
     <a href="#timeline" data-section="timeline" class="nav-anchor" data-pt="Linha do Tempo" data-en="Timeline" data-es="Línea de Tiempo">Linha do Tempo</a>
     <a href="#cronograma" data-section="cronograma" class="nav-anchor" data-pt="Cronograma" data-en="Schedule" data-es="Cronograma">Cronograma</a>
+    <a href="#planejador" data-section="planejador" class="nav-anchor" data-pt="Planejador" data-en="Planner" data-es="Planificador">Planejador</a>
     <a href="#sobre" data-section="sobre" class="nav-anchor" data-pt="Sobre" data-en="About" data-es="Acerca de">Sobre</a>
     <a href="#projetos" data-section="projetos" class="nav-anchor" data-pt="Projetos" data-en="Projects" data-es="Proyectos">Projetos</a>
     <a href="#publicacoes" data-section="publicacoes" class="nav-anchor" data-pt="Publicações" data-en="Publications" data-es="Publicaciones">Publicações</a>
@@ -1546,14 +1880,11 @@ table.cron-table {
     </div>
     <h1 class="hero-name">ICT4D<br><em>Brazil</em></h1>
 
-    <p class="hero-desc" id="hero-desc-pt">
+    <p class="hero-desc"
+       data-html-pt='Site desenvolvido pelo agrônomo e pesquisador <strong style="font-weight:700;color:#fff;">Rodrigo Ferraz</strong>. Reúne análises e iniciativas em ICT4D (Tecnologias da Informação e Comunicação para o Desenvolvimento), com foco em soluções digitais aplicadas à ATER e na promoção da inovação nos sistemas agroalimentares.'
+       data-html-en='This site was developed by agronomist and researcher <strong style="font-weight:700;color:#fff;">Rodrigo Ferraz</strong>. It brings together analyses and initiatives in ICT4D (Information and Communication Technologies for Development), focusing on digital solutions applied to ATER (Technical Assistance and Rural Extension) and the promotion of innovation in agri-food systems.'
+       data-html-es='Este sitio fue desarrollado por el agrónomo e investigador <strong style="font-weight:700;color:#fff;">Rodrigo Ferraz</strong>. Reúne análisis e iniciativas en ICT4D (Tecnologías de la Información y la Comunicación para el Desarrollo), con foco en soluciones digitales aplicadas a la ATER y en la promoción de la innovación en los sistemas agroalimentarios.'>
 Site desenvolvido pelo agrônomo e pesquisador <strong style="font-weight:700;color:#fff;">Rodrigo Ferraz</strong>. Reúne análises e iniciativas em ICT4D (Tecnologias da Informação e Comunicação para o Desenvolvimento), com foco em soluções digitais aplicadas à ATER e na promoção da inovação nos sistemas agroalimentares.</p>
-
-    <p class="hero-desc" id="hero-desc-en" style="display:none">
-This site was developed by agronomist and researcher <strong style="font-weight:700;color:#fff;">Rodrigo Ferraz</strong>. It brings together analyses and initiatives in ICT4D (Information and Communication Technologies for Development), focusing on digital solutions applied to ATER (Technical Assistance and Rural Extension) and the promotion of innovation in agri-food systems.</p>
-
-    <p class="hero-desc" id="hero-desc-es" style="display:none">
-Este sitio fue desarrollado por el agrónomo e investigador <strong style="font-weight:700;color:#fff;">Rodrigo Ferraz</strong>. Reúne análisis e iniciativas en ICT4D (Tecnologías de la Información y la Comunicación para el Desarrollo), con foco en soluciones digitales aplicadas a la ATER y en la promoción de la innovación en los sistemas agroalimentarios.</p>
 
 
 
@@ -1676,7 +2007,7 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
 <section id="cronograma">
   <a class="section-anchor" id="anchor-cronograma"></a>
   <div class="section-wrap">
-    <div class="section-label" data-pt="Cronograma" data-en="Schedule" data-es="Cronograma">Cronograma</div>
+    <div class="section-label"><span data-pt="Cronograma" data-en="Schedule" data-es="Cronograma">Cronograma</span></div>
     <h2 class="section-title"
         data-pt="Execução para serviços de ATER em formato híbrido"
         data-en="Execution schedule for hybrid ATER services"
@@ -1731,6 +2062,79 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
        data-es="Fuente: elaborado por Rodrigo Ferraz.">Elaborado por Rodrigo Ferraz.</p>
   </div>
 </section>
+
+<!-- =============================================
+     PLANEJADOR E ETAPAS ATER
+============================================= -->
+<section id="planejador">
+  <a class="section-anchor" id="anchor-planejador"></a>
+  <div class="section-wrap">
+    <div class="section-label">
+      <span data-pt="Ferramenta" data-en="Tool" data-es="Herramienta">Ferramenta</span>
+    </div>
+    <div style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+      <h2 class="section-title" style="margin-bottom:0"
+          data-pt="Planejador e etapas ATER"
+          data-en="ATER Planner & Steps"
+          data-es="Planificador y etapas ATER">Planejador e etapas ATER</h2>
+      <button class="share-section-btn" onclick="shareSection('planejador')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        <span data-pt="Compartilhar" data-en="Share" data-es="Compartir">Compartilhar</span>
+      </button>
+    </div>
+
+    <div class="planner-intro">
+      <p data-pt="Muitas organizações querem trabalhar com ATER Digital, mas não sabem por onde começar. Esta ferramenta percorre as três etapas de um serviço — antes, durante e depois do atendimento — e ajuda a estruturar as decisões. Responda às perguntas de cada etapa e gere um roteiro inicial para a sua instituição."
+         data-en="Many organizations want to work with Digital ATER but don't know where to start. This tool walks through the three stages of a service — before, during and after the visit — and helps structure the decisions. Answer the questions in each stage and generate an initial roadmap for your institution."
+         data-es="Muchas organizaciones quieren trabajar con ATER Digital pero no saben por dónde empezar. Esta herramienta recorre las tres etapas de un servicio — antes, durante y después de la atención — y ayuda a estructurar las decisiones. Responda las preguntas de cada etapa y genere una hoja de ruta inicial para su institución.">
+        Muitas organizações querem trabalhar com ATER Digital, mas não sabem por onde começar. Esta ferramenta percorre as três etapas de um serviço — antes, durante e depois do atendimento — e ajuda a estruturar as decisões. Responda às perguntas de cada etapa e gere um roteiro inicial para a sua instituição.
+      </p>
+    </div>
+
+    <!-- Trilha de fases (preenchida por JS) -->
+    <div class="planner-phases" id="planner-phases"></div>
+
+    <!-- Painéis das fases (preenchidos por JS) -->
+    <div class="planner-body" id="planner-body"></div>
+
+    <!-- Navegação -->
+    <div class="planner-nav">
+      <div class="planner-progress-text" id="planner-progress"></div>
+      <div class="planner-nav-btns">
+        <button class="planner-btn" id="planner-prev"
+                data-pt="← Anterior" data-en="← Previous" data-es="← Anterior">← Anterior</button>
+        <button class="planner-btn primary" id="planner-next"
+                data-pt="Próxima etapa →" data-en="Next stage →" data-es="Siguiente etapa →">Próxima etapa →</button>
+        <button class="planner-btn accent" id="planner-generate"
+                data-pt="Gerar roteiro" data-en="Generate roadmap" data-es="Generar hoja de ruta">Gerar roteiro</button>
+      </div>
+    </div>
+
+    <!-- Plano gerado -->
+    <div class="planner-result" id="planner-result">
+      <div class="planner-result-head">
+        <h3 data-pt="Seu roteiro de ATER Digital"
+            data-en="Your Digital ATER roadmap"
+            data-es="Su hoja de ruta de ATER Digital">Seu roteiro de ATER Digital</h3>
+        <div class="pr-actions">
+          <button class="planner-btn" id="planner-copy"
+                  data-pt="Copiar" data-en="Copy" data-es="Copiar">Copiar</button>
+          <button class="planner-btn" id="planner-restart"
+                  data-pt="Recomeçar" data-en="Restart" data-es="Reiniciar">Recomeçar</button>
+        </div>
+      </div>
+      <div class="planner-result-body" id="planner-result-body"></div>
+    </div>
+
+    <p class="map-fonte" style="margin-top:14px; font-size:13px; text-align:left;"
+       data-pt="Fonte: elaborado por Rodrigo Ferraz, com base nos modelos de implementação de ATER Digital (Epagri, Emater, EmaterCE, projeto CompensAÇÃO)."
+       data-en="Source: elaborated by Rodrigo Ferraz, based on Digital ATER implementation models (Epagri, Emater, EmaterCE, CompensACTION project)."
+       data-es="Fuente: elaborado por Rodrigo Ferraz, con base en los modelos de implementación de ATER Digital (Epagri, Emater, EmaterCE, proyecto CompensACCIÓN).">
+       Fonte: elaborado por Rodrigo Ferraz, com base nos modelos de implementação de ATER Digital.
+    </p>
+  </div>
+</section>
+
 
 <!-- =============================================
      ABOUT
@@ -2248,7 +2652,6 @@ var lblAtiv  = { pt: 'Atividades', en: 'Activities', es: 'Actividades' }[current
   '<th colspan="2" style="border-bottom:1px solid rgba(255,255,255,0.2);"></th>' +
   '<th colspan="12" style="text-align:center;border-bottom:1px solid rgba(255,255,255,0.2);">' + lblMeses + '</th>' +
 '</tr>' +
-    '</tr>' +
     '<tr>' +
       '<th style="text-align:left;">' + lblAtiv + '</th>' +
       '<th>' + lblQnt + '</th>';
@@ -2288,26 +2691,6 @@ var lblAtiv  = { pt: 'Atividades', en: 'Activities', es: 'Actividades' }[current
 }
 
 // Cores por categoria (cat) — mantidas para o badge
-var CAT_COLORS = {
-  "Mídia":          "#8B6914",
-  "Política Pública":"#2d6a32",
-  "Internet":       "#1a6b8a",
-  "Tecnologia":     "#6b3a8a",
-  "Extensão Digital":"#c47c2b",
-  "Mobile":         "#2a7a6b",
-  "Internacional":  "#1f4023"
-};
-
-var CAT_LABELS = {
-  "Mídia":           { en: "Media",            es: "Medios" },
-  "Política Pública":{ en: "Public Policy",    es: "Política Pública" },
-  "Internet":        { en: "Internet",         es: "Internet" },
-  "Tecnologia":      { en: "Technology",       es: "Tecnología" },
-  "Extensão Digital":{ en: "Digital Extension",es: "Extensión Digital" },
-  "Mobile":          { en: "Mobile",           es: "Móvil" },
-  "Internacional":   { en: "International",    es: "Internacional" }
-};
-
 // Nível 1 — Natureza do Marco
 // NÍVEL 1: Cores Frias e Institucionais (Estrutura/Governança)
 // Azul Profundo, Verde Floresta e Roxo Fechado.
@@ -2382,16 +2765,6 @@ var N2_DESC = {
     en: "Tools for data collection, processing and analysis applied to production monitoring and management. E.g.: GPS, GIS, drones, AI, big data.",
     es: "Herramientas para recolección, procesamiento y análisis de datos aplicadas al monitoreo y gestión de la producción. Ej.: GPS, SIG, drones, IA, big data."
   }
-};
-
-var CAT_LABELS = {
-  "Mídia":           { en: "Media",            es: "Medios" },
-  "Política Pública":{ en: "Public Policy",    es: "Política Pública" },
-  "Internet":        { en: "Internet",         es: "Internet" },
-  "Tecnologia":      { en: "Technology",       es: "Tecnología" },
-  "Extensão Digital":{ en: "Digital Extension",es: "Extensión Digital" },
-  "Mobile":          { en: "Mobile",           es: "Móvil" },
-  "Internacional":   { en: "International",    es: "Internacional" }
 };
 
 var PROJECTS_DATA = [
@@ -2495,7 +2868,7 @@ function setLang(lang) {
   document.getElementById('btn-en').classList.toggle('active', lang === 'en');
   document.getElementById('btn-es').classList.toggle('active', lang === 'es');
 
-  // Update all [data-pt] / [data-en] / [data-es] elements
+  // Update all [data-pt] / [data-en] / [data-es] elements (texto puro)
   document.querySelectorAll('[data-pt]').forEach(function(el) {
     var txt = el.getAttribute('data-' + lang) || el.getAttribute('data-en');
     if (el.tagName !== 'BUTTON' && el.tagName !== 'A') {
@@ -2506,9 +2879,11 @@ function setLang(lang) {
     }
   });
 
-  document.getElementById('hero-desc-pt').style.display = lang === 'pt' ? '' : 'none';
-  document.getElementById('hero-desc-en').style.display = lang === 'en' ? '' : 'none';
-  document.getElementById('hero-desc-es').style.display = lang === 'es' ? '' : 'none';
+  // Update [data-html-pt] / [data-html-en] / [data-html-es] (conteúdo com HTML embutido)
+  document.querySelectorAll('[data-html-pt]').forEach(function(el) {
+    var html = el.getAttribute('data-html-' + lang) || el.getAttribute('data-html-en');
+    if (html != null) el.innerHTML = html;
+  });
 
   // Re-render dynamic sections
   renderTimeline();
@@ -2516,6 +2891,9 @@ function setLang(lang) {
   renderProjects();
   renderPublications();
   renderVideos();
+  renderPlanner();
+  var plannerRes = document.getElementById('planner-result');
+  if (plannerRes && plannerRes.classList.contains('show')) generatePlannerPlan();
 
   localStorage.setItem('lang', lang);
 
@@ -2705,6 +3083,406 @@ function renderVideos() {
   }).join('');
 }
 
+
+// =============================================
+// PLANEJADOR E ETAPAS ATER
+// Ferramenta de decisão baseada no Planejador (anexo 4)
+// =============================================
+// Tipos de opção: 'single' = escolha única (radio) | 'multi' = múltipla (checkbox)
+// Opções marcadas neutral:true ("Ainda será definido"/"Não se aplica") não entram
+// nas recomendações como decisão, mas são registradas no roteiro.
+
+var PLANNER_DATA = {
+  phases: [
+    {
+      key: 'antes',
+      kicker: { pt: 'Etapa 1', en: 'Stage 1', es: 'Etapa 1' },
+      name:   { pt: 'Antes do atendimento', en: 'Before the visit', es: 'Antes de la atención' },
+      desc:   { pt: 'Planejamento das ações', en: 'Action planning', es: 'Planificación de las acciones' },
+      questions: [
+        {
+          code: '1.1', type: 'single',
+          title: { pt: 'Modelo de incorporação', en: 'Adoption model', es: 'Modelo de incorporación' },
+          sub: { pt: 'Como a ATER Digital será incorporada na instituição?', en: 'How will Digital ATER be adopted by the institution?', es: '¿Cómo se incorporará la ATER Digital en la institución?' },
+          opts: [
+            { pt: 'Contratar empresas especializadas', en: 'Hire specialized companies', es: 'Contratar empresas especializadas' },
+            { pt: 'Fortalecimento institucional (capacitar equipe própria)', en: 'Institutional strengthening (train own team)', es: 'Fortalecimiento institucional (capacitar equipo propio)' },
+            { pt: 'Contratar profissionais especializados (PF)', en: 'Hire specialized professionals', es: 'Contratar profesionales especializados' },
+            { pt: 'Modelo híbrido (combinação das opções)', en: 'Hybrid model (combination)', es: 'Modelo híbrido (combinación)' },
+            { pt: 'Ainda será definido', en: 'To be defined', es: 'Aún por definir', neutral: true },
+            { pt: 'Não se aplica', en: 'Not applicable', es: 'No se aplica', neutral: true }
+          ]
+        },
+        {
+          code: '1.2', type: 'single',
+          title: { pt: 'Responsável pelo atendimento', en: 'Who delivers the service', es: 'Responsable de la atención' },
+          sub: { pt: 'Como será estruturada a responsabilidade pelo atendimento remoto e presencial?', en: 'How will responsibility for remote and in-person service be structured?', es: '¿Cómo se estructurará la responsabilidad por la atención remota y presencial?' },
+          opts: [
+            { pt: 'A mesma pessoa faz o remoto e o presencial', en: 'Same person does remote and in-person', es: 'La misma persona hace remoto y presencial' },
+            { pt: 'Pessoas diferentes para cada modalidade', en: 'Different people per modality', es: 'Personas diferentes por modalidad' },
+            { pt: 'Varia conforme a situação ou demanda', en: 'Varies by situation or demand', es: 'Varía según la situación o demanda' },
+            { pt: 'Ainda será definido', en: 'To be defined', es: 'Aún por definir', neutral: true },
+            { pt: 'Não se aplica', en: 'Not applicable', es: 'No se aplica', neutral: true }
+          ]
+        },
+        {
+          code: '1.3', type: 'single',
+          title: { pt: 'Momento de implementação', en: 'Timing of implementation', es: 'Momento de implementación' },
+          sub: { pt: 'Em que momento, no plano de ATER, a digitalização será implementada?', en: 'At what point in the ATER plan will it be implemented?', es: '¿En qué momento del plan de ATER se implementará?' },
+          opts: [
+            { pt: 'Híbrida — paralela ao presencial', en: 'Hybrid — parallel to in-person', es: 'Híbrida — paralela a lo presencial' },
+            { pt: 'Sequencial — após o ciclo presencial', en: 'Sequential — after the in-person cycle', es: 'Secuencial — tras el ciclo presencial' },
+            { pt: 'Exclusivamente digital', en: 'Fully digital', es: 'Exclusivamente digital' },
+            { pt: 'Variará conforme o projeto', en: 'Varies by project', es: 'Variará según el proyecto' },
+            { pt: 'Ainda será definido', en: 'To be defined', es: 'Aún por definir', neutral: true },
+            { pt: 'Não se aplica', en: 'Not applicable', es: 'No se aplica', neutral: true }
+          ]
+        },
+        {
+          code: '1.4', type: 'multi',
+          title: { pt: 'Questões legais, éticas e de sigilo', en: 'Legal, ethical & confidentiality', es: 'Cuestiones legales, éticas y de confidencialidad' },
+          sub: { pt: 'Como esses aspectos serão tratados? (pode marcar mais de um)', en: 'How will these aspects be handled? (select all that apply)', es: '¿Cómo se tratarán estos aspectos? (puede marcar varios)' },
+          opts: [
+            { pt: 'Treinamentos presenciais', en: 'In-person training', es: 'Capacitaciones presenciales' },
+            { pt: 'Treinamentos online', en: 'Online training', es: 'Capacitaciones en línea' },
+            { pt: 'Manuais e guias impressos', en: 'Printed manuals and guides', es: 'Manuales y guías impresos' },
+            { pt: 'Materiais digitais', en: 'Digital materials', es: 'Materiales digitales' },
+            { pt: 'Consultoria jurídica externa', en: 'External legal counsel', es: 'Asesoría jurídica externa' },
+            { pt: 'Políticas internas documentadas', en: 'Documented internal policies', es: 'Políticas internas documentadas' },
+            { pt: 'Ainda será definido', en: 'To be defined', es: 'Aún por definir', neutral: true },
+            { pt: 'Não se aplica', en: 'Not applicable', es: 'No se aplica', neutral: true }
+          ]
+        },
+        {
+          code: '1.5', type: 'multi',
+          title: { pt: 'Produção de material digital', en: 'Digital material production', es: 'Producción de material digital' },
+          sub: { pt: 'Quais materiais serão produzidos e usados nas práticas de ATER? (pode marcar mais de um)', en: 'Which materials will be produced and used? (select all that apply)', es: '¿Qué materiales se producirán y usarán? (puede marcar varios)' },
+          opts: [
+            { pt: 'Textos e/ou folhetos informativos', en: 'Texts and/or leaflets', es: 'Textos y/o folletos' },
+            { pt: 'Imagens (fotos e/ou cards)', en: 'Images (photos and/or cards)', es: 'Imágenes (fotos y/o tarjetas)' },
+            { pt: 'Vídeos instrucionais', en: 'Instructional videos', es: 'Videos instructivos' },
+            { pt: 'Guias práticos', en: 'Practical guides', es: 'Guías prácticas' },
+            { pt: 'Manuais de boas práticas', en: 'Best-practice manuals', es: 'Manuales de buenas prácticas' },
+            { pt: 'Conteúdos para redes sociais', en: 'Social media content', es: 'Contenidos para redes sociales' },
+            { pt: 'Não se aplica', en: 'Not applicable', es: 'No se aplica', neutral: true }
+          ]
+        }
+      ]
+    },
+    {
+      key: 'durante',
+      kicker: { pt: 'Etapa 2', en: 'Stage 2', es: 'Etapa 2' },
+      name:   { pt: 'Execução do atendimento', en: 'Service delivery', es: 'Ejecución de la atención' },
+      desc:   { pt: 'Durante o atendimento', en: 'During the visit', es: 'Durante la atención' },
+      questions: [
+        {
+          code: '2.1', type: 'multi',
+          title: { pt: 'Canal principal de atendimento', en: 'Main service channel', es: 'Canal principal de atención' },
+          sub: { pt: 'Quais canais serão utilizados? (pode marcar mais de um)', en: 'Which channels will be used? (select all that apply)', es: '¿Qué canales se usarán? (puede marcar varios)' },
+          opts: [
+            { pt: 'WhatsApp (mensageria)', en: 'WhatsApp (messaging)', es: 'WhatsApp (mensajería)' },
+            { pt: 'Ligações telefônicas', en: 'Phone calls', es: 'Llamadas telefónicas' },
+            { pt: 'Videochamadas', en: 'Video calls', es: 'Videollamadas' },
+            { pt: 'Plataformas específicas', en: 'Specific platforms', es: 'Plataformas específicas' },
+            { pt: 'Redes sociais', en: 'Social media', es: 'Redes sociales' },
+            { pt: 'E-mail', en: 'E-mail', es: 'Correo electrónico' },
+            { pt: 'Não se aplica', en: 'Not applicable', es: 'No se aplica', neutral: true }
+          ]
+        },
+        {
+          code: '2.2', type: 'single',
+          title: { pt: 'Dinâmica de atendimento', en: 'Service dynamics', es: 'Dinámica de atención' },
+          sub: { pt: 'Como ocorrerá a dinâmica do atendimento?', en: 'How will the service be organized?', es: '¿Cómo será la dinámica de atención?' },
+          opts: [
+            { pt: 'Individual', en: 'Individual', es: 'Individual' },
+            { pt: 'Em grupo', en: 'Group', es: 'En grupo' },
+            { pt: 'Mista (individual + grupo)', en: 'Mixed (individual + group)', es: 'Mixta (individual + grupo)' },
+            { pt: 'Ainda será definido', en: 'To be defined', es: 'Aún por definir', neutral: true },
+            { pt: 'Não se aplica', en: 'Not applicable', es: 'No se aplica', neutral: true }
+          ]
+        },
+        {
+          code: '2.3', type: 'multi',
+          title: { pt: 'Atividades a realizar', en: 'Activities to deliver', es: 'Actividades a realizar' },
+          sub: { pt: 'Quais atividades serão priorizadas no atendimento? (pode marcar mais de um)', en: 'Which activities will be prioritized? (select all that apply)', es: '¿Qué actividades se priorizarán? (puede marcar varios)' },
+          opts: [
+            { pt: 'Diagnóstico produtivo', en: 'Production diagnosis', es: 'Diagnóstico productivo' },
+            { pt: 'Assistência técnica (orientação agronômica)', en: 'Technical assistance (agronomic)', es: 'Asistencia técnica (agronómica)' },
+            { pt: 'Capacitação/formação de produtores', en: 'Producer training', es: 'Capacitación de productores' },
+            { pt: 'Monitoramento da produção', en: 'Production monitoring', es: 'Monitoreo de la producción' },
+            { pt: 'Comercialização/acesso a mercados', en: 'Marketing/market access', es: 'Comercialización/acceso a mercados' },
+            { pt: 'Regularização ambiental/fundiária', en: 'Environmental/land regularization', es: 'Regularización ambiental/territorial' },
+            { pt: 'Não se aplica', en: 'Not applicable', es: 'No se aplica', neutral: true }
+          ]
+        },
+        {
+          code: '2.4', type: 'multi',
+          title: { pt: 'Equipamentos a utilizar', en: 'Equipment to use', es: 'Equipos a utilizar' },
+          sub: { pt: 'Quais equipamentos serão utilizados pelos técnicos? (pode marcar mais de um)', en: 'Which equipment will technicians use? (select all that apply)', es: '¿Qué equipos usarán los técnicos? (puede marcar varios)' },
+          opts: [
+            { pt: 'Smartphone', en: 'Smartphone', es: 'Smartphone' },
+            { pt: 'Tablet', en: 'Tablet', es: 'Tableta' },
+            { pt: 'Computador/notebook', en: 'Computer/laptop', es: 'Computadora/portátil' },
+            { pt: 'Equipamentos de campo (GPS, sensores)', en: 'Field equipment (GPS, sensors)', es: 'Equipos de campo (GPS, sensores)' },
+            { pt: 'Não serão usados equipamentos digitais', en: 'No digital equipment', es: 'Sin equipos digitales', neutral: true },
+            { pt: 'Não se aplica', en: 'Not applicable', es: 'No se aplica', neutral: true }
+          ]
+        },
+        {
+          code: '2.5', type: 'multi',
+          title: { pt: 'Formato do atendimento', en: 'Service format', es: 'Formato de la atención' },
+          sub: { pt: 'Em que formatos o atendimento digital acontecerá? (pode marcar mais de um)', en: 'In which formats will digital service happen? (select all that apply)', es: '¿En qué formatos ocurrirá la atención digital? (puede marcar varios)' },
+          opts: [
+            { pt: 'Teleatendimento por apps (WhatsApp, Telegram)', en: 'Tele-service via apps (WhatsApp, Telegram)', es: 'Teleatención por apps (WhatsApp, Telegram)' },
+            { pt: 'Teleatendimento por videoconferência (Meet)', en: 'Tele-service via video (Meet)', es: 'Teleatención por videoconferencia (Meet)' },
+            { pt: 'Reuniões, encontros e cursos por videoconferência', en: 'Meetings & courses via video', es: 'Reuniones y cursos por videoconferencia' },
+            { pt: 'Lives em redes sociais (Instagram)', en: 'Live streams (Instagram)', es: 'Transmisiones en vivo (Instagram)' },
+            { pt: 'Plantão de dúvidas online', en: 'Online Q&A support', es: 'Guardia de dudas en línea' },
+            { pt: 'Cursos e capacitações online (EAD)', en: 'Online courses (e-learning)', es: 'Cursos en línea (e-learning)' },
+            { pt: 'Não se aplica', en: 'Not applicable', es: 'No se aplica', neutral: true }
+          ]
+        }
+      ]
+    },
+    {
+      key: 'depois',
+      kicker: { pt: 'Etapa 3', en: 'Stage 3', es: 'Etapa 3' },
+      name:   { pt: 'Após o atendimento', en: 'After the visit', es: 'Después de la atención' },
+      desc:   { pt: 'Verificação e feedback', en: 'Verification & feedback', es: 'Verificación y retroalimentación' },
+      questions: [
+        {
+          code: '3.1', type: 'multi',
+          title: { pt: 'Verificação da prática recomendada', en: 'Verifying recommended practice', es: 'Verificación de la práctica recomendada' },
+          sub: { pt: 'Como será verificada a adoção das recomendações? (pode marcar mais de um)', en: 'How will adoption be verified? (select all that apply)', es: '¿Cómo se verificará la adopción? (puede marcar varios)' },
+          opts: [
+            { pt: 'Retorno via mensagens (ex.: WhatsApp)', en: 'Feedback via messages (e.g. WhatsApp)', es: 'Respuesta por mensajes (ej.: WhatsApp)' },
+            { pt: 'Envio de fotos/vídeos pelos produtores', en: 'Photos/videos sent by producers', es: 'Envío de fotos/videos por productores' },
+            { pt: 'Visitas de campo', en: 'Field visits', es: 'Visitas de campo' },
+            { pt: 'Monitoramento remoto (sensores/imagens)', en: 'Remote monitoring (sensors/imagery)', es: 'Monitoreo remoto (sensores/imágenes)' },
+            { pt: 'Não será realizada verificação', en: 'No verification', es: 'Sin verificación', neutral: true },
+            { pt: 'Ainda será definido', en: 'To be defined', es: 'Aún por definir', neutral: true },
+            { pt: 'Não se aplica', en: 'Not applicable', es: 'No se aplica', neutral: true }
+          ]
+        },
+        {
+          code: '3.2', type: 'multi',
+          title: { pt: 'Feedback dos clientes', en: 'Client feedback', es: 'Retroalimentación de los clientes' },
+          sub: { pt: 'Como será coletado o feedback dos produtores? (pode marcar mais de um)', en: 'How will producer feedback be collected? (select all that apply)', es: '¿Cómo se recolectará la retroalimentación? (puede marcar varios)' },
+          opts: [
+            { pt: 'Mensagens diretas (ex.: WhatsApp)', en: 'Direct messages (e.g. WhatsApp)', es: 'Mensajes directos (ej.: WhatsApp)' },
+            { pt: 'Formulários digitais', en: 'Digital forms', es: 'Formularios digitales' },
+            { pt: 'Ligações telefônicas', en: 'Phone calls', es: 'Llamadas telefónicas' },
+            { pt: 'Reuniões/encontros', en: 'Meetings/gatherings', es: 'Reuniones/encuentros' },
+            { pt: 'Não será coletado feedback', en: 'No feedback collected', es: 'Sin retroalimentación', neutral: true },
+            { pt: 'Ainda será definido', en: 'To be defined', es: 'Aún por definir', neutral: true },
+            { pt: 'Não se aplica', en: 'Not applicable', es: 'No se aplica', neutral: true }
+          ]
+        }
+      ]
+    }
+  ]
+};
+
+// Estado: respostas[phaseKey][code] = array de índices selecionados
+var plannerState = { answers: {}, current: 0 };
+
+var PLANNER_T = {
+  progress: {
+    pt: function(c, t) { return 'Etapa ' + c + ' de ' + t; },
+    en: function(c, t) { return 'Stage ' + c + ' of ' + t; },
+    es: function(c, t) { return 'Etapa ' + c + ' de ' + t; }
+  },
+  emptyAnswer: { pt: '— sem resposta —', en: '— no answer —', es: '— sin respuesta —' },
+  notDefined: { pt: 'A definir', en: 'To be defined', es: 'Por definir' },
+  copyOk: { pt: 'Roteiro copiado!', en: 'Roadmap copied!', es: '¡Hoja de ruta copiada!' },
+  noteTitle: { pt: 'Próximo passo: ', en: 'Next step: ', es: 'Próximo paso: ' },
+  note: {
+    pt: 'Use este roteiro como ponto de partida para o desenho do serviço. As lacunas marcadas como "a definir" indicam onde a instituição precisa decidir antes de começar. Para um modelo híbrido, combine este planejador com o cronograma de 12 meses acima.',
+    en: 'Use this roadmap as a starting point for service design. Items marked "to be defined" show where the institution must decide before starting. For a hybrid model, combine this planner with the 12-month schedule above.',
+    es: 'Use esta hoja de ruta como punto de partida para el diseño del servicio. Los puntos marcados como "por definir" muestran dónde la institución debe decidir antes de empezar. Para un modelo híbrido, combine este planificador con el cronograma de 12 meses anterior.'
+  }
+};
+
+function plannerL(obj) { return (obj && (obj[currentLang] || obj.en)) || ''; }
+
+function renderPlannerPhases() {
+  var wrap = document.getElementById('planner-phases');
+  if (!wrap) return;
+  wrap.innerHTML = PLANNER_DATA.phases.map(function(ph, i) {
+    var active = i === plannerState.current ? ' active' : '';
+    return '<button class="planner-phase-tab' + active + '" data-phase="' + i + '">' +
+      '<div class="planner-phase-num">' + (i + 1) + '</div>' +
+      '<div class="planner-phase-label">' +
+        '<span class="pl-kicker">' + plannerL(ph.kicker) + '</span>' +
+        '<span class="pl-name">' + plannerL(ph.name) + '</span>' +
+      '</div>' +
+    '</button>';
+  }).join('');
+  wrap.querySelectorAll('.planner-phase-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      plannerState.current = parseInt(tab.getAttribute('data-phase'), 10);
+      renderPlanner();
+    });
+  });
+}
+
+function renderPlannerBody() {
+  var body = document.getElementById('planner-body');
+  if (!body) return;
+  body.innerHTML = PLANNER_DATA.phases.map(function(ph, pi) {
+    var active = pi === plannerState.current ? ' active' : '';
+    var qs = ph.questions.map(function(q) {
+      var sel = (plannerState.answers[ph.key] && plannerState.answers[ph.key][q.code]) || [];
+      var hintTxt = q.type === 'multi'
+        ? { pt: 'Múltipla escolha', en: 'Multiple choice', es: 'Opción múltiple' }
+        : { pt: 'Escolha única', en: 'Single choice', es: 'Opción única' };
+      var opts = q.opts.map(function(opt, oi) {
+        var isSel = sel.indexOf(oi) !== -1;
+        var cls = 'planner-opt ' + (q.type === 'single' ? 'radio' : '') +
+          (opt.neutral ? ' neutral' : '') + (isSel ? ' selected' : '');
+        return '<button class="' + cls + '" data-phase="' + ph.key + '" data-code="' + q.code +
+          '" data-opt="' + oi + '" data-type="' + q.type + '">' +
+          '<span class="planner-check"></span>' + plannerL(opt) + '</button>';
+      }).join('');
+      return '<div class="planner-q">' +
+        '<div class="planner-q-head">' +
+          '<span class="planner-q-code">' + q.code + '</span>' +
+          '<span class="planner-q-title">' + plannerL(q.title) + '</span>' +
+        '</div>' +
+        '<div class="planner-q-sub">' + plannerL(q.sub) + '</div>' +
+        '<span class="planner-q-hint">' + plannerL(hintTxt) + '</span>' +
+        '<div class="planner-opts">' + opts + '</div>' +
+      '</div>';
+    }).join('');
+    return '<div class="planner-phase-panel' + active + '" data-panel="' + pi + '">' + qs + '</div>';
+  }).join('');
+
+  body.querySelectorAll('.planner-opt').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var phase = btn.getAttribute('data-phase');
+      var code = btn.getAttribute('data-code');
+      var opt = parseInt(btn.getAttribute('data-opt'), 10);
+      var type = btn.getAttribute('data-type');
+      if (!plannerState.answers[phase]) plannerState.answers[phase] = {};
+      var cur = plannerState.answers[phase][code] || [];
+      if (type === 'single') {
+        cur = (cur.length === 1 && cur[0] === opt) ? [] : [opt];
+      } else {
+        var idx = cur.indexOf(opt);
+        if (idx === -1) cur = cur.concat([opt]); else { cur = cur.slice(); cur.splice(idx, 1); }
+      }
+      plannerState.answers[phase][code] = cur;
+      renderPlannerBody();
+    });
+  });
+}
+
+function updatePlannerNav() {
+  var prev = document.getElementById('planner-prev');
+  var next = document.getElementById('planner-next');
+  var gen = document.getElementById('planner-generate');
+  var prog = document.getElementById('planner-progress');
+  if (!prev || !next || !gen || !prog) return;
+  var total = PLANNER_DATA.phases.length;
+  var isLast = plannerState.current === total - 1;
+  prev.disabled = plannerState.current === 0;
+  next.style.display = isLast ? 'none' : '';
+  gen.style.display = isLast ? '' : 'none';
+  prog.textContent = PLANNER_T.progress[currentLang]
+    ? PLANNER_T.progress[currentLang](plannerState.current + 1, total)
+    : PLANNER_T.progress.en(plannerState.current + 1, total);
+}
+
+function renderPlanner() {
+  renderPlannerPhases();
+  renderPlannerBody();
+  updatePlannerNav();
+}
+
+function generatePlannerPlan(doScroll) {
+  var bodyEl = document.getElementById('planner-result-body');
+  var resultEl = document.getElementById('planner-result');
+  if (!bodyEl || !resultEl) return;
+  var html = PLANNER_DATA.phases.map(function(ph) {
+    var items = ph.questions.map(function(q) {
+      var sel = (plannerState.answers[ph.key] && plannerState.answers[ph.key][q.code]) || [];
+      var answer;
+      if (sel.length === 0) {
+        answer = '<span class="pri-empty">' + plannerL(PLANNER_T.emptyAnswer) + '</span>';
+      } else {
+        answer = sel.map(function(oi) {
+          var o = q.opts[oi];
+          var txt = plannerL(o);
+          return o.neutral ? '<span class="pri-empty">' + txt + '</span>' : txt;
+        }).join(' · ');
+      }
+      return '<div class="planner-result-item">' +
+        '<span class="pri-q">' + q.code + ' ' + plannerL(q.title) + ':</span> ' +
+        '<span class="pri-a">' + answer + '</span></div>';
+    }).join('');
+    return '<div class="planner-result-phase">' +
+      '<h4>' + plannerL(ph.kicker) + ' · ' + plannerL(ph.name) + '</h4>' +
+      items + '</div>';
+  }).join('');
+  html += '<div class="planner-result-note"><strong>' + plannerL(PLANNER_T.noteTitle) +
+    '</strong>' + plannerL(PLANNER_T.note) + '</div>';
+  bodyEl.innerHTML = html;
+  resultEl.classList.add('show');
+  if (doScroll) resultEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function plannerPlainText() {
+  var lines = [];
+  lines.push(plannerL({ pt: 'ROTEIRO DE ATER DIGITAL', en: 'DIGITAL ATER ROADMAP', es: 'HOJA DE RUTA DE ATER DIGITAL' }));
+  lines.push('');
+  PLANNER_DATA.phases.forEach(function(ph) {
+    lines.push((plannerL(ph.kicker) + ' — ' + plannerL(ph.name)).toUpperCase());
+    ph.questions.forEach(function(q) {
+      var sel = (plannerState.answers[ph.key] && plannerState.answers[ph.key][q.code]) || [];
+      var ans = sel.length === 0
+        ? plannerL(PLANNER_T.emptyAnswer)
+        : sel.map(function(oi) { return plannerL(q.opts[oi]); }).join(' · ');
+      lines.push('  ' + q.code + ' ' + plannerL(q.title) + ': ' + ans);
+    });
+    lines.push('');
+  });
+  lines.push(plannerL(PLANNER_T.noteTitle) + plannerL(PLANNER_T.note));
+  return lines.join('\n');
+}
+
+function initPlannerEvents() {
+  var prev = document.getElementById('planner-prev');
+  var next = document.getElementById('planner-next');
+  var gen = document.getElementById('planner-generate');
+  var copy = document.getElementById('planner-copy');
+  var restart = document.getElementById('planner-restart');
+  if (!prev) return;
+  prev.addEventListener('click', function() {
+    if (plannerState.current > 0) { plannerState.current--; renderPlanner(); }
+  });
+  next.addEventListener('click', function() {
+    if (plannerState.current < PLANNER_DATA.phases.length - 1) { plannerState.current++; renderPlanner(); }
+  });
+  gen.addEventListener('click', function() { generatePlannerPlan(true); });
+  copy.addEventListener('click', function() {
+    var txt = plannerPlainText();
+    if (navigator.clipboard) navigator.clipboard.writeText(txt);
+    var toast = document.getElementById('share-toast');
+    if (toast) {
+      toast.textContent = plannerL(PLANNER_T.copyOk);
+      toast.classList.add('show');
+      setTimeout(function() { toast.classList.remove('show'); }, 2500);
+    }
+  });
+  restart.addEventListener('click', function() {
+    plannerState = { answers: {}, current: 0 };
+    document.getElementById('planner-result').classList.remove('show');
+    renderPlanner();
+    document.getElementById('planejador').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+}
+
+
 // =============================================
 // SHARE SECTION
 // =============================================
@@ -2737,7 +3515,7 @@ document.querySelectorAll('.nav-anchor').forEach(function(a) {
 });
 
 // Active nav on scroll
-var sections = ['hero','mapa','timeline','sobre','projetos','publicacoes','videos'];
+var sections = ['hero','mapa','timeline','cronograma','planejador','sobre','projetos','publicacoes','videos'];
 window.addEventListener('scroll', function() {
   var scrollY = window.scrollY + 80;
   var current = 'hero';
@@ -3549,6 +4327,7 @@ var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] ||
 // =============================================
 var savedLang = localStorage.getItem('lang') || 'pt';
 setLang(savedLang);
+initPlannerEvents();
 })();
 </script>
 </body>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>Identidade visual — ict4dbrazil.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --c-bg:         #f5f0e8;
+  --c-bg-alt:     #ece7db;
+  --c-bg-dark:    #1a2e1a;
+  --c-ink:        #1c1c1c;
+  --c-ink-muted:  #6b6b5e;
+  --c-green-dark: #1f4023;
+  --c-green:      #2d6a32;
+  --c-green-mid:  #4a8c50;
+  --c-green-light:#8ab890;
+  --c-amber:      #c47c2b;
+  --c-amber-light:#e8a84a;
+  --c-cream:      #fdf8f0;
+  --c-border:     #d4cdc0;
+  --f-serif: 'Libre Baskerville', Georgia, serif;
+  --f-sans: 'DM Sans', system-ui, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; }
+body {
+  background: var(--c-bg);
+  color: var(--c-ink);
+  font-family: var(--f-sans);
+  font-size: 16px;
+  line-height: 1.55;
+  padding: 24px 16px 80px;
+}
+main { max-width: 860px; }
+h1 { font-family: var(--f-serif); font-size: 26px; line-height: 1.25; margin-bottom: 6px; }
+.sub { color: var(--c-ink-muted); font-size: 14px; margin-bottom: 40px; }
+h2 {
+  font-family: var(--f-sans); font-size: 13px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-green);
+  border-top: 1px solid var(--c-border); padding-top: 18px;
+  margin: 44px 0 16px;
+}
+p.nota { font-size: 14px; color: var(--c-ink-muted); margin-bottom: 16px; max-width: 620px; }
+
+/* Paleta editável */
+.token { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--c-border); }
+.token input[type=color] { width: 44px; height: 32px; border: 1px solid var(--c-border); padding: 0; background: none; cursor: pointer; }
+.token .tk-var { font-family: monospace; font-size: 13px; min-width: 130px; }
+.token .tk-hex { font-family: monospace; font-size: 13px; color: var(--c-ink-muted); min-width: 70px; }
+.token .tk-uso { font-size: 13px; color: var(--c-ink-muted); }
+@media (max-width: 560px) { .token .tk-uso { flex-basis: 100%; padding-left: 56px; margin-top: -6px; } .token { flex-wrap: wrap; } }
+
+button.acao {
+  font-family: var(--f-sans); font-size: 14px; font-weight: 500;
+  background: var(--c-green-dark); color: #fff; border: none;
+  padding: 10px 18px; cursor: pointer; margin-top: 16px;
+}
+button.acao.sec { background: transparent; color: var(--c-ink); border: 1px solid var(--c-border); }
+#copiado { font-size: 13px; color: var(--c-green); margin-left: 10px; }
+
+/* Tipografia */
+.tipo-ex { border-left: none; padding: 14px 0; border-bottom: 1px solid var(--c-border); }
+.tipo-ex .ex-label { font-size: 12px; color: var(--c-ink-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+.ex-h1 { font-family: var(--f-serif); font-size: 30px; font-weight: 700; line-height: 1.2; }
+.ex-h2 { font-family: var(--f-serif); font-size: 21px; line-height: 1.3; }
+.ex-body { font-family: var(--f-sans); font-size: 16px; }
+.ex-label-comp { font-family: var(--f-sans); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-green); }
+.ex-fonte { font-family: var(--f-sans); font-size: 13px; color: var(--c-ink-muted); }
+
+/* Escala do mapa */
+.escala { display: flex; margin: 8px 0 4px; max-width: 620px; }
+.escala div { flex: 1; height: 36px; display: flex; align-items: flex-end; padding: 3px 4px; font-size: 10px; font-family: monospace; }
+
+/* Amostras de componentes */
+.amostra { background: var(--c-cream); border: 1px solid var(--c-border); padding: 20px; margin-bottom: 16px; max-width: 620px; }
+.amostra .am-tag { display: inline-block; font-size: 12px; font-weight: 600; background: var(--c-bg-alt); color: var(--c-green-dark); padding: 3px 10px; margin-right: 6px; }
+.am-btn-p { font-family: var(--f-sans); font-size: 14px; font-weight: 500; background: var(--c-green-dark); color: #fff; border: none; padding: 10px 18px; margin-right: 8px; cursor: pointer; }
+.am-btn-a { font-family: var(--f-sans); font-size: 14px; font-weight: 500; background: var(--c-amber); color: #fff; border: none; padding: 10px 18px; cursor: pointer; }
+
+table.regras { border-collapse: collapse; font-size: 14px; max-width: 620px; }
+table.regras td { border: 1px solid var(--c-border); padding: 8px 10px; vertical-align: top; }
+table.regras td:first-child { font-weight: 600; white-space: nowrap; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Identidade visual</h1>
+  <p class="sub">ict4dbrazil.com — portfólio de Rodrigo Ferraz. Referência viva: edite as cores abaixo para testar variações e copie o bloco CSS para aplicar no index.html.</p>
+
+  <h2>Paleta</h2>
+  <p class="nota">Tons terrosos com verde como cor principal e âmbar como acento. Clique no quadrado de cor para editar; a página inteira reage.</p>
+  <div id="tokens"></div>
+  <button class="acao" id="btn-copiar">Copiar CSS (:root)</button>
+  <button class="acao sec" id="btn-reset">Restaurar original</button>
+  <span id="copiado"></span>
+
+  <h2>Tipografia</h2>
+  <div class="tipo-ex"><div class="ex-label">Títulos — Libre Baskerville 700</div><div class="ex-h1">A realidade da ATER no Brasil</div></div>
+  <div class="tipo-ex"><div class="ex-label">Subtítulos — Libre Baskerville 400</div><div class="ex-h2">Uma linha do tempo da extensão rural digital</div></div>
+  <div class="tipo-ex"><div class="ex-label">Corpo — DM Sans 400, 16px</div><div class="ex-body">Reúne análises e iniciativas em ICT4D, com foco em soluções digitais aplicadas à ATER e na promoção da inovação nos sistemas agroalimentares.</div></div>
+  <div class="tipo-ex"><div class="ex-label">Rótulo de seção — DM Sans 600, caixa alta</div><div class="ex-label-comp">Ferramenta</div></div>
+  <div class="tipo-ex"><div class="ex-label">Fonte/crédito — DM Sans 400, 13px</div><div class="ex-fonte">Fonte: elaborado por Rodrigo Ferraz, com base na ASBRAER</div></div>
+
+  <h2>Escala do mapa (sequencial, tons de terra)</h2>
+  <p class="nota">Usada nos mapas coropléticos e histogramas. O primeiro tom marca "zero ou sem dado".</p>
+  <div class="escala" id="escala-mapa"></div>
+
+  <h2>Componentes</h2>
+  <div class="amostra">
+    <div style="margin-bottom:12px"><span class="am-tag">Política pública</span><span class="am-tag">Tecnologia</span></div>
+    <button class="am-btn-p">Próxima etapa →</button><button class="am-btn-a">Gerar roteiro</button>
+  </div>
+
+  <h2>Regras de uso</h2>
+  <table class="regras">
+    <tr><td>Cantos</td><td>Retos em botões e tags; cards do site usam raio pequeno já definido no index.html.</td></tr>
+    <tr><td>Idiomas</td><td>Todo texto em PT, EN e ES (atributos data-pt/en/es). Nunca publicar só um idioma.</td></tr>
+    <tr><td>Verde escuro</td><td>Ações principais, navegação ativa, títulos de fase.</td></tr>
+    <tr><td>Âmbar</td><td>Acento e chamada de ação secundária (ex.: "Gerar roteiro"). Usar com moderação.</td></tr>
+    <tr><td>Fundo</td><td>Bege claro (--c-bg); blocos em --c-cream com borda --c-border. Sem sombras fortes.</td></tr>
+    <tr><td>Gráficos</td><td>Escala do mapa acima para dados sequenciais; não truncar eixo sem sinalizar; fonte sempre citada.</td></tr>
+    <tr><td>Fotos</td><td>Contexto real de campo, sem banco de imagens "sorridente"; checar direito autoral.</td></tr>
+  </table>
+</main>
+
+<script>
+var TOKENS = [
+  ['--c-bg',          'Fundo da página'],
+  ['--c-bg-alt',      'Fundo alternativo, tags'],
+  ['--c-bg-dark',     'Blocos escuros, rodapé'],
+  ['--c-ink',         'Texto principal'],
+  ['--c-ink-muted',   'Texto secundário, legendas'],
+  ['--c-green-dark',  'Botões principais, navegação ativa'],
+  ['--c-green',       'Rótulos de seção, links'],
+  ['--c-green-mid',   'Apoio em gráficos'],
+  ['--c-green-light', 'Apoio claro em gráficos'],
+  ['--c-amber',       'Acento, ação secundária'],
+  ['--c-amber-light', 'Acento claro'],
+  ['--c-cream',       'Fundo de cards'],
+  ['--c-border',      'Bordas e divisórias']
+];
+var MAP_COLORS = ['#fdf8f0','#e8d9b8','#d4ba80','#c09848','#8a6a20','#5a4210','#2e2008'];
+var root = document.documentElement;
+var originais = {};
+
+function hexAtual(v) {
+  return getComputedStyle(root).getPropertyValue(v).trim();
+}
+function montar() {
+  var wrap = document.getElementById('tokens');
+  wrap.innerHTML = '';
+  TOKENS.forEach(function(t) {
+    var hex = hexAtual(t[0]);
+    if (!(t[0] in originais)) originais[t[0]] = hex;
+    var div = document.createElement('div');
+    div.className = 'token';
+    div.innerHTML = '<input type="color" value="' + hex + '" data-var="' + t[0] + '">' +
+      '<span class="tk-var">' + t[0] + '</span>' +
+      '<span class="tk-hex">' + hex + '</span>' +
+      '<span class="tk-uso">' + t[1] + '</span>';
+    wrap.appendChild(div);
+  });
+  wrap.querySelectorAll('input[type=color]').forEach(function(inp) {
+    inp.addEventListener('input', function() {
+      root.style.setProperty(inp.getAttribute('data-var'), inp.value);
+      inp.parentNode.querySelector('.tk-hex').textContent = inp.value;
+    });
+  });
+}
+montar();
+
+var esc = document.getElementById('escala-mapa');
+MAP_COLORS.forEach(function(c, i) {
+  var d = document.createElement('div');
+  d.style.background = c;
+  d.style.color = i < 3 ? '#333' : '#fff';
+  d.textContent = c;
+  esc.appendChild(d);
+});
+
+document.getElementById('btn-copiar').addEventListener('click', function() {
+  var css = ':root {\n' + TOKENS.map(function(t) {
+    return '  ' + t[0] + ': ' + hexAtual(t[0]) + ';';
+  }).join('\n') + '\n}';
+  navigator.clipboard.writeText(css).then(function() {
+    document.getElementById('copiado').textContent = 'Copiado. Cole no bloco :root do index.html.';
+  });
+});
+document.getElementById('btn-reset').addEventListener('click', function() {
+  Object.keys(originais).forEach(function(v) { root.style.setProperty(v, originais[v]); });
+  montar();
+  document.getElementById('copiado').textContent = '';
+});
+</script>
+</body>
+</html>

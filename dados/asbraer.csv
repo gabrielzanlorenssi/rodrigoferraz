@@ -1,0 +1,136 @@
+estado,uf,indicador,Quantidade
+Acre,AC,Ensino Médio,40
+Acre,AC,Graduação,40
+Acre,AC,Especialização,8
+Acre,AC,Mestrado,5
+Acre,AC,Doutorado,0
+Alagoas,AL,Graduação,29
+Alagoas,AL,Especialização,22
+Alagoas,AL,Ensino Médio,9
+Alagoas,AL,Mestrado,8
+Alagoas,AL,Doutorado,5
+Amapá,AP,Graduação,122
+Amapá,AP,Ensino Médio,91
+Amapá,AP,Mestrado,0
+Amapá,AP,Especialização,0
+Amapá,AP,Doutorado,0
+Amazonas,AM,Ensino Médio,228
+Amazonas,AM,Graduação,49
+Amazonas,AM,Especialização,28
+Amazonas,AM,Mestrado,19
+Amazonas,AM,Doutorado,2
+Bahia,BA,Ensino Médio,56
+Bahia,BA,Graduação,43
+Bahia,BA,Especialização,27
+Bahia,BA,Mestrado,6
+Bahia,BA,Doutorado,0
+Ceará,CE,Ensino Médio,328
+Ceará,CE,Graduação,164
+Ceará,CE,Especialização,99
+Ceará,CE,Mestrado,43
+Ceará,CE,Doutorado,13
+Distrito Federal,DF,Graduação,86
+Distrito Federal,DF,Especialização,49
+Distrito Federal,DF,Mestrado,47
+Distrito Federal,DF,Ensino Médio,43
+Distrito Federal,DF,Doutorado,11
+Espírito Santo,ES,Ensino Médio,88
+Espírito Santo,ES,Mestrado,52
+Espírito Santo,ES,Especialização,50
+Espírito Santo,ES,Graduação,23
+Espírito Santo,ES,Doutorado,10
+Goiás,GO,Ensino Médio,353
+Goiás,GO,Graduação,113
+Goiás,GO,Especialização,57
+Goiás,GO,Mestrado,12
+Goiás,GO,Doutorado,0
+Maranhão,MA,Ensino Médio,163
+Maranhão,MA,Graduação,126
+Maranhão,MA,Mestrado,0
+Maranhão,MA,Especialização,0
+Maranhão,MA,Doutorado,0
+Mato Grosso,MT,Ensino Médio,130
+Mato Grosso,MT,Graduação,39
+Mato Grosso,MT,Mestrado,0
+Mato Grosso,MT,Especialização,0
+Mato Grosso,MT,Doutorado,0
+Mato Grosso do Sul,MS,Graduação,201
+Mato Grosso do Sul,MS,Ensino Médio,84
+Mato Grosso do Sul,MS,Especialização,44
+Mato Grosso do Sul,MS,Mestrado,9
+Mato Grosso do Sul,MS,Doutorado,4
+Minas Gerais,MG,Ensino Médio,513
+Minas Gerais,MG,Especialização,404
+Minas Gerais,MG,Graduação,402
+Minas Gerais,MG,Mestrado,120
+Minas Gerais,MG,Doutorado,26
+Pará,PA,Ensino Médio,555
+Pará,PA,Graduação,346
+Pará,PA,Especialização,330
+Pará,PA,Mestrado,62
+Pará,PA,Doutorado,4
+Paraíba,PB,Ensino Médio,474
+Paraíba,PB,Graduação,265
+Paraíba,PB,Especialização,14
+Paraíba,PB,Doutorado,2
+Paraíba,PB,Mestrado,1
+Paraná,PR,Graduação,472
+Paraná,PR,Ensino Médio,298
+Paraná,PR,Mestrado,151
+Paraná,PR,Especialização,48
+Paraná,PR,Doutorado,38
+Pernambuco,PE,Ensino Médio,196
+Pernambuco,PE,Mestrado,0
+Pernambuco,PE,Graduação,0
+Pernambuco,PE,Especialização,0
+Pernambuco,PE,Doutorado,0
+Piauí,PI,Graduação,1114
+Piauí,PI,Ensino Médio,185
+Piauí,PI,Especialização,34
+Piauí,PI,Mestrado,5
+Piauí,PI,Doutorado,1
+Rio de Janeiro,RJ,Ensino Médio,358
+Rio de Janeiro,RJ,Graduação,202
+Rio de Janeiro,RJ,Mestrado,0
+Rio de Janeiro,RJ,Especialização,0
+Rio de Janeiro,RJ,Doutorado,0
+Rio Grande do Norte,RN,Ensino Médio,182
+Rio Grande do Norte,RN,Graduação,58
+Rio Grande do Norte,RN,Especialização,29
+Rio Grande do Norte,RN,Mestrado,26
+Rio Grande do Norte,RN,Doutorado,5
+Rio Grande do Sul,RS,Ensino Médio,767
+Rio Grande do Sul,RS,Especialização,231
+Rio Grande do Sul,RS,Graduação,200
+Rio Grande do Sul,RS,Mestrado,136
+Rio Grande do Sul,RS,Doutorado,26
+Rondônia,RO,Graduação,284
+Rondônia,RO,Ensino Médio,199
+Rondônia,RO,Especialização,58
+Rondônia,RO,Mestrado,14
+Rondônia,RO,Doutorado,1
+Roraima,RR,Mestrado,0
+Roraima,RR,Graduação,0
+Roraima,RR,Especialização,0
+Roraima,RR,Ensino Médio,0
+Roraima,RR,Doutorado,0
+Santa Catarina,SC,Graduação,320
+Santa Catarina,SC,Ensino Médio,184
+Santa Catarina,SC,Especialização,70
+Santa Catarina,SC,Mestrado,22
+Santa Catarina,SC,Doutorado,2
+São Paulo,SP,Graduação,527
+São Paulo,SP,Ensino Médio,211
+São Paulo,SP,Mestrado,0
+São Paulo,SP,Especialização,0
+São Paulo,SP,Doutorado,0
+Sergipe,SE,Ensino Médio,132
+Sergipe,SE,Especialização,58
+Sergipe,SE,Graduação,42
+Sergipe,SE,Mestrado,16
+Sergipe,SE,Doutorado,4
+Tocantins,TO,Graduação,188
+Tocantins,TO,Especialização,1
+Tocantins,TO,Mestrado,0
+Tocantins,TO,Ensino Médio,0
+Tocantins,TO,Doutorado,0

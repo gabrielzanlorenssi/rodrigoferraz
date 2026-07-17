@@ -25,9 +25,10 @@ está automatizado. Uso:
     python3 merge_estabelecimentos_munic.py
     python3 merge_estabelecimentos_munic.py --geojson caminho/local/munic.geojson
 
-Depois: subir o `munic.geojson` gerado e o `indicadores.csv` atualizado no bucket
-`storage.googleapis.com/projeto-graficos/ifad2025/mapas/` e trocar o `?v91` da URL
-do munic.geojson no index.html por um novo número (ex.: ?v92) para furar o cache.
+NOTA (17/07/2026): esta migração JÁ FOI FEITA — os dados estão no bucket próprio
+`storage.googleapis.com/ict4dbrazil/mapas/` (projeto gzanlorenssi) com os dois
+indicadores incluídos. O script fica como referência para futuras atualizações:
+gerar o geojson, subir no bucket ict4dbrazil e trocar o ?v92 do index.html por ?v93.
 
 Municípios sem dado (7, suprimidos pelo IBGE por sigilo estatístico — áreas muito
 urbanas como Barueri, Carapicuíba, Nilópolis): ficam sem a propriedade e aparecem
@@ -37,7 +38,7 @@ import csv, json, os, sys, urllib.request
 
 DIR = os.path.dirname(os.path.abspath(__file__))
 CSV_PATH = os.path.join(DIR, "estabelecimentos_municipio.csv")
-BUCKET_GEOJSON = "https://storage.googleapis.com/projeto-graficos/ifad2025/mapas/munic.geojson?v91"
+BUCKET_GEOJSON = "https://storage.googleapis.com/ict4dbrazil/mapas/munic.geojson?v92"
 OUT_GEOJSON = os.path.join(DIR, "munic.geojson")
 
 IND_TOTAL = "Estabelecimentos agropecuários"

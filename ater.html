@@ -824,7 +824,7 @@
   // =============================================
   var municipiosData = [];
 
-  fetch('https://storage.googleapis.com/projeto-graficos/ifad2025/mapas/estabelecimentos.csv')
+  fetch('https://storage.googleapis.com/ict4dbrazil/mapas/estabelecimentos.csv')
     .then(function(r) { return r.text(); })
     .then(function(txt) {
       var linhas = txt.trim().split('\n');

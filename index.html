@@ -2842,10 +2842,10 @@ function fmtNumExato(v, lang) {
 
     Promise.all([
       d3.json("https://storage.googleapis.com/ict4dbrazil/mapas/munic.geojson?v92"),
-      d3.json("https://storage.googleapis.com/ict4dbrazil/mapas/state.geojson"),
-      d3.csv("https://storage.googleapis.com/ict4dbrazil/mapas/indicadores.csv"),
-      d3.csv("https://storage.googleapis.com/ict4dbrazil/mapas/indicadores_regiao.csv"),
-d3.csv("https://storage.googleapis.com/ict4dbrazil/mapas/asbraer.csv")
+      d3.json("https://storage.googleapis.com/ict4dbrazil/mapas/state.geojson?v92"),
+      d3.csv("https://storage.googleapis.com/ict4dbrazil/mapas/indicadores.csv?v92"),
+      d3.csv("https://storage.googleapis.com/ict4dbrazil/mapas/indicadores_regiao.csv?v92"),
+d3.csv("https://storage.googleapis.com/ict4dbrazil/mapas/asbraer.csv?v92")
     ]).then(function(results) {
       geojsonMunicGlobal  = results[0];
       geojsonStateGlobal  = results[1];

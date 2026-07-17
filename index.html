@@ -2841,11 +2841,11 @@ function fmtNumExato(v, lang) {
     var MAP_COLORS = ['#fdf8f0','#e8d9b8','#d4ba80','#c09848','#8a6a20','#5a4210','#2e2008'];
 
     Promise.all([
-      d3.json("https://storage.googleapis.com/ict4dbrazil/mapas/munic.geojson?v92"),
-      d3.json("https://storage.googleapis.com/ict4dbrazil/mapas/state.geojson?v92"),
-      d3.csv("https://storage.googleapis.com/ict4dbrazil/mapas/indicadores.csv?v92"),
-      d3.csv("https://storage.googleapis.com/ict4dbrazil/mapas/indicadores_regiao.csv?v92"),
-d3.csv("https://storage.googleapis.com/ict4dbrazil/mapas/asbraer.csv?v92")
+      d3.json("https://storage.googleapis.com/ict4dbrazil/mapas/munic.geojson?v93"),
+      d3.json("https://storage.googleapis.com/ict4dbrazil/mapas/state.geojson?v93"),
+      d3.csv("https://storage.googleapis.com/ict4dbrazil/mapas/indicadores.csv?v93"),
+      d3.csv("https://storage.googleapis.com/ict4dbrazil/mapas/indicadores_regiao.csv?v93"),
+d3.csv("https://storage.googleapis.com/ict4dbrazil/mapas/asbraer.csv?v93")
     ]).then(function(results) {
       geojsonMunicGlobal  = results[0];
       geojsonStateGlobal  = results[1];

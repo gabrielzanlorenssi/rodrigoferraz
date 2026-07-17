@@ -1084,17 +1084,30 @@
 
     var erros = [];
 
+    // Nº de produtores e de técnicos são obrigatórios em todos os modos
+    var idAgric, idTec;
     if (modoLocalidade) {
-      var agLocVal = document.getElementById('total_agricultores_loc').value;
-      var tecLocVal = document.getElementById('total_tecnicos_loc').value;
-      if (!agLocVal || parseFloat(agLocVal) <= 0) {
-        marcarErro('total_agricultores_loc', 'Informe o número de famílias');
-        erros.push('familias_loc');
-      }
-      if (!tecLocVal || parseFloat(tecLocVal) <= 0) {
-        marcarErro('total_tecnicos_loc', 'Informe o número de técnicos');
-        erros.push('tecnicos_loc');
-      }
+      idAgric = 'total_agricultores_loc'; idTec = 'total_tecnicos_loc';
+    } else if (nivelGeo === 'uf') {
+      idAgric = 'total_agricultores_uf'; idTec = 'total_tecnicos_uf';
+    } else if (nivelGeo === 'regiao') {
+      idAgric = 'total_agricultores_reg'; idTec = 'total_tecnicos_reg';
+    } else if (nivelGeo === 'brasil') {
+      idAgric = 'total_agricultores_br'; idTec = 'total_tecnicos_br';
+    } else {
+      idAgric = 'total_agricultores'; idTec = 'total_tecnicos';
+    }
+    var elAgric = document.getElementById(idAgric);
+    var elTec = document.getElementById(idTec);
+    var vAgric = modoLocalidade ? parseFloat(elAgric && elAgric.value) : lerCampoNumerico(idAgric);
+    var vTec = parseFloat(elTec && elTec.value);
+    if (!elAgric || !elAgric.value || !(vAgric > 0)) {
+      marcarErro(idAgric, 'Informe o número de famílias/produtores');
+      erros.push('agric');
+    }
+    if (!elTec || !elTec.value || !(vTec > 0)) {
+      marcarErro(idTec, 'Informe o número de técnicos');
+      erros.push('tec');
     }
 
     if (perfil === 'gestor') {
@@ -1427,7 +1440,7 @@
     vis += '<div class="vis-block-title">Quantas vidas o seu técnico precisaria ter?</div>';
     vis += '<div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;">';
     vis += '<div style="flex:1;min-width:160px;"><div class="vidas-num">' + vidas + '</div>';
-    vis += '<div class="vidas-label">Os técnicos da região precisariam de <strong>' + vidas + ' vida' + (vidas > 1 ? 's</strong>' : '</strong>') + ' para atender todos os produtores — são <strong>' + fmt(Math.round(famPorTec)) + ' famílias por técnico</strong>, quando o ideal é 100.</div></div>';
+    vis += '<div class="vidas-label">Os técnicos da região precisariam de <strong>' + vidas + ' vida' + (vidas > 1 ? 's</strong>' : '</strong>') + ' para atender todos os produtores — são <strong>' + fmt(Math.round(famPorTec)) + ' famílias por técnico</strong>, quando o máximo recomendado é 100.</div></div>';
     vis += '<div class="vidas-bar-wrap" style="margin-top:16px;">';
     for (var vi = 0; vi < Math.min(vidas, 10); vi++) {
       var op2 = vi === 0 ? '1' : '0.25';

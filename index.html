@@ -734,6 +734,69 @@ box-shadow: 0 1px 0 var(--c-amber);
   cursor: not-allowed;
 }
 
+/* Modo "cruzar dois indicadores" (dispersão) */
+.map-cross-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.cross-toggle {
+  font-family: var(--f-sans);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 7px 16px;
+  border: 1.5px solid var(--c-border);
+  border-radius: 4px;
+  background: var(--c-cream);
+  color: var(--c-ink-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cross-toggle:hover {
+  border-color: var(--c-green);
+  color: var(--c-green-dark);
+}
+
+.cross-toggle.active {
+  background: var(--c-green-dark);
+  border-color: var(--c-green-dark);
+  color: white;
+}
+
+.cross-y-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.cross-y-label {
+  font-family: var(--f-sans);
+  font-size: 12px;
+  color: var(--c-ink-muted);
+}
+
+.cross-y-wrap .map-indicator-selector {
+  margin-bottom: 0;
+  width: auto;
+  max-width: 320px;
+}
+
+.scatter-note {
+  font-size: 12px;
+  color: var(--c-ink-muted);
+  margin-top: 8px;
+  line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+  .cross-y-wrap .map-indicator-selector { max-width: 100%; width: 100%; }
+}
+
 .coming-soon {
   font-size: 10px;
   font-weight: 600;
@@ -1600,6 +1663,16 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
     </div>
 
     <select id="map-indicator-selector" class="map-indicator-selector"></select>
+
+    <div class="map-cross-controls" id="map-cross-controls">
+      <button class="cross-toggle" id="cross-toggle" aria-pressed="false">
+        <span data-pt="Cruzar dois indicadores" data-en="Cross two indicators" data-es="Cruzar dos indicadores">Cruzar dois indicadores</span>
+      </button>
+      <div class="cross-y-wrap" id="cross-y-wrap" style="display:none">
+        <span class="cross-y-label" data-pt="× segundo indicador (eixo Y):" data-en="× second indicator (Y axis):" data-es="× segundo indicador (eje Y):">× segundo indicador (eixo Y):</span>
+        <select id="map-indicator-selector-y" class="map-indicator-selector"></select>
+      </div>
+    </div>
     <!-- Legend (filled by JS) -->
     <div class="map-legend-wrap" id="map-legend-wrap"></div>
 
@@ -2100,7 +2173,7 @@ var TIMELINE_DATA = [
     canal: { pt: "Plataformas Interativas", en: "Interactive Platforms", es: "Plataformas Interactivas" },
     tipo: { pt: "Plataforma digital", en: "Digital Platform", es: "Plataforma digital" },
     meio: { pt: "Rastreabilidade", en: "Traceability", es: "Trazabilidad" },
-    text: { pt: "Instituto Biosistêmico lança a plataforma Agrotrace, para ações de ATER rastreabilidade e monitoramento agropecuário.", en: "Instituto Biosistêmico launches the Agrotrace platform for agricultural extension, traceability, and monitoring actions in agriculture.", es: "Instituto Biosistêmico lanza la plataforma Agrotrace para acciones de ATER, trazabilidad y monitoreo agropecuario." },
+    text: { pt: "Instituto Biosistêmico lança a plataforma Agrotrace, para ações de ATER, rastreabilidade e monitoramento agropecuário.", en: "Instituto Biosistêmico launches the Agrotrace platform for rural extension (ATER), traceability, and monitoring actions in agriculture.", es: "Instituto Biosistêmico lanza la plataforma Agrotrace para acciones de ATER, trazabilidad y monitoreo agropecuario." },
     links: ["https://www.agrotrace.com.br/portal-agrotrace"]
   },
   {
@@ -2801,6 +2874,16 @@ function fmtNumExato(v, lang) {
     });
   });
 
+  // Modo "cruzar dois indicadores" (AJUSTES_JUL02, A2)
+  var crossToggleBtn = document.getElementById('cross-toggle');
+  if (crossToggleBtn) {
+    crossToggleBtn.addEventListener('click', function() { setCrossMode(!crossMode); });
+  }
+  var crossSelY = document.getElementById('map-indicator-selector-y');
+  if (crossSelY) {
+    crossSelY.addEventListener('change', function() { drawMapLevel(); });
+  }
+
   function drawMap() {
     var container = document.getElementById('mapa_d3');
     d3.select(container).selectAll('*').remove();
@@ -2873,49 +2956,107 @@ d3.csv("https://storage.googleapis.com/ict4dbrazil/mapas/asbraer.csv?v93")
     drawMap._MAP_COLORS = MAP_COLORS;
   }
 
-function populateSelector() {
-  var selector = document.getElementById('map-indicator-selector');
-  selector.innerHTML = '';
+// AJUSTES_JUL02 (A1): o seletor mostra só os 4 temas pedidos por Rodrigo —
+// estabelecimentos agropecuários, técnicos de ATER (ASBRAER), acesso à internet
+// e acesso a serviços de ATER. Os demais indicadores seguem intactos nos CSVs e
+// no geojson; para reativar algum, basta incluí-lo nas listas abaixo.
+// No modo "cruzar" (A2), o nível município volta a oferecer a lista completa,
+// porque ali o objetivo é relacionar variáveis da mesma malha.
+var SELECTOR_MUNICIPIO = ['Estabelecimentos agropecuários','Estabelecimentos de agricultura familiar','% Agricultura familiar entre estabelecimentos agrícolas'];
+var SELECTOR_UF = ['Estabelecimentos agropecuários','Estabelecimentos de agricultura familiar','% de agricultura familiar','Total de extensionistas'];
+var SELECTOR_REGIAO = ['Domicílios com acesso à Internet','Agricultores familiares que recebem ATER'];
 
+var crossMode = false;
+
+function selectorOptionsForLevel() {
   if (currentGeoLevel === 'municipio' && indicadoresGlobal) {
-    indicadoresGlobal.forEach(function(ind) {
-      if (ind.indicador.indexOf('Número de alertas') !== -1) return;
-      var opt = document.createElement('option');
-      opt.value = ind.indicador;
-      opt.textContent = ind.indicador;
-      selector.appendChild(opt);
-    });
-  } else if (currentGeoLevel === 'uf') {
-    ['Estabelecimentos agropecuários','Estabelecimentos de agricultura familiar','% de agricultura familiar','Total de extensionistas','% Ensino Médio','% Graduação','% Especialização'].forEach(function(ind) {
-      var opt = document.createElement('option');
-      opt.value = ind;
-      opt.textContent = ind;
-      selector.appendChild(opt);
-    });
-  } else if (currentGeoLevel === 'regiao' && regiaoDataGlobal) {
-    var indicadoresRegiao = [];
+    var todos = indicadoresGlobal
+      .map(function(ind) { return ind.indicador; })
+      .filter(function(nome) { return nome.indexOf('Número de alertas') === -1; });
+    if (crossMode) return todos;
+    return SELECTOR_MUNICIPIO.filter(function(nome) { return todos.indexOf(nome) !== -1; });
+  }
+  if (currentGeoLevel === 'uf') return SELECTOR_UF.slice();
+  if (currentGeoLevel === 'regiao' && regiaoDataGlobal) {
+    var vistos = [];
     regiaoDataGlobal.forEach(function(row) {
-      if (indicadoresRegiao.indexOf(row.indicador) === -1) {
-        indicadoresRegiao.push(row.indicador);
+      if (SELECTOR_REGIAO.indexOf(row.indicador) !== -1 && vistos.indexOf(row.indicador) === -1) {
+        vistos.push(row.indicador);
       }
     });
-    indicadoresRegiao.forEach(function(ind) {
-      var opt = document.createElement('option');
-      opt.value = ind;
-      opt.textContent = ind;
-      selector.appendChild(opt);
-    });
+    return vistos;
   }
+  return [];
+}
+
+// Preenche um <select> e devolve true se conseguiu manter a seleção anterior
+function fillSelector(selector, nomes) {
+  var anterior = selector.value;
+  selector.innerHTML = '';
+  nomes.forEach(function(nome) {
+    var opt = document.createElement('option');
+    opt.value = nome;
+    opt.textContent = nome;
+    selector.appendChild(opt);
+  });
+  var manteve = !!anterior && nomes.indexOf(anterior) !== -1;
+  if (manteve) selector.value = anterior;
+  return manteve;
+}
+
+function populateSelector() {
+  var selector = document.getElementById('map-indicator-selector');
+  var nomes = selectorOptionsForLevel();
+  fillSelector(selector, nomes);
 
   var newSelector = selector.cloneNode(true);
+  newSelector.value = selector.value;
   selector.parentNode.replaceChild(newSelector, selector);
   newSelector.addEventListener('change', function() {
     drawMapLevel();
   });
+
+  // Modo cruzar (A2): região fica de fora (5 pontos não sustentam dispersão)
+  var crossControls = document.getElementById('map-cross-controls');
+  var crossOk = currentGeoLevel !== 'regiao';
+  if (crossControls) crossControls.style.display = crossOk ? '' : 'none';
+  if (!crossOk && crossMode) setCrossMode(false, true);
+
+  var selY = document.getElementById('map-indicator-selector-y');
+  if (selY && crossMode) {
+    var manteveY = fillSelector(selY, nomes);
+    if (!manteveY || selY.value === newSelector.value) {
+      var padrao = currentGeoLevel === 'uf' ? 'Total de extensionistas' : 'Taxa de alfabetização';
+      if (padrao === newSelector.value || nomes.indexOf(padrao) === -1) {
+        padrao = nomes.filter(function(n) { return n !== newSelector.value; })[0] || nomes[0];
+      }
+      selY.value = padrao;
+    }
+  }
+}
+
+function setCrossMode(on, skipRedraw) {
+  crossMode = on;
+  var btn = document.getElementById('cross-toggle');
+  var yWrap = document.getElementById('cross-y-wrap');
+  if (btn) {
+    btn.classList.toggle('active', on);
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+  }
+  if (yWrap) yWrap.style.display = on ? '' : 'none';
+  if (!skipRedraw) {
+    populateSelector();
+    drawMapLevel();
+  }
 }
 
   function getSelectedIndicador() {
     var selector = document.getElementById('map-indicator-selector');
+    return selector ? selector.value : null;
+  }
+
+  function getSelectedIndicadorY() {
+    var selector = document.getElementById('map-indicator-selector-y');
     return selector ? selector.value : null;
   }
 
@@ -3020,8 +3161,11 @@ function renderMunicipios() {
       .style('stroke-width', 0.6)
       .style('pointer-events', 'none');
 
-    // Histograma — setTimeout para garantir que o DOM pintou antes de medir largura
-    setTimeout(function() { renderHistograma(currentIndicador, meta, cfg); }, 50);
+    // Histograma (ou dispersão, no modo cruzar) — setTimeout para garantir que o DOM pintou antes de medir largura
+    setTimeout(function() {
+      if (crossMode) renderScatter();
+      else renderHistograma(currentIndicador, meta, cfg);
+    }, 50);
   }
 
   function renderRegioes() {
@@ -3282,7 +3426,8 @@ var estado = d.properties.estado || d.properties.nome || d.properties.NM_UF || u
     var fonteEl = document.getElementById('map-fonte');
 var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] || 'Source: ';
     if (fonteEl) fonteEl.textContent = lblFonte + (isEstab ? 'IBGE, Censo Agropecuário 2017' : 'ASBRAER');
-    renderBarrasUF(totaisPorUF, currentIndicador, isPct, catName);
+    if (crossMode) renderScatter();
+    else renderBarrasUF(totaisPorUF, currentIndicador, isPct, catName);
   }
 
   // =============================================
@@ -3578,6 +3723,247 @@ var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] ||
         .attr('font-family', 'DM Sans, sans-serif').attr('font-size', '12px').attr('font-weight', '500').attr('fill', '#1c1c1c')
         .text(fmt(d.val));
     });
+  }
+
+  // =============================================
+  // DISPERSÃO — modo "cruzar dois indicadores"
+  // (AJUSTES_JUL02, A2 — só com dado que já existe na mesma malha:
+  // município × município e UF × UF. Região fica de fora: 5 pontos.)
+  // =============================================
+  var IBGE2_TO_UF = {
+    '11':'RO','12':'AC','13':'AM','14':'RR','15':'PA','16':'AP','17':'TO',
+    '21':'MA','22':'PI','23':'CE','24':'RN','25':'PB','26':'PE','27':'AL','28':'SE','29':'BA',
+    '31':'MG','32':'ES','33':'RJ','35':'SP',
+    '41':'PR','42':'SC','43':'RS',
+    '50':'MS','51':'MT','52':'GO','53':'DF'
+  };
+
+  function municMeta(ind) {
+    return (indicadoresGlobal || []).find(function(d) { return d.indicador === ind; });
+  }
+
+  // Valores por UF para qualquer indicador do seletor de UF
+  function ufIndicatorValues(ind) {
+    var vals = {};
+    if (ESTAB_INDICADORES.indexOf(ind) !== -1) {
+      Object.keys(ESTAB_UF).forEach(function(ibge2) {
+        var uf = IBGE2_TO_UF[ibge2];
+        if (!uf) return;
+        var t = ESTAB_UF[ibge2];
+        if (ind === 'Estabelecimentos agropecuários') vals[uf] = t.total;
+        else if (ind === 'Estabelecimentos de agricultura familiar') vals[uf] = t.af;
+        else if (t.total > 0) vals[uf] = t.af / t.total;
+      });
+    } else if (ind === 'Total de extensionistas' && asbraerDataGlobal) {
+      asbraerDataGlobal.forEach(function(row) {
+        var uf = row['uf'] || row[Object.keys(row)[1]];
+        if (!uf) return;
+        vals[uf] = (vals[uf] || 0) + (+row['Quantidade'] || 0);
+      });
+    }
+    return vals;
+  }
+
+  function scatterData() {
+    var indX = getSelectedIndicador(), indY = getSelectedIndicadorY();
+    if (!indX || !indY) return null;
+    var pts = [], isPctX = false, isPctY = false, fonte = '';
+    if (currentGeoLevel === 'municipio') {
+      if (!geojsonMunicGlobal) return null;
+      var mX = municMeta(indX), mY = municMeta(indY);
+      isPctX = !!(mX && mX.mensuracao === 'percentual');
+      isPctY = !!(mY && mY.mensuracao === 'percentual');
+      geojsonMunicGlobal.features.forEach(function(f) {
+        var x = f.properties[indX], y = f.properties[indY];
+        if (x === null || x === undefined || x === '' || isNaN(+x)) return;
+        if (y === null || y === undefined || y === '' || isNaN(+y)) return;
+        pts.push({ x: +x, y: +y, nome: f.properties.municipio + ' (' + f.properties.uf + ')' });
+      });
+      var fontes = [];
+      [mX, mY].forEach(function(m) {
+        if (m && m.fonte && fontes.indexOf(m.fonte) === -1) fontes.push(m.fonte);
+      });
+      fonte = fontes.join(' · ');
+    } else {
+      var vX = ufIndicatorValues(indX), vY = ufIndicatorValues(indY);
+      isPctX = indX.indexOf('%') === 0;
+      isPctY = indY.indexOf('%') === 0;
+      Object.keys(vX).forEach(function(uf) {
+        if (vX[uf] === undefined || vY[uf] === undefined) return;
+        pts.push({ x: vX[uf], y: vY[uf], nome: uf, sigla: uf });
+      });
+      var fx = indX === 'Total de extensionistas' ? 'ASBRAER' : 'IBGE, Censo Agropecuário 2017';
+      var fy = indY === 'Total de extensionistas' ? 'ASBRAER' : 'IBGE, Censo Agropecuário 2017';
+      fonte = fx === fy ? fx : fx + ' · ' + fy;
+    }
+    return { pts: pts, indX: indX, indY: indY, isPctX: isPctX, isPctY: isPctY, fonte: fonte };
+  }
+
+  function pearsonR(pts) {
+    var n = pts.length;
+    if (n < 3) return null;
+    var sx = 0, sy = 0;
+    pts.forEach(function(p) { sx += p.x; sy += p.y; });
+    var mx = sx / n, my = sy / n;
+    var num = 0, dx2 = 0, dy2 = 0;
+    pts.forEach(function(p) {
+      var dx = p.x - mx, dy = p.y - my;
+      num += dx * dy; dx2 += dx * dx; dy2 += dy * dy;
+    });
+    if (dx2 === 0 || dy2 === 0) return null;
+    return num / Math.sqrt(dx2 * dy2);
+  }
+
+  function truncLabel(s, max) {
+    return s.length > max ? s.slice(0, max - 1) + '…' : s;
+  }
+
+  function renderScatter() {
+    var container = document.getElementById('map-chart');
+    if (!container) return;
+    var dados = scatterData();
+    if (!dados || dados.pts.length === 0) { container.innerHTML = ''; return; }
+
+    var labelEl = document.getElementById('map-chart-label');
+    if (labelEl) labelEl.textContent = dados.indX + ' × ' + dados.indY;
+
+    var fonteEl = document.getElementById('map-fonte');
+    if (fonteEl && dados.fonte) {
+      var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] || 'Source: ';
+      fonteEl.textContent = lblFonte + dados.fonte;
+    }
+
+    d3.select(container).selectAll('*').remove();
+
+    var isUF = currentGeoLevel === 'uf';
+    var w = 0, el = container;
+    while (el && w < 100) { w = el.offsetWidth; el = el.parentElement; }
+    if (w < 100) w = 700;
+
+    var isMobile = window.innerWidth < 600;
+    var h = isMobile ? 320 : 380;
+    var margin = { top: 28, right: 24, bottom: 52, left: 66 };
+    var innerW = w - margin.left - margin.right;
+    var innerH = h - margin.top - margin.bottom;
+
+    var svg = d3.select(container).append('svg')
+      .attr('width', '100%')
+      .attr('viewBox', '0 0 ' + w + ' ' + h)
+      .attr('preserveAspectRatio', 'xMinYMin');
+    var g = svg.append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+    var x = d3.scaleLinear()
+      .domain(d3.extent(dados.pts, function(p) { return p.x; })).nice()
+      .range([0, innerW]);
+    var y = d3.scaleLinear()
+      .domain(d3.extent(dados.pts, function(p) { return p.y; })).nice()
+      .range([innerH, 0]);
+
+    var fmtX = function(v) { return dados.isPctX ? Math.round(v * 100) + '%' : fmtNum(v, currentLang); };
+    var fmtY = function(v) { return dados.isPctY ? Math.round(v * 100) + '%' : fmtNum(v, currentLang); };
+    var fmtVal = function(v, isPct) {
+      return isPct ? (v * 100).toFixed(1) + '%' : fmtNumExato(v, currentLang);
+    };
+
+    g.append('g')
+      .attr('transform', 'translate(0,' + innerH + ')')
+      .call(d3.axisBottom(x).ticks(isMobile ? 4 : 6).tickFormat(fmtX))
+      .selectAll('text')
+      .attr('font-family', 'DM Sans, sans-serif')
+      .attr('font-size', '12px')
+      .attr('fill', '#6b6b5e');
+    g.append('g')
+      .call(d3.axisLeft(y).ticks(5).tickFormat(fmtY))
+      .selectAll('text')
+      .attr('font-family', 'DM Sans, sans-serif')
+      .attr('font-size', '12px')
+      .attr('fill', '#6b6b5e');
+    g.selectAll('.domain').attr('stroke', '#d4cdc0');
+    g.selectAll('.tick line').attr('stroke', '#d4cdc0');
+
+    // Rótulos dos eixos
+    g.append('text')
+      .attr('x', innerW / 2).attr('y', innerH + 42)
+      .attr('text-anchor', 'middle')
+      .attr('font-family', 'DM Sans, sans-serif')
+      .attr('font-size', '12px').attr('fill', '#6b6b5e')
+      .text(truncLabel(dados.indX, 60));
+    g.append('text')
+      .attr('transform', 'rotate(-90)')
+      .attr('x', -innerH / 2).attr('y', -52)
+      .attr('text-anchor', 'middle')
+      .attr('font-family', 'DM Sans, sans-serif')
+      .attr('font-size', '12px').attr('fill', '#6b6b5e')
+      .text(truncLabel(dados.indY, 52));
+
+    // Pontos
+    g.selectAll('circle.scatter-pt')
+      .data(dados.pts)
+      .enter().append('circle')
+      .attr('class', 'scatter-pt')
+      .attr('cx', function(p) { return x(p.x); })
+      .attr('cy', function(p) { return y(p.y); })
+      .attr('r', isUF ? 5 : 2.2)
+      .attr('fill', '#8a6a20')
+      .attr('fill-opacity', isUF ? 0.85 : 0.35)
+      .attr('stroke', isUF ? '#5a4210' : 'none')
+      .attr('stroke-width', isUF ? 1 : 0)
+      .on('mouseover', function(event, p) {
+        d3.select(this).attr('fill', '#2d6a32').attr('fill-opacity', 1);
+        ttip.style('opacity', 1)
+          .style('left', (event.pageX + 12) + 'px')
+          .style('top', (event.pageY - 20) + 'px')
+          .html('<strong>' + p.nome + '</strong><br>' +
+            dados.indX + ': ' + fmtVal(p.x, dados.isPctX) + '<br>' +
+            dados.indY + ': ' + fmtVal(p.y, dados.isPctY));
+      })
+      .on('mouseout', function() {
+        d3.select(this).attr('fill', '#8a6a20').attr('fill-opacity', isUF ? 0.85 : 0.35);
+        ttip.style('opacity', 0);
+      });
+
+    // Siglas das UFs (só no nível UF — 27 pontos)
+    if (isUF) {
+      g.selectAll('text.scatter-sigla')
+        .data(dados.pts)
+        .enter().append('text')
+        .attr('class', 'scatter-sigla')
+        .attr('x', function(p) { return x(p.x) + 7; })
+        .attr('y', function(p) { return y(p.y) + 3; })
+        .attr('font-family', 'DM Sans, sans-serif')
+        .attr('font-size', '10px')
+        .attr('fill', '#6b6b5e')
+        .text(function(p) { return p.sigla; });
+    }
+
+    // Correlação de Pearson + nº de pontos
+    var r = pearsonR(dados.pts);
+    var loc = currentLang === 'pt' ? 'pt-BR' : currentLang === 'es' ? 'es-ES' : 'en-US';
+    var unidade = isUF
+      ? { pt: 'UFs', en: 'states', es: 'UFs' }[currentLang]
+      : { pt: 'municípios', en: 'municipalities', es: 'municipios' }[currentLang];
+    var rTxt = (r === null ? '' : 'r = ' + (Math.round(r * 100) / 100).toLocaleString(loc) + ' · ') +
+      'n = ' + dados.pts.length.toLocaleString(loc) + ' ' + unidade;
+    g.append('text')
+      .attr('x', innerW).attr('y', -12)
+      .attr('text-anchor', 'end')
+      .attr('font-family', 'DM Sans, sans-serif')
+      .attr('font-size', '12px')
+      .attr('font-weight', '500')
+      .attr('fill', '#1c1c1c')
+      .text(rTxt);
+
+    // Nota de leitura
+    var nota = isUF
+      ? { pt: 'Cada ponto é uma unidade federativa. Passe o mouse ou toque em um ponto para ver os valores. "r" é a correlação de Pearson entre os dois indicadores.',
+          en: 'Each dot is a state. Hover or tap a dot to see the values. "r" is the Pearson correlation between the two indicators.',
+          es: 'Cada punto es una unidad federativa. Pase el cursor o toque un punto para ver los valores. "r" es la correlación de Pearson entre los dos indicadores.' }
+      : { pt: 'Cada ponto é um município. Passe o mouse ou toque em um ponto para ver os valores. "r" é a correlação de Pearson entre os dois indicadores.',
+          en: 'Each dot is a municipality. Hover or tap a dot to see the values. "r" is the Pearson correlation between the two indicators.',
+          es: 'Cada punto es un municipio. Pase el cursor o toque un punto para ver los valores. "r" es la correlación de Pearson entre los dos indicadores.' };
+    d3.select(container).append('p')
+      .attr('class', 'scatter-note')
+      .text(nota[currentLang] || nota.en);
   }
 
   drawMap();

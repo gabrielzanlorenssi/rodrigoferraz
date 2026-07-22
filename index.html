@@ -475,11 +475,99 @@ box-shadow: 0 1px 0 var(--c-amber);
 
     .zoom-btn:hover { background: var(--c-bg-alt); }
 
+    .map-legend-row {
+      position: relative;
+      display: flex;
+      align-items: stretch;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
     .map-legend-wrap {
       display: flex;
       flex-wrap: nowrap;
       gap: 2px;
-      margin-bottom: 16px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* Engrenagem: escolher a regra de divisão das faixas */
+    .class-gear {
+      font-size: 15px;
+      line-height: 1;
+      width: 34px;
+      border: 1.5px solid var(--c-border);
+      border-radius: 4px;
+      background: var(--c-cream);
+      color: var(--c-ink-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .class-gear:hover { border-color: var(--c-green); color: var(--c-green-dark); }
+    .class-gear.open { background: var(--c-green-dark); border-color: var(--c-green-dark); color: white; }
+
+    .class-panel {
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      z-index: 60;
+      background: var(--c-cream);
+      border: 1px solid var(--c-border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+      min-width: 250px;
+      font-family: var(--f-sans);
+    }
+    .class-panel h5 {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-ink-muted);
+      margin: 0 0 8px;
+    }
+    .class-panel label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--c-ink);
+      padding: 4px 0;
+      cursor: pointer;
+    }
+    .class-panel input[type="radio"] { accent-color: var(--c-green); margin: 0; }
+    .class-manual-row { display: none; gap: 6px; margin-top: 6px; }
+    .class-manual-row.show { display: flex; }
+    .class-manual-row input[type="text"] {
+      flex: 1;
+      font-family: var(--f-sans);
+      font-size: 12px;
+      padding: 6px 8px;
+      border: 1px solid var(--c-border);
+      border-radius: 4px;
+      background: #fff;
+      color: var(--c-ink);
+      min-width: 0;
+    }
+    .class-manual-row input.invalid { border-color: #a33; }
+    .class-manual-row button {
+      font-family: var(--f-sans);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 10px;
+      border: 1.5px solid var(--c-green-dark);
+      border-radius: 4px;
+      background: var(--c-green-dark);
+      color: #fff;
+      cursor: pointer;
+    }
+    .class-panel .class-hint {
+      font-size: 11px;
+      color: var(--c-ink-muted);
+      margin: 6px 0 0;
+      line-height: 1.4;
     }
 
     .map-legend-item {
@@ -1732,8 +1820,13 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
     </div>
 
     <select id="map-indicator-selector" class="map-indicator-selector"></select>
-    <!-- Legend (filled by JS) -->
-    <div class="map-legend-wrap" id="map-legend-wrap"></div>
+    <!-- Legend + configuração das faixas (engrenagem) -->
+    <div class="map-legend-row" id="map-legend-row">
+      <div class="map-legend-wrap" id="map-legend-wrap"></div>
+      <button class="class-gear" id="class-gear" type="button" aria-haspopup="true" aria-expanded="false"
+              title="Divisão das faixas / Class breaks">⚙</button>
+      <div class="class-panel" id="class-panel" style="display:none"></div>
+    </div>
 
     <div id="mapa_d3"></div>
 
@@ -3012,6 +3105,7 @@ function fmtPct(v, dec, lang) {
       document.querySelectorAll('.geo-btn').forEach(function(b) { b.classList.remove('active'); });
       this.classList.add('active');
       currentGeoLevel = this.getAttribute('data-level');
+      resetManualSePreciso();
       populateSelector();
       drawMapLevel();
     });
@@ -3036,6 +3130,96 @@ function fmtPct(v, dec, lang) {
   var dlCrossBtn = document.getElementById('map-download-cross-btn');
   if (dlCrossBtn) {
     dlCrossBtn.addEventListener('click', function() { baixarDadosSelecao(true); });
+  }
+
+  // Engrenagem da legenda: regra de divisão das faixas
+  var gearBtn = document.getElementById('class-gear');
+  var classPanel = document.getElementById('class-panel');
+
+  function isPctAtual() {
+    var ind = getSelectedIndicador();
+    if (!ind) return false;
+    if (currentGeoLevel === 'uf') return ind.indexOf('%') === 0;
+    var meta = (indicadoresGlobal || []).find(function(d) { return d.indicador === ind; });
+    return !!(meta && meta.mensuracao === 'percentual');
+  }
+
+  function fecharClassPanel() {
+    classPanel.style.display = 'none';
+    gearBtn.classList.remove('open');
+    gearBtn.setAttribute('aria-expanded', 'false');
+  }
+
+  function montarClassPanel() {
+    var L = {
+      titulo:  { pt: 'Divisão das faixas', en: 'Class breaks', es: 'División de los rangos' },
+      pretty:  { pt: 'Faixas arredondadas (padrão)', en: 'Rounded breaks (default)', es: 'Rangos redondeados (estándar)' },
+      igual:   { pt: 'Intervalos iguais', en: 'Equal intervals', es: 'Intervalos iguales' },
+      quantil: { pt: 'Quantis (frequências iguais)', en: 'Quantiles (equal counts)', es: 'Cuantiles (frecuencias iguales)' },
+      manual:  { pt: 'Manual', en: 'Manual', es: 'Manual' },
+      aplicar: { pt: 'Aplicar', en: 'Apply', es: 'Aplicar' },
+      dica: {
+        pt: 'No manual: cortes separados por vírgula, decimal com ponto; percentuais em pontos percentuais (ex.: 0, 5, 10, 25, 50, 100).',
+        en: 'Manual: comma-separated cut points, dot as decimal; percentages in percentage points (e.g., 0, 5, 10, 25, 50, 100).',
+        es: 'Manual: cortes separados por coma, decimal con punto; porcentajes en puntos porcentuales (ej.: 0, 5, 10, 25, 50, 100).'
+      }
+    };
+    function t(o) { return o[currentLang] || o.en; }
+    var html = '<h5>' + t(L.titulo) + '</h5>';
+    ['pretty', 'igual', 'quantil', 'manual'].forEach(function(m) {
+      html += '<label><input type="radio" name="class-mode" value="' + m + '"' +
+        (classMode === m ? ' checked' : '') + '> ' + t(L[m]) + '</label>';
+    });
+    var prefill = '';
+    if (lastBreaks) {
+      var dec = lastIsPct ? pctDecimals(lastBreaks) : 0;
+      prefill = lastBreaks.map(function(b) {
+        return lastIsPct ? +(b * 100).toFixed(dec) : +b.toFixed(2);
+      }).join(', ');
+    }
+    html += '<div class="class-manual-row' + (classMode === 'manual' ? ' show' : '') + '">' +
+      '<input type="text" id="class-manual-input" value="' + prefill + '">' +
+      '<button type="button" id="class-manual-apply">' + t(L.aplicar) + '</button></div>' +
+      '<p class="class-hint">' + t(L.dica) + '</p>';
+    classPanel.innerHTML = html;
+
+    classPanel.querySelectorAll('input[name="class-mode"]').forEach(function(r) {
+      r.addEventListener('change', function() {
+        classMode = this.value;
+        classPanel.querySelector('.class-manual-row').classList.toggle('show', classMode === 'manual');
+        if (classMode !== 'manual') {
+          manualBreaks = null;
+          drawMapLevel();
+        }
+      });
+    });
+    classPanel.querySelector('#class-manual-apply').addEventListener('click', function() {
+      var inp = classPanel.querySelector('#class-manual-input');
+      var nums = inp.value.split(/[\s,;]+/).filter(Boolean).map(Number);
+      var ok = nums.length >= 3 && nums.length <= 8 && nums.every(function(n) { return !isNaN(n); });
+      for (var i = 1; ok && i < nums.length; i++) if (nums[i] <= nums[i - 1]) ok = false;
+      if (!ok) { inp.classList.add('invalid'); return; }
+      inp.classList.remove('invalid');
+      manualBreaks = isPctAtual() ? nums.map(function(n) { return n / 100; }) : nums;
+      classMode = 'manual';
+      drawMapLevel();
+    });
+  }
+
+  if (gearBtn && classPanel) {
+    gearBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (classPanel.style.display !== 'none') { fecharClassPanel(); return; }
+      montarClassPanel();
+      classPanel.style.display = '';
+      gearBtn.classList.add('open');
+      gearBtn.setAttribute('aria-expanded', 'true');
+    });
+    document.addEventListener('click', function(e) {
+      if (classPanel.style.display !== 'none' && !classPanel.contains(e.target) && e.target !== gearBtn) {
+        fecharClassPanel();
+      }
+    });
   }
 
   // Nome dos estados por sigla (state.geojson só traz o código ibge2)
@@ -3218,6 +3402,84 @@ var SELECTOR_UF = ATER_ORIENTACAO
 
 var crossMode = false;
 
+// =============================================
+// DIVISÃO DAS FAIXAS (engrenagem da legenda)
+// 'pretty' = cortes redondos (padrão) | 'igual' = intervalos iguais |
+// 'quantil' = frequências iguais | 'manual' = cortes digitados
+// =============================================
+var classMode = 'pretty';
+var manualBreaks = null;   // fração 0–1 nos %, valor absoluto no resto
+var lastBreaks = null, lastIsPct = false;  // p/ pré-preencher o campo manual
+
+function computeBreaks(valoresBrutos, isPct) {
+  var vals = valoresBrutos
+    .filter(function(v) { return v !== null && v !== undefined && v !== '' && !isNaN(+v); })
+    .map(Number).sort(function(a, b) { return a - b; });
+  if (!vals.length) return [0, 1];
+  var min = vals[0], max = vals[vals.length - 1];
+  if (max === min) max = min + (isPct ? 0.01 : 1);
+
+  if (classMode === 'manual' && manualBreaks && manualBreaks.length >= 3) {
+    return manualBreaks.slice();
+  }
+  if (classMode === 'igual') {
+    var eq = [];
+    for (var i = 0; i <= 6; i++) eq.push(min + (max - min) * i / 6);
+    return eq;
+  }
+  if (classMode === 'quantil') {
+    var pts = [];
+    for (var q = 0; q <= 6; q++) {
+      var idx = Math.min(vals.length - 1, Math.round(q / 6 * (vals.length - 1)));
+      pts.push(vals[idx]);
+    }
+    var eps = isPct ? 0.0005 : 1;
+    var outQ = [pts[0]];
+    for (var j = 1; j < pts.length; j++) outQ.push(Math.max(pts[j], outQ[j - 1] + eps));
+    return outQ;
+  }
+  // pretty (padrão): cortes redondos cobrindo o intervalo (em p.p. quando %)
+  var f = isPct ? 100 : 1;
+  var dom = d3.nice(min * f, max * f, 6);
+  var ticks = null;
+  [6, 5, 7, 4].some(function(c) {
+    var t = d3.ticks(dom[0], dom[1], c);
+    if (t.length >= 4 && t.length <= 8) { ticks = t; return true; }
+    return false;
+  });
+  if (!ticks) ticks = d3.ticks(dom[0], dom[1], 5);
+  var passo = ticks.length > 1 ? ticks[1] - ticks[0] : 1;
+  if (ticks[0] > min * f) ticks.unshift(ticks[0] - passo);
+  if (ticks[ticks.length - 1] < max * f) ticks.push(ticks[ticks.length - 1] + passo);
+  return ticks.map(function(t) { return t / f; });
+}
+
+// Cores por nº de faixas: amostra espaçada da escala de 7 tons de terra
+var CLASS_RAMP = ['#fdf8f0','#e8d9b8','#d4ba80','#c09848','#8a6a20','#5a4210','#2e2008'];
+var CLASS_RAMP_CLARAS = ['#fdf8f0','#e8d9b8','#d4ba80','#c09848'];
+function rampColors(n) {
+  if (n >= CLASS_RAMP.length) return CLASS_RAMP.slice(0, n);
+  if (n <= 1) return [CLASS_RAMP[CLASS_RAMP.length - 1]];
+  var out = [];
+  for (var i = 0; i < n; i++) {
+    out.push(CLASS_RAMP[Math.round(i * (CLASS_RAMP.length - 1) / (n - 1))]);
+  }
+  return out;
+}
+
+function makeClassCfg(breaks, isPct) {
+  var colors = rampColors(breaks.length - 1);
+  var colorScale = d3.scaleThreshold()
+    .domain(breaks.slice(1, -1))
+    .range(colors);
+  lastBreaks = breaks; lastIsPct = isPct;
+  return { breaks: breaks, colors: colors, colorScale: colorScale, isPct: isPct, MAP_COLORS: colors };
+}
+
+function resetManualSePreciso() {
+  if (classMode === 'manual') { classMode = 'pretty'; manualBreaks = null; }
+}
+
 function selectorOptionsForLevel() {
   if (currentGeoLevel === 'municipio' && indicadoresGlobal) {
     var todos = indicadoresGlobal
@@ -3254,6 +3516,7 @@ function populateSelector() {
   newSelector.value = selector.value;
   selector.parentNode.replaceChild(newSelector, selector);
   newSelector.addEventListener('change', function() {
+    resetManualSePreciso();  // cortes manuais valem para o indicador em que foram criados
     drawMapLevel();
   });
 
@@ -3329,17 +3592,7 @@ function setCrossMode(on, skipRedraw) {
     }
   }
 
-  function getBreaksAndColors(metaRow) {
-    var MAP_COLORS = ['#fdf8f0','#e8d9b8','#d4ba80','#c09848','#8a6a20','#5a4210','#2e2008'];
-    var breaks = metaRow.intervalos.split(',').map(function(s) { return +s.trim(); });
-    var colorScale = d3.scaleThreshold()
-      .domain(breaks.slice(1, -1))
-      .range(MAP_COLORS);
-    var isPct = metaRow.mensuracao === 'percentual';
-    return { breaks: breaks, colorScale: colorScale, isPct: isPct, MAP_COLORS: MAP_COLORS };
-  }
-
-  function updateLegend(breaks, MAP_COLORS, isPct) {
+  function updateLegend(breaks, colors, isPct) {
     var legendWrap = document.getElementById('map-legend-wrap');
     legendWrap.innerHTML = '';
     var dec = isPct ? pctDecimals(breaks) : 0;
@@ -3352,9 +3605,9 @@ function setCrossMode(on, skipRedraw) {
       };
       var div = document.createElement('div');
       div.className = 'map-legend-item';
-      div.style.backgroundColor = MAP_COLORS[i];
-      // Texto escuro até o 4º tom (#c09848); branco só nos tons escuros (contraste ≥5:1)
-      div.style.color = i < 4 ? '#1c1c1c' : 'white';
+      div.style.backgroundColor = colors[i];
+      // Texto escuro nos tons claros; branco nos escuros (contraste ≥5:1)
+      div.style.color = CLASS_RAMP_CLARAS.indexOf(colors[i]) !== -1 ? '#1c1c1c' : 'white';
       div.textContent = fmt(lo) + '–' + fmt(hi);
       legendWrap.appendChild(div);
     }
@@ -3368,8 +3621,12 @@ function renderMunicipios() {
   if (!meta) return;
 
 
-    var cfg = getBreaksAndColors(meta);
-    updateLegend(cfg.breaks, cfg.MAP_COLORS, cfg.isPct);
+    // Classificação a partir dos valores reais, conforme a regra da engrenagem
+    var valoresMunic = geojsonMunicGlobal.features
+      .map(function(f) { return f.properties[currentIndicador]; });
+    var cfg = makeClassCfg(computeBreaks(valoresMunic, meta.mensuracao === 'percentual'),
+      meta.mensuracao === 'percentual');
+    updateLegend(cfg.breaks, cfg.colors, cfg.isPct);
     // Tooltip com pelo menos 1 casa; mais se a escala exigir (valores pequenos)
     var decTip = cfg.isPct ? Math.max(1, pctDecimals(cfg.breaks)) : 0;
 
@@ -3528,30 +3785,13 @@ function renderMunicipios() {
       });
     }
 
-    var valores = Object.values(valoresPorUF).filter(function(v) { return v > 0; });
-    var colorScale = d3.scaleQuantile()
-      .domain(valores)
-      .range(MAP_COLORS.slice(1));
-
-    // Legenda
-    var legendWrap = document.getElementById('map-legend-wrap');
-    legendWrap.innerHTML = '';
-    var quantiles = colorScale.quantiles();
-    var minVal = d3.min(valores), maxVal = d3.max(valores);
-    var breaks = [minVal].concat(quantiles).concat([maxVal]);
-   var decLeg = isPct ? pctDecimals(breaks) : 0;
-   var fmtLeg = function(v) {
-  return isPct ? fmtPct(v, decLeg, currentLang) : Math.round(v).toLocaleString('pt-BR');
-};
-    for (var i = 0; i < breaks.length - 1; i++) {
-      var div = document.createElement('div');
-      div.className = 'map-legend-item';
-      div.style.backgroundColor = MAP_COLORS[i + 1];
-      // MAP_COLORS[i+1]: escuro a partir do índice 4 (#8a6a20) → branco; antes, texto escuro
-      div.style.color = i + 1 < 4 ? '#1c1c1c' : 'white';
-      div.textContent = fmtLeg(breaks[i]) + '–' + fmtLeg(breaks[i + 1]);
-      legendWrap.appendChild(div);
-    }
+    // Classificação unificada (regra da engrenagem), como no nível município
+    var valores = Object.values(valoresPorUF).filter(function(v) { return v !== undefined && v !== null; });
+    var cfgUF = makeClassCfg(computeBreaks(valores, isPct), isPct);
+    var colorScale = cfgUF.colorScale;
+    var breaks = cfgUF.breaks;
+    updateLegend(breaks, cfgUF.colors, isPct);
+    var decLeg = isPct ? pctDecimals(breaks) : 0;
 
     zoomGroup.selectAll('path.municipio').remove();
     zoomGroup.selectAll('path.estado').remove();
@@ -3569,7 +3809,7 @@ function renderMunicipios() {
   var ibge2 = String(d.properties.ibge2 || '');
   var uf = ibge2ToUF[ibge2];
   var val = uf ? valoresPorUF[uf] : undefined;
-if (val === undefined || val === 0) return MAP_COLORS[0];
+  if (val === undefined || val === null) return '#e0ddd5';
   return colorScale(val);
 })
       .on('mouseover', function(event, d) {
@@ -3701,7 +3941,7 @@ var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] ||
     var marginH = { top: 28, right: 16, bottom: 60, left: 76 };
     var innerW = w - marginH.left - marginH.right;
     var barW = Math.max(8, innerW / numCats - 4);
-    var h = 330;
+    var h = 400;
     var innerH = h - marginH.top - marginH.bottom;
 
     var svg = d3.select(container).append('svg')

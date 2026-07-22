@@ -747,14 +747,27 @@ box-shadow: 0 1px 0 var(--c-amber);
   cursor: not-allowed;
 }
 
-/* Modo "cruzar dois indicadores" (dispersão) */
+/* Modo "cruzar dois indicadores" (dispersão) — fica depois do mapa, junto do gráfico */
 .map-cross-controls {
   display: flex;
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
-  margin-bottom: 16px;
+  margin: 22px 0 4px;
+  padding-top: 16px;
+  border-top: 1px solid var(--c-border);
 }
+
+/* Cabeçalho do gráfico: título + botão de baixar os dados cruzados */
+.map-chart-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 22px 0 10px;
+}
+.map-chart-head .map-chart-label { margin: 0; }
 
 .cross-toggle {
   font-family: var(--f-sans);
@@ -1719,16 +1732,6 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
     </div>
 
     <select id="map-indicator-selector" class="map-indicator-selector"></select>
-
-    <div class="map-cross-controls" id="map-cross-controls">
-      <button class="cross-toggle" id="cross-toggle" aria-pressed="false">
-        <span data-pt="Cruzar dois indicadores" data-en="Cross two indicators" data-es="Cruzar dos indicadores">Cruzar dois indicadores</span>
-      </button>
-      <div class="cross-y-wrap" id="cross-y-wrap" style="display:none">
-        <span class="cross-y-label" data-pt="× segundo indicador (eixo Y):" data-en="× second indicator (Y axis):" data-es="× segundo indicador (eje Y):">× segundo indicador (eixo Y):</span>
-        <select id="map-indicator-selector-y" class="map-indicator-selector"></select>
-      </div>
-    </div>
     <!-- Legend (filled by JS) -->
     <div class="map-legend-wrap" id="map-legend-wrap"></div>
 
@@ -1742,11 +1745,26 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
     <div class="map-fonte-row">
       <p id="map-fonte" class="map-fonte"></p>
       <button class="map-download-btn" id="map-download-btn" type="button"
-              data-pt="Baixar dados" data-en="Download data" data-es="Descargar datos">Baixar dados</button>
+              data-pt="Baixar dados do mapa" data-en="Download map data" data-es="Descargar datos del mapa">Baixar dados do mapa</button>
+    </div>
+
+    <!-- Cruzamento: vem depois do mapa, junto do gráfico que ele controla -->
+    <div class="map-cross-controls" id="map-cross-controls">
+      <button class="cross-toggle" id="cross-toggle" aria-pressed="false">
+        <span data-pt="Cruzar dois indicadores" data-en="Cross two indicators" data-es="Cruzar dos indicadores">Cruzar dois indicadores</span>
+      </button>
+      <div class="cross-y-wrap" id="cross-y-wrap" style="display:none">
+        <span class="cross-y-label" data-pt="× segundo indicador (eixo Y):" data-en="× second indicator (Y axis):" data-es="× segundo indicador (eje Y):">× segundo indicador (eixo Y):</span>
+        <select id="map-indicator-selector-y" class="map-indicator-selector"></select>
+      </div>
     </div>
 
     <div id="map-chart-wrap">
-      <p class="map-chart-label" id="map-chart-label"></p>
+      <div class="map-chart-head">
+        <p class="map-chart-label" id="map-chart-label"></p>
+        <button class="map-download-btn" id="map-download-cross-btn" type="button" style="display:none"
+                data-pt="Baixar dados cruzados" data-en="Download crossed data" data-es="Descargar datos cruzados">Baixar dados cruzados</button>
+      </div>
       <div id="map-chart"></div>
     </div>
   </div>
@@ -3009,10 +3027,15 @@ function fmtPct(v, dec, lang) {
     crossSelY.addEventListener('change', function() { drawMapLevel(); });
   }
 
-  // Botão "Baixar dados" (Instruções Mapa ATER, item 5): CSV client-side da seleção
+  // Botões "Baixar dados" (CSV client-side): um para o mapa (indicador atual),
+  // outro para os dados cruzados do gráfico (só aparece no modo cruzar)
   var dlBtn = document.getElementById('map-download-btn');
   if (dlBtn) {
-    dlBtn.addEventListener('click', function() { baixarDadosSelecao(); });
+    dlBtn.addEventListener('click', function() { baixarDadosSelecao(false); });
+  }
+  var dlCrossBtn = document.getElementById('map-download-cross-btn');
+  if (dlCrossBtn) {
+    dlCrossBtn.addEventListener('click', function() { baixarDadosSelecao(true); });
   }
 
   // Nome dos estados por sigla (state.geojson só traz o código ibge2)
@@ -3039,11 +3062,11 @@ function fmtPct(v, dec, lang) {
     return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
   }
 
-  function baixarDadosSelecao() {
+  function baixarDadosSelecao(comCruzamento) {
     if (!geojsonMunicGlobal) return;
     var indX = getSelectedIndicador();
-    var indY = crossMode ? getSelectedIndicadorY() : null;
-    if (!indX) return;
+    var indY = comCruzamento ? getSelectedIndicadorY() : null;
+    if (!indX || (comCruzamento && !indY)) return;
 
     var header, rows = [];
     if (currentGeoLevel === 'municipio') {
@@ -3255,11 +3278,13 @@ function setCrossMode(on, skipRedraw) {
   crossMode = on;
   var btn = document.getElementById('cross-toggle');
   var yWrap = document.getElementById('cross-y-wrap');
+  var dlCross = document.getElementById('map-download-cross-btn');
   if (btn) {
     btn.classList.toggle('active', on);
     btn.setAttribute('aria-pressed', on ? 'true' : 'false');
   }
   if (yWrap) yWrap.style.display = on ? '' : 'none';
+  if (dlCross) dlCross.style.display = on ? '' : 'none';
   if (!skipRedraw) {
     populateSelector();
     drawMapLevel();

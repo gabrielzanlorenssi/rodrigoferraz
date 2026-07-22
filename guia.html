@@ -12,7 +12,7 @@
   --c-bg-alt:     #ece7db;
   --c-bg-dark:    #1a2e1a;
   --c-ink:        #1c1c1c;
-  --c-ink-muted:  #6b6b5e;
+  --c-ink-muted:  #646458;
   --c-green-dark: #1f4023;
   --c-green:      #2d6a32;
   --c-green-mid:  #4a8c50;
@@ -51,98 +51,85 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
 }
 .share-toast.show { opacity: 1; }
 /* =============================================
-   PLANEJADOR E ETAPAS ATER
-   Ferramenta de decisão: responda às etapas e
-   gere um roteiro inicial para a instituição.
+   GUIA ATER — questionário em 3 etapas
+   Estética editorial: pouco cartão, hierarquia
+   na tipografia, filetes no lugar de caixas.
 ============================================= */
 .planner-intro {
-  max-width: 620px;
-  margin-bottom: 28px;
+  max-width: 640px;
+  margin-bottom: 34px;
 }
 .planner-intro p {
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.7;
-  color: var(--c-ink-muted);
+  color: var(--c-ink);
 }
 
-/* Trilha de fases (stepper de topo) */
+/* Trilha de fases: numeral serifado + nome, filete âmbar na ativa */
 .planner-phases {
   display: flex;
-  gap: 0;
-  margin-bottom: 28px;
-  border: 1px solid var(--c-border);
-  border-radius: 8px;
-  overflow: hidden;
-  background: var(--c-cream);
+  gap: 36px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--c-border);
 }
 .planner-phase-tab {
-  flex: 1;
   display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 16px;
+  align-items: baseline;
+  gap: 11px;
+  padding: 0 0 14px;
+  margin-bottom: -1px;
   cursor: pointer;
-  background: transparent;
+  background: none;
   border: none;
-  border-right: 1px solid var(--c-border);
-  transition: background 0.2s;
+  border-bottom: 2px solid transparent;
   text-align: left;
   font-family: var(--f-sans);
+  color: var(--c-ink-muted);
+  transition: color 0.2s;
 }
-.planner-phase-tab:last-child { border-right: none; }
-.planner-phase-tab:hover { background: var(--c-bg-alt); }
-.planner-phase-tab.active { background: var(--c-green-dark); }
-.planner-phase-num {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: var(--c-bg-alt);
+.planner-phase-tab:hover { color: var(--c-green-dark); }
+.planner-phase-tab.active {
   color: var(--c-green-dark);
+  border-bottom-color: var(--c-amber);
+}
+.planner-phase-num {
   font-family: var(--f-serif);
   font-weight: 700;
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: all 0.2s;
+  font-size: 23px;
+  line-height: 1;
+  color: var(--c-border);
+  transition: color 0.2s;
 }
-.planner-phase-tab.active .planner-phase-num {
-  background: var(--c-amber);
-  color: #fff;
-}
+.planner-phase-tab:hover .planner-phase-num,
+.planner-phase-tab.active .planner-phase-num { color: var(--c-amber); }
 .planner-phase-label {
   display: flex;
   flex-direction: column;
-  line-height: 1.25;
+  line-height: 1.3;
 }
-.planner-phase-label .pl-kicker {
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--c-ink-muted);
-  font-weight: 700;
-}
-.planner-phase-tab.active .planner-phase-label .pl-kicker { color: rgba(255,255,255,0.7); }
 .planner-phase-label .pl-name {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
-  color: var(--c-ink);
 }
-.planner-phase-tab.active .planner-phase-label .pl-name { color: #fff; }
+.planner-phase-label .pl-desc {
+  font-size: 12.5px;
+  font-weight: 400;
+  color: var(--c-ink-muted);
+}
 
 /* Corpo: painel de perguntas da fase ativa */
 .planner-body { margin-bottom: 24px; }
-.planner-about { margin-bottom: 18px; }
+.planner-about { margin: 22px 0 10px; }
 .planner-about-toggle {
-  font-family: var(--f-sans); font-size: 13px; font-weight: 500;
-  background: none; border: 1px solid var(--c-border); color: var(--c-green-dark);
-  padding: 6px 14px; border-radius: 4px; cursor: pointer;
+  font-family: var(--f-sans); font-size: 13px; font-weight: 600;
+  background: none; border: none; padding: 0; cursor: pointer;
+  color: var(--c-green-dark);
+  border-bottom: 1px solid var(--c-green-light);
 }
-.planner-about-toggle:hover { background: var(--c-bg-alt); }
+.planner-about-toggle:hover { color: var(--c-green); border-bottom-color: var(--c-green); }
 .planner-about-panel {
-  display: none; margin-top: 10px; padding: 16px 18px;
-  background: var(--c-cream); border: 1px solid var(--c-border); border-radius: 6px;
+  display: none; margin-top: 14px; padding-left: 16px;
+  border-left: 2px solid var(--c-border);
 }
 .planner-about-panel.open { display: block; }
 .planner-about-panel h4 {
@@ -150,7 +137,7 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
   letter-spacing: 0.07em; text-transform: uppercase; color: var(--c-green);
   margin: 0 0 4px;
 }
-.planner-about-panel p { font-size: 14px; margin: 0 0 12px; color: var(--c-ink); }
+.planner-about-panel p { font-size: 14px; margin: 0 0 14px; color: var(--c-ink); line-height: 1.6; }
 .planner-about-panel p:last-child { margin-bottom: 0; }
 .planner-phase-panel { display: none; }
 .planner-phase-panel.active { display: block; animation: plannerFade 0.3s ease; }
@@ -159,149 +146,107 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* Perguntas: sem cartão, separadas por filete e numeral pendurado */
 .planner-q {
-  background: var(--c-cream);
-  border: 1px solid var(--c-border);
-  border-radius: 8px;
-  padding: 18px 20px;
-  margin-bottom: 16px;
+  padding: 30px 0;
+  border-top: 1px solid var(--c-border);
 }
+.planner-q:first-child { border-top: none; padding-top: 6px; }
 .planner-q-head {
   display: flex;
   align-items: baseline;
-  gap: 8px;
-  margin-bottom: 4px;
+  gap: 11px;
+  margin-bottom: 3px;
 }
 .planner-q-code {
   font-family: var(--f-serif);
   font-weight: 700;
-  font-size: 13px;
+  font-size: 15px;
   color: var(--c-amber);
   flex-shrink: 0;
+  min-width: 26px;
 }
 .planner-q-title {
   font-family: var(--f-sans);
   font-weight: 600;
-  font-size: 15px;
+  font-size: 16.5px;
   color: var(--c-green-dark);
 }
 .planner-q-sub {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--c-ink-muted);
-  margin-bottom: 12px;
+  margin: 0 0 12px 37px;
   line-height: 1.5;
 }
 .planner-q-hint {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 500;
+  display: block;
+  font-size: 12px;
+  font-style: italic;
   color: var(--c-ink-muted);
-  background: var(--c-bg-alt);
-  border-radius: 10px;
-  padding: 2px 9px;
-  margin-bottom: 12px;
+  margin: 0 0 12px 37px;
 }
 
-/* Opções (chips selecionáveis) */
+/* Opções: chip liso que preenche sólido quando marcado */
 .planner-opts {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  margin-left: 37px;
 }
 .planner-opt {
   font-family: var(--f-sans);
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 500;
   padding: 8px 14px;
-  border-radius: 8px;
-  border: 1.5px solid var(--c-border);
-  background: var(--c-bg);
+  border-radius: 3px;
+  border: 1px solid var(--c-border);
+  background: var(--c-cream);
   color: var(--c-ink);
   cursor: pointer;
   transition: all 0.15s;
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  line-height: 1.3;
+  line-height: 1.35;
   text-align: left;
 }
 .planner-opt:hover {
   border-color: var(--c-green-mid);
-  background: rgba(45,106,50,0.06);
-}
-.planner-opt .planner-check {
-  width: 15px;
-  height: 15px;
-  border-radius: 4px;
-  border: 1.5px solid var(--c-border);
-  flex-shrink: 0;
-  position: relative;
-  transition: all 0.15s;
-}
-.planner-opt.radio .planner-check { border-radius: 50%; }
-.planner-opt.selected {
-  border-color: var(--c-green);
-  background: rgba(45,106,50,0.1);
   color: var(--c-green-dark);
 }
-.planner-opt.selected .planner-check {
-  background: var(--c-green);
-  border-color: var(--c-green);
-}
-.planner-opt.selected .planner-check::after {
-  content: '';
-  position: absolute;
-  left: 4px;
-  top: 1px;
-  width: 4px;
-  height: 8px;
-  border: solid #fff;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
-}
-.planner-opt.radio.selected .planner-check::after {
-  left: 3.5px; top: 3.5px;
-  width: 6px; height: 6px;
-  border: none; border-radius: 50%;
-  background: #fff; transform: none;
+.planner-opt.selected {
+  border-color: var(--c-green-dark);
+  background: var(--c-green-dark);
+  color: #fff;
 }
 .planner-opt.neutral.selected {
   border-color: var(--c-ink-muted);
-  background: rgba(107,107,94,0.12);
-  color: var(--c-ink-muted);
-}
-.planner-opt.neutral.selected .planner-check {
   background: var(--c-ink-muted);
-  border-color: var(--c-ink-muted);
+  color: #fff;
 }
 
-/* Textos explicativos (AJUSTES_JUL02, B1 — fonte: "Parâmetros da ATER Digital no Brasil", 2024) */
+/* Nota de contexto: filete fino, sem caixa (fonte: "Parâmetros da ATER Digital no Brasil", 2024) */
 .planner-q-info {
-  font-size: 13px;
-  line-height: 1.55;
-  color: var(--c-ink);
-  background: var(--c-bg-alt);
-  border-left: 3px solid var(--c-amber);
-  border-radius: 0 6px 6px 0;
-  padding: 10px 14px;
-  margin: 0 0 12px;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--c-ink-muted);
+  border-left: 2px solid var(--c-border);
+  padding-left: 14px;
+  margin: 4px 0 14px 37px;
 }
 .planner-opt.has-desc {
   width: 100%;
   flex-wrap: wrap;
   align-items: flex-start;
 }
-.planner-opt.has-desc .planner-check { margin-top: 1px; }
 .planner-opt-desc {
   flex-basis: 100%;
   font-weight: 400;
   font-size: 12.5px;
-  line-height: 1.5;
+  line-height: 1.55;
   color: var(--c-ink-muted);
-  margin-left: 22px;
-  margin-top: 2px;
+  margin-top: 5px;
 }
-.planner-opt.selected .planner-opt-desc { color: inherit; opacity: 0.85; }
+.planner-opt.selected .planner-opt-desc { color: rgba(255,255,255,0.82); }
 
 /* Navegação entre fases */
 .planner-nav {
@@ -309,7 +254,9 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  margin-top: 20px;
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--c-border);
   flex-wrap: wrap;
 }
 .planner-progress-text {
@@ -323,7 +270,7 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
   font-size: 13px;
   font-weight: 600;
   padding: 10px 18px;
-  border-radius: 6px;
+  border-radius: 3px;
   border: 1px solid var(--c-border);
   background: var(--c-cream);
   color: var(--c-ink);
@@ -336,21 +283,21 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
   border-color: var(--c-green-dark);
   color: #fff;
 }
-.planner-btn.primary:hover { background: var(--c-green); }
+.planner-btn.primary:hover { background: var(--c-green); border-color: var(--c-green); }
 .planner-btn.accent {
   background: var(--c-amber);
   border-color: var(--c-amber);
   color: #fff;
 }
-.planner-btn.accent:hover { background: var(--c-amber-light); }
+.planner-btn.accent:hover { background: var(--c-amber-light); border-color: var(--c-amber-light); }
 .planner-btn:disabled { opacity: 0.4; cursor: default; }
 
 /* Plano gerado */
 .planner-result {
   display: none;
-  margin-top: 28px;
-  border: 1px solid var(--c-green-light);
-  border-radius: 10px;
+  margin-top: 32px;
+  border: 1px solid var(--c-border);
+  border-radius: 4px;
   overflow: hidden;
   background: var(--c-cream);
 }
@@ -358,7 +305,7 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
 .planner-result-head {
   background: var(--c-green-dark);
   color: #fff;
-  padding: 18px 22px;
+  padding: 22px 26px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -367,7 +314,8 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
 }
 .planner-result-head h3 {
   font-family: var(--f-serif);
-  font-size: 19px;
+  font-size: 23px;
+  line-height: 1.2;
   font-weight: 700;
   margin: 0;
 }
@@ -378,22 +326,20 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
   color: #fff;
 }
 .planner-result-head .planner-btn:hover { background: rgba(255,255,255,0.22); }
-.planner-result-body { padding: 22px; }
-.planner-result-phase { margin-bottom: 22px; }
+.planner-result-body { padding: 28px 26px; }
+.planner-result-phase { margin-bottom: 28px; }
 .planner-result-phase:last-child { margin-bottom: 0; }
 .planner-result-phase h4 {
-  font-family: var(--f-sans);
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--c-amber);
-  margin: 0 0 10px 0;
-  padding-bottom: 6px;
+  font-family: var(--f-serif);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--c-green-dark);
+  margin: 0 0 12px 0;
+  padding-bottom: 8px;
   border-bottom: 1px solid var(--c-border);
 }
 .planner-result-item {
-  margin-bottom: 12px;
+  margin-bottom: 11px;
   font-size: 14px;
   line-height: 1.55;
 }
@@ -410,23 +356,20 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
   font-style: italic;
 }
 .planner-result-note {
-  margin-top: 18px;
-  padding: 14px 16px;
-  background: rgba(196,124,43,0.08);
-  border: 1px solid rgba(196,124,43,0.25);
-  border-radius: 8px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--c-border);
   font-size: 13px;
   line-height: 1.6;
   color: var(--c-ink);
 }
+.planner-result-note strong { color: var(--c-green-dark); }
 
 /* Parâmetros de referência no resultado (AJUSTES_JUL02, B2) */
 .planner-result-ref {
-  margin-top: 18px;
-  padding: 14px 16px;
-  background: var(--c-bg-alt);
-  border-left: 3px solid var(--c-amber);
-  border-radius: 0 8px 8px 0;
+  margin-top: 20px;
+  padding-left: 16px;
+  border-left: 2px solid var(--c-amber);
   font-size: 13px;
   line-height: 1.6;
   color: var(--c-ink);
@@ -450,9 +393,18 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
 }
 
 @media (max-width: 768px) {
-  .planner-phases { flex-direction: column; }
-  .planner-phase-tab { border-right: none; border-bottom: 1px solid var(--c-border); }
-  .planner-phase-tab:last-child { border-bottom: none; }
+  .planner-phases {
+    flex-direction: column;
+    gap: 0;
+    border-bottom: none;
+  }
+  .planner-phase-tab {
+    padding: 12px 0 12px 14px;
+    margin-bottom: 0;
+    border-bottom: none;
+    border-left: 2px solid var(--c-border);
+  }
+  .planner-phase-tab.active { border-left-color: var(--c-amber); }
   .planner-nav { flex-direction: column-reverse; align-items: stretch; }
   .planner-nav-btns { justify-content: space-between; }
   .planner-progress-text { text-align: center; }
@@ -491,11 +443,14 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
           data-es="Guía de ATER Digital">Guia de ATER Digital</h2>
     </div>
 
+    <p style="font-size:13px; font-weight:500; font-style:italic; color:var(--c-ink-muted); margin:0 0 14px;"
+       data-pt="Ferramenta interativa" data-en="Interactive tool" data-es="Herramienta interactiva">Ferramenta interativa</p>
+
     <div class="planner-intro">
-      <p data-pt="Muitas organizações querem trabalhar com ATER Digital, mas não sabem por onde começar. Esta ferramenta percorre as três etapas de um serviço — antes, durante e depois do atendimento — e ajuda a estruturar as decisões. Responda às perguntas de cada etapa e gere um roteiro inicial para a sua instituição."
-         data-en="Many organizations want to work with Digital ATER but don't know where to start. This tool walks through the three stages of a service — before, during and after the visit — and helps structure the decisions. Answer the questions in each stage and generate an initial roadmap for your institution."
-         data-es="Muchas organizaciones quieren trabajar con ATER Digital pero no saben por dónde empezar. Esta herramienta recorre las tres etapas de un servicio — antes, durante y después de la atención — y ayuda a estructurar las decisiones. Responda las preguntas de cada etapa y genere una hoja de ruta inicial para su institución.">
-        Muitas organizações querem trabalhar com ATER Digital, mas não sabem por onde começar. Esta ferramenta percorre as três etapas de um serviço — antes, durante e depois do atendimento — e ajuda a estruturar as decisões. Responda às perguntas de cada etapa e gere um roteiro inicial para a sua instituição.
+      <p data-pt="Muitas organizações querem trabalhar com ATER Digital, mas não sabem por onde começar. Esta ferramenta percorre as três etapas de um serviço (antes, durante e depois do atendimento) e ajuda a estruturar as decisões. Responda às perguntas de cada etapa e gere um roteiro inicial para a sua instituição."
+         data-en="Many organizations want to work with Digital ATER but don't know where to start. This tool walks through the three stages of a service (before, during and after the visit) and helps structure the decisions. Answer the questions in each stage and generate an initial roadmap for your institution."
+         data-es="Muchas organizaciones quieren trabajar con ATER Digital pero no saben por dónde empezar. Esta herramienta recorre las tres etapas de un servicio (antes, durante y después de la atención) y ayuda a estructurar las decisiones. Responda las preguntas de cada etapa y genere una hoja de ruta inicial para su institución.">
+        Muitas organizações querem trabalhar com ATER Digital, mas não sabem por onde começar. Esta ferramenta percorre as três etapas de um serviço (antes, durante e depois do atendimento) e ajuda a estruturar as decisões. Responda às perguntas de cada etapa e gere um roteiro inicial para a sua instituição.
       </p>
     </div>
 
@@ -617,9 +572,9 @@ var PLANNER_DATA = {
           opts: [
             { pt: 'A mesma pessoa faz o remoto e o presencial', en: 'Same person does remote and in-person', es: 'La misma persona hace remoto y presencial',
               info: {
-                pt: 'É o arranjo mais comum: cerca de 75% das instituições mapeadas no estudo de 2024 mantêm o mesmo técnico no campo e no digital — o que dá continuidade às orientações, fortalece a confiança do produtor e reduz custos com treinamento e supervisão de equipes separadas.',
-                en: 'This is the most common arrangement: about 75% of the institutions mapped in the 2024 study keep the same technician in the field and online — which gives continuity to guidance, builds trust with producers and cuts the costs of training and supervising separate teams.',
-                es: 'Es el arreglo más común: cerca del 75% de las instituciones mapeadas en el estudio de 2024 mantienen al mismo técnico en campo y en el medio digital — lo que da continuidad a las orientaciones, fortalece la confianza del productor y reduce costos de capacitación y supervisión de equipos separados.'
+                pt: 'É o arranjo mais comum: cerca de 75% das instituições mapeadas no estudo de 2024 mantêm o mesmo técnico no campo e no digital, o que dá continuidade às orientações, fortalece a confiança do produtor e reduz custos com treinamento e supervisão de equipes separadas.',
+                en: 'This is the most common arrangement: about 75% of the institutions mapped in the 2024 study keep the same technician in the field and online, which gives continuity to guidance, builds trust with producers and cuts the costs of training and supervising separate teams.',
+                es: 'Es el arreglo más común: cerca del 75% de las instituciones mapeadas en el estudio de 2024 mantienen al mismo técnico en campo y en el medio digital, lo que da continuidad a las orientaciones, fortalece la confianza del productor y reduce costos de capacitación y supervisión de equipos separados.'
               } },
             { pt: 'Pessoas diferentes para cada modalidade', en: 'Different people per modality', es: 'Personas diferentes por modalidad' },
             { pt: 'Varia conforme a situação ou demanda', en: 'Varies by situation or demand', es: 'Varía según la situación o demanda' },
@@ -632,18 +587,18 @@ var PLANNER_DATA = {
           title: { pt: 'Momento de implementação', en: 'Timing of implementation', es: 'Momento de implementación' },
           sub: { pt: 'Em que momento, no plano de ATER, a digitalização será implementada?', en: 'At what point in the ATER plan will it be implemented?', es: '¿En qué momento del plan de ATER se implementará?' },
           opts: [
-            { pt: 'Híbrida — paralela ao presencial', en: 'Hybrid — parallel to in-person', es: 'Híbrida — paralela a lo presencial',
+            { pt: 'Híbrida: paralela ao presencial', en: 'Hybrid: parallel to in-person', es: 'Híbrida: paralela a lo presencial',
               info: {
                 pt: 'Modalidade adotada por todas as instituições do estudo de 2024: as ações digitais potencializam o presencial, o contato com o produtor passa a ser semanal ou quinzenal e o custo médio por família fica abaixo do da ATER exclusivamente presencial.',
                 en: 'The modality adopted by every institution in the 2024 study: digital actions boost in-person work, contact with producers becomes weekly or biweekly, and the average cost per family is lower than fully in-person ATER.',
                 es: 'Modalidad adoptada por todas las instituciones del estudio de 2024: las acciones digitales potencian lo presencial, el contacto con el productor pasa a ser semanal o quincenal y el costo medio por familia queda por debajo de la ATER exclusivamente presencial.'
               } },
-            { pt: 'Sequencial — após o ciclo presencial', en: 'Sequential — after the in-person cycle', es: 'Secuencial — tras el ciclo presencial' },
+            { pt: 'Sequencial: após o ciclo presencial', en: 'Sequential: after the in-person cycle', es: 'Secuencial: tras el ciclo presencial' },
             { pt: 'Exclusivamente digital', en: 'Fully digital', es: 'Exclusivamente digital',
               info: {
-                pt: 'Ainda pouco usual — cerca de 18% das instituições com práticas digitais têm projetos 100% remotos —, mas com custo muito inferior. É útil, por exemplo, para dar continuidade ao acompanhamento onde a ATER presencial ou híbrida não é viável.',
-                en: 'Still uncommon — about 18% of institutions with digital practices run fully remote projects — but at a much lower cost. It is useful, for example, to keep supporting families where in-person or hybrid ATER is not viable.',
-                es: 'Aún poco usual — cerca del 18% de las instituciones con prácticas digitales tienen proyectos 100% remotos —, pero con un costo muy inferior. Es útil, por ejemplo, para dar continuidad al acompañamiento donde la ATER presencial o híbrida no es viable.'
+                pt: 'Ainda pouco usual (cerca de 18% das instituições com práticas digitais têm projetos 100% remotos), mas com custo muito inferior. É útil, por exemplo, para dar continuidade ao acompanhamento onde a ATER presencial ou híbrida não é viável.',
+                en: 'Still uncommon (about 18% of institutions with digital practices run fully remote projects), but at a much lower cost. It is useful, for example, to keep supporting families where in-person or hybrid ATER is not viable.',
+                es: 'Aún poco usual (cerca del 18% de las instituciones con prácticas digitales tienen proyectos 100% remotos), pero con un costo muy inferior. Es útil, por ejemplo, para dar continuidad al acompañamiento donde la ATER presencial o híbrida no es viable.'
               } },
             { pt: 'Variará conforme o projeto', en: 'Varies by project', es: 'Variará según el proyecto' },
             { pt: 'Ainda será definido', en: 'To be defined', es: 'Aún por definir', neutral: true },
@@ -655,9 +610,9 @@ var PLANNER_DATA = {
           title: { pt: 'Questões legais, éticas e de sigilo', en: 'Legal, ethical & confidentiality', es: 'Cuestiones legales, éticas y de confidencialidad' },
           sub: { pt: 'Como esses aspectos serão tratados? (pode marcar mais de um)', en: 'How will these aspects be handled? (select all that apply)', es: '¿Cómo se tratarán estos aspectos? (puede marcar varios)' },
           info: {
-            pt: 'A LGPD (Lei nº 13.709/2018) protege os dados pessoais e sensíveis das famílias agricultoras tratados nas atividades digitais. No estudo de 2024, os treinamentos on-line são a forma mais comum de orientar os técnicos sobre o tema (52% das instituições), seguidos dos treinamentos presenciais (17%) — prática que reduz riscos e aumenta a confiança dos produtores.',
-            en: 'The Brazilian data protection law (LGPD, Law 13,709/2018) protects the personal and sensitive data of farming families handled in digital activities. In the 2024 study, online training is the most common way to guide technicians on the topic (52% of institutions), followed by in-person training (17%) — a practice that reduces risks and increases producer trust.',
-            es: 'La ley brasileña de protección de datos (LGPD, Ley 13.709/2018) protege los datos personales y sensibles de las familias agricultoras tratados en las actividades digitales. En el estudio de 2024, las capacitaciones en línea son la forma más común de orientar a los técnicos sobre el tema (52% de las instituciones), seguidas de las presenciales (17%) — práctica que reduce riesgos y aumenta la confianza de los productores.'
+            pt: 'A LGPD (Lei nº 13.709/2018) protege os dados pessoais e sensíveis das famílias agricultoras tratados nas atividades digitais. No estudo de 2024, os treinamentos on-line são a forma mais comum de orientar os técnicos sobre o tema (52% das instituições), seguidos dos treinamentos presenciais (17%). É uma prática que reduz riscos e aumenta a confiança dos produtores.',
+            en: 'The Brazilian data protection law (LGPD, Law 13,709/2018) protects the personal and sensitive data of farming families handled in digital activities. In the 2024 study, online training is the most common way to guide technicians on the topic (52% of institutions), followed by in-person training (17%). It is a practice that reduces risks and increases producer trust.',
+            es: 'La ley brasileña de protección de datos (LGPD, Ley 13.709/2018) protege los datos personales y sensibles de las familias agricultoras tratados en las actividades digitales. En el estudio de 2024, las capacitaciones en línea son la forma más común de orientar a los técnicos sobre el tema (52% de las instituciones), seguidas de las presenciales (17%). Es una práctica que reduce riesgos y aumenta la confianza de los productores.'
           },
           opts: [
             { pt: 'Treinamentos presenciais', en: 'In-person training', es: 'Capacitaciones presenciales' },
@@ -675,9 +630,9 @@ var PLANNER_DATA = {
           title: { pt: 'Produção de material digital', en: 'Digital material production', es: 'Producción de material digital' },
           sub: { pt: 'Quais materiais serão produzidos e usados nas práticas de ATER? (pode marcar mais de um)', en: 'Which materials will be produced and used? (select all that apply)', es: '¿Qué materiales se producirán y usarán? (puede marcar varios)' },
           info: {
-            pt: 'Imagens (fotos e cards) são o material mais usado — praticamente todas as instituições do estudo de 2024 —, seguidas de textos e folhetos informativos (78%): a comunicação visual transmite informação de forma rápida e intuitiva nos meios digitais. E nem tudo precisa ser produzido do zero: bibliotecas virtuais como Zap Rural, e-campo, Plataforma Ater+ Digital e Senar EaD oferecem conteúdo pronto e reduzem custos.',
-            en: 'Images (photos and cards) are the most used material — nearly every institution in the 2024 study —, followed by texts and leaflets (78%): visual communication conveys information quickly and intuitively in digital media. Not everything needs to be produced from scratch: virtual libraries such as Zap Rural, e-campo, Plataforma Ater+ Digital and Senar EaD offer ready-made content and reduce costs.',
-            es: 'Las imágenes (fotos y tarjetas) son el material más usado — prácticamente todas las instituciones del estudio de 2024 —, seguidas de textos y folletos (78%): la comunicación visual transmite información de forma rápida e intuitiva en los medios digitales. Y no todo debe producirse desde cero: bibliotecas virtuales como Zap Rural, e-campo, Plataforma Ater+ Digital y Senar EaD ofrecen contenido listo y reducen costos.'
+            pt: 'Imagens (fotos e cards) são o material mais usado, presente em praticamente todas as instituições do estudo de 2024, seguidas de textos e folhetos informativos (78%): a comunicação visual transmite informação de forma rápida e intuitiva nos meios digitais. E nem tudo precisa ser produzido do zero: bibliotecas virtuais como Zap Rural, e-campo, Plataforma Ater+ Digital e Senar EaD oferecem conteúdo pronto e reduzem custos.',
+            en: 'Images (photos and cards) are the most used material, present in nearly every institution in the 2024 study, followed by texts and leaflets (78%): visual communication conveys information quickly and intuitively in digital media. Not everything needs to be produced from scratch: virtual libraries such as Zap Rural, e-campo, Plataforma Ater+ Digital and Senar EaD offer ready-made content and reduce costs.',
+            es: 'Las imágenes (fotos y tarjetas) son el material más usado, presente en prácticamente todas las instituciones del estudio de 2024, seguidas de textos y folletos (78%): la comunicación visual transmite información de forma rápida e intuitiva en los medios digitales. Y no todo debe producirse desde cero: bibliotecas virtuales como Zap Rural, e-campo, Plataforma Ater+ Digital y Senar EaD ofrecen contenido listo y reducen costos.'
           },
           opts: [
             { pt: 'Textos e/ou folhetos informativos', en: 'Texts and/or leaflets', es: 'Textos y/o folletos' },
@@ -774,9 +729,9 @@ var PLANNER_DATA = {
           title: { pt: 'Equipamentos a utilizar', en: 'Equipment to use', es: 'Equipos a utilizar' },
           sub: { pt: 'Quais equipamentos serão utilizados pelos técnicos? (pode marcar mais de um)', en: 'Which equipment will technicians use? (select all that apply)', es: '¿Qué equipos usarán los técnicos? (puede marcar varios)' },
           info: {
-            pt: 'O celular/smartphone é o equipamento universal da ATER digital: nas zonas rurais, 92% dos domicílios possuem celular, e quem acessa a internet no meio rural o faz pelo aparelho. Já a doação de equipamentos aos produtores não tem funcionado na prática — é mais eficaz investir em infraestrutura coletiva, como wi-fi em associações e espaços comunitários.',
-            en: 'The mobile phone/smartphone is the universal equipment of digital ATER: in rural areas, 92% of households own a mobile phone, and rural internet users access it through the device. Donating equipment to producers has not worked in practice — investing in collective infrastructure, such as wi-fi in associations and community spaces, is more effective.',
-            es: 'El celular/smartphone es el equipo universal de la ATER digital: en las zonas rurales, el 92% de los hogares tiene celular, y quien accede a internet en el medio rural lo hace por el aparato. La donación de equipos a los productores no ha funcionado en la práctica — es más eficaz invertir en infraestructura colectiva, como wi-fi en asociaciones y espacios comunitarios.'
+            pt: 'O celular/smartphone é o equipamento universal da ATER digital: nas zonas rurais, 92% dos domicílios possuem celular, e quem acessa a internet no meio rural o faz pelo aparelho. Já a doação de equipamentos aos produtores não tem funcionado na prática: é mais eficaz investir em infraestrutura coletiva, como wi-fi em associações e espaços comunitários.',
+            en: 'The mobile phone/smartphone is the universal equipment of digital ATER: in rural areas, 92% of households own a mobile phone, and rural internet users access it through the device. Donating equipment to producers has not worked in practice: investing in collective infrastructure, such as wi-fi in associations and community spaces, is more effective.',
+            es: 'El celular/smartphone es el equipo universal de la ATER digital: en las zonas rurales, el 92% de los hogares tiene celular, y quien accede a internet en el medio rural lo hace por el aparato. La donación de equipos a los productores no ha funcionado en la práctica: es más eficaz invertir en infraestructura colectiva, como wi-fi en asociaciones y espacios comunitarios.'
           },
           opts: [
             { pt: 'Smartphone', en: 'Smartphone', es: 'Smartphone' },
@@ -849,9 +804,9 @@ var PLANNER_DATA = {
             { pt: 'Retorno via mensagens (ex.: WhatsApp)', en: 'Feedback via messages (e.g. WhatsApp)', es: 'Respuesta por mensajes (ej.: WhatsApp)' },
             { pt: 'Envio de fotos/vídeos pelos produtores', en: 'Photos/videos sent by producers', es: 'Envío de fotos/videos por productores',
               info: {
-                pt: 'Junto com o relato direto do produtor, é a forma mais rápida e barata de verificar (não exige deslocamento), embora menos precisa — fotos e relatos podem não capturar toda a implementação da prática recomendada.',
-                en: 'Together with direct reports from producers, this is the fastest and cheapest way to verify (no travel required), although less precise — photos and reports may not capture the full implementation of the recommended practice.',
-                es: 'Junto con el relato directo del productor, es la forma más rápida y barata de verificar (no exige desplazamiento), aunque menos precisa — fotos y relatos pueden no capturar toda la implementación de la práctica recomendada.'
+                pt: 'Junto com o relato direto do produtor, é a forma mais rápida e barata de verificar (não exige deslocamento), embora menos precisa: fotos e relatos podem não capturar toda a implementação da prática recomendada.',
+                en: 'Together with direct reports from producers, this is the fastest and cheapest way to verify (no travel required), although less precise: photos and reports may not capture the full implementation of the recommended practice.',
+                es: 'Junto con el relato directo del productor, es la forma más rápida y barata de verificar (no exige desplazamiento), aunque menos precisa: fotos y relatos pueden no capturar toda la implementación de la práctica recomendada.'
               } },
             { pt: 'Visitas de campo', en: 'Field visits', es: 'Visitas de campo',
               info: {
@@ -898,7 +853,7 @@ var PLANNER_T = {
     en: function(c, t) { return 'Stage ' + c + ' of ' + t; },
     es: function(c, t) { return 'Etapa ' + c + ' de ' + t; }
   },
-  emptyAnswer: { pt: '— sem resposta —', en: '— no answer —', es: '— sin respuesta —' },
+  emptyAnswer: { pt: '(sem resposta)', en: '(no answer)', es: '(sin respuesta)' },
   notDefined: { pt: 'A definir', en: 'To be defined', es: 'Por definir' },
   copyOk: { pt: 'Roteiro copiado!', en: 'Roadmap copied!', es: '¡Hoja de ruta copiada!' },
   noteTitle: { pt: 'Próximo passo: ', en: 'Next step: ', es: 'Próximo paso: ' },
@@ -923,26 +878,26 @@ var PLANNER_REF = {
   // Índices 0–2 da pergunta 1.3 (momento de implementação)
   porModalidade: [
     {
-      pt: 'Modalidade escolhida — híbrida: custo médio de referência de R$ 258 por família/mês (R$ 3.096/ano), com contato semanal ou quinzenal entre técnico e produtor.',
-      en: 'Chosen modality — hybrid: reference average cost of R$ 258 per family/month (R$ 3,096/year), with weekly or biweekly contact between technician and producer.',
-      es: 'Modalidad elegida — híbrida: costo medio de referencia de R$ 258 por familia/mes (R$ 3.096/año), con contacto semanal o quincenal entre técnico y productor.'
+      pt: 'Modalidade híbrida (a escolhida): custo médio de referência de R$ 258 por família/mês (R$ 3.096/ano), com contato semanal ou quinzenal entre técnico e produtor.',
+      en: 'Hybrid modality (chosen): reference average cost of R$ 258 per family/month (R$ 3,096/year), with weekly or biweekly contact between technician and producer.',
+      es: 'Modalidad híbrida (la elegida): costo medio de referencia de R$ 258 por familia/mes (R$ 3.096/año), con contacto semanal o quincenal entre técnico y productor.'
     },
     {
-      pt: 'Modalidade escolhida — sequencial: o acompanhamento digital dá continuidade ao ciclo presencial e é uma alternativa de baixo custo para manter o vínculo com as famílias quando o projeto presencial termina.',
-      en: 'Chosen modality — sequential: digital follow-up continues the in-person cycle and is a low-cost alternative to keep the bond with families when the in-person project ends.',
-      es: 'Modalidad elegida — secuencial: el acompañamiento digital da continuidad al ciclo presencial y es una alternativa de bajo costo para mantener el vínculo con las familias cuando el proyecto presencial termina.'
+      pt: 'Modalidade sequencial (a escolhida): o acompanhamento digital dá continuidade ao ciclo presencial e é uma alternativa de baixo custo para manter o vínculo com as famílias quando o projeto presencial termina.',
+      en: 'Sequential modality (chosen): digital follow-up continues the in-person cycle and is a low-cost alternative to keep the bond with families when the in-person project ends.',
+      es: 'Modalidad secuencial (la elegida): el acompañamiento digital da continuidad al ciclo presencial y es una alternativa de bajo costo para mantener el vínculo con las familias cuando el proyecto presencial termina.'
     },
     {
-      pt: 'Modalidade escolhida — exclusivamente digital: custo médio de referência de R$ 26,62 por família/mês (R$ 319,44/ano), o menor entre as modalidades; um técnico atuando de forma remota chega a atender até 1.000 famílias.',
-      en: 'Chosen modality — fully digital: reference average cost of R$ 26.62 per family/month (R$ 319.44/year), the lowest among the modalities; one technician working remotely can serve up to 1,000 families.',
-      es: 'Modalidad elegida — exclusivamente digital: costo medio de referencia de R$ 26,62 por familia/mes (R$ 319,44/año), el menor entre las modalidades; un técnico actuando de forma remota llega a atender hasta 1.000 familias.'
+      pt: 'Modalidade exclusivamente digital (a escolhida): custo médio de referência de R$ 26,62 por família/mês (R$ 319,44/ano), o menor entre as modalidades; um técnico atuando de forma remota chega a atender até 1.000 famílias.',
+      en: 'Fully digital modality (chosen): reference average cost of R$ 26.62 per family/month (R$ 319.44/year), the lowest among the modalities; one technician working remotely can serve up to 1,000 families.',
+      es: 'Modalidad exclusivamente digital (la elegida): costo medio de referencia de R$ 26,62 por familia/mes (R$ 319,44/año), el menor entre las modalidades; un técnico actuando de forma remota llega a atender hasta 1.000 familias.'
     }
   ],
   bullets: [
     {
-      pt: 'Custos de referência por família/ano: ATER presencial R$ 3.500–4.000; híbrida R$ 3.096; exclusivamente digital R$ 319 — incorporar atividades remotas reduz o custo e aumenta a frequência de contato.',
-      en: 'Reference costs per family/year: in-person ATER R$ 3,500–4,000; hybrid R$ 3,096; fully digital R$ 319 — incorporating remote activities lowers costs and increases contact frequency.',
-      es: 'Costos de referencia por familia/año: ATER presencial R$ 3.500–4.000; híbrida R$ 3.096; exclusivamente digital R$ 319 — incorporar actividades remotas reduce el costo y aumenta la frecuencia de contacto.'
+      pt: 'Custos de referência por família/ano: ATER presencial R$ 3.500–4.000; híbrida R$ 3.096; exclusivamente digital R$ 319. Incorporar atividades remotas reduz o custo e aumenta a frequência de contato.',
+      en: 'Reference costs per family/year: in-person ATER R$ 3,500–4,000; hybrid R$ 3,096; fully digital R$ 319. Incorporating remote activities lowers costs and increases contact frequency.',
+      es: 'Costos de referencia por familia/año: ATER presencial R$ 3.500–4.000; híbrida R$ 3.096; exclusivamente digital R$ 319. Incorporar actividades remotas reduce el costo y aumenta la frecuencia de contacto.'
     },
     {
       pt: 'Frequência de contato: com práticas digitais, a interação técnico–produtor passa a ser semanal ou quinzenal, ante 4 a 6 visitas por ano na ATER exclusivamente presencial.',
@@ -950,9 +905,9 @@ var PLANNER_REF = {
       es: 'Frecuencia de contacto: con prácticas digitales, la interacción técnico–productor pasa a ser semanal o quincenal, frente a 4 a 6 visitas por año en la ATER exclusivamente presencial.'
     },
     {
-      pt: 'Capacidade de atendimento: um técnico em modalidade híbrida chega a 10 atendimentos presenciais e 70 on-line por mês — até 4 vezes o alcance do modelo exclusivamente presencial.',
-      en: 'Service capacity: a technician in hybrid mode can deliver 10 in-person and 70 online sessions per month — up to 4 times the reach of the fully in-person model.',
-      es: 'Capacidad de atención: un técnico en modalidad híbrida llega a 10 atenciones presenciales y 70 en línea por mes — hasta 4 veces el alcance del modelo exclusivamente presencial.'
+      pt: 'Capacidade de atendimento: um técnico em modalidade híbrida chega a 10 atendimentos presenciais e 70 on-line por mês, até 4 vezes o alcance do modelo exclusivamente presencial.',
+      en: 'Service capacity: a technician in hybrid mode can deliver 10 in-person and 70 online sessions per month, up to 4 times the reach of the fully in-person model.',
+      es: 'Capacidad de atención: un técnico en modalidad híbrida llega a 10 atenciones presenciales y 70 en línea por mes, hasta 4 veces el alcance del modelo exclusivamente presencial.'
     },
     {
       pt: 'Metodologia de referência (12 meses): articulação e mobilização → cadastro e diagnóstico das famílias (incluindo o "capital digital") → planejamento coletivo e individual → atendimentos individuais virtuais quinzenais (cerca de 20 minutos, via WhatsApp) combinados a visitas presenciais e eventos coletivos → relatórios de avaliação e divulgação de resultados.',
@@ -991,8 +946,8 @@ function renderPlannerPhases() {
     return '<button class="planner-phase-tab' + active + '" data-phase="' + i + '">' +
       '<div class="planner-phase-num">' + (i + 1) + '</div>' +
       '<div class="planner-phase-label">' +
-        '<span class="pl-kicker">' + plannerL(ph.kicker) + '</span>' +
         '<span class="pl-name">' + plannerL(ph.name) + '</span>' +
+        '<span class="pl-desc">' + plannerL(ph.desc) + '</span>' +
       '</div>' +
     '</button>';
   }).join('');
@@ -1021,7 +976,7 @@ function renderPlannerBody() {
           (opt.info ? ' has-desc' : '');
         return '<button class="' + cls + '" data-phase="' + ph.key + '" data-code="' + q.code +
           '" data-opt="' + oi + '" data-type="' + q.type + '">' +
-          '<span class="planner-check"></span>' + plannerL(opt) +
+          plannerL(opt) +
           (opt.info ? '<span class="planner-opt-desc">' + plannerL(opt.info) + '</span>' : '') +
           '</button>';
       }).join('');
@@ -1141,7 +1096,7 @@ function plannerPlainText() {
   lines.push(plannerL({ pt: 'ROTEIRO DE ATER DIGITAL', en: 'DIGITAL ATER ROADMAP', es: 'HOJA DE RUTA DE ATER DIGITAL' }));
   lines.push('');
   PLANNER_DATA.phases.forEach(function(ph) {
-    lines.push((plannerL(ph.kicker) + ' — ' + plannerL(ph.name)).toUpperCase());
+    lines.push((plannerL(ph.kicker) + ': ' + plannerL(ph.name)).toUpperCase());
     ph.questions.forEach(function(q) {
       var sel = (plannerState.answers[ph.key] && plannerState.answers[ph.key][q.code]) || [];
       var ans = sel.length === 0

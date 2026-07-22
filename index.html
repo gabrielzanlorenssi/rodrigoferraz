@@ -27,7 +27,7 @@
       --c-bg-alt:     #ece7db;
       --c-bg-dark:    #1a2e1a;
       --c-ink:        #1c1c1c;
-      --c-ink-muted:  #6b6b5e;
+      --c-ink-muted:  #646458;
       --c-green-dark: #1f4023;
       --c-green:      #2d6a32;
       --c-green-mid:  #4a8c50;
@@ -151,6 +151,7 @@ box-shadow: 0 1px 0 var(--c-amber);
       color: var(--c-cream);
       letter-spacing: 0.04em;
       text-transform: uppercase;
+      white-space: nowrap;
     }
 
     .nav-logo span {
@@ -173,6 +174,18 @@ box-shadow: 0 1px 0 var(--c-amber);
       padding: 6px 10px;
       border-radius: 3px;
       transition: color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+
+    /* Desktop estreito: comprimir o menu antes de cair para o hambúrguer */
+    @media (max-width: 1180px) {
+      .nav-links { gap: 2px; }
+      .nav-links a {
+        padding: 6px 6px;
+        letter-spacing: 0.04em;
+      }
+      .nav-divider { margin: 0 2px; }
+      .lang-btn { padding: 5px 7px; }
     }
 
     .nav-links a:hover {
@@ -349,7 +362,7 @@ box-shadow: 0 1px 0 var(--c-amber);
       align-items: center;
       gap: 8px;
       background: var(--c-amber);
-      color: white;
+      color: #1c1c1c; /* contraste 5.0:1 sobre âmbar (branco dava 3.3) */
       font-family: var(--f-sans);
       font-size: 13px;
       font-weight: 600;
@@ -405,7 +418,7 @@ box-shadow: 0 1px 0 var(--c-amber);
       font-weight: 600;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--c-amber);
+      color: var(--c-green); /* regra da identidade: rótulo de seção em verde (âmbar dava 2.7:1) */
     }
 
     .section-label::after {
@@ -565,7 +578,7 @@ box-shadow: 0 1px 0 var(--c-amber);
 
 .tl-tag:hover {
   border-color: var(--c-amber);
-  color: var(--c-amber);
+  color: #8a6a20; /* âmbar-terra: âmbar puro não passa como texto pequeno */
   background: rgba(196,124,43,0.07);
 }
 
@@ -830,14 +843,52 @@ box-shadow: 0 1px 0 var(--c-amber);
   text-align: right;
 }
 
-.map-chart-label {
+.map-fonte-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+}
+.map-fonte-row .map-fonte { margin-top: 0; }
+
+/* Botão discreto "Baixar dados" — mesmos tokens dos demais controles da seção */
+.map-download-btn {
   font-family: var(--f-sans);
   font-size: 12px;
   font-weight: 500;
+  padding: 6px 12px;
+  border: 1.5px solid var(--c-border);
+  border-radius: 4px;
+  background: var(--c-cream);
   color: var(--c-ink-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin: 20px 0 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.map-download-btn:hover {
+  border-color: var(--c-green);
+  color: var(--c-green-dark);
+}
+
+/* Título do gráfico abaixo do mapa (hierarquia: é título, não legenda) */
+.map-chart-label {
+  font-family: var(--f-sans);
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--c-ink);
+  line-height: 1.35;
+  margin: 30px 0 16px;
+}
+.map-chart-label strong { font-weight: 700; color: var(--c-ink); }
+.map-chart-label .mcl-soft { font-weight: 400; color: var(--c-ink-muted); }
+
+@media (max-width: 600px) {
+  .map-fonte-row { flex-direction: column; align-items: stretch; gap: 8px; }
+  .map-fonte-row .map-fonte { text-align: left; }
+  .map-download-btn { align-self: flex-start; }
+  .map-chart-label { font-size: 16px; }
 }
 
 #map-chart {
@@ -992,7 +1043,7 @@ box-shadow: 0 1px 0 var(--c-amber);
       font-family: var(--f-serif);
       font-size: 13px;
       font-style: italic;
-      color: rgba(255,255,255,0.5);
+      color: rgba(255,255,255,0.92); /* 0.5 dava até 2.6:1 nos thumbs mais claros */
       text-align: center;
       padding: 12px;
     }
@@ -1014,7 +1065,7 @@ box-shadow: 0 1px 0 var(--c-amber);
       font-weight: 600;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--c-amber);
+      color: #8a6a20; /* âmbar-terra da escala do mapa; âmbar puro dava 3.2:1 em texto pequeno */
       margin-bottom: 6px;
     }
 
@@ -1060,7 +1111,7 @@ box-shadow: 0 1px 0 var(--c-amber);
       font-family: var(--f-serif);
       font-size: 13px;
       font-weight: 700;
-      color: var(--c-amber);
+      color: #8a6a20; /* âmbar-terra (contraste de texto pequeno) */
       min-width: 36px;
       padding-top: 2px;
     }
@@ -1270,9 +1321,9 @@ box-shadow: 0 1px 0 var(--c-amber);
 
     .tl-intro p:last-child { margin-bottom: 0; }
 
-@media (max-width: 768px) {
-  :root { --section-gap: 60px; }
-
+/* Nav colapsa para hambúrguer antes do breakpoint geral: entre ~769 e 940px
+   o menu completo não cabe sem quebrar linha ("Linha do Tempo" em 3 linhas) */
+@media (max-width: 940px) {
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
 
@@ -1289,7 +1340,11 @@ box-shadow: 0 1px 0 var(--c-amber);
   }
 
   .nav-links.open .nav-divider { display: none; }
-  .nav-links.open a { padding: 8px 24px; }
+  .nav-links.open a { padding: 8px 24px; white-space: normal; }
+}
+
+@media (max-width: 768px) {
+  :root { --section-gap: 60px; }
 
   .about-grid {
     grid-template-columns: 1fr;
@@ -1331,16 +1386,18 @@ box-shadow: 0 1px 0 var(--c-amber);
   .tl-item:nth-child(odd),
   .tl-item:nth-child(even) {
     grid-column: unset;
+    margin-top: 0;
     margin-bottom: 12px;
-    padding-left: 28px;
+    padding-left: 30px;
     padding-right: 0;
   }
 
   .tl-item::before,
   .tl-item:nth-child(odd)::before,
   .tl-item:nth-child(even)::before {
-    left: 1px;
+    left: -2px;
     right: auto;
+    top: 18px;
   }
 
   .tl-item:nth-child(even) .tl-card {
@@ -1641,9 +1698,9 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
     </div>
     <div style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
       <h2 class="section-title" style="margin-bottom:0"
-          data-pt="Evolução de indicadores ATER e Digitalização no Brasil"
-          data-en="Evolution of ATER and Digitalization Indicators in Brazil"
-          data-es="Evolución de indicadores ATER y Digitalización en Brasil">Indicadores ATER no Brasil</h2>
+          data-pt="Indicadores ATER e Digitalização no Brasil"
+          data-en="ATER and Digitalization Indicators in Brazil"
+          data-es="Indicadores ATER y Digitalización en Brasil">Indicadores ATER e Digitalização no Brasil</h2>
       <button class="share-section-btn" onclick="shareSection('mapa')">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
         <span data-pt="Compartilhar" data-en="Share" data-es="Compartir">Compartilhar</span>
@@ -1659,7 +1716,6 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
     <div class="geo-level-btns" id="geo-level-btns">
       <button class="geo-btn active" data-level="municipio" data-pt="Município" data-en="Municipality" data-es="Municipio">Município</button>
       <button class="geo-btn" data-level="uf" data-pt="Unidade federativa" data-en="State" data-es="Unidad federativa">Unidade federativa</button>
-      <button class="geo-btn" data-level="regiao" data-pt="Região" data-en="Region" data-es="Región">Região</button>
     </div>
 
     <select id="map-indicator-selector" class="map-indicator-selector"></select>
@@ -1683,7 +1739,11 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
       <button class="zoom-btn" id="zoom-out" title="Zoom out">−</button>
       <button class="zoom-btn" id="zoom-reset" title="Reset zoom" style="font-size:14px">⟲</button>
     </div>
-    <p id="map-fonte" class="map-fonte"></p>
+    <div class="map-fonte-row">
+      <p id="map-fonte" class="map-fonte"></p>
+      <button class="map-download-btn" id="map-download-btn" type="button"
+              data-pt="Baixar dados" data-en="Download data" data-es="Descargar datos">Baixar dados</button>
+    </div>
 
     <div id="map-chart-wrap">
       <p class="map-chart-label" id="map-chart-label"></p>
@@ -1820,6 +1880,9 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
         <span data-pt="Compartilhar" data-en="Share" data-es="Compartir">Compartilhar</span>
       </button>
     </div>
+
+    <p style="font-size:13px; font-weight:500; font-style:italic; color:var(--c-ink-muted); margin:0 0 14px;"
+       data-pt="Ferramenta interativa" data-en="Interactive tool" data-es="Herramienta interactiva">Ferramenta interativa</p>
 
     <p style="max-width:620px; margin-bottom:20px;"
        data-pt="Muitas organizações querem trabalhar com ATER Digital, mas não sabem por onde começar. O guia percorre as três etapas de um serviço — antes, durante e depois do atendimento — e gera um roteiro inicial para a sua instituição."
@@ -2016,8 +2079,18 @@ var TIMELINE_DATA = [
     canal: null,
     tipo: { pt: "Política pública", en: "Public Policy", es: "Política pública" },
     meio: { pt: "Institucionalização", en: "Institutionalization", es: "Institucionalización" },
-    text: { pt: "Criação da Associação de Crédito e Assistência Rural (ABCAR), institucionalizando a ATER no Brasil.", en: "Creation of ABCAR (Association for Rural Credit and Assistance), institutionalizing ATER in Brazil.", es: "Creación de la ABCAR (Asociación de Crédito y Asistencia Rural), institucionalizando la ATER en Brasil." },
+    text: { pt: "Criação da ACAR em Minas Gerais, marco inicial da institucionalização da ATER no Brasil.", en: "Creation of ACAR in Minas Gerais, the starting point of the institutionalization of ATER in Brazil.", es: "Creación de la ACAR en Minas Gerais, hito inicial de la institucionalización de la ATER en Brasil." },
     links: ["https://www.gov.br/agricultura/pt-br/assuntos/ater/historico","https://portalantigo.ipea.gov.br/agencia/images/stories/PDFs/TDs/td_2343.pdf","https://tidsskrift.dk/dialogos/article/view/128044"]
+  },
+  {
+    year: 1956, cat: "Política Pública",
+    // Marco novo (revisão de 20/07/2026) — tags definidas pelo Claude, revisar com Rodrigo
+    natureza: { pt: "Fortalecimento Institucional Público e Privado", en: "Public and Private Institutional Strengthening", es: "Fortalecimiento Institucional Público y Privado" },
+    canal: null,
+    tipo: { pt: "Fortalecimento institucional", en: "Institutional Strengthening", es: "Fortalecimiento institucional" },
+    meio: { pt: "Institucionalização", en: "Institutionalization", es: "Institucionalización" },
+    text: { pt: "Criação da ABCAR, responsável pela organização nacional das associações de crédito e assistência rural.", en: "Creation of ABCAR, responsible for the national organization of rural credit and assistance associations.", es: "Creación de la ABCAR, responsable de la organización nacional de las asociaciones de crédito y asistencia rural." },
+    links: ["https://www.gov.br/agricultura/pt-br/assuntos/ater/historico","https://portalantigo.ipea.gov.br/agencia/images/stories/PDFs/TDs/td_2343.pdf"]
   },
   {
     year: 1960, cat: "Mídia",
@@ -2036,6 +2109,16 @@ var TIMELINE_DATA = [
     meio: { pt: "Rede institucional", en: "Institutional Network", es: "Red institucional" },
     text: { pt: "Consolidação das redes estaduais de rádio rural (Emater, Epagri, etc.).", en: "Consolidation of state rural radio networks (Emater, Epagri, etc.).", es: "Consolidación de las redes estatales de radio rural (Emater, Epagri, etc.)." },
     links: ["https://www.epagri.sc.gov.br/","https://periodicos.ufsm.br/extensaorural/article/view/35930/pdf"]
+  },
+  {
+    year: 1975, cat: "Política Pública",
+    // Marco novo (revisão de 20/07/2026) — tags definidas pelo Claude, revisar com Rodrigo
+    natureza: { pt: "Políticas Públicas e Estratégias Governamentais", en: "Public Policies and Government Strategies", es: "Políticas Públicas y Estrategias Gubernamentales" },
+    canal: null,
+    tipo: { pt: "Política pública", en: "Public Policy", es: "Política pública" },
+    meio: { pt: "Institucionalização", en: "Institutionalization", es: "Institucionalización" },
+    text: { pt: "Criação da EMBRATER e consolidação do Sistema Nacional de ATER.", en: "Creation of EMBRATER and consolidation of the National ATER System.", es: "Creación de la EMBRATER y consolidación del Sistema Nacional de ATER." },
+    links: ["https://www.gov.br/agricultura/pt-br/assuntos/ater/historico","https://www12.senado.leg.br/publicacoes/estudos-legislativos/tipos-de-estudos/textos-para-discussao/td-48-extensao-rural-no-brasil-uma-abordagem-historica-da-legislacao"]
   },
   {
     year: 1980, cat: "Mídia",
@@ -2072,7 +2155,7 @@ var TIMELINE_DATA = [
     canal: null,
     tipo: { pt: "Fortalecimento institucional", en: "Institutional Strengthening", es: "Fortalecimiento institucional" },
     meio: { pt: "Institucionalização", en: "Institutionalization", es: "Institucionalización" },
-    text: { pt: "Criação da Asbraer (Associação Brasileira das Entidades Estaduais de Assistência Técnica e Extensão Rural).", en: "Creation of Asbraer (Brazilian Association of State Rural Extension Entities).", es: "Creación de la Asbraer (Asociación Brasileña de Entidades Estatales de Asistencia Técnica y Extensión Rural)." },
+    text: { pt: "Extinção da EMBRATER, criação da ASBRAER e início da expansão da internet no Brasil.", en: "Dissolution of EMBRATER, creation of ASBRAER and the beginning of internet expansion in Brazil.", es: "Extinción de la EMBRATER, creación de la ASBRAER e inicio de la expansión de internet en Brasil." },
     links: ["http://www.tede2.ufrpe.br:8080/tede2/bitstream/tede2/6047/2/Bruno%20de%20Oliveira%20Andrade.pdf","https://www.asbraer.org.br/gestao.html"]
   },
   {
@@ -2086,11 +2169,12 @@ var TIMELINE_DATA = [
   },
   {
     year: 1995, cat: "Tecnologia",
+    yearLabel: { pt: "Década de 1990", en: "1990s", es: "Década de 1990" },
     natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations", es: "Innovaciones en Comunicación y Tecnología" },
     canal: { pt: "Tecnologias Digitais e de Automação", en: "Digital and Automation Technologies", es: "Tecnologías Digitales y de Automatización" },
     tipo: { pt: "Geotecnologia", en: "Geotechnology", es: "Geotecnología" },
     meio: { pt: "Agricultura de precisão", en: "Precision Agriculture", es: "Agricultura de precisión" },
-    text: { pt: "Introdução do GPS e SIG na agricultura de precisão.", en: "Introduction of GPS and GIS in precision agriculture.", es: "Introducción del GPS y SIG en la agricultura de precisión." },
+    text: { pt: "Introdução de GPS, SIG, sensores, imagens de satélite e drones, formando a base da agricultura de precisão.", en: "Introduction of GPS, GIS, sensors, satellite imagery and drones, forming the basis of precision agriculture.", es: "Introducción de GPS, SIG, sensores, imágenes satelitales y drones, formando la base de la agricultura de precisión." },
     links: ["https://www.embrapa.br/agricultura-de-precisao","https://revistatecie.crea-pr.org.br/index.php/revista/article/view/907/704","https://www.infoteca.cnptia.embrapa.br/infoteca/bitstream/doc/908112/1/sustent.pdf"]
   },
   {
@@ -2103,22 +2187,23 @@ var TIMELINE_DATA = [
     links: ["https://www.embrapa.br/agricultura-de-precisao","https://revistacultivar.com.br/index.php/artigos/a-digitalizacao-da-agricultura","https://scientificelectronicarchives.org/index.php/SEA/article/view/1520/1577"]
   },
   {
+    year: 2000, cat: "Mobile",
+    yearLabel: { pt: "Década de 2000", en: "2000s", es: "Década de 2000" },
+    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations", es: "Innovaciones en Comunicación y Tecnología" },
+    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms", es: "Plataformas Interactivas" },
+    tipo: { pt: "Telefonia móvel", en: "Mobile Telephony", es: "Telefonía móvil" },
+    meio: { pt: "Comunicação digital", en: "Digital Communication", es: "Comunicación digital" },
+    text: { pt: "Uso de SMS para gestão de serviços e difusão de informações em áreas rurais.", en: "Use of SMS for service management and information dissemination in rural areas.", es: "Uso de SMS para la gestión de servicios y difusión de información en áreas rurales." },
+    links: ["https://precisionag.org/"]
+  },
+  {
     year: 2005, cat: "Extensão Digital",
     natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations", es: "Innovaciones en Comunicación y Tecnología" },
     canal: { pt: "Plataformas Interativas", en: "Interactive Platforms", es: "Plataformas Interactivas" },
     tipo: { pt: "Extensão digital", en: "Digital Extension", es: "Extensión digital" },
     meio: { pt: "Educação online", en: "Online Education", es: "Educación en línea" },
-    text: { pt: "Início dos programas de e-Extension em universidades e agências internacionais.", en: "Start of e-Extension programs at universities and international agencies.", es: "Inicio de los programas de e-Extension en universidades y agencias internacionales." },
+    text: { pt: "Emergência dos programas de e-Extension em universidades e agências internacionais.", en: "Emergence of e-Extension programs at universities and international agencies.", es: "Emergencia de los programas de e-Extension en universidades y agencias internacionales." },
     links: ["https://www.fao.org/e-agriculture/en","https://periodicos.uniarp.edu.br/index.php/juridico/article/view/3379/1635","https://revistas.uepg.br/index.php/conexao/article/view/23274","https://ap.fftc.org.tw/article/761"]
-  },
-  {
-    year: 2008, cat: "Mobile",
-    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations", es: "Innovaciones en Comunicación y Tecnología" },
-    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms", es: "Plataformas Interactivas" },
-    tipo: { pt: "Telefonia móvel", en: "Mobile Telephony", es: "Telefonía móvil" },
-    meio: { pt: "Comunicação digital", en: "Digital Communication", es: "Comunicación digital" },
-    text: { pt: "Uso de SMS para comunicação técnica entre extensionistas e agricultores.", en: "Use of SMS for technical communication between extension agents and farmers.", es: "Uso de SMS para comunicación técnica entre extensionistas y agricultores." },
-    links: ["https://precisionag.org/"]
   },
   {
     year: 2010, cat: "Extensão Digital",
@@ -2141,58 +2226,45 @@ var TIMELINE_DATA = [
     links: ["https://precisionag.org/","https://www.givewell.org/international/technical/programs/precision-agriculture-for-development","https://en.everybodywiki.com/Precision_Agriculture_for_Development"]
   },
   {
-    year: 2013, cat: "Política Pública",
-    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations", es: "Innovaciones en Comunicación y Tecnología" },
-    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms", es: "Plataformas Interactivas" },
-    tipo: { pt: "Portal digital", en: "Digital Portal", es: "Portal digital" },
-    meio: { pt: "Governo eletrônico", en: "E-Government", es: "Gobierno electrónico" },
-    text: { pt: "Lançamento do Portal e-Campo da Embrapa, marco da ATER digital pública no Brasil.", en: "Launch of Embrapa's e-Campo Portal, a landmark of public digital ATER in Brazil.", es: "Lanzamiento del Portal e-Campo de Embrapa, hito de la ATER digital pública en Brasil." },
-    links: ["https://www.embrapa.br/e-campo","https://ainfo.cnptia.embrapa.br/digital/bitstream/doc/1153499/1/Relatorio-Gerencial-2019-2023.pdf"]
-  },
-  {
     year: 2015, cat: "Mobile",
+    yearLabel: { pt: "Década de 2010", en: "2010s", es: "Década de 2010" },
     natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations", es: "Innovaciones en Comunicación y Tecnología" },
     canal: { pt: "Plataformas Interativas", en: "Interactive Platforms", es: "Plataformas Interactivas" },
     tipo: { pt: "Mídias sociais", en: "Social Media", es: "Redes sociales" },
     meio: { pt: "Comunicação horizontal", en: "Horizontal Communication", es: "Comunicación horizontal" },
-    text: { pt: "Uso massivo de WhatsApp e redes sociais por extensionistas e produtores.", en: "Mass use of WhatsApp and social media by extension agents and producers.", es: "Uso masivo de WhatsApp y redes sociales por extensionistas y productores." },
+    text: { pt: "Expansão do WhatsApp e das redes sociais na extensão rural.", en: "Expansion of WhatsApp and social media in rural extension.", es: "Expansión de WhatsApp y de las redes sociales en la extensión rural." },
     links: ["https://www.startagro.agr.br/como-o-produtor-rural-usa-a-internet-smartphones-whatsapp-e-aplicativos/"]
   },
   {
     year: 2016, cat: "Tecnologia",
+    yearLabel: { pt: "2016–2017", en: "2016–2017", es: "2016–2017" },
+    // Marcos de 2016 (ManejeBem) e 2017 (Agrotrace) unificados na revisão de 20/07/2026 — tags a revisar com Rodrigo
     natureza: { pt: "Fortalecimento Institucional Público e Privado", en: "Public and Private Institutional Strengthening", es: "Fortalecimiento Institucional Público y Privado" },
-    canal: null,
+    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms", es: "Plataformas Interactivas" },
     tipo: { pt: "Startup", en: "Startup", es: "Startup" },
     meio: { pt: "ATER digital", en: "Digital ATER", es: "ATER digital" },
-    text: { pt: "Fundação da startup brasileira ManejeBem, especializada em ATER digital.", en: "Foundation of Brazilian startup ManejeBem, specialized in digital ATER.", es: "Fundación de la startup brasileña ManejeBem, especializada en ATER digital." },
-    links: ["https://manejebem.com/","https://sistemabbrasil.org/empresas-b/manejebem/"]
-  },
-  {
-    year: 2017, cat: "Tecnologia",
-    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations", es: "Innovaciones en Comunicación y Tecnología" },
-    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms", es: "Plataformas Interactivas" },
-    tipo: { pt: "Plataforma digital", en: "Digital Platform", es: "Plataforma digital" },
-    meio: { pt: "Rastreabilidade", en: "Traceability", es: "Trazabilidad" },
-    text: { pt: "Instituto Biosistêmico lança a plataforma Agrotrace, para ações de ATER, rastreabilidade e monitoramento agropecuário.", en: "Instituto Biosistêmico launches the Agrotrace platform for rural extension (ATER), traceability, and monitoring actions in agriculture.", es: "Instituto Biosistêmico lanza la plataforma Agrotrace para acciones de ATER, trazabilidad y monitoreo agropecuario." },
-    links: ["https://www.agrotrace.com.br/portal-agrotrace"]
+    text: { pt: "Criação e expansão de soluções como ManejeBem e Agrotrace, com foco em gestão, monitoramento e ATER Digital.", en: "Creation and expansion of solutions such as ManejeBem and Agrotrace, focused on management, monitoring and Digital ATER.", es: "Creación y expansión de soluciones como ManejeBem y Agrotrace, con foco en gestión, monitoreo y ATER Digital." },
+    links: ["https://manejebem.com/","https://sistemabbrasil.org/empresas-b/manejebem/","https://www.agrotrace.com.br/portal-agrotrace"]
   },
   {
     year: 2018, cat: "Tecnologia",
+    // Dois marcos de 2018 unificados + e-Campo (ex-2013) incorporado (revisão de 20/07/2026) — tags a revisar com Rodrigo
     natureza: { pt: "Fortalecimento Institucional Público e Privado", en: "Public and Private Institutional Strengthening", es: "Fortalecimiento Institucional Público y Privado" },
-    canal: null,
+    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms", es: "Plataformas Interactivas" },
     tipo: { pt: "Startup", en: "Startup", es: "Startup" },
     meio: { pt: "Inovação tecnológica", en: "Technological Innovation", es: "Innovación tecnológica" },
-    text: { pt: "Consolidação de startups agtech brasileiras (ManejeBem, Agrotools, Solinftec).", en: "Consolidation of Brazilian agtech startups (ManejeBem, Agrotools, Solinftec).", es: "Consolidación de startups agtech brasileñas (ManejeBem, Agrotools, Solinftec)." },
-    links: ["https://www.agrotools.com.br","https://radaragtech.com.br/wp-content/uploads/2022/10/radaragtech-2019.pdf"]
+    text: { pt: "Consolidação das agtechs e fortalecimento das plataformas públicas de ATER, como e-Campo, Epagri Mob e Emater Digital.", en: "Consolidation of agtechs and strengthening of public ATER platforms, such as e-Campo, Epagri Mob and Emater Digital.", es: "Consolidación de las agtechs y fortalecimiento de las plataformas públicas de ATER, como e-Campo, Epagri Mob y Emater Digital." },
+    links: ["https://www.agrotools.com.br","https://www.embrapa.br/e-campo","https://www.epagri.sc.gov.br/"]
   },
   {
-    year: 2018, cat: "Política Pública",
-    natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations", es: "Innovaciones en Comunicación y Tecnología" },
-    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms", es: "Plataformas Interactivas" },
-    tipo: { pt: "Governo digital", en: "Digital Government", es: "Gobierno digital" },
-    meio: { pt: "Extensão pública", en: "Public Extension", es: "Extensión pública" },
-    text: { pt: "Criação de plataformas públicas de ATER digital, como Epagri Mob e Emater Digital.", en: "Creation of public digital ATER platforms, such as Epagri Mob and Emater Digital.", es: "Creación de plataformas públicas de ATER digital, como Epagri Mob y Emater Digital." },
-    links: ["https://www.epagri.sc.gov.br/"]
+    year: 2019, cat: "Tecnologia",
+    // Marco novo (revisão de 20/07/2026) — tags definidas pelo Claude, revisar com Rodrigo
+    natureza: { pt: "Fortalecimento Institucional Público e Privado", en: "Public and Private Institutional Strengthening", es: "Fortalecimiento Institucional Público y Privado" },
+    canal: null,
+    tipo: { pt: "Mapeamento de ecossistema", en: "Ecosystem Mapping", es: "Mapeo de ecosistema" },
+    meio: { pt: "Inovação tecnológica", en: "Technological Innovation", es: "Innovación tecnológica" },
+    text: { pt: "Lançamento do Radar Agtech Brasil e mapeamento do ecossistema de startups agrícolas.", en: "Launch of Radar Agtech Brasil and mapping of the agricultural startup ecosystem.", es: "Lanzamiento del Radar Agtech Brasil y mapeo del ecosistema de startups agrícolas." },
+    links: ["https://radaragtech.com.br/"]
   },
   {
     year: 2020, cat: "Política Pública",
@@ -2200,7 +2272,7 @@ var TIMELINE_DATA = [
     canal: null,
     tipo: { pt: "Política pública", en: "Public Policy", es: "Política pública" },
     meio: { pt: "Plataforma digital", en: "Digital Platform", es: "Plataforma digital" },
-    text: { pt: "Lançamento do Programa ATER Digital pelo MAPA.", en: "Launch of the ATER Digital Program by MAPA.", es: "Lanzamiento del Programa ATER Digital por el MAPA." },
+    text: { pt: "Lançamento do Programa ATER Digital pelo Ministério da Agricultura.", en: "Launch of the ATER Digital Program by the Ministry of Agriculture.", es: "Lanzamiento del Programa ATER Digital por el Ministerio de Agricultura." },
     links: ["https://www.gov.br/agricultura/pt-br/assuntos/noticias/mapa-lanca-programa-ater-digital","https://www.atermaisdigital.cnptia.embrapa.br/"]
   },
   {
@@ -2209,16 +2281,27 @@ var TIMELINE_DATA = [
     canal: { pt: "Plataformas Interativas", en: "Interactive Platforms", es: "Plataformas Interactivas" },
     tipo: { pt: "Estratégia híbrida", en: "Hybrid Strategy", es: "Estrategia híbrida" },
     meio: { pt: "Adaptação tecnológica", en: "Technological Adaptation", es: "Adaptación tecnológica" },
-    text: { pt: "Pandemia de COVID-19 acelera a adoção de modelos híbridos de ATER (combinação de atendimento presencial e digital).", en: "COVID-19 pandemic accelerates adoption of hybrid ATER models (combining in-person and digital service).", es: "La pandemia de COVID-19 acelera la adopción de modelos híbridos de ATER (combinación de atención presencial y digital)." },
+    text: { pt: "Pandemia de COVID-19 e consolidação de modelos híbridos de ATER.", en: "COVID-19 pandemic and consolidation of hybrid ATER models.", es: "Pandemia de COVID-19 y consolidación de modelos híbridos de ATER." },
     links: []
   },
   {
+    year: 2020, cat: "Política Pública",
+    // Movido de 2022 para 2020 na revisão de 20/07/2026
+    natureza: { pt: "Políticas Públicas e Estratégias Governamentais", en: "Public Policies and Government Strategies", es: "Políticas Públicas y Estrategias Gubernamentales" },
+    canal: null,
+    tipo: { pt: "Edital público", en: "Public Tender", es: "Convocatoria pública" },
+    meio: { pt: "Serviços remotos", en: "Remote Services", es: "Servicios remotos" },
+    text: { pt: "Formalização da oferta de serviços remotos e digitais em editais públicos da ANATER.", en: "Formalization of remote and digital services in ANATER public tenders.", es: "Formalización de la oferta de servicios remotos y digitales en convocatorias públicas de la ANATER." },
+    links: ["https://www.anater.org/wp-content/uploads/2022/07/EDITAL-DE-CHAMAMENTO-PUBLICO-No-001-2022.pdf"]
+  },
+  {
     year: 2021, cat: "Tecnologia",
+    yearLabel: { pt: "Década de 2020", en: "2020s", es: "Década de 2020" },
     natureza: { pt: "Inovações em Comunicação e Tecnologia", en: "Communication and Technology Innovations", es: "Innovaciones en Comunicación y Tecnología" },
     canal: { pt: "Tecnologias Digitais e de Automação", en: "Digital and Automation Technologies", es: "Tecnologías Digitales y de Automatización" },
     tipo: { pt: "Inteligência artificial", en: "Artificial Intelligence", es: "Inteligencia artificial" },
     meio: { pt: "Monitoramento agrícola", en: "Agricultural Monitoring", es: "Monitoreo agrícola" },
-    text: { pt: "Crescimento no uso de inteligência artificial, big data e drones em sistemas de assistência técnica e monitoramento de lavouras.", en: "Growth in the use of artificial intelligence, big data and drones in technical assistance and crop monitoring systems.", es: "Crecimiento en el uso de inteligencia artificial, big data y drones en sistemas de asistencia técnica y monitoreo de cultivos." },
+    text: { pt: "Expansão da Inteligência Artificial e do Big Data na agricultura e na ATER.", en: "Expansion of Artificial Intelligence and Big Data in agriculture and ATER.", es: "Expansión de la Inteligencia Artificial y del Big Data en la agricultura y la ATER." },
     img: "https://wp.technologyreview.com/wp-content/uploads/2016/07/fotolia88050102subscriptionmonthlym-7.jpg?fit=2160,1214",
     imgCredit: "Fotolia/MIT Tech Review.",
     links: ["https://www.embrapa.br/busca-de-noticias/-/noticia/67664619/inteligencia-artificial-no-agronegocio","https://ainfo.cnptia.embrapa.br/digital/bitstream/doc/1170729/1/P-Inteligencia-artificial-aplicada-na.pdf"]
@@ -2233,21 +2316,12 @@ var TIMELINE_DATA = [
     links: ["https://www.sinterpa.com.br/single-post/anater-e-senar-lan%C3%A7am-novas-capacita%C3%A7%C3%B5es-online-e-gratuitas"]
   },
   {
-    year: 2022, cat: "Política Pública",
-    natureza: { pt: "Políticas Públicas e Estratégias Governamentais", en: "Public Policies and Government Strategies", es: "Políticas Públicas y Estrategias Gubernamentales" },
-    canal: null,
-    tipo: { pt: "Edital público", en: "Public Tender", es: "Convocatoria pública" },
-    meio: { pt: "Serviços remotos", en: "Remote Services", es: "Servicios remotos" },
-    text: { pt: "Editais da ANATER passam a prever formalmente produtos e serviços digitais/remotos.", en: "ANATER public tenders begin to formally include digital and remote products and services.", es: "Las convocatorias de la ANATER comienzan a prever formalmente productos y servicios digitales/remotos." },
-    links: ["https://www.anater.org/wp-content/uploads/2022/07/EDITAL-DE-CHAMAMENTO-PUBLICO-No-001-2022.pdf"]
-  },
-  {
     year: 2023, cat: "Internacional",
     natureza: { pt: "Fortalecimento Institucional Público e Privado", en: "Public and Private Institutional Strengthening", es: "Fortalecimiento Institucional Público y Privado" },
     canal: null,
     tipo: { pt: "Plataforma digital", en: "Digital Platform", es: "Plataforma digital" },
     meio: { pt: "Cooperação internacional", en: "International Cooperation", es: "Cooperación internacional" },
-    text: { pt: "Criação de Hubs Digitais de ATER e inovação rural (como ATER+ Digital / IICA).", en: "Creation of Digital ATER Hubs and rural innovation networks (such as ATER+ Digital / IICA).", es: "Creación de Hubs Digitales de ATER e innovación rural (como ATER+ Digital / IICA)." },
+    text: { pt: "Criação de hubs digitais de ATER e inovação rural, com destaque para o Projeto HubTech.", en: "Creation of digital ATER and rural innovation hubs, notably the HubTech Project.", es: "Creación de hubs digitales de ATER e innovación rural, con destaque para el Proyecto HubTech." },
     links: ["https://agenciagov.ebc.com.br/noticias/202404/plataforma-ater-digital-disponibiliza-conteudos-on-line-para-tecnicos-extensionistas"]
   },
   {
@@ -2256,7 +2330,7 @@ var TIMELINE_DATA = [
     canal: null,
     tipo: { pt: "Estratégia institucional", en: "Institutional Strategy", es: "Estrategia institucional" },
     meio: { pt: "Planejamento estratégico", en: "Strategic Planning", es: "Planificación estratégica" },
-    text: { pt: "Inclusão da temática da ATER Digital como estratégia do FIDA no COSOP Brasil 2025–2029.", en: "ATER Digital included as a strategy in IFAD's Brazil COSOP 2025–2029.", es: "Inclusión de la temática de ATER Digital como estrategia del FIDA en el COSOP Brasil 2025–2029." },
+    text: { pt: "Institucionalização da ATER Digital em estratégias nacionais e internacionais, incluindo o COSOP do FIDA.", en: "Institutionalization of Digital ATER in national and international strategies, including the IFAD COSOP.", es: "Institucionalización de la ATER Digital en estrategias nacionales e internacionales, incluido el COSOP del FIDA." },
     links: ["https://www.ifad.org/en/w/countries/brazil"]
   },
   {
@@ -2265,7 +2339,7 @@ var TIMELINE_DATA = [
     canal: null,
     tipo: { pt: "Política pública", en: "Public Policy", es: "Política pública" },
     meio: { pt: "Financiamento", en: "Financing", es: "Financiamiento" },
-    text: { pt: "MDA investiu R$ 19 milhões na ATER para cerca de 4.625 famílias, contemplando ATER Digital.", en: "MDA invested R$ 19 million in ATER for approximately 4,625 families, including Digital ATER.", es: "El MDA invirtió R$ 19 millones en ATER para aproximadamente 4.625 familias, contemplando la ATER Digital." },
+    text: { pt: "Investimentos do MDA em ATER Digital e lançamento da Plataforma ATER+ Digital.", en: "MDA investments in Digital ATER and launch of the ATER+ Digital Platform.", es: "Inversiones del MDA en ATER Digital y lanzamiento de la Plataforma ATER+ Digital." },
     links: ["https://www.gov.br/mda/pt-br/noticias/2024/12/mda-vai-investir-r-19-milhoes-em-assistencia-tecnica-para-mais-de-4-mil-familias-de-agricultores-familiares"]
   },
   {
@@ -2274,7 +2348,7 @@ var TIMELINE_DATA = [
     canal: null,
     tipo: { pt: "Implementação de projetos", en: "Project Implementation", es: "Implementación de proyectos" },
     meio: { pt: "Cooperação internacional", en: "International Cooperation", es: "Cooperación internacional" },
-    text: { pt: "Início dos primeiros projetos do FIDA que incorporam a temática da ATER Digital, como CompensAÇÃO e PSI.", en: "Start of the first IFAD projects incorporating Digital ATER, such as CompensACTION and PSI.", es: "Inicio de los primeros proyectos del FIDA que incorporan la temática de ATER Digital, como CompensACCIÓN y PSI." },
+    text: { pt: "Implementação de projetos de inclusão socioprodutiva com metodologias remotas, como o CompensAÇÃO.", en: "Implementation of socio-productive inclusion projects with remote methodologies, such as CompensACTION.", es: "Implementación de proyectos de inclusión socioproductiva con metodologías remotas, como CompensACCIÓN." },
     links: ["https://www.ifad.org/en/w/projects/2000004380"]
   },
   {
@@ -2283,7 +2357,7 @@ var TIMELINE_DATA = [
     canal: null,
     tipo: { pt: "Iniciativa de digitalização", en: "Digitalization Initiative", es: "Iniciativa de digitalización" },
     meio: { pt: "Acesso a serviços públicos", en: "Access to Public Services", es: "Acceso a servicios públicos" },
-    text: { pt: "Meu Imóvel Rural Digital – Iniciativa que integra dados georreferenciados e serviços digitais para ampliar o acesso de agricultores familiares a políticas públicas e crédito rural.", en: "Meu Imóvel Rural Digital — initiative integrating georeferenced data and digital services to expand family farmers' access to public policies and rural credit.", es: "Meu Imóvel Rural Digital — iniciativa que integra datos georreferenciados y servicios digitales para ampliar el acceso de agricultores familiares a políticas públicas y crédito rural." },
+    text: { pt: "Integração de dados e serviços públicos por meio da plataforma Meu Imóvel Rural.", en: "Integration of public data and services through the Meu Imóvel Rural platform.", es: "Integración de datos y servicios públicos por medio de la plataforma Meu Imóvel Rural." },
     links: ["https://www.gov.br/gestao/pt-br/assuntos/meu-imovel-rural"]
   },
   {
@@ -2292,8 +2366,28 @@ var TIMELINE_DATA = [
     canal: null,
     tipo: { pt: "Implementação de projetos", en: "Project Implementation", es: "Implementación de proyectos" },
     meio: { pt: "Cooperação internacional", en: "International Cooperation", es: "Cooperación internacional" },
-    text: { pt: "Início do Projeto Dom Helder Câmara III, que inclui ações de ATER Digital a serem implementadas em nível federal.", en: "Launch of the Dom Helder Câmara III Project, incorporating Digital ATER actions to be implemented at the federal level.", es: "Inicio del Proyecto Dom Helder Câmara III, que incluye acciones de ATER Digital a implementarse a nivel federal." },
+    text: { pt: "Expansão da ATER Digital em campo por meio do Projeto Dom Helder Câmara III.", en: "Expansion of Digital ATER in the field through the Dom Helder Câmara III Project.", es: "Expansión de la ATER Digital en campo por medio del Proyecto Dom Helder Câmara III." },
     links: []
+  },
+  {
+    year: 2026, cat: "Política Pública",
+    // Marco novo (revisão de 20/07/2026) — tags definidas pelo Claude, revisar com Rodrigo
+    natureza: { pt: "Políticas Públicas e Estratégias Governamentais", en: "Public Policies and Government Strategies", es: "Políticas Públicas y Estrategias Gubernamentales" },
+    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms", es: "Plataformas Interactivas" },
+    tipo: { pt: "Plataforma digital", en: "Digital Platform", es: "Plataforma digital" },
+    meio: { pt: "Extensão pública", en: "Public Extension", es: "Extensión pública" },
+    text: { pt: "Lançamento da plataforma Minha ATER Digital.", en: "Launch of the Minha ATER Digital platform.", es: "Lanzamiento de la plataforma Minha ATER Digital." },
+    links: []
+  },
+  {
+    year: 2026, cat: "Política Pública",
+    // Marco novo (revisão de 20/07/2026) — tags definidas pelo Claude, revisar com Rodrigo
+    natureza: { pt: "Políticas Públicas e Estratégias Governamentais", en: "Public Policies and Government Strategies", es: "Políticas Públicas y Estrategias Gubernamentales" },
+    canal: { pt: "Plataformas Interativas", en: "Interactive Platforms", es: "Plataformas Interactivas" },
+    tipo: { pt: "Plataforma digital", en: "Digital Platform", es: "Plataforma digital" },
+    meio: { pt: "Acesso a serviços públicos", en: "Access to Public Services", es: "Acceso a servicios públicos" },
+    text: { pt: "Lançamento de nova versão do Meu Imóvel Rural, com funcionalidades ampliadas.", en: "Launch of a new version of Meu Imóvel Rural, with expanded features.", es: "Lanzamiento de una nueva versión de Meu Imóvel Rural, con funcionalidades ampliadas." },
+    links: ["https://www.gov.br/gestao/pt-br/assuntos/meu-imovel-rural"]
   }
 ];
 // =============================================
@@ -2397,10 +2491,13 @@ var lblAtiv  = { pt: 'Atividades', en: 'Activities', es: 'Actividades' }[current
 // Nível 1 — Natureza do Marco
 // NÍVEL 1: Cores Frias e Institucionais (Estrutura/Governança)
 // Azul Profundo, Verde Floresta e Roxo Fechado.
+// Cores de categoria dentro da identidade visual (verdes + âmbar/terras da escala
+// do mapa — ver identidade.html). Nível 1 = família dos verdes + o acento âmbar;
+// nível 2 = tons de terra. Todas as combinações de texto foram checadas (≥4.5:1).
 var N1_COLORS = {
-  "Políticas Públicas e Estratégias Governamentais": "#1B4332", // Verde escuro (Estado/Agricultura)
-  "Fortalecimento Institucional Público e Privado":  "#0D3B66", // Azul marinho (Institucional/Confiança)
-  "Inovações em Comunicação e Tecnologia":     "#480CA8" 
+  "Políticas Públicas e Estratégias Governamentais": "#1f4023", // verde-escuro (Estado)
+  "Fortalecimento Institucional Público e Privado":  "#2d6a32", // verde (institucional)
+  "Inovações em Comunicação e Tecnologia":           "#c47c2b"  // âmbar (acento da identidade)
 };
 
 
@@ -2438,11 +2535,11 @@ var N1_DESC = {
   }
 };
 
-// Nível 2 — Canal/Tecnologia
+// Nível 2 — Canal/Tecnologia (tons de terra da escala do mapa)
 var N2_COLORS = {
-  "Mídias de Massa":                    "#D4A373", // Bege escuro/Dourado (Remete ao rádio/papel antigo)
-  "Plataformas Interativas":            "#EE964B", // Laranja vibrante (Interação/Digital)
-  "Tecnologias Digitais e de Automação": "#ff4d44"  // Verde médio ou  (Amarelo queimado)
+  "Mídias de Massa":                    "#8a6a20", // âmbar-terra (rádio/papel antigo)
+  "Plataformas Interativas":            "#5a4210", // terra escuro
+  "Tecnologias Digitais e de Automação": "#2e2008"  // terra quase-preto (digital/denso)
 };
 
 
@@ -2490,21 +2587,22 @@ var PROJECTS_DATA = [
     title: { pt: "Dom Helder Câmara III & Paulo Freire II", en: "Dom Helder Câmara III & Paulo Freire II", es: "Dom Helder Câmara III & Paulo Freire II" },
     desc: { pt: "Contribuição ao design de projetos do portfólio FIDA Brasil na área de ICT4D, com missões de campo e elaboração de notas conceituais.", en: "Contribution to the design of IFAD Brazil portfolio projects in the ICT4D area, with field missions and preparation of concept notes.", es: "Contribución al diseño de proyectos de la cartera FIDA Brasil en el área de ICT4D, con misiones de campo y elaboración de notas conceptuales." },
     link: "https://www.ifad.org/en/w/countries/brazil",
-    color: "#c47c2b"
+    color: "#8a6a20"
   },
   {
     org: "REAF / MERCOSUL",
     title: { pt: "Estratégias de Inovação em ATER no MERCOSUL", en: "ATER Innovation Strategies in MERCOSUR", es: "Estrategias de Innovación en ATER en el MERCOSUR" },
     desc: { pt: "Recomendações para inovar e fortalecer os serviços de extensão rural no MERCOSUL ampliado, com ênfase em tecnologias para extensionistas.", en: "Recommendations to innovate and strengthen rural extension services in expanded MERCOSUR, emphasizing technologies for extension agents.", es: "Recomendaciones para innovar y fortalecer los servicios de extensión rural en el MERCOSUR ampliado, con énfasis en tecnologías para extensionistas." },
-    color: "#1a6b8a",
+    color: "#2e2008",
     link: "https://centrocompetencias.iica.int/caja_herramientas_ater/",
   },
   {
     org: "ATER Digital",
-    title: { pt: "Ferramenta Interativa ATER", en: "ATER Interactive Tool", es: "Herramienta Interactiva ATER" },
+    title: { pt: "A Realidade da ATER no Brasil", en: "The Reality of ATER in Brazil", es: "La Realidad de la ATER en Brasil" },
+    subtitle: { pt: "Ferramenta interativa", en: "Interactive tool", es: "Herramienta interactiva" },
     desc: { pt: "A realidade da ATER. Insira seus dados e descubra, em números, o tamanho do desafio da Assistência Técnica e Extensão Rural no Brasil.", en: "The reality of ATER. Enter your data and discover, in numbers, the size of the challenge of Technical Assistance and Rural Extension in Brazil.", es: "La realidad de la ATER. Ingrese sus datos y descubra, en números, el tamaño del desafío de la Asistencia Técnica y Extensión Rural en Brasil." },
     link: "https://ict4dbrazil.com/ater",
-    color: "#6b3a8a"
+    color: "#5a4210"
   }
 ];
 
@@ -2637,7 +2735,9 @@ function renderTimeline() {
   Object.keys(N1_COLORS).forEach(function(n1) {
     var isActive = activeN1 === n1;
     var label = currentLang === 'pt' ? n1 : (N1_LABELS[n1][currentLang] || n1);
-    htmlFilters += '<button class="filter-chip' + (isActive ? ' active' : '') + '" onclick="setTimelineFilter(\'n1\', \'' + n1 + '\')" style="border-color:' + N1_COLORS[n1] + ';' + (isActive ? 'background:' + N1_COLORS[n1] + ';color:white;' : 'color:' + N1_COLORS[n1] + ';') + '">' + label + '</button>';
+    // Texto sempre legível: inativo em tinta; ativo em branco (ou tinta sobre o âmbar, que é claro)
+    var corAtivoN1 = N1_COLORS[n1] === '#c47c2b' ? '#1c1c1c' : 'white';
+    htmlFilters += '<button class="filter-chip' + (isActive ? ' active' : '') + '" onclick="setTimelineFilter(\'n1\', \'' + n1 + '\')" style="border-color:' + N1_COLORS[n1] + ';' + (isActive ? 'background:' + N1_COLORS[n1] + ';color:' + corAtivoN1 + ';' : 'color:#1c1c1c;') + '">' + label + '</button>';
   });
   htmlFilters += '</div>';
 
@@ -2648,7 +2748,7 @@ function renderTimeline() {
   Object.keys(N2_COLORS).forEach(function(n2) {
     var isActive = activeN2 === n2;
     var label = currentLang === 'pt' ? n2 : (N2_LABELS[n2][currentLang] || n2);
-    htmlFilters += '<button class="filter-chip' + (isActive ? ' active' : '') + '" onclick="setTimelineFilter(\'n2\', \'' + n2 + '\')" style="border-color:' + N2_COLORS[n2] + ';' + (isActive ? 'background:' + N2_COLORS[n2] + ';color:white;' : 'color:' + N2_COLORS[n2] + ';') + '">' + label + '</button>';
+    htmlFilters += '<button class="filter-chip' + (isActive ? ' active' : '') + '" onclick="setTimelineFilter(\'n2\', \'' + n2 + '\')" style="border-color:' + N2_COLORS[n2] + ';' + (isActive ? 'background:' + N2_COLORS[n2] + ';color:white;' : 'color:#1c1c1c;') + '">' + label + '</button>';
   });
   htmlFilters += '</div>';
 
@@ -2690,7 +2790,7 @@ function renderTimeline() {
       +     '</div>'
 
       // ANO (Colorido conforme Natureza)
-      +     '<div class="tl-meta"><span class="tl-year" style="color:' + cN1 + '; font-size: 20px; font-weight: 700;">' + item.year + '</span></div>'
+      +     '<div class="tl-meta"><span class="tl-year" style="color:' + cN1 + '; font-size: 20px; font-weight: 700;">' + (item.yearLabel ? (item.yearLabel[currentLang] || item.yearLabel.pt) : item.year) + '</span></div>'
       
       // TEXTO PRINCIPAL
       +     '<div class="tl-text" style="font-weight: 500; margin-top: 8px; line-height: 1.5;">' + item.text[currentLang] + '</div>'
@@ -2700,8 +2800,8 @@ function renderTimeline() {
       
       // TAGS (Natureza e Canal)
       +     '<div class="tl-tags" style="margin-top: 15px; display: flex; flex-wrap: wrap; gap: 6px;">'
-      +       '<span class="tl-tag" style="background:' + cN1 + '10; color:' + cN1 + '; border: 1px solid ' + cN1 + '40; font-weight: 600; padding: 4px 8px; border-radius: 4px; font-size: 11px;">' + (currentLang === 'pt' ? item.natureza.pt : N1_LABELS[item.natureza.pt][currentLang]) + '</span>'
-      +       (item.canal ? '<span class="tl-tag" style="background:' + cN2 + '10; color:' + cN2 + '; border: 1px solid ' + cN2 + '40; font-weight: 600; padding: 4px 8px; border-radius: 4px; font-size: 11px;">' + (currentLang === 'pt' ? item.canal.pt : N2_LABELS[item.canal.pt][currentLang]) + '</span>' : '')
+      +       '<span class="tl-tag" style="background:' + cN1 + '10; color:#1c1c1c; border: 1px solid ' + cN1 + '66; font-weight: 600; padding: 4px 8px; border-radius: 4px; font-size: 11px;">' + (currentLang === 'pt' ? item.natureza.pt : N1_LABELS[item.natureza.pt][currentLang]) + '</span>'
+      +       (item.canal ? '<span class="tl-tag" style="background:' + cN2 + '10; color:#1c1c1c; border: 1px solid ' + cN2 + '66; font-weight: 600; padding: 4px 8px; border-radius: 4px; font-size: 11px;">' + (currentLang === 'pt' ? item.canal.pt : N2_LABELS[item.canal.pt][currentLang]) + '</span>' : '')
       +     '</div>'
       
       // RODAPÉ COM LINKS
@@ -2738,6 +2838,7 @@ function renderProjects() {
       '<div class="project-card-body">' +
         '<div class="project-card-org">' + p.org + '</div>' +
    '<div class="project-card-title">' + (p.title[currentLang] || p.title.en) + '</div>' +
+        (p.subtitle ? '<div style="font-size:12px; font-weight:500; font-style:italic; color:var(--c-ink-muted); margin:2px 0 4px;">' + (p.subtitle[currentLang] || p.subtitle.en) + '</div>' : '') +
         '<div class="project-card-desc">' + (p.desc[currentLang] || p.desc.en) + '</div>' +
       '</div>' +
     '</a>';
@@ -2771,9 +2872,11 @@ function renderVideos() {
   var grid = document.getElementById('videos-grid');
   grid.innerHTML = VIDEOS_DATA.map(function(v) {
     var thumb = 'https://img.youtube.com/vi/' + v.ytid + '/mqdefault.jpg';
+    // Se a thumbnail falhar (vídeo indisponível), esconde o <img> e fica o fundo
+    // verde-escuro com o botão de play — sem imagem quebrada no card.
     return '<a class="video-card" href="' + v.link + '" target="_blank">' +
-      '<div class="video-thumb">' +
-        '<img src="' + thumb + '" alt="" loading="lazy">' +
+      '<div class="video-thumb" style="background:var(--c-green-dark)">' +
+        '<img src="' + thumb + '" alt="" loading="lazy" onerror="this.style.display=\'none\'">' +
         '<div class="video-play"><div class="video-play-btn">' +
           '<svg width="14" height="16" viewBox="0 0 14 16" fill="white"><polygon points="0,0 14,8 0,16"/></svg>' +
         '</div></div>' +
@@ -2860,7 +2963,29 @@ function fmtNumExato(v, lang) {
   return Math.round(v).toLocaleString(loc);
 }
 
-  var geojsonMunicGlobal, geojsonStateGlobal, indicadoresGlobal, regiaoDataGlobal, asbraerDataGlobal;
+// Percentuais com casas decimais adaptativas: o menor nº de casas (0–2) que
+// distingue todos os valores da escala. Evita legendas como "0%–0%" em
+// indicadores de valores pequenos (ex.: % orientação técnica: ONGs).
+function pctDecimals(valores) {
+  for (var dec = 0; dec <= 2; dec++) {
+    var vistos = {}, ok = true;
+    for (var i = 0; i < valores.length; i++) {
+      var s = (valores[i] * 100).toFixed(dec);
+      if (vistos[s]) { ok = false; break; }
+      vistos[s] = true;
+    }
+    if (ok) return dec;
+  }
+  return 2;
+}
+
+function fmtPct(v, dec, lang) {
+  var s = (v * 100).toFixed(dec);
+  if (lang === 'pt' || lang === 'es') s = s.replace('.', ',');
+  return s + '%';
+}
+
+  var geojsonMunicGlobal, geojsonStateGlobal, indicadoresGlobal, asbraerDataGlobal;
   var ttip;
 
   // Botões de nível geográfico
@@ -2882,6 +3007,89 @@ function fmtNumExato(v, lang) {
   var crossSelY = document.getElementById('map-indicator-selector-y');
   if (crossSelY) {
     crossSelY.addEventListener('change', function() { drawMapLevel(); });
+  }
+
+  // Botão "Baixar dados" (Instruções Mapa ATER, item 5): CSV client-side da seleção
+  var dlBtn = document.getElementById('map-download-btn');
+  if (dlBtn) {
+    dlBtn.addEventListener('click', function() { baixarDadosSelecao(); });
+  }
+
+  // Nome dos estados por sigla (state.geojson só traz o código ibge2)
+  var UF_NOME = {
+    RO:'Rondônia', AC:'Acre', AM:'Amazonas', RR:'Roraima', PA:'Pará', AP:'Amapá',
+    TO:'Tocantins', MA:'Maranhão', PI:'Piauí', CE:'Ceará', RN:'Rio Grande do Norte',
+    PB:'Paraíba', PE:'Pernambuco', AL:'Alagoas', SE:'Sergipe', BA:'Bahia',
+    MG:'Minas Gerais', ES:'Espírito Santo', RJ:'Rio de Janeiro', SP:'São Paulo',
+    PR:'Paraná', SC:'Santa Catarina', RS:'Rio Grande do Sul', MS:'Mato Grosso do Sul',
+    MT:'Mato Grosso', GO:'Goiás', DF:'Distrito Federal'
+  };
+
+  function slugIndicador(nome) {
+    return nome
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')  // tira acentos
+      .toLowerCase()
+      .replace(/%/g, 'pct')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+  }
+
+  function csvCampo(v) {
+    var s = (v === null || v === undefined) ? '' : String(v);
+    return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  }
+
+  function baixarDadosSelecao() {
+    if (!geojsonMunicGlobal) return;
+    var indX = getSelectedIndicador();
+    var indY = crossMode ? getSelectedIndicadorY() : null;
+    if (!indX) return;
+
+    var header, rows = [];
+    if (currentGeoLevel === 'municipio') {
+      header = ['codigo_ibge', 'municipio', 'uf', indX];
+      if (indY) header.push(indY);
+      geojsonMunicGlobal.features.forEach(function(f) {
+        var p = f.properties;
+        var vx = p[indX];
+        if (vx === undefined || vx === null || vx === '') return;
+        var vy;
+        if (indY) { vy = p[indY]; if (vy === undefined || vy === null || vy === '') return; }
+        var row = [String(Math.round(p.ibge7)), p.municipio, p.uf, vx];
+        if (indY) row.push(vy);
+        rows.push(row);
+      });
+    } else { // uf
+      var UF_TO_IBGE2 = {};
+      Object.keys(IBGE2_TO_UF).forEach(function(k) { UF_TO_IBGE2[IBGE2_TO_UF[k]] = k; });
+      var vX = ufIndicatorValues(indX);
+      var vY = indY ? ufIndicatorValues(indY) : null;
+      header = ['codigo_ibge', 'estado', 'uf', indX];
+      if (indY) header.push(indY);
+      Object.keys(vX).forEach(function(uf) {
+        if (vX[uf] === undefined) return;
+        if (vY && vY[uf] === undefined) return;
+        var row = [UF_TO_IBGE2[uf] || '', UF_NOME[uf] || uf, uf, vX[uf]];
+        if (indY) row.push(vY[uf]);
+        rows.push(row);
+      });
+      rows.sort(function(a, b) { return String(a[0]).localeCompare(String(b[0])); });
+    }
+
+    var linhas = [header].concat(rows).map(function(r) {
+      return r.map(csvCampo).join(',');
+    });
+    var conteudo = '﻿' + linhas.join('\n');  // BOM p/ Excel abrir UTF-8
+    var nome = slugIndicador(indX) + (indY ? '_x_' + slugIndicador(indY) : '') +
+      '_' + currentGeoLevel + '.csv';
+
+    var blob = new Blob([conteudo], { type: 'text/csv;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url; a.download = nome;
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a);
+    setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
   }
 
   function drawMap() {
@@ -2924,17 +3132,15 @@ function fmtNumExato(v, lang) {
     var MAP_COLORS = ['#fdf8f0','#e8d9b8','#d4ba80','#c09848','#8a6a20','#5a4210','#2e2008'];
 
     Promise.all([
-      d3.json("https://storage.googleapis.com/ict4dbrazil/mapas/munic.geojson?v93"),
-      d3.json("https://storage.googleapis.com/ict4dbrazil/mapas/state.geojson?v93"),
-      d3.csv("https://storage.googleapis.com/ict4dbrazil/mapas/indicadores.csv?v93"),
-      d3.csv("https://storage.googleapis.com/ict4dbrazil/mapas/indicadores_regiao.csv?v93"),
-d3.csv("https://storage.googleapis.com/ict4dbrazil/mapas/asbraer.csv?v93")
+      d3.json("https://storage.googleapis.com/ict4dbrazil/mapas/munic.geojson?v95"),
+      d3.json("https://storage.googleapis.com/ict4dbrazil/mapas/state.geojson?v95"),
+      d3.csv("https://storage.googleapis.com/ict4dbrazil/mapas/indicadores.csv?v95"),
+d3.csv("https://storage.googleapis.com/ict4dbrazil/mapas/asbraer.csv?v95")
     ]).then(function(results) {
       geojsonMunicGlobal  = results[0];
       geojsonStateGlobal  = results[1];
       indicadoresGlobal   = results[2];
-      regiaoDataGlobal    = results[3];
-      asbraerDataGlobal   = results[4];
+      asbraerDataGlobal   = results[3];
 
       populateSelector();
       drawMapLevel();
@@ -2956,15 +3162,36 @@ d3.csv("https://storage.googleapis.com/ict4dbrazil/mapas/asbraer.csv?v93")
     drawMap._MAP_COLORS = MAP_COLORS;
   }
 
-// AJUSTES_JUL02 (A1): o seletor mostra só os 4 temas pedidos por Rodrigo —
-// estabelecimentos agropecuários, técnicos de ATER (ASBRAER), acesso à internet
-// e acesso a serviços de ATER. Os demais indicadores seguem intactos nos CSVs e
-// no geojson; para reativar algum, basta incluí-lo nas listas abaixo.
+// AJUSTES_JUL02 (A1) + Instruções Mapa ATER: o seletor mostra os temas pedidos —
+// estabelecimentos, técnicos de ATER (ASBRAER, só UF), acesso à internet (Censo
+// 2022) e acesso a serviços de ATER / orientação técnica (Censo Agro 2017, tab.
+// 6881, com a quebra por origem). Os demais indicadores seguem intactos nos CSVs
+// e no geojson; para reativar algum, basta incluí-lo nas listas abaixo.
 // No modo "cruzar" (A2), o nível município volta a oferecer a lista completa,
 // porque ali o objetivo é relacionar variáveis da mesma malha.
-var SELECTOR_MUNICIPIO = ['Estabelecimentos agropecuários','Estabelecimentos de agricultura familiar','% Agricultura familiar entre estabelecimentos agrícolas'];
-var SELECTOR_UF = ['Estabelecimentos agropecuários','Estabelecimentos de agricultura familiar','% de agricultura familiar','Total de extensionistas'];
-var SELECTOR_REGIAO = ['Domicílios com acesso à Internet','Agricultores familiares que recebem ATER'];
+
+// Orientação técnica (SIDRA 6881): "recebe" + uma linha por origem. Município e UF.
+var ATER_ORIENTACAO = [
+  '% que recebe orientação técnica',
+  '% orientação técnica: governo',
+  '% orientação técnica: próprio produtor',
+  '% orientação técnica: cooperativas',
+  '% orientação técnica: empresas integradoras',
+  '% orientação técnica: empresas privadas',
+  '% orientação técnica: ONGs',
+  '% orientação técnica: Sistema S',
+  '% orientação técnica: outra origem'
+];
+var INTERNET_IND = '% de domicílios com acesso à internet';
+
+// "% que recebe orientação técnica" primeiro: é o dado principal do mapa
+// (pedido de 22/07) e por isso a seleção padrão nos dois níveis.
+var SELECTOR_MUNICIPIO = ATER_ORIENTACAO
+  .concat([INTERNET_IND])
+  .concat(['Estabelecimentos agropecuários','Estabelecimentos de agricultura familiar','% Agricultura familiar entre estabelecimentos agrícolas']);
+var SELECTOR_UF = ATER_ORIENTACAO
+  .concat([INTERNET_IND])
+  .concat(['Estabelecimentos agropecuários','Estabelecimentos de agricultura familiar','% de agricultura familiar','Total de extensionistas']);
 
 var crossMode = false;
 
@@ -2977,15 +3204,6 @@ function selectorOptionsForLevel() {
     return SELECTOR_MUNICIPIO.filter(function(nome) { return todos.indexOf(nome) !== -1; });
   }
   if (currentGeoLevel === 'uf') return SELECTOR_UF.slice();
-  if (currentGeoLevel === 'regiao' && regiaoDataGlobal) {
-    var vistos = [];
-    regiaoDataGlobal.forEach(function(row) {
-      if (SELECTOR_REGIAO.indexOf(row.indicador) !== -1 && vistos.indexOf(row.indicador) === -1) {
-        vistos.push(row.indicador);
-      }
-    });
-    return vistos;
-  }
   return [];
 }
 
@@ -3016,11 +3234,9 @@ function populateSelector() {
     drawMapLevel();
   });
 
-  // Modo cruzar (A2): região fica de fora (5 pontos não sustentam dispersão)
+  // Modo cruzar (A2): disponível em município e UF (região foi removida)
   var crossControls = document.getElementById('map-cross-controls');
-  var crossOk = currentGeoLevel !== 'regiao';
-  if (crossControls) crossControls.style.display = crossOk ? '' : 'none';
-  if (!crossOk && crossMode) setCrossMode(false, true);
+  if (crossControls) crossControls.style.display = '';
 
   var selY = document.getElementById('map-indicator-selector-y');
   if (selY && crossMode) {
@@ -3060,12 +3276,29 @@ function setCrossMode(on, skipRedraw) {
     return selector ? selector.value : null;
   }
 
+  // Título do gráfico com hierarquia (Instruções Mapa ATER, item 6): nome do
+  // indicador em destaque (negrito) + recorte em peso normal.
+  function escHtml(s) {
+    return String(s).replace(/[&<>]/g, function(c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c];
+    });
+  }
+  function setChartLabel(indicador, sufixo) {
+    var el = document.getElementById('map-chart-label');
+    if (!el) return;
+    var html = '<strong>' + escHtml(indicador) + '</strong>';
+    if (sufixo) {
+      html += ' <span class="mcl-soft">' + escHtml(sufixo[currentLang] || sufixo.en) + '</span>';
+    }
+    el.innerHTML = html;
+  }
+  var LBL_MUNIC = { pt: '· distribuição dos municípios', en: '· distribution of municipalities', es: '· distribución de los municipios' };
+  var LBL_UF = { pt: '· por estado', en: '· by state', es: '· por estado' };
+
   function drawMapLevel() {
     if (!geojsonMunicGlobal) return;
     if (currentGeoLevel === 'municipio') {
       renderMunicipios();
-    } else if (currentGeoLevel === 'regiao') {
-      renderRegioes();
     } else if (currentGeoLevel === 'uf') {
       renderUF();
     }
@@ -3084,17 +3317,19 @@ function setCrossMode(on, skipRedraw) {
   function updateLegend(breaks, MAP_COLORS, isPct) {
     var legendWrap = document.getElementById('map-legend-wrap');
     legendWrap.innerHTML = '';
+    var dec = isPct ? pctDecimals(breaks) : 0;
     for (var i = 0; i < breaks.length - 1; i++) {
       var lo = breaks[i];
       var hi = breaks[i + 1];
       var fmt = function(v) {
-        if (isPct) return Math.round(v * 100) + '%';
+        if (isPct) return fmtPct(v, dec, currentLang);
         return fmtNum(v, currentLang);
       };
       var div = document.createElement('div');
       div.className = 'map-legend-item';
       div.style.backgroundColor = MAP_COLORS[i];
-      div.style.color = i < 2 ? '#333' : 'white';
+      // Texto escuro até o 4º tom (#c09848); branco só nos tons escuros (contraste ≥5:1)
+      div.style.color = i < 4 ? '#1c1c1c' : 'white';
       div.textContent = fmt(lo) + '–' + fmt(hi);
       legendWrap.appendChild(div);
     }
@@ -3110,6 +3345,8 @@ function renderMunicipios() {
 
     var cfg = getBreaksAndColors(meta);
     updateLegend(cfg.breaks, cfg.MAP_COLORS, cfg.isPct);
+    // Tooltip com pelo menos 1 casa; mais se a escala exigir (valores pequenos)
+    var decTip = cfg.isPct ? Math.max(1, pctDecimals(cfg.breaks)) : 0;
 
     var fonteEl = document.getElementById('map-fonte');
    var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] || 'Source: ';
@@ -3139,7 +3376,7 @@ function renderMunicipios() {
         var valFmt = (val === null || val === undefined)
           ? '—'
           : cfg.isPct
-            ? (val * 100).toFixed(1) + '%'
+            ? fmtPct(+val, decTip, currentLang)
             : (+val).toLocaleString('pt-BR');
         ttip.style('opacity', 1)
           .style('left', (event.pageX + 12) + 'px')
@@ -3168,114 +3405,6 @@ function renderMunicipios() {
     }, 50);
   }
 
-  function renderRegioes() {
-    if (!regiaoDataGlobal || !geojsonStateGlobal) return;
-    var currentIndicador = getSelectedIndicador();
-    if (!currentIndicador) return;
-
-    // Filtrar dados da região selecionada, excluindo TOTAL e Área
-    var dadosRegiao = regiaoDataGlobal.filter(function(row) {
-      return row.indicador === currentIndicador &&
-        row.regiao !== 'TOTAL' && row.regiao !== 'Urbana' && row.regiao !== 'Rural';
-    });
-
-    if (dadosRegiao.length === 0) return;
-
-    var meta = dadosRegiao[0];
-    var valores = dadosRegiao.map(function(d) { return +d.valor; });
-    var minVal = d3.min(valores);
-    var maxVal = d3.max(valores);
-
-    var MAP_COLORS = ['#fdf8f0','#e8d9b8','#d4ba80','#c09848','#8a6a20','#5a4210','#2e2008'];
-    var colorScale = d3.scaleLinear()
-      .domain([minVal, maxVal])
-      .range([MAP_COLORS[1], MAP_COLORS[5]]);
-
-    var isPct = meta.mensuracao === 'percentual';
-
-    // Mapa nome região CSV → valor
-    var regiaoMap = {};
-    dadosRegiao.forEach(function(row) { regiaoMap[row.regiao] = +row.valor; });
-
-    // Mapeamento: primeiro dígito do ibge2 → nome da região no CSV
-    var ibgeRegiaoMap = {
-      '1': 'Norte',
-      '2': 'Nordeste',
-      '3': 'Sudeste',
-      '4': 'Sul',
-      '5': 'Centro-Oeste'
-    };
-
-    function getRegiaoByIbge(props) {
-      // Tentar ibge2 (código do estado, 2 dígitos)
-      var ibge2 = String(props.ibge2 || props.CD_UF || props.coduf || '');
-      if (ibge2) {
-        var regiao = ibgeRegiaoMap[ibge2.charAt(0)];
-        if (regiao) return regiao;
-      }
-      // Fallback: nome direto
-      return props.regiao || props.NM_REGIAO || '';
-    }
-
-    var path = drawMap._path;
-
-    zoomGroup.selectAll('path.municipio').remove();
-    zoomGroup.selectAll('path.estado').remove();
-    zoomGroup.selectAll('path.regiao').remove();
-
-    zoomGroup.selectAll('path.regiao')
-      .data(geojsonStateGlobal.features)
-      .enter().append('path')
-      .attr('class', 'regiao')
-      .attr('d', path)
-      .style('stroke', '#fff')
-      .style('stroke-width', 0.8)
-      .style('fill', function(d) {
-        var nomeRegiao = getRegiaoByIbge(d.properties);
-        var val = regiaoMap[nomeRegiao];
-        if (val === undefined) return '#e0ddd5';
-        return colorScale(val);
-      })
-      .on('mouseover', function(event, d) {
-        d3.select(event.currentTarget).style('opacity', 0.75);
-        var nomeRegiao = getRegiaoByIbge(d.properties);
-        var nomeEstado = d.properties.estado || d.properties.NM_UF || d.properties.nome || '';
-        var val = regiaoMap[nomeRegiao];
-        var valFmt = val === undefined ? '—'
-          : isPct ? (val * 100).toFixed(1) + '%'
-          : val.toLocaleString('pt-BR');
-        ttip.style('opacity', 1)
-          .style('left', (event.pageX + 12) + 'px')
-          .style('top', (event.pageY - 20) + 'px')
-          .html('<strong>' + (nomeEstado || nomeRegiao) + '</strong>' +
-            (nomeEstado ? '<br><em>' + nomeRegiao + '</em>' : '') +
-            '<br>' + currentIndicador + ': ' + valFmt);
-      })
-      .on('mouseout', function() {
-        d3.select(this).style('opacity', 1);
-        ttip.style('opacity', 0);
-      });
-
-    // Legenda gradiente simples
-    var legendWrap = document.getElementById('map-legend-wrap');
-    legendWrap.innerHTML = '';
-    var fmt = function(v) { return isPct ? (v * 100).toFixed(0) + '%' : v.toLocaleString('pt-BR'); };
-    [minVal, (minVal + maxVal) / 2, maxVal].forEach(function(v, i) {
-      var div = document.createElement('div');
-      div.className = 'map-legend-item';
-      div.style.backgroundColor = colorScale(v);
-      div.style.color = i === 0 ? '#333' : 'white';
-      div.textContent = fmt(v);
-      legendWrap.appendChild(div);
-    });
-
-    var fonteEl = document.getElementById('map-fonte');
-    if (fonteEl) fonteEl.textContent = (currentLang === 'pt' ? 'Fonte: ' : 'Source: ') + (meta.fonte || 'CETIC (2023)');
-
-    // Barras regionais — passar todos os dados para incluir TOTAL/Urbana/Rural
-    renderBarrasRegiao(dadosRegiao, currentIndicador, isPct, regiaoDataGlobal);
-  }
-
   // Estabelecimentos agropecuários por UF — IBGE, Censo Agropecuário 2017
   // (tabela SIDRA 6754, variável 183; tipologia: total e agricultura familiar)
   var ESTAB_UF = {
@@ -3290,6 +3419,15 @@ function renderMunicipios() {
     '51':{total:118679,af:81635},'52':{total:152174,af:95684},'53':{total:5246,af:2733}
   };
   var ESTAB_INDICADORES = ['Estabelecimentos agropecuários','Estabelecimentos de agricultura familiar','% de agricultura familiar'];
+
+  // Percentuais por UF (Instruções Mapa ATER): orientação técnica (SIDRA 6881,
+  // Censo Agro 2017) e internet (SIDRA 9936, Censo 2022). Valores já em razão 0–1.
+  var UF_PCT = {"% que recebe orientação técnica": {"RO": 0.187,"AC": 0.114,"AM": 0.1225,"RR": 0.1333,"PA": 0.0602,"AP": 0.1539,"TO": 0.1396,"MA": 0.0443,"PI": 0.0351,"CE": 0.1133,"RN": 0.1617,"PB": 0.173,"PE": 0.0677,"AL": 0.0618,"SE": 0.0894,"BA": 0.077,"MG": 0.2621,"ES": 0.2352,"RJ": 0.2467,"SP": 0.41,"PR": 0.4516,"SC": 0.5188,"RS": 0.4998,"MS": 0.3179,"MT": 0.1855,"GO": 0.2198,"DF": 0.7693},"% orientação técnica: governo": {"RO": 0.1424,"AC": 0.0781,"AM": 0.1021,"RR": 0.0898,"PA": 0.0315,"AP": 0.1338,"TO": 0.0747,"MA": 0.0205,"PI": 0.0178,"CE": 0.0968,"RN": 0.0869,"PB": 0.1322,"PE": 0.0347,"AL": 0.0266,"SE": 0.0586,"BA": 0.032,"MG": 0.0905,"ES": 0.0827,"RJ": 0.1044,"SP": 0.0972,"PR": 0.0987,"SC": 0.1936,"RS": 0.1605,"MS": 0.0909,"MT": 0.0418,"GO": 0.0363,"DF": 0.6805},"% orientação técnica: próprio produtor": {"RO": 0.0367,"AC": 0.0257,"AM": 0.0146,"RR": 0.0384,"PA": 0.0182,"AP": 0.0159,"TO": 0.0536,"MA": 0.0158,"PI": 0.0108,"CE": 0.0113,"RN": 0.0551,"PB": 0.0308,"PE": 0.0177,"AL": 0.0202,"SE": 0.0241,"BA": 0.0226,"MG": 0.1058,"ES": 0.0729,"RJ": 0.111,"SP": 0.1916,"PR": 0.1156,"SC": 0.0985,"RS": 0.1229,"MS": 0.1663,"MT": 0.1062,"GO": 0.1236,"DF": 0.0796},"% orientação técnica: cooperativas": {"RO": 0.0042,"AC": 0.0038,"AM": 0.0031,"RR": 0.0022,"PA": 0.0039,"AP": 0.0017,"TO": 0.0035,"MA": 0.0016,"PI": 0.0023,"CE": 0.0025,"RN": 0.0083,"PB": 0.0075,"PE": 0.0049,"AL": 0.0103,"SE": 0.0022,"BA": 0.011,"MG": 0.0639,"ES": 0.0676,"RJ": 0.0198,"SP": 0.1009,"PR": 0.2083,"SC": 0.1731,"RS": 0.165,"MS": 0.0488,"MT": 0.0176,"GO": 0.0488,"DF": 0.0416},"% orientação técnica: empresas integradoras": {"RO": 0.005,"AC": 0.0031,"AM": 0.0007,"RR": 0.001,"PA": 0.0027,"AP": 0.001,"TO": 0.0035,"MA": 0.0019,"PI": 0.0004,"CE": 0.0005,"RN": 0.0018,"PB": 0.0018,"PE": 0.002,"AL": 0.0011,"SE": 0.0016,"BA": 0.0028,"MG": 0.0123,"ES": 0.0122,"RJ": 0.0028,"SP": 0.0278,"PR": 0.0861,"SC": 0.1721,"RS": 0.1442,"MS": 0.0149,"MT": 0.0148,"GO": 0.0125,"DF": 0.0309},"% orientação técnica: empresas privadas": {"RO": 0.0022,"AC": 0.0005,"AM": 0.0006,"RR": 0.0016,"PA": 0.0013,"AP": 0.0014,"TO": 0.0027,"MA": 0.0008,"PI": 0.0004,"CE": 0.0005,"RN": 0.0016,"PB": 0.0004,"PE": 0.0012,"AL": 0.0007,"SE": 0.0007,"BA": 0.0012,"MG": 0.0036,"ES": 0.0037,"RJ": 0.0033,"SP": 0.0099,"PR": 0.02,"SC": 0.0146,"RS": 0.0246,"MS": 0.0124,"MT": 0.007,"GO": 0.0084,"DF": 0.0067},"% orientação técnica: ONGs": {"RO": 0.0007,"AC": 0.0085,"AM": 0.0019,"RR": 0.0004,"PA": 0.0009,"AP": 0.0001,"TO": 0.0002,"MA": 0.0006,"PI": 0.0004,"CE": 0.0014,"RN": 0.0011,"PB": 0.0027,"PE": 0.0032,"AL": 0.0004,"SE": 0.0001,"BA": 0.0046,"MG": 0.0012,"ES": 0.0004,"RJ": 0.0006,"SP": 0.001,"PR": 0.0008,"SC": 0.001,"RS": 0.0011,"MS": 0.001,"MT": 0.0007,"GO": 0.0005,"DF": 0.0013},"% orientação técnica: Sistema S": {"RO": 0.0004,"AC": 0.0019,"AM": 0.0003,"RR": 0.0066,"PA": 0.0005,"AP": 0.0054,"TO": 0.0043,"MA": 0.0009,"PI": 0.0011,"CE": 0.0005,"RN": 0.0063,"PB": 0.0008,"PE": 0.0003,"AL": 0.0005,"SE": 0.0005,"BA": 0.0008,"MG": 0.0015,"ES": 0.0033,"RJ": 0.0006,"SP": 0.0028,"PR": 0.0008,"SC": 0.0031,"RS": 0.0024,"MS": 0.0098,"MT": 0.0029,"GO": 0.0021,"DF": 0.0168},"% orientação técnica: outra origem": {"RO": 0.0049,"AC": 0.0047,"AM": 0.0052,"RR": 0.0051,"PA": 0.0041,"AP": 0.0041,"TO": 0.0067,"MA": 0.004,"PI": 0.004,"CE": 0.0031,"RN": 0.0118,"PB": 0.0068,"PE": 0.0074,"AL": 0.0049,"SE": 0.0042,"BA": 0.0071,"MG": 0.0141,"ES": 0.0158,"RJ": 0.0254,"SP": 0.0315,"PR": 0.0154,"SC": 0.0183,"RS": 0.0193,"MS": 0.0112,"MT": 0.0091,"GO": 0.0086,"DF": 0.008},"% de domicílios com acesso à internet": {"RO": 0.8891,"AC": 0.7479,"AM": 0.7799,"RR": 0.8126,"PA": 0.7763,"AP": 0.8527,"TO": 0.8364,"MA": 0.7709,"PI": 0.7825,"CE": 0.8268,"RN": 0.8444,"PB": 0.8243,"PE": 0.8267,"AL": 0.8151,"SE": 0.8132,"BA": 0.8094,"MG": 0.8559,"ES": 0.8691,"RJ": 0.8776,"SP": 0.9071,"PR": 0.8928,"SC": 0.9254,"RS": 0.8781,"MS": 0.8835,"MT": 0.884,"GO": 0.8878,"DF": 0.9473}};
+  function fonteDoIndicador(nome) {
+    if (nome === '% de domicílios com acesso à internet') return 'IBGE, Censo Demográfico 2022';
+    if (nome.indexOf('orientação técnica') !== -1) return 'IBGE, Censo Agropecuário 2017 (tabela 6881)';
+    return null;
+  }
 
   function renderUF() {
 
@@ -3311,12 +3449,19 @@ function renderMunicipios() {
     var categorias = ['Ensino Médio','Graduação','Especialização','Mestrado','Doutorado'];
 
     var isEstab = ESTAB_INDICADORES.indexOf(currentIndicador) !== -1;
+    var isUFPct = UF_PCT.hasOwnProperty(currentIndicador);
 
     // Montar totais por UF
     var totaisPorUF = {};
     var isPct, catName;
+    var valoresPorUF = {};
 
-    if (isEstab) {
+    if (isUFPct) {
+      // Percentuais prontos por UF (orientação técnica 6881 / internet 2022)
+      isPct = true; catName = null;
+      var mapaUF = UF_PCT[currentIndicador];
+      Object.keys(mapaUF).forEach(function(uf) { valoresPorUF[uf] = mapaUF[uf]; });
+    } else if (isEstab) {
       // Fonte: IBGE, Censo Agropecuário 2017 (embutido em ESTAB_UF)
       Object.keys(ESTAB_UF).forEach(function(ibge2) {
         var uf = ibge2ToUF[ibge2];
@@ -3349,13 +3494,14 @@ function renderMunicipios() {
       catName = isPct ? currentIndicador.replace('% ', '') : null;
     }
 
-    var valoresPorUF = {};
-    Object.keys(totaisPorUF).forEach(function(uf) {
-      var d = totaisPorUF[uf];
-      valoresPorUF[uf] = isPct
-        ? (d.total > 0 ? (d[catName] || 0) / d.total : 0)
-        : d.total;
-    });
+    if (!isUFPct) {
+      Object.keys(totaisPorUF).forEach(function(uf) {
+        var d = totaisPorUF[uf];
+        valoresPorUF[uf] = isPct
+          ? (d.total > 0 ? (d[catName] || 0) / d.total : 0)
+          : d.total;
+      });
+    }
 
     var valores = Object.values(valoresPorUF).filter(function(v) { return v > 0; });
     var colorScale = d3.scaleQuantile()
@@ -3368,14 +3514,16 @@ function renderMunicipios() {
     var quantiles = colorScale.quantiles();
     var minVal = d3.min(valores), maxVal = d3.max(valores);
     var breaks = [minVal].concat(quantiles).concat([maxVal]);
+   var decLeg = isPct ? pctDecimals(breaks) : 0;
    var fmtLeg = function(v) {
-  return isPct ? Math.round(v * 100) + '%' : Math.round(v).toLocaleString('pt-BR');
+  return isPct ? fmtPct(v, decLeg, currentLang) : Math.round(v).toLocaleString('pt-BR');
 };
     for (var i = 0; i < breaks.length - 1; i++) {
       var div = document.createElement('div');
       div.className = 'map-legend-item';
       div.style.backgroundColor = MAP_COLORS[i + 1];
-      div.style.color = i < 1 ? '#333' : 'white';
+      // MAP_COLORS[i+1]: escuro a partir do índice 4 (#8a6a20) → branco; antes, texto escuro
+      div.style.color = i + 1 < 4 ? '#1c1c1c' : 'white';
       div.textContent = fmtLeg(breaks[i]) + '–' + fmtLeg(breaks[i + 1]);
       legendWrap.appendChild(div);
     }
@@ -3407,7 +3555,7 @@ var estado = d.properties.estado || d.properties.nome || d.properties.NM_UF || u
         var val = valoresPorUF[uf];
         var unidade = isEstab ? ' estabelecimentos' : ' extensionistas';
         var valFmt = val === undefined ? '—'
-          : isPct ? Math.round(val * 100) + '%'
+          : isPct ? fmtPct(val, Math.max(1, decLeg), currentLang)
           : fmtNumExato(val, currentLang) + unidade;
         var d2 = totaisPorUF[uf];
         var breakdown = (!isEstab && d2) ? categorias.map(function(c) {
@@ -3425,9 +3573,11 @@ var estado = d.properties.estado || d.properties.nome || d.properties.NM_UF || u
 
     var fonteEl = document.getElementById('map-fonte');
 var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] || 'Source: ';
-    if (fonteEl) fonteEl.textContent = lblFonte + (isEstab ? 'IBGE, Censo Agropecuário 2017' : 'ASBRAER');
+    var fonteTxt = isUFPct ? fonteDoIndicador(currentIndicador)
+      : isEstab ? 'IBGE, Censo Agropecuário 2017' : 'ASBRAER';
+    if (fonteEl) fonteEl.textContent = lblFonte + fonteTxt;
     if (crossMode) renderScatter();
-    else renderBarrasUF(totaisPorUF, currentIndicador, isPct, catName);
+    else renderBarrasUF(totaisPorUF, currentIndicador, isPct, catName, isUFPct ? valoresPorUF : null);
   }
 
   // =============================================
@@ -3448,18 +3598,18 @@ var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] ||
     var breaks = cfg.breaks; // inclui min e max
     var MAP_COLORS = cfg.MAP_COLORS;
 
-    // Atualizar label
-    var labelEl = document.getElementById('map-chart-label');
-    if (labelEl) labelEl.textContent = indicador;
+    // Atualizar label (título do gráfico)
+    setChartLabel(indicador, LBL_MUNIC);
 
     // Usar as categorias da legenda como bins fixos
     var numCats = breaks.length - 1;
     var catData = [];
+    var decHist = isPct ? pctDecimals(breaks) : 0;
     for (var i = 0; i < numCats; i++) {
       var lo = breaks[i], hi = breaks[i + 1];
       var count = valores.filter(function(v) { return v >= lo && (i === numCats - 1 ? v <= hi : v < hi); }).length;
       var fmt = function(v) {
-        if (isPct) return Math.round(v * 100) + '%';
+        if (isPct) return fmtPct(v, decHist, currentLang);
         return fmtNum(v, currentLang);
       };
       catData.push({
@@ -3475,13 +3625,59 @@ var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] ||
     while (el && w < 100) { w = el.offsetWidth; el = el.parentElement; }
     if (w < 100) w = 700;
 
-    var marginH = { top: 24, right: 16, bottom: 60, left: 52 };
+    d3.select(container).selectAll('*').remove();
+
+    // Em tela estreita, barras deitadas: as faixas viram linhas e o espaço
+    // horizontal fica para o comprimento das barras (rótulos sem colisão)
+    if (window.innerWidth < 600) {
+      var marginM = { top: 6, right: 60, bottom: 8, left: 100 };
+      var rowH = 30, gapM = 8;
+      var hM = catData.length * (rowH + gapM) - gapM + marginM.top + marginM.bottom;
+      var innerWM = w - marginM.left - marginM.right;
+
+      var svgM = d3.select(container).append('svg')
+        .attr('width', '100%')
+        .attr('viewBox', '0 0 ' + w + ' ' + hM)
+        .attr('preserveAspectRatio', 'xMinYMin');
+      var gM = svgM.append('g').attr('transform', 'translate(' + marginM.left + ',' + marginM.top + ')');
+
+      var xMax = d3.max(catData, function(d) { return d.count; }) || 1;
+      var xM = d3.scaleLinear().domain([0, xMax]).range([0, innerWM]);
+
+      catData.forEach(function(d, i) {
+        var y = i * (rowH + gapM);
+        gM.append('rect')
+          .attr('x', 0).attr('y', y)
+          .attr('width', d.count > 0 ? Math.max(xM(d.count), 2) : 0)
+          .attr('height', rowH)
+          .attr('fill', d.color)
+          .attr('stroke', '#d4cdc0').attr('stroke-width', 0.6)
+          .attr('rx', 2);
+        gM.append('text')
+          .attr('x', -8).attr('y', y + rowH / 2)
+          .attr('text-anchor', 'end').attr('dominant-baseline', 'middle')
+          .attr('font-family', 'DM Sans, sans-serif').attr('font-size', '12px')
+          .attr('fill', '#646458')
+          .text(d.label);
+        gM.append('text')
+          .attr('x', xM(d.count) + 6).attr('y', y + rowH / 2)
+          .attr('dominant-baseline', 'middle')
+          .attr('font-family', 'DM Sans, sans-serif').attr('font-size', '12px')
+          .attr('font-weight', '500').attr('fill', '#1c1c1c')
+          .text(d.count.toLocaleString('pt-BR'));
+      });
+
+      d3.select(container).append('p')
+        .attr('class', 'scatter-note')
+        .text({ pt: 'nº de municípios por faixa', en: 'no. of municipalities per range', es: 'nº de municipios por rango' }[currentLang] || 'no. of municipalities per range');
+      return;
+    }
+
+    var marginH = { top: 28, right: 16, bottom: 60, left: 76 };
     var innerW = w - marginH.left - marginH.right;
     var barW = Math.max(8, innerW / numCats - 4);
-    var h = 200;
+    var h = 220;
     var innerH = h - marginH.top - marginH.bottom;
-
-    d3.select(container).selectAll('*').remove();
 
     var svg = d3.select(container).append('svg')
       .attr('width', '100%')
@@ -3532,7 +3728,7 @@ var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] ||
       .selectAll('text')
       .attr('font-family', 'DM Sans, sans-serif')
       .attr('font-size', '13px')
-      .attr('fill', '#6b6b5e')
+      .attr('fill', '#646458')
       .attr('dy', '1.2em');
 
     // Eixo Y
@@ -3543,7 +3739,7 @@ var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] ||
       .selectAll('text')
       .attr('font-family', 'DM Sans, sans-serif')
       .attr('font-size', '13px')
-      .attr('fill', '#6b6b5e');
+      .attr('fill', '#646458');
 
     g.selectAll('.domain').attr('stroke', '#d4cdc0');
     g.selectAll('.tick line').attr('stroke', '#d4cdc0');
@@ -3552,137 +3748,33 @@ var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] ||
     g.append('text')
       .attr('transform', 'rotate(-90)')
       .attr('x', -innerH / 2)
-      .attr('y', -42)
+      .attr('y', -60)
       .attr('text-anchor', 'middle')
       .attr('font-family', 'DM Sans, sans-serif')
       .attr('font-size', '12px')
-      .attr('fill', '#6b6b5e')
+      .attr('fill', '#646458')
   .text({ pt: 'nº de municípios', en: 'no. of municipalities', es: 'nº de municipios' }[currentLang] || 'no. of municipalities');
   }
 
-  // =============================================
-  // BARRAS REGIONAIS
-  // =============================================
-  function renderBarrasRegiao(dadosRegiao, indicador, isPct, regiaoDataAll) {
+  function renderBarrasUF(totaisPorUF, indicador, isPct, catName, valoresDiretos) {
     var container = document.getElementById('map-chart');
     if (!container) return;
 
-    // Atualizar label
-    var labelEl = document.getElementById('map-chart-label');
-    if (labelEl) labelEl.textContent = indicador;
+    setChartLabel(indicador, LBL_UF);
 
     d3.select(container).selectAll('*').remove();
 
-    var fmt = function(v) {
-      if (isPct) return (v * 100).toFixed(1) + '%';
-      return fmtNum(v, currentLang);
-    };
-
-    // Montar lista completa: Regiões + separador + TOTAL, Urbana, Rural
-    var regioes = dadosRegiao.slice().sort(function(a, b) { return +b.valor - +a.valor; });
-
-    var extras = (regiaoDataAll || []).filter(function(row) {
-      return row.indicador === indicador &&
-        (row.regiao === 'TOTAL' || row.regiao === 'Urbana' || row.regiao === 'Rural');
-    }).sort(function(a, b) {
-      var ordem = { 'TOTAL': 0, 'Urbana': 1, 'Rural': 2 };
-      return ordem[a.regiao] - ordem[b.regiao];
-    });
-
-    var todos = regioes.concat(extras);
-
-    var w = 0, el = container;
-    while (el && w < 100) { w = el.offsetWidth; el = el.parentElement; }
-    if (w < 100) w = 700;
-
-    var marginB = { top: 10, right: 70, bottom: 10, left: 110 };
-    var rowH = 30;
-    var gap = 6;
-    var sepH = 16; // altura do separador entre regiões e totais
-    var innerH = todos.length * (rowH + gap) + sepH;
-    var h = innerH + marginB.top + marginB.bottom;
-    var innerW = w - marginB.left - marginB.right;
-
-    var svg = d3.select(container).append('svg')
-      .attr('width', '100%')
-      .attr('viewBox', '0 0 ' + w + ' ' + h)
-      .attr('preserveAspectRatio', 'xMinYMin');
-
-    var g = svg.append('g').attr('transform', 'translate(' + marginB.left + ',' + marginB.top + ')');
-
-    var maxVal = d3.max(todos, function(d) { return +d.valor; });
-    var x = d3.scaleLinear().domain([0, maxVal]).range([0, innerW]);
-
-    var colorRegioes = d3.scaleLinear()
-      .domain([0, maxVal])
-      .range(['#e8d9b8', '#5a4210']);
-
-    var colorExtras = { 'TOTAL': '#2d6a32', 'Urbana': '#4a8c50', 'Rural': '#8ab890' };
-
-    // Desenhar regiões
-    regioes.forEach(function(d, i) {
-      var y = i * (rowH + gap);
-      g.append('rect')
-        .attr('x', 0).attr('y', y)
-        .attr('width', x(+d.valor)).attr('height', rowH)
-        .attr('fill', colorRegioes(+d.valor)).attr('rx', 2);
-      g.append('text')
-        .attr('x', -6).attr('y', y + rowH / 2)
-        .attr('text-anchor', 'end').attr('dominant-baseline', 'middle')
-        .attr('font-family', 'DM Sans, sans-serif').attr('font-size', '13px').attr('fill', '#1c1c1c')
-        .text(d.regiao);
-      g.append('text')
-        .attr('x', x(+d.valor) + 6).attr('y', y + rowH / 2)
-        .attr('dominant-baseline', 'middle')
-        .attr('font-family', 'DM Sans, sans-serif').attr('font-size', '13px').attr('font-weight', '500').attr('fill', '#1c1c1c')
-        .text(fmt(+d.valor));
-    });
-
-    // Linha separadora
-    var sepY = regioes.length * (rowH + gap) + gap;
-    g.append('line')
-      .attr('x1', -marginB.left + 10).attr('x2', innerW)
-      .attr('y1', sepY + sepH / 2).attr('y2', sepY + sepH / 2)
-      .attr('stroke', '#d4cdc0').attr('stroke-dasharray', '3,3');
-
-    // Desenhar TOTAL / Urbana / Rural
-    extras.forEach(function(d, i) {
-      var y = regioes.length * (rowH + gap) + sepH + i * (rowH + gap);
-      g.append('rect')
-        .attr('x', 0).attr('y', y)
-        .attr('width', x(+d.valor)).attr('height', rowH)
-        .attr('fill', colorExtras[d.regiao] || '#888').attr('rx', 2);
-      g.append('text')
-        .attr('x', -6).attr('y', y + rowH / 2)
-        .attr('text-anchor', 'end').attr('dominant-baseline', 'middle')
-        .attr('font-family', 'DM Sans, sans-serif').attr('font-size', '13px').attr('fill', '#1c1c1c')
-        .text(d.regiao);
-      g.append('text')
-        .attr('x', x(+d.valor) + 6).attr('y', y + rowH / 2)
-        .attr('dominant-baseline', 'middle')
-        .attr('font-family', 'DM Sans, sans-serif').attr('font-size', '13px').attr('font-weight', '500').attr('fill', '#1c1c1c')
-        .text(fmt(+d.valor));
-    });
-  }
-
-  function renderBarrasUF(totaisPorUF, indicador, isPct, catName) {
-    var container = document.getElementById('map-chart');
-    if (!container) return;
-
-    var labelEl = document.getElementById('map-chart-label');
-    if (labelEl) labelEl.textContent = indicador;
-
-    d3.select(container).selectAll('*').remove();
-
-    var categorias = ['Ensino Médio','Graduação','Especialização','Mestrado','Doutorado'];
     var UFS_ORDER = ['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'];
 
     var dados = UFS_ORDER.map(function(uf) {
-      var d = totaisPorUF[uf] || { total: 0 };
-      return {
-        uf: uf,
-        val: isPct ? (d.total > 0 ? (d[catName] || 0) / d.total : 0) : (d.total || 0)
-      };
+      var val;
+      if (valoresDiretos) {
+        val = valoresDiretos[uf] || 0;
+      } else {
+        var d = totaisPorUF[uf] || { total: 0 };
+        val = isPct ? (d.total > 0 ? (d[catName] || 0) / d.total : 0) : (d.total || 0);
+      }
+      return { uf: uf, val: val };
     }).filter(function(d) { return d.val > 0; })
       .sort(function(a, b) { return b.val - a.val; });
 
@@ -3705,8 +3797,9 @@ var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] ||
     var maxVal = d3.max(dados, function(d) { return d.val; }) || 1;
     var x = d3.scaleLinear().domain([0, maxVal]).range([0, innerW]);
     var colorScale = d3.scaleLinear().domain([0, maxVal]).range(['#e8d9b8', '#5a4210']);
+    var decBar = isPct ? pctDecimals(dados.map(function(d) { return d.val; })) : 0;
     var fmt = function(v) {
-      return isPct ? Math.round(v * 100) + '%' : fmtNumExato(v, currentLang);
+      return isPct ? fmtPct(v, decBar, currentLang) : fmtNumExato(v, currentLang);
     };
 
     dados.forEach(function(d, i) {
@@ -3745,7 +3838,10 @@ var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] ||
   // Valores por UF para qualquer indicador do seletor de UF
   function ufIndicatorValues(ind) {
     var vals = {};
-    if (ESTAB_INDICADORES.indexOf(ind) !== -1) {
+    if (UF_PCT.hasOwnProperty(ind)) {
+      var mapa = UF_PCT[ind];
+      Object.keys(mapa).forEach(function(uf) { vals[uf] = mapa[uf]; });
+    } else if (ESTAB_INDICADORES.indexOf(ind) !== -1) {
       Object.keys(ESTAB_UF).forEach(function(ibge2) {
         var uf = IBGE2_TO_UF[ibge2];
         if (!uf) return;
@@ -3762,6 +3858,13 @@ var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] ||
       });
     }
     return vals;
+  }
+
+  // Fonte por indicador no nível UF (para o rótulo do cruzamento)
+  function fonteUF(ind) {
+    var f = fonteDoIndicador(ind);
+    if (f) return f;
+    return ind === 'Total de extensionistas' ? 'ASBRAER' : 'IBGE, Censo Agropecuário 2017';
   }
 
   function scatterData() {
@@ -3792,8 +3895,7 @@ var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] ||
         if (vX[uf] === undefined || vY[uf] === undefined) return;
         pts.push({ x: vX[uf], y: vY[uf], nome: uf, sigla: uf });
       });
-      var fx = indX === 'Total de extensionistas' ? 'ASBRAER' : 'IBGE, Censo Agropecuário 2017';
-      var fy = indY === 'Total de extensionistas' ? 'ASBRAER' : 'IBGE, Censo Agropecuário 2017';
+      var fx = fonteUF(indX), fy = fonteUF(indY);
       fonte = fx === fy ? fx : fx + ' · ' + fy;
     }
     return { pts: pts, indX: indX, indY: indY, isPctX: isPctX, isPctY: isPctY, fonte: fonte };
@@ -3825,7 +3927,8 @@ var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] ||
     if (!dados || dados.pts.length === 0) { container.innerHTML = ''; return; }
 
     var labelEl = document.getElementById('map-chart-label');
-    if (labelEl) labelEl.textContent = dados.indX + ' × ' + dados.indY;
+    if (labelEl) labelEl.innerHTML = '<strong>' + escHtml(dados.indX) + '</strong>' +
+      ' <span class="mcl-soft">×</span> <strong>' + escHtml(dados.indY) + '</strong>';
 
     var fonteEl = document.getElementById('map-fonte');
     if (fonteEl && dados.fonte) {
@@ -3859,10 +3962,12 @@ var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] ||
       .domain(d3.extent(dados.pts, function(p) { return p.y; })).nice()
       .range([innerH, 0]);
 
-    var fmtX = function(v) { return dados.isPctX ? Math.round(v * 100) + '%' : fmtNum(v, currentLang); };
-    var fmtY = function(v) { return dados.isPctY ? Math.round(v * 100) + '%' : fmtNum(v, currentLang); };
-    var fmtVal = function(v, isPct) {
-      return isPct ? (v * 100).toFixed(1) + '%' : fmtNumExato(v, currentLang);
+    var decX = dados.isPctX ? pctDecimals(x.ticks(isMobile ? 4 : 6)) : 0;
+    var decY = dados.isPctY ? pctDecimals(y.ticks(5)) : 0;
+    var fmtX = function(v) { return dados.isPctX ? fmtPct(v, decX, currentLang) : fmtNum(v, currentLang); };
+    var fmtY = function(v) { return dados.isPctY ? fmtPct(v, decY, currentLang) : fmtNum(v, currentLang); };
+    var fmtVal = function(v, isPct, dec) {
+      return isPct ? fmtPct(v, Math.max(1, dec), currentLang) : fmtNumExato(v, currentLang);
     };
 
     g.append('g')
@@ -3871,13 +3976,13 @@ var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] ||
       .selectAll('text')
       .attr('font-family', 'DM Sans, sans-serif')
       .attr('font-size', '12px')
-      .attr('fill', '#6b6b5e');
+      .attr('fill', '#646458');
     g.append('g')
       .call(d3.axisLeft(y).ticks(5).tickFormat(fmtY))
       .selectAll('text')
       .attr('font-family', 'DM Sans, sans-serif')
       .attr('font-size', '12px')
-      .attr('fill', '#6b6b5e');
+      .attr('fill', '#646458');
     g.selectAll('.domain').attr('stroke', '#d4cdc0');
     g.selectAll('.tick line').attr('stroke', '#d4cdc0');
 
@@ -3886,14 +3991,14 @@ var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] ||
       .attr('x', innerW / 2).attr('y', innerH + 42)
       .attr('text-anchor', 'middle')
       .attr('font-family', 'DM Sans, sans-serif')
-      .attr('font-size', '12px').attr('fill', '#6b6b5e')
+      .attr('font-size', '12px').attr('fill', '#646458')
       .text(truncLabel(dados.indX, 60));
     g.append('text')
       .attr('transform', 'rotate(-90)')
       .attr('x', -innerH / 2).attr('y', -52)
       .attr('text-anchor', 'middle')
       .attr('font-family', 'DM Sans, sans-serif')
-      .attr('font-size', '12px').attr('fill', '#6b6b5e')
+      .attr('font-size', '12px').attr('fill', '#646458')
       .text(truncLabel(dados.indY, 52));
 
     // Pontos
@@ -3914,8 +4019,8 @@ var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] ||
           .style('left', (event.pageX + 12) + 'px')
           .style('top', (event.pageY - 20) + 'px')
           .html('<strong>' + p.nome + '</strong><br>' +
-            dados.indX + ': ' + fmtVal(p.x, dados.isPctX) + '<br>' +
-            dados.indY + ': ' + fmtVal(p.y, dados.isPctY));
+            dados.indX + ': ' + fmtVal(p.x, dados.isPctX, decX) + '<br>' +
+            dados.indY + ': ' + fmtVal(p.y, dados.isPctY, decY));
       })
       .on('mouseout', function() {
         d3.select(this).attr('fill', '#8a6a20').attr('fill-opacity', isUF ? 0.85 : 0.35);
@@ -3932,7 +4037,7 @@ var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] ||
         .attr('y', function(p) { return y(p.y) + 3; })
         .attr('font-family', 'DM Sans, sans-serif')
         .attr('font-size', '10px')
-        .attr('fill', '#6b6b5e')
+        .attr('fill', '#646458')
         .text(function(p) { return p.sigla; });
     }
 

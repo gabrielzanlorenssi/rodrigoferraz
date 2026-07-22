@@ -853,7 +853,7 @@ box-shadow: 0 1px 0 var(--c-amber);
   font-size: 11px;
   color: var(--c-ink-muted);
   margin-top: 10px;
-  text-align: right;
+  text-align: left;
 }
 
 .map-fonte-row {
@@ -3701,7 +3701,7 @@ var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] ||
     var marginH = { top: 28, right: 16, bottom: 60, left: 76 };
     var innerW = w - marginH.left - marginH.right;
     var barW = Math.max(8, innerW / numCats - 4);
-    var h = 220;
+    var h = 330;
     var innerH = h - marginH.top - marginH.bottom;
 
     var svg = d3.select(container).append('svg')

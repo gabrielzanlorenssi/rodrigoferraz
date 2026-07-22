@@ -49,8 +49,11 @@ def fetch(nivel):
 
 
 def valor(v):
+    # '-' no SIDRA é zero absoluto; X/../... é que são ausência de dado
     v = (v or "").strip()
-    if v in ("", "-", "..", "...", "X", "x"):
+    if v == "-":
+        return 0
+    if v in ("", "..", "...", "X", "x"):
         return None
     try:
         return int(round(float(v.replace(",", "."))))

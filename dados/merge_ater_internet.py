@@ -73,15 +73,24 @@ def ratio(numer, denom):
 
 
 def quantile_breaks(vals, nbins=6):
-    """6 faixas -> 7 pontos de corte, por quantis. Decimais arredondados."""
+    """6 faixas -> 7 pontos de corte, por quantis. Decimais arredondados.
+
+    Distribuições com muitos zeros (SIDRA '-' = zero absoluto): a 1ª faixa fica
+    para os ~zero e os quantis são calculados só sobre os positivos — senão os
+    cortes degeneram (vários quantis iguais a 0) e o mapa perde a gradação.
+    """
     xs = sorted(v for v in vals if v is not None)
     if not xs:
         return "0, 0.2, 0.4, 0.6, 0.8, 0.9, 1"
-    pts = []
-    for i in range(nbins + 1):
-        q = i / nbins
-        idx = min(len(xs) - 1, int(round(q * (len(xs) - 1))))
-        pts.append(xs[idx])
+    pos = [v for v in xs if v > 0]
+    muitos_zeros = len(pos) < len(xs) * 0.9 and len(pos) > nbins
+    base = pos if muitos_zeros else xs
+    pts = [0.0] if muitos_zeros else []
+    n_q = nbins - 1 if muitos_zeros else nbins  # nº de intervalos sobre a base
+    for i in range(n_q + 1):
+        q = i / n_q
+        idx = min(len(base) - 1, int(round(q * (len(base) - 1))))
+        pts.append(base[idx])
     # arredonda para 3 casas, garante monotonicidade e extremos limpos
     out, prev = [], -1
     for i, v in enumerate(pts):
@@ -141,6 +150,10 @@ def main():
     with urllib.request.urlopen(BUCKET + "indicadores.csv?v93", timeout=120) as resp:
         base_rows = list(csv.reader(resp.read().decode("utf-8").splitlines()))
     header, body = base_rows[0], base_rows[1:]
+    # Idempotência: se o bucket já tiver versões destas linhas, remove antes de
+    # acrescentar as recalculadas (senão duplica a cada re-execução)
+    nomes_novos = set(n for n, _ in ATER_INDIC) | {INTERNET_INDIC}
+    body = [r for r in body if r and r[0] not in nomes_novos]
     novas = []
     for nome, _ in ATER_INDIC:
         fonte = FONTE_ATER_RECEBE if nome == "% que recebe orientação técnica" else FONTE_ATER_ORIGEM

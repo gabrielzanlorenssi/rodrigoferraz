@@ -68,9 +68,16 @@ def fetch(nivel):
 
 
 def valor(v):
-    """String do SIDRA -> int, ou None se ausente/suprimido."""
+    """String do SIDRA -> int, ou None se ausente/suprimido.
+
+    Semântica do SIDRA: '-' é ZERO ABSOLUTO (não resultante de arredondamento);
+    'X' é sigilo estatístico; '..'/'...' são não-aplicável/não-disponível.
+    Só X/../... viram None — zero é dado real e entra como 0.
+    """
     v = (v or "").strip()
-    if v in ("", "-", "..", "...", "X", "x"):
+    if v == "-":
+        return 0
+    if v in ("", "..", "...", "X", "x"):
         return None
     try:
         return int(round(float(v.replace(",", "."))))

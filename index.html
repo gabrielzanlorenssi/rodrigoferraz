@@ -162,6 +162,15 @@ box-shadow: 0 1px 0 var(--c-amber);
       display: flex;
       align-items: center;
       gap: 6px;
+      margin-left: auto;
+    }
+
+    /* Idiomas: grupo próprio, separado das seções (no celular fica sempre
+       visível na barra, enquanto as seções ficam no hambúrguer) */
+    .nav-lang {
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .nav-links a {
@@ -180,6 +189,7 @@ box-shadow: 0 1px 0 var(--c-amber);
     /* Desktop estreito: comprimir o menu antes de cair para o hambúrguer */
     @media (max-width: 1180px) {
       .nav-links { gap: 2px; }
+      .nav-lang { gap: 3px; }
       .nav-links a {
         padding: 6px 6px;
         letter-spacing: 0.04em;
@@ -1443,8 +1453,26 @@ box-shadow: 0 1px 0 var(--c-amber);
     gap: 2px;
   }
 
-  .nav-links.open .nav-divider { display: none; }
-  .nav-links.open a { padding: 8px 24px; white-space: normal; }
+  .nav-links.open a { padding: 10px 24px; white-space: normal; }
+
+  /* Idiomas saem do menu e viram um controle próprio na barra, à esquerda
+     do hambúrguer: um botão para seções, outro grupo para idioma */
+  .nav-lang {
+    margin-left: auto;
+    gap: 4px;
+    padding-right: 12px;
+    margin-right: 4px;
+    border-right: 1px solid rgba(255,255,255,0.15);
+  }
+  .nav-lang .nav-divider { display: none; }
+  .nav-lang .lang-btn { padding: 6px 8px; font-size: 10px; letter-spacing: 0.06em; }
+  .nav-hamburger { padding: 8px 4px; }
+}
+
+@media (max-width: 380px) {
+  .nav-logo { font-size: 13px; }
+  .nav-lang { gap: 2px; padding-right: 8px; }
+  .nav-lang .lang-btn { padding: 6px 6px; }
 }
 
 @media (max-width: 768px) {
@@ -1740,6 +1768,8 @@ table.cron-table {
     <a href="#projetos" data-section="projetos" class="nav-anchor" data-pt="Projetos" data-en="Projects" data-es="Proyectos">Projetos</a>
     <a href="#publicacoes" data-section="publicacoes" class="nav-anchor" data-pt="Publicações" data-en="Publications" data-es="Publicaciones">Publicações</a>
     <a href="#videos" data-section="videos" class="nav-anchor" data-pt="Vídeos" data-en="Videos" data-es="Videos">Vídeos</a>
+  </div>
+  <div class="nav-lang" id="nav-lang" aria-label="Idioma / Language">
     <div class="nav-divider"></div>
     <button class="lang-btn active" id="btn-pt" onclick="setLang('pt')">PT</button>
     <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>

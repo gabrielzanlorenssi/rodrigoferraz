@@ -21,6 +21,9 @@
   --c-amber-light:#e8a84a;
   --c-cream:      #fdf8f0;
   --c-border:     #d4cdc0;
+  /* Cor exclusiva da etapa 3 do guia: a identidade não tem roxo — ameixa
+     terrosa escolhida para contrastar com o verde da etapa 1 sem destoar. */
+  --c-plum:       #6d4a66;
   --f-serif:  'Libre Baskerville', Georgia, serif;
   --f-sans:   'DM Sans', system-ui, sans-serif;
 }
@@ -69,22 +72,25 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
 
 /* Cor de cada etapa (tokens da identidade) — trocada por JS em #planejador */
 #planejador {
+  --c-stage-ink:  var(--c-green-dark);
   --c-stage:      var(--c-green);
   --c-stage-soft: rgba(45,106,50,0.07);
   --c-stage-line: rgba(45,106,50,0.35);
   --c-stage-glow: rgba(45,106,50,0.16);
 }
 #planejador.stage-2 {
+  --c-stage-ink:  #8a6a20;
   --c-stage:      var(--c-amber);
   --c-stage-soft: rgba(196,124,43,0.08);
   --c-stage-line: rgba(196,124,43,0.38);
   --c-stage-glow: rgba(196,124,43,0.18);
 }
 #planejador.stage-3 {
-  --c-stage:      var(--c-green-mid);
-  --c-stage-soft: rgba(74,140,80,0.09);
-  --c-stage-line: rgba(74,140,80,0.40);
-  --c-stage-glow: rgba(74,140,80,0.20);
+  --c-stage-ink:  var(--c-plum);
+  --c-stage:      var(--c-plum);
+  --c-stage-soft: rgba(109,74,102,0.08);
+  --c-stage-line: rgba(109,74,102,0.38);
+  --c-stage-glow: rgba(109,74,102,0.18);
 }
 
 /* Trilha de fases: numeral serifado + nome, filete da etapa na ativa.
@@ -121,7 +127,7 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
 }
 .planner-phase-tab:hover { color: var(--c-green-dark); }
 .planner-phase-tab.active {
-  color: var(--c-green-dark);
+  color: var(--c-stage-ink);
   border-bottom-color: var(--c-stage);
 }
 .planner-phase-num {
@@ -155,10 +161,10 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
 .planner-about-toggle {
   font-family: var(--f-sans); font-size: 13px; font-weight: 600;
   background: none; border: none; padding: 0; cursor: pointer;
-  color: var(--c-green-dark);
-  border-bottom: 1px solid var(--c-green-light);
+  color: var(--c-stage-ink);
+  border-bottom: 1px solid var(--c-stage-line);
 }
-.planner-about-toggle:hover { color: var(--c-green); border-bottom-color: var(--c-green); }
+.planner-about-toggle:hover { color: var(--c-stage); border-bottom-color: var(--c-stage); }
 .planner-about-panel {
   display: none; margin-top: 14px; padding-left: 16px;
   border-left: 2px solid var(--c-stage-line);
@@ -202,7 +208,7 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
   font-family: var(--f-sans);
   font-weight: 600;
   font-size: 16.5px;
-  color: var(--c-green-dark);
+  color: var(--c-stage-ink);
 }
 .planner-q-sub {
   font-size: 14px;
@@ -233,7 +239,7 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
   padding: 10px 16px;
   border-radius: 4px;
   border: 1.5px solid var(--c-stage-line);
-  background: var(--c-cream);
+  background: var(--c-stage-soft);
   color: var(--c-ink);
   cursor: pointer;
   transition: all 0.18s ease;
@@ -306,10 +312,7 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
   width: 100%;
   flex-wrap: wrap;
   align-items: flex-start;
-  background: var(--c-stage-soft);
 }
-.planner-opt.has-desc:hover { background: var(--c-cream); }
-.planner-opt.has-desc.selected { background: var(--c-green-dark); }
 .planner-opt.has-desc.selected::before { align-self: flex-start; margin-top: 6px; }
 .planner-opt-desc {
   flex-basis: 100%;
@@ -1148,7 +1151,12 @@ function renderPlannerBody() {
       var hintTxt = q.type === 'multi'
         ? { pt: 'Múltipla escolha', en: 'Multiple choice', es: 'Opción múltiple' }
         : { pt: 'Escolha única', en: 'Single choice', es: 'Opción única' };
-      var opts = q.opts.map(function(opt, oi) {
+      // Primeiro as opções com explicação (ocupam a linha inteira); as demais
+      // fecham a grade em seguida, sem deixar buracos entre os chips.
+      var ordem = q.opts.map(function(opt, oi) { return oi; })
+        .sort(function(a, b) { return (q.opts[a].info ? 0 : 1) - (q.opts[b].info ? 0 : 1); });
+      var opts = ordem.map(function(oi) {
+        var opt = q.opts[oi];
         var isSel = sel.indexOf(oi) !== -1;
         var cls = 'planner-opt ' + (q.type === 'single' ? 'radio' : '') +
           (opt.neutral ? ' neutral' : '') + (isSel ? ' selected' : '') +

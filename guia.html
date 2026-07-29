@@ -41,6 +41,44 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
 }
 .lang-btn.active { color: var(--c-green-dark); border-color: var(--c-border); background: var(--c-bg-alt); }
 .section-wrap { max-width: 860px; margin: 0 auto; padding: 36px 16px 80px; }
+
+/* Capa do guia (mesmo padrão visual do hero de ater.html: foto escurecida
+   + tag + título serifado, só que compacta, para caber acima do topbar). */
+.guia-hero {
+  position: relative;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+.guia-hero-bg {
+  position: absolute; inset: 0;
+  background-image: url('img/capa-guia.jpg');
+  background-size: cover;
+  background-position: center 45%;
+  filter: brightness(0.38);
+}
+.guia-hero-content {
+  position: relative;
+  z-index: 1;
+  padding: 48px 24px 40px;
+  max-width: 640px;
+}
+.guia-hero-tag {
+  display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--c-amber-light);
+  border: 1px solid rgba(232,168,74,0.35); border-radius: 20px; padding: 4px 14px;
+  margin-bottom: 18px;
+}
+.guia-hero-content h1 {
+  font-family: var(--f-serif); font-size: clamp(26px, 5vw, 38px);
+  color: #fff; line-height: 1.2; margin-bottom: 12px;
+}
+.guia-hero-desc { font-size: 15px; color: rgba(255,255,255,0.72); line-height: 1.65; }
+.guia-hero-credit { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 12px; }
+@media (max-width: 768px) { .guia-hero { min-height: 240px; } }
 .section-anchor { display: block; }
 .section-label span {
   font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-green);
@@ -553,24 +591,27 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
   </div>
 </nav>
 
+<div class="guia-hero">
+  <div class="guia-hero-bg"></div>
+  <div class="guia-hero-content">
+    <div class="guia-hero-tag" data-pt="Ferramenta interativa" data-en="Interactive tool" data-es="Herramienta interactiva">Ferramenta interativa</div>
+    <h1 data-pt="Guia de ATER Digital" data-en="Digital ATER Guide" data-es="Guía de ATER Digital">Guia de ATER Digital</h1>
+    <p class="guia-hero-desc"
+       data-pt="Responda às perguntas de cada etapa e gere um roteiro inicial de ATER Digital para a sua instituição."
+       data-en="Answer the questions in each stage and generate an initial Digital ATER roadmap for your institution."
+       data-es="Responda las preguntas de cada etapa y genere una hoja de ruta inicial de ATER Digital para su institución.">Responda às perguntas de cada etapa e gere um roteiro inicial de ATER Digital para a sua instituição.</p>
+    <!-- PLACEHOLDER: img/capa-guia.jpg é, por ora, a mesma foto do hero de
+         ater.html — falta o Gabriel salvar a foto de banco de imagens real
+         nesse caminho (ver PROJETO.md). Créditos abaixo refletem o provisório. -->
+    <p class="guia-hero-credit" data-pt="Foto: ATER no campo (provisória — aguardando a foto definitiva)" data-en="Photo: ATER in the field (placeholder — final photo pending)" data-es="Foto: ATER en el campo (provisoria — a la espera de la foto definitiva)">Foto: ATER no campo (provisória — aguardando a foto definitiva)</p>
+  </div>
+</div>
+
 <div class="share-toast" id="share-toast"></div>
 
 <section id="planejador">
   <a class="section-anchor" id="anchor-planejador"></a>
   <div class="section-wrap">
-    <div class="section-label">
-      <span data-pt="Ferramenta" data-en="Tool" data-es="Herramienta">Ferramenta</span>
-    </div>
-    <div style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
-      <h2 class="section-title" style="margin-bottom:0"
-          data-pt="Guia de ATER Digital"
-          data-en="Digital ATER Guide"
-          data-es="Guía de ATER Digital">Guia de ATER Digital</h2>
-    </div>
-
-    <p style="font-size:13px; font-weight:500; font-style:italic; color:var(--c-ink-muted); margin:0 0 14px;"
-       data-pt="Ferramenta interativa" data-en="Interactive tool" data-es="Herramienta interactiva">Ferramenta interativa</p>
-
     <div class="planner-intro">
       <p data-pt="Esta ferramenta tem como objetivo auxiliar instituições a planejar e estruturar serviços de ATER Digital, estejam eles integrados ou não a ações presenciais. A ferramenta percorre as três etapas do serviço, antes, durante e depois do atendimento, e, a partir das respostas fornecidas, gera um roteiro inicial para a instituição."
          data-en="This tool is designed to help institutions plan and structure Digital ATER services, whether or not they are integrated with in-person activities. It walks through the three stages of the service — before, during and after the visit — and, based on the answers provided, generates an initial roadmap for the institution."

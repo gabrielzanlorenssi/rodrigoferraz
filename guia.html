@@ -104,11 +104,13 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
   top: 0;
   z-index: 20;
   background: var(--c-bg);
-  transition: box-shadow 0.2s, padding 0.2s;
+  transition: border-color 0.2s, padding 0.2s;
 }
+/* Grudada: só o filete de baixo ganha peso. Nada de sombra — ela escurecia
+   a faixa ao redor e fazia a barra parecer de outra cor que o fundo. */
 .planner-phases.stuck {
-  padding-top: 10px;
-  box-shadow: 0 6px 16px -10px rgba(28,28,28,0.45);
+  padding-top: 8px;
+  border-bottom-color: var(--c-ink-muted);
 }
 .planner-phase-tab {
   display: flex;

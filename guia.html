@@ -125,7 +125,7 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
   color: var(--c-ink-muted);
   transition: color 0.2s;
 }
-.planner-phase-tab:hover { color: var(--c-green-dark); }
+.planner-phase-tab:hover { color: var(--c-ink); }
 .planner-phase-tab.active {
   color: var(--c-stage-ink);
   border-bottom-color: var(--c-stage);
@@ -138,8 +138,10 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
   color: var(--c-border);
   transition: color 0.2s;
 }
-.planner-phase-tab:hover .planner-phase-num,
-.planner-phase-tab.active .planner-phase-num { color: var(--c-stage); }
+.planner-phase-tab:hover .planner-phase-num { color: var(--c-ink-muted); }
+.planner-phase-tab.active .planner-phase-num,
+.planner-phase-tab.active:hover .planner-phase-num { color: var(--c-stage); }
+.planner-phase-tab.active:hover { color: var(--c-stage-ink); }
 .planner-phase-label {
   display: flex;
   flex-direction: column;

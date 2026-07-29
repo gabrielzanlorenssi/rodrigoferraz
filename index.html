@@ -564,11 +564,14 @@ box-shadow: 0 1px 0 var(--c-amber);
       cursor: pointer;
     }
     .class-panel .class-hint {
+      display: none;
       font-size: 11px;
       color: var(--c-ink-muted);
       margin: 6px 0 0;
-      line-height: 1.4;
+      line-height: 1.5;
     }
+    .class-panel .class-hint.show { display: block; }
+    .class-panel .class-hint span { display: block; }
 
     .map-legend-item {
       flex: 1;
@@ -3158,10 +3161,15 @@ function fmtPct(v, dec, lang) {
       quantil: { pt: 'Quantis (frequências iguais)', en: 'Quantiles (equal counts)', es: 'Cuantiles (frecuencias iguales)' },
       manual:  { pt: 'Manual', en: 'Manual', es: 'Manual' },
       aplicar: { pt: 'Aplicar', en: 'Apply', es: 'Aplicar' },
-      dica: {
-        pt: 'No manual: cortes separados por vírgula, decimal com ponto; percentuais em pontos percentuais (ex.: 0, 5, 10, 25, 50, 100).',
-        en: 'Manual: comma-separated cut points, dot as decimal; percentages in percentage points (e.g., 0, 5, 10, 25, 50, 100).',
-        es: 'Manual: cortes separados por coma, decimal con punto; porcentajes en puntos porcentuales (ej.: 0, 5, 10, 25, 50, 100).'
+      dica1: {
+        pt: 'Digite os cortes separados por vírgula, usando ponto como decimal.',
+        en: 'Type the cut points separated by commas, using a dot as the decimal mark.',
+        es: 'Escriba los cortes separados por coma, usando punto como decimal.'
+      },
+      dica2: {
+        pt: 'Nos indicadores em %, escreva o número do percentual (ex.: 0, 5, 10, 25, 50, 100).',
+        en: 'For percentage indicators, type the percentage number (e.g., 0, 5, 10, 25, 50, 100).',
+        es: 'En los indicadores en %, escriba el número del porcentaje (ej.: 0, 5, 10, 25, 50, 100).'
       }
     };
     function t(o) { return o[currentLang] || o.en; }
@@ -3180,13 +3188,15 @@ function fmtPct(v, dec, lang) {
     html += '<div class="class-manual-row' + (classMode === 'manual' ? ' show' : '') + '">' +
       '<input type="text" id="class-manual-input" value="' + prefill + '">' +
       '<button type="button" id="class-manual-apply">' + t(L.aplicar) + '</button></div>' +
-      '<p class="class-hint">' + t(L.dica) + '</p>';
+      '<p class="class-hint' + (classMode === 'manual' ? ' show' : '') + '">' +
+      '<span>' + t(L.dica1) + '</span><span>' + t(L.dica2) + '</span></p>';
     classPanel.innerHTML = html;
 
     classPanel.querySelectorAll('input[name="class-mode"]').forEach(function(r) {
       r.addEventListener('change', function() {
         classMode = this.value;
         classPanel.querySelector('.class-manual-row').classList.toggle('show', classMode === 'manual');
+        classPanel.querySelector('.class-hint').classList.toggle('show', classMode === 'manual');
         if (classMode !== 'manual') {
           manualBreaks = null;
           drawMapLevel();

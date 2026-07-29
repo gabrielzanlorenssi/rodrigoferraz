@@ -63,14 +63,46 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
   font-size: 16px;
   line-height: 1.7;
   color: var(--c-ink);
+  margin-bottom: 14px;
+}
+.planner-intro p:last-child { margin-bottom: 0; }
+
+/* Cor de cada etapa (tokens da identidade) — trocada por JS em #planejador */
+#planejador {
+  --c-stage:      var(--c-green);
+  --c-stage-soft: rgba(45,106,50,0.07);
+  --c-stage-line: rgba(45,106,50,0.35);
+  --c-stage-glow: rgba(45,106,50,0.16);
+}
+#planejador.stage-2 {
+  --c-stage:      var(--c-amber);
+  --c-stage-soft: rgba(196,124,43,0.08);
+  --c-stage-line: rgba(196,124,43,0.38);
+  --c-stage-glow: rgba(196,124,43,0.18);
+}
+#planejador.stage-3 {
+  --c-stage:      var(--c-green-mid);
+  --c-stage-soft: rgba(74,140,80,0.09);
+  --c-stage-line: rgba(74,140,80,0.40);
+  --c-stage-glow: rgba(74,140,80,0.20);
 }
 
-/* Trilha de fases: numeral serifado + nome, filete âmbar na ativa */
+/* Trilha de fases: numeral serifado + nome, filete da etapa na ativa.
+   Fica grudada no topo (sticky) enquanto a pessoa rola as perguntas. */
 .planner-phases {
   display: flex;
   gap: 36px;
   margin-bottom: 8px;
   border-bottom: 1px solid var(--c-border);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--c-bg);
+  transition: box-shadow 0.2s, padding 0.2s;
+}
+.planner-phases.stuck {
+  padding-top: 10px;
+  box-shadow: 0 6px 16px -10px rgba(28,28,28,0.45);
 }
 .planner-phase-tab {
   display: flex;
@@ -90,7 +122,7 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
 .planner-phase-tab:hover { color: var(--c-green-dark); }
 .planner-phase-tab.active {
   color: var(--c-green-dark);
-  border-bottom-color: var(--c-amber);
+  border-bottom-color: var(--c-stage);
 }
 .planner-phase-num {
   font-family: var(--f-serif);
@@ -101,7 +133,7 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
   transition: color 0.2s;
 }
 .planner-phase-tab:hover .planner-phase-num,
-.planner-phase-tab.active .planner-phase-num { color: var(--c-amber); }
+.planner-phase-tab.active .planner-phase-num { color: var(--c-stage); }
 .planner-phase-label {
   display: flex;
   flex-direction: column;
@@ -129,12 +161,12 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
 .planner-about-toggle:hover { color: var(--c-green); border-bottom-color: var(--c-green); }
 .planner-about-panel {
   display: none; margin-top: 14px; padding-left: 16px;
-  border-left: 2px solid var(--c-border);
+  border-left: 2px solid var(--c-stage-line);
 }
 .planner-about-panel.open { display: block; }
 .planner-about-panel h4 {
   font-family: var(--f-sans); font-size: 12px; font-weight: 600;
-  letter-spacing: 0.07em; text-transform: uppercase; color: var(--c-green);
+  letter-spacing: 0.07em; text-transform: uppercase; color: var(--c-stage);
   margin: 0 0 4px;
 }
 .planner-about-panel p { font-size: 14px; margin: 0 0 14px; color: var(--c-ink); line-height: 1.6; }
@@ -162,7 +194,7 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
   font-family: var(--f-serif);
   font-weight: 700;
   font-size: 15px;
-  color: var(--c-amber);
+  color: var(--c-stage);
   flex-shrink: 0;
   min-width: 26px;
 }
@@ -197,39 +229,76 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
   font-family: var(--f-sans);
   font-size: 13.5px;
   font-weight: 500;
-  padding: 8px 14px;
-  border-radius: 3px;
-  border: 1px solid var(--c-border);
+  min-height: 42px;
+  padding: 10px 16px;
+  border-radius: 4px;
+  border: 1.5px solid var(--c-stage-line);
   background: var(--c-cream);
   color: var(--c-ink);
   cursor: pointer;
-  transition: all 0.15s;
+  transition: all 0.18s ease;
   display: inline-flex;
   align-items: center;
   line-height: 1.35;
   text-align: left;
+  box-shadow: 0 1px 0 rgba(28,28,28,0.05);
 }
 .planner-opt:hover {
-  border-color: var(--c-green-mid);
+  border-color: var(--c-stage);
+  background: #fff;
   color: var(--c-green-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px var(--c-stage-glow);
 }
+.planner-opt:active { transform: translateY(0); }
 .planner-opt.selected {
   border-color: var(--c-green-dark);
   background: var(--c-green-dark);
   color: #fff;
+  box-shadow: 0 3px 10px rgba(31,64,35,0.22);
 }
+.planner-opt.selected::before {
+  content: '';
+  width: 7px; height: 7px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--c-amber-light);
+  margin-right: 9px;
+  align-self: center;
+  animation: plannerPop 0.28s ease;
+}
+#planejador.stage-2 .planner-opt.selected::before { background: var(--c-cream); }
 .planner-opt.neutral.selected {
   border-color: var(--c-ink-muted);
   background: var(--c-ink-muted);
   color: #fff;
+  box-shadow: 0 2px 6px rgba(28,28,28,0.16);
 }
+.planner-opt.neutral.selected::before { background: var(--c-border); }
+@keyframes plannerPop {
+  0%   { transform: scale(0); }
+  60%  { transform: scale(1.5); }
+  100% { transform: scale(1); }
+}
+/* Link auxiliar de uma pergunta (ex.: cronograma de ATER híbrida) */
+.planner-q-link {
+  display: inline-block;
+  margin: 12px 0 0 37px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--c-stage);
+  text-decoration: none;
+  border-bottom: 1px solid var(--c-stage-line);
+  transition: color 0.2s, border-color 0.2s;
+}
+.planner-q-link:hover { color: var(--c-amber); border-bottom-color: var(--c-amber); }
 
 /* Nota de contexto: filete fino, sem caixa (fonte: "Parâmetros da ATER Digital no Brasil", 2024) */
 .planner-q-info {
   font-size: 13.5px;
   line-height: 1.65;
   color: var(--c-ink-muted);
-  border-left: 2px solid var(--c-border);
+  border-left: 2px solid var(--c-stage-line);
   padding-left: 14px;
   margin: 4px 0 14px 37px;
 }
@@ -237,7 +306,11 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
   width: 100%;
   flex-wrap: wrap;
   align-items: flex-start;
+  background: var(--c-stage-soft);
 }
+.planner-opt.has-desc:hover { background: var(--c-cream); }
+.planner-opt.has-desc.selected { background: var(--c-green-dark); }
+.planner-opt.has-desc.selected::before { align-self: flex-start; margin-top: 6px; }
 .planner-opt-desc {
   flex-basis: 100%;
   font-weight: 400;
@@ -264,33 +337,68 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
   color: var(--c-ink-muted);
   font-family: var(--f-sans);
 }
-.planner-nav-btns { display: flex; gap: 8px; }
+.planner-nav-btns { display: flex; gap: 10px; }
 .planner-btn {
   font-family: var(--f-sans);
   font-size: 13px;
   font-weight: 600;
-  padding: 10px 18px;
-  border-radius: 3px;
+  min-width: 158px;
+  min-height: 44px;
+  padding: 10px 20px;
+  border-radius: 4px;
   border: 1px solid var(--c-border);
   background: var(--c-cream);
   color: var(--c-ink);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 1px 2px rgba(28,28,28,0.06);
 }
-.planner-btn:hover { background: var(--c-bg-alt); }
+.planner-btn:hover:not(:disabled) {
+  background: var(--c-bg-alt);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(28,28,28,0.10);
+}
+.planner-btn:active:not(:disabled) { transform: translateY(0); box-shadow: 0 1px 2px rgba(28,28,28,0.10); }
 .planner-btn.primary {
   background: var(--c-green-dark);
   border-color: var(--c-green-dark);
   color: #fff;
+  box-shadow: 0 2px 6px rgba(31,64,35,0.24);
 }
-.planner-btn.primary:hover { background: var(--c-green); border-color: var(--c-green); }
+.planner-btn.primary:hover:not(:disabled) { background: var(--c-green); border-color: var(--c-green); box-shadow: 0 5px 14px rgba(31,64,35,0.28); }
 .planner-btn.accent {
   background: var(--c-amber);
   border-color: var(--c-amber);
   color: #fff;
+  box-shadow: 0 2px 6px rgba(196,124,43,0.28);
 }
-.planner-btn.accent:hover { background: var(--c-amber-light); border-color: var(--c-amber-light); }
-.planner-btn:disabled { opacity: 0.4; cursor: default; }
+.planner-btn.accent:hover:not(:disabled) { background: var(--c-amber-light); border-color: var(--c-amber-light); box-shadow: 0 5px 14px rgba(196,124,43,0.32); }
+/* Pulso leve quando o roteiro já pode ser gerado */
+.planner-btn.accent.ready { animation: plannerPulse 2.4s ease-in-out infinite; }
+@keyframes plannerPulse {
+  0%, 100% { box-shadow: 0 2px 6px rgba(196,124,43,0.28); }
+  50%      { box-shadow: 0 2px 6px rgba(196,124,43,0.28), 0 0 0 7px rgba(232,168,74,0.20); }
+}
+.planner-btn:disabled { opacity: 0.4; cursor: default; box-shadow: none; }
+/* Marcador de etapa concluída na trilha */
+.planner-phase-dot {
+  display: inline-block;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--c-stage);
+  margin-left: 7px;
+  vertical-align: middle;
+}
+@media (prefers-reduced-motion: reduce) {
+  .planner-btn.accent.ready { animation: none; }
+  .planner-opt.selected::before { animation: none; }
+  .planner-phase-panel.active { animation: none; }
+  .planner-opt:hover, .planner-btn:hover:not(:disabled) { transform: none; }
+}
 
 /* Plano gerado */
 .planner-result {
@@ -393,20 +501,30 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
 }
 
 @media (max-width: 768px) {
+  /* Trilha compacta e grudada no topo: só os números, e o nome da etapa atual */
   .planner-phases {
-    flex-direction: column;
-    gap: 0;
-    border-bottom: none;
+    gap: 14px;
+    align-items: stretch;
+    padding: 8px 0 0;
   }
   .planner-phase-tab {
-    padding: 12px 0 12px 14px;
-    margin-bottom: 0;
-    border-bottom: none;
-    border-left: 2px solid var(--c-border);
+    padding: 0 0 10px;
+    gap: 8px;
+    flex: 0 1 auto;
+    min-width: 0;
   }
-  .planner-phase-tab.active { border-left-color: var(--c-amber); }
+  .planner-phase-tab.active { flex: 1 1 auto; }
+  .planner-phase-num { font-size: 20px; }
+  .planner-phase-label { min-width: 0; }
+  .planner-phase-tab:not(.active) .planner-phase-label { display: none; }
+  .planner-phase-label .pl-name { font-size: 14px; }
+  .planner-phase-label .pl-desc { display: none; }
   .planner-nav { flex-direction: column-reverse; align-items: stretch; }
   .planner-nav-btns { justify-content: space-between; }
+  .planner-nav-btns .planner-btn { min-width: 0; flex: 1; }
+  .planner-opts { margin-left: 0; }
+  .planner-q-sub, .planner-q-hint, .planner-q-info, .planner-q-link { margin-left: 0; }
+  .planner-opt { width: 100%; }
   .planner-progress-text { text-align: center; }
 }
 
@@ -447,10 +565,15 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
        data-pt="Ferramenta interativa" data-en="Interactive tool" data-es="Herramienta interactiva">Ferramenta interativa</p>
 
     <div class="planner-intro">
-      <p data-pt="Muitas organizações querem trabalhar com ATER Digital, mas não sabem por onde começar. Esta ferramenta percorre as três etapas de um serviço (antes, durante e depois do atendimento) e ajuda a estruturar as decisões. Responda às perguntas de cada etapa e gere um roteiro inicial para a sua instituição."
-         data-en="Many organizations want to work with Digital ATER but don't know where to start. This tool walks through the three stages of a service (before, during and after the visit) and helps structure the decisions. Answer the questions in each stage and generate an initial roadmap for your institution."
-         data-es="Muchas organizaciones quieren trabajar con ATER Digital pero no saben por dónde empezar. Esta herramienta recorre las tres etapas de un servicio (antes, durante y después de la atención) y ayuda a estructurar las decisiones. Responda las preguntas de cada etapa y genere una hoja de ruta inicial para su institución.">
-        Muitas organizações querem trabalhar com ATER Digital, mas não sabem por onde começar. Esta ferramenta percorre as três etapas de um serviço (antes, durante e depois do atendimento) e ajuda a estruturar as decisões. Responda às perguntas de cada etapa e gere um roteiro inicial para a sua instituição.
+      <p data-pt="Esta ferramenta tem como objetivo auxiliar instituições a planejar e estruturar serviços de ATER Digital, estejam eles integrados ou não a ações presenciais. A ferramenta percorre as três etapas do serviço, antes, durante e depois do atendimento, e, a partir das respostas fornecidas, gera um roteiro inicial para a instituição."
+         data-en="This tool is designed to help institutions plan and structure Digital ATER services, whether or not they are integrated with in-person activities. It walks through the three stages of the service — before, during and after the visit — and, based on the answers provided, generates an initial roadmap for the institution."
+         data-es="Esta herramienta tiene como objetivo ayudar a las instituciones a planificar y estructurar servicios de ATER Digital, estén o no integrados a acciones presenciales. La herramienta recorre las tres etapas del servicio —antes, durante y después de la atención— y, a partir de las respuestas brindadas, genera una hoja de ruta inicial para la institución.">
+        Esta ferramenta tem como objetivo auxiliar instituições a planejar e estruturar serviços de ATER Digital, estejam eles integrados ou não a ações presenciais. A ferramenta percorre as três etapas do serviço, antes, durante e depois do atendimento, e, a partir das respostas fornecidas, gera um roteiro inicial para a instituição.
+      </p>
+      <p data-pt="A ferramenta adota como referência os parâmetros apresentados no estudo Parâmetros da ATER Digital no Brasil: Metodologias e Custos (UFV/IPPDS/AKSAAM/FIDA, 2024), que mapeou as práticas de ATER Digital desenvolvidas por organizações atuantes no Brasil."
+         data-en="The tool draws on the parameters presented in the study Parâmetros da ATER Digital no Brasil: Metodologias e Custos (UFV/IPPDS/AKSAAM/FIDA, 2024), which mapped the Digital ATER practices developed by organizations working in Brazil."
+         data-es="La herramienta adopta como referencia los parámetros presentados en el estudio Parâmetros da ATER Digital no Brasil: Metodologias e Custos (UFV/IPPDS/AKSAAM/FIDA, 2024), que mapeó las prácticas de ATER Digital desarrolladas por organizaciones que actúan en Brasil.">
+        A ferramenta adota como referência os parâmetros apresentados no estudo Parâmetros da ATER Digital no Brasil: Metodologias e Custos (UFV/IPPDS/AKSAAM/FIDA, 2024), que mapeou as práticas de ATER Digital desenvolvidas por organizações atuantes no Brasil.
       </p>
     </div>
 
@@ -489,12 +612,6 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
       <div class="planner-result-body" id="planner-result-body"></div>
     </div>
 
-    <p class="map-fonte" style="margin-top:14px; font-size:13px; text-align:left;"
-       data-pt="Fonte: elaborado por Rodrigo Ferraz, com base nos modelos de implementação de ATER Digital. Textos explicativos e parâmetros adaptados de Parâmetros da ATER Digital no Brasil: Metodologias e Custos (UFV/IPPDS/AKSAAM/FIDA, 2024)."
-       data-en="Source: elaborated by Rodrigo Ferraz, based on Digital ATER implementation models. Explanatory texts and parameters adapted from Parâmetros da ATER Digital no Brasil: Metodologias e Custos (UFV/IPPDS/AKSAAM/FIDA, 2024)."
-       data-es="Fuente: elaborado por Rodrigo Ferraz, con base en los modelos de implementación de ATER Digital. Textos explicativos y parámetros adaptados de Parâmetros da ATER Digital no Brasil: Metodologias e Custos (UFV/IPPDS/AKSAAM/FIDA, 2024).">
-       Fonte: elaborado por Rodrigo Ferraz, com base nos modelos de implementação de ATER Digital. Textos explicativos e parâmetros adaptados de Parâmetros da ATER Digital no Brasil: Metodologias e Custos (UFV/IPPDS/AKSAAM/FIDA, 2024).
-    </p>
   </div>
 </section>
 
@@ -557,8 +674,18 @@ var PLANNER_DATA = {
           title: { pt: 'Modelo de incorporação', en: 'Adoption model', es: 'Modelo de incorporación' },
           sub: { pt: 'Como a ATER Digital será incorporada na instituição?', en: 'How will Digital ATER be adopted by the institution?', es: '¿Cómo se incorporará la ATER Digital en la institución?' },
           opts: [
-            { pt: 'Contratar empresas especializadas', en: 'Hire specialized companies', es: 'Contratar empresas especializadas' },
-            { pt: 'Fortalecimento institucional (capacitar equipe própria)', en: 'Institutional strengthening (train own team)', es: 'Fortalecimiento institucional (capacitar equipo propio)' },
+            { pt: 'Contratar empresas especializadas', en: 'Hire specialized companies', es: 'Contratar empresas especializadas',
+              info: {
+                pt: 'As instituições podem optar por contratar empresas que já possuem expertise técnica consolidada na prestação de serviços de ATER Digital. Atualmente, existem diversas startups e empresas privadas atuando nesse segmento.',
+                en: 'Institutions may choose to hire companies that already have consolidated technical expertise in delivering Digital ATER services. There are currently several startups and private companies working in this segment.',
+                es: 'Las instituciones pueden optar por contratar empresas que ya poseen experiencia técnica consolidada en la prestación de servicios de ATER Digital. Actualmente existen diversas startups y empresas privadas actuando en ese segmento.'
+              } },
+            { pt: 'Fortalecimento institucional (capacitar equipe própria)', en: 'Institutional strengthening (train own team)', es: 'Fortalecimiento institucional (capacitar equipo propio)',
+              info: {
+                pt: 'As organizações executoras de ATER (como as entidades oficiais estaduais) podem ser capacitadas para prestar serviços de ATER Digital ou podem contratar profissionais (PF) com a expertise necessária para compor suas equipes.',
+                en: 'The organizations that deliver ATER (such as official state agencies) can be trained to provide Digital ATER services, or they can hire individual professionals with the necessary expertise to join their teams.',
+                es: 'Las organizaciones ejecutoras de ATER (como las entidades oficiales estaduales) pueden ser capacitadas para prestar servicios de ATER Digital o pueden contratar profesionales (personas físicas) con la experiencia necesaria para integrar sus equipos.'
+              } },
             { pt: 'Contratar profissionais especializados (PF)', en: 'Hire specialized professionals', es: 'Contratar profesionales especializados' },
             { pt: 'Modelo híbrido (combinação das opções)', en: 'Hybrid model (combination)', es: 'Modelo híbrido (combinación)' },
             { pt: 'Ainda será definido', en: 'To be defined', es: 'Aún por definir', neutral: true },
@@ -572,11 +699,16 @@ var PLANNER_DATA = {
           opts: [
             { pt: 'A mesma pessoa faz o remoto e o presencial', en: 'Same person does remote and in-person', es: 'La misma persona hace remoto y presencial',
               info: {
-                pt: 'É o arranjo mais comum: cerca de 75% das instituições mapeadas no estudo de 2024 mantêm o mesmo técnico no campo e no digital, o que dá continuidade às orientações, fortalece a confiança do produtor e reduz custos com treinamento e supervisão de equipes separadas.',
-                en: 'This is the most common arrangement: about 75% of the institutions mapped in the 2024 study keep the same technician in the field and online, which gives continuity to guidance, builds trust with producers and cuts the costs of training and supervising separate teams.',
-                es: 'Es el arreglo más común: cerca del 75% de las instituciones mapeadas en el estudio de 2024 mantienen al mismo técnico en campo y en el medio digital, lo que da continuidad a las orientaciones, fortalece la confianza del productor y reduce costos de capacitación y supervisión de equipos separados.'
+                pt: 'É o arranjo mais comum: a maioria das instituições mantém o mesmo técnico nas atividades presenciais e digitais, o que assegura a continuidade das orientações, fortalece a confiança dos produtores e reduz os custos de treinamento e supervisão de equipes separadas.',
+                en: 'This is the most common arrangement: most institutions keep the same technician in both in-person and digital activities, which ensures continuity of guidance, builds producers\' trust and reduces the costs of training and supervising separate teams.',
+                es: 'Es el arreglo más común: la mayoría de las instituciones mantiene al mismo técnico en las actividades presenciales y digitales, lo que asegura la continuidad de las orientaciones, fortalece la confianza de los productores y reduce los costos de capacitación y supervisión de equipos separados.'
               } },
-            { pt: 'Pessoas diferentes para cada modalidade', en: 'Different people per modality', es: 'Personas diferentes por modalidad' },
+            { pt: 'Pessoas diferentes para cada modalidade', en: 'Different people per modality', es: 'Personas diferentes por modalidad',
+              info: {
+                pt: 'É o arranjo mais comum: a maioria das instituições mantém o mesmo técnico nas atividades presenciais e digitais, o que assegura a continuidade das orientações, fortalece a confiança dos produtores e reduz os custos de treinamento e supervisão de equipes separadas.',
+                en: 'This is the most common arrangement: most institutions keep the same technician in both in-person and digital activities, which ensures continuity of guidance, builds producers\' trust and reduces the costs of training and supervising separate teams.',
+                es: 'Es el arreglo más común: la mayoría de las instituciones mantiene al mismo técnico en las actividades presenciales y digitales, lo que asegura la continuidad de las orientaciones, fortalece la confianza de los productores y reduce los costos de capacitación y supervisión de equipos separados.'
+              } },
             { pt: 'Varia conforme a situação ou demanda', en: 'Varies by situation or demand', es: 'Varía según la situación o demanda' },
             { pt: 'Ainda será definido', en: 'To be defined', es: 'Aún por definir', neutral: true },
             { pt: 'Não se aplica', en: 'Not applicable', es: 'No se aplica', neutral: true }
@@ -589,30 +721,63 @@ var PLANNER_DATA = {
           opts: [
             { pt: 'Híbrida: paralela ao presencial', en: 'Hybrid: parallel to in-person', es: 'Híbrida: paralela a lo presencial',
               info: {
-                pt: 'Modalidade adotada por todas as instituições do estudo de 2024: as ações digitais potencializam o presencial, o contato com o produtor passa a ser semanal ou quinzenal e o custo médio por família fica abaixo do da ATER exclusivamente presencial.',
-                en: 'The modality adopted by every institution in the 2024 study: digital actions boost in-person work, contact with producers becomes weekly or biweekly, and the average cost per family is lower than fully in-person ATER.',
-                es: 'Modalidad adoptada por todas las instituciones del estudio de 2024: las acciones digitales potencian lo presencial, el contacto con el productor pasa a ser semanal o quincenal y el costo medio por familia queda por debajo de la ATER exclusivamente presencial.'
+                pt: 'A ATER Digital integra-se às atividades presenciais de forma complementar e contínua, fortalecendo as ações em andamento e podendo ampliar o contato com o produtor para uma frequência semanal ou quinzenal.',
+                en: 'Digital ATER is integrated with in-person activities in a complementary and continuous way, strengthening ongoing actions and potentially increasing contact with producers to a weekly or biweekly frequency.',
+                es: 'La ATER Digital se integra a las actividades presenciales de forma complementaria y continua, fortaleciendo las acciones en curso y pudiendo ampliar el contacto con el productor a una frecuencia semanal o quincenal.'
               } },
-            { pt: 'Sequencial: após o ciclo presencial', en: 'Sequential: after the in-person cycle', es: 'Secuencial: tras el ciclo presencial' },
+            { pt: 'Sequencial: após o ciclo presencial', en: 'Sequential: after the in-person cycle', es: 'Secuencial: tras el ciclo presencial',
+              info: {
+                pt: 'Após a conclusão de um ciclo definido de ATER presencial (por exemplo, dois anos), inicia-se um novo ciclo dedicado exclusivamente à ATER Digital (por exemplo, um ano).',
+                en: 'After a defined cycle of in-person ATER is completed (for example, two years), a new cycle dedicated exclusively to Digital ATER begins (for example, one year).',
+                es: 'Tras la conclusión de un ciclo definido de ATER presencial (por ejemplo, dos años), se inicia un nuevo ciclo dedicado exclusivamente a la ATER Digital (por ejemplo, un año).'
+              } },
             { pt: 'Exclusivamente digital', en: 'Fully digital', es: 'Exclusivamente digital',
               info: {
-                pt: 'Ainda pouco usual (cerca de 18% das instituições com práticas digitais têm projetos 100% remotos), mas com custo muito inferior. É útil, por exemplo, para dar continuidade ao acompanhamento onde a ATER presencial ou híbrida não é viável.',
-                en: 'Still uncommon (about 18% of institutions with digital practices run fully remote projects), but at a much lower cost. It is useful, for example, to keep supporting families where in-person or hybrid ATER is not viable.',
-                es: 'Aún poco usual (cerca del 18% de las instituciones con prácticas digitales tienen proyectos 100% remotos), pero con un costo muy inferior. Es útil, por ejemplo, para dar continuidad al acompañamiento donde la ATER presencial o híbrida no es viable.'
+                pt: 'Ainda pouco usual, mas com custo muito inferior. É útil, por exemplo, para dar continuidade ao acompanhamento onde a ATER presencial ou híbrida não é viável.',
+                en: 'Still uncommon, but at a much lower cost. It is useful, for example, to keep supporting families where in-person or hybrid ATER is not viable.',
+                es: 'Aún poco usual, pero con un costo muy inferior. Es útil, por ejemplo, para dar continuidad al acompañamiento donde la ATER presencial o híbrida no es viable.'
               } },
             { pt: 'Variará conforme o projeto', en: 'Varies by project', es: 'Variará según el proyecto' },
+            { pt: 'Ainda será definido', en: 'To be defined', es: 'Aún por definir', neutral: true },
+            { pt: 'Não se aplica', en: 'Not applicable', es: 'No se aplica', neutral: true }
+          ],
+          link: {
+            href: 'index.html#cronograma',
+            pt: 'Ver exemplo de cronograma de ATER Híbrida →',
+            en: 'See an example of a Hybrid ATER schedule →',
+            es: 'Ver ejemplo de cronograma de ATER Híbrida →'
+          }
+        },
+        {
+          code: '1.4', type: 'single',
+          title: { pt: 'Forma de interação', en: 'Interaction format', es: 'Forma de interacción' },
+          sub: { pt: 'Como ocorrerá a interação entre técnico e produtor no atendimento digital?', en: 'How will technician and producer interact in the digital service?', es: '¿Cómo será la interacción entre técnico y productor en la atención digital?' },
+          opts: [
+            { pt: 'Síncrona', en: 'Synchronous', es: 'Síncrona',
+              info: {
+                pt: 'O atendimento ocorre em tempo real, com interação simultânea entre técnico e produtor, por exemplo, por videochamadas, ligações telefônicas ou mensagens instantâneas. É mais indicado para tirar dúvidas, realizar diagnósticos, orientar decisões imediatas e fortalecer a relação entre técnico e produtor.',
+                en: 'The service happens in real time, with simultaneous interaction between technician and producer — for example, through video calls, phone calls or instant messaging. It is best suited to answering questions, making diagnoses, guiding immediate decisions and strengthening the relationship between technician and producer.',
+                es: 'La atención ocurre en tiempo real, con interacción simultánea entre técnico y productor, por ejemplo, por videollamadas, llamadas telefónicas o mensajes instantáneos. Es más indicada para resolver dudas, realizar diagnósticos, orientar decisiones inmediatas y fortalecer la relación entre técnico y productor.'
+              } },
+            { pt: 'Assíncrona', en: 'Asynchronous', es: 'Asíncrona',
+              info: {
+                pt: 'O atendimento não exige que técnico e produtor estejam conectados ao mesmo tempo. As interações ocorrem por meio de mensagens, áudios, vídeos, materiais educativos ou plataformas digitais, que podem ser acessados e respondidos posteriormente. Essa modalidade oferece maior flexibilidade, amplia o alcance do serviço, reduz custos operacionais e facilita o acompanhamento contínuo, especialmente em áreas com limitações de conectividade ou disponibilidade de horário.',
+                en: 'The service does not require technician and producer to be connected at the same time. Interactions take place through messages, audio, video, educational materials or digital platforms, which can be accessed and answered later. This format offers greater flexibility, widens the reach of the service, reduces operating costs and supports continuous follow-up, especially in areas with limited connectivity or restricted availability.',
+                es: 'La atención no exige que técnico y productor estén conectados al mismo tiempo. Las interacciones ocurren por medio de mensajes, audios, videos, materiales educativos o plataformas digitales, que pueden ser accedidos y respondidos posteriormente. Esta modalidad ofrece mayor flexibilidad, amplía el alcance del servicio, reduce costos operativos y facilita el acompañamiento continuo, especialmente en áreas con limitaciones de conectividad o de disponibilidad de horario.'
+              } },
+            { pt: 'Ambos', en: 'Both', es: 'Ambos' },
             { pt: 'Ainda será definido', en: 'To be defined', es: 'Aún por definir', neutral: true },
             { pt: 'Não se aplica', en: 'Not applicable', es: 'No se aplica', neutral: true }
           ]
         },
         {
-          code: '1.4', type: 'multi',
+          code: '1.5', type: 'multi',
           title: { pt: 'Questões legais, éticas e de sigilo', en: 'Legal, ethical & confidentiality', es: 'Cuestiones legales, éticas y de confidencialidad' },
           sub: { pt: 'Como esses aspectos serão tratados? (pode marcar mais de um)', en: 'How will these aspects be handled? (select all that apply)', es: '¿Cómo se tratarán estos aspectos? (puede marcar varios)' },
           info: {
-            pt: 'A LGPD (Lei nº 13.709/2018) protege os dados pessoais e sensíveis das famílias agricultoras tratados nas atividades digitais. No estudo de 2024, os treinamentos on-line são a forma mais comum de orientar os técnicos sobre o tema (52% das instituições), seguidos dos treinamentos presenciais (17%). É uma prática que reduz riscos e aumenta a confiança dos produtores.',
-            en: 'The Brazilian data protection law (LGPD, Law 13,709/2018) protects the personal and sensitive data of farming families handled in digital activities. In the 2024 study, online training is the most common way to guide technicians on the topic (52% of institutions), followed by in-person training (17%). It is a practice that reduces risks and increases producer trust.',
-            es: 'La ley brasileña de protección de datos (LGPD, Ley 13.709/2018) protege los datos personales y sensibles de las familias agricultoras tratados en las actividades digitales. En el estudio de 2024, las capacitaciones en línea son la forma más común de orientar a los técnicos sobre el tema (52% de las instituciones), seguidas de las presenciales (17%). Es una práctica que reduce riesgos y aumenta la confianza de los productores.'
+            pt: 'A LGPD (Lei nº 13.709/2018) protege os dados pessoais e sensíveis das famílias agricultoras tratados nas atividades digitais. No estudo, os treinamentos on-line foram a forma mais comum de orientar os técnicos sobre o tema, seguidos dos treinamentos presenciais.',
+            en: 'The Brazilian data protection law (LGPD, Law 13,709/2018) protects the personal and sensitive data of farming families handled in digital activities. In the study, online training was the most common way to guide technicians on the topic, followed by in-person training.',
+            es: 'La ley brasileña de protección de datos (LGPD, Ley 13.709/2018) protege los datos personales y sensibles de las familias agricultoras tratados en las actividades digitales. En el estudio, las capacitaciones en línea fueron la forma más común de orientar a los técnicos sobre el tema, seguidas de las capacitaciones presenciales.'
           },
           opts: [
             { pt: 'Treinamentos presenciais', en: 'In-person training', es: 'Capacitaciones presenciales' },
@@ -626,13 +791,13 @@ var PLANNER_DATA = {
           ]
         },
         {
-          code: '1.5', type: 'multi',
-          title: { pt: 'Produção de material digital', en: 'Digital material production', es: 'Producción de material digital' },
+          code: '1.6', type: 'multi',
+          title: { pt: 'Material digital para as ações de ATER', en: 'Digital material for ATER activities', es: 'Material digital para las acciones de ATER' },
           sub: { pt: 'Quais materiais serão produzidos e usados nas práticas de ATER? (pode marcar mais de um)', en: 'Which materials will be produced and used? (select all that apply)', es: '¿Qué materiales se producirán y usarán? (puede marcar varios)' },
           info: {
-            pt: 'Imagens (fotos e cards) são o material mais usado, presente em praticamente todas as instituições do estudo de 2024, seguidas de textos e folhetos informativos (78%): a comunicação visual transmite informação de forma rápida e intuitiva nos meios digitais. E nem tudo precisa ser produzido do zero: bibliotecas virtuais como Zap Rural, e-campo, Plataforma Ater+ Digital e Senar EaD oferecem conteúdo pronto e reduzem custos.',
-            en: 'Images (photos and cards) are the most used material, present in nearly every institution in the 2024 study, followed by texts and leaflets (78%): visual communication conveys information quickly and intuitively in digital media. Not everything needs to be produced from scratch: virtual libraries such as Zap Rural, e-campo, Plataforma Ater+ Digital and Senar EaD offer ready-made content and reduce costs.',
-            es: 'Las imágenes (fotos y tarjetas) son el material más usado, presente en prácticamente todas las instituciones del estudio de 2024, seguidas de textos y folletos (78%): la comunicación visual transmite información de forma rápida e intuitiva en los medios digitales. Y no todo debe producirse desde cero: bibliotecas virtuales como Zap Rural, e-campo, Plataforma Ater+ Digital y Senar EaD ofrecen contenido listo y reducen costos.'
+            pt: 'Imagens, como fotos e cards, estão entre os materiais mais utilizados, estando presentes em praticamente todas as instituições analisadas no estudo, seguidas de textos e folhetos informativos. Esse tipo de comunicação visual transmite informações de forma rápida e intuitiva nos meios digitais.',
+            en: 'Images such as photos and cards are among the most widely used materials, present in practically every institution analysed in the study, followed by texts and informative leaflets. This kind of visual communication conveys information quickly and intuitively in digital media.',
+            es: 'Las imágenes, como fotos y tarjetas, están entre los materiales más utilizados, presentes en prácticamente todas las instituciones analizadas en el estudio, seguidas de textos y folletos informativos. Ese tipo de comunicación visual transmite información de forma rápida e intuitiva en los medios digitales.'
           },
           opts: [
             { pt: 'Textos e/ou folhetos informativos', en: 'Texts and/or leaflets', es: 'Textos y/o folletos' },
@@ -671,16 +836,16 @@ var PLANNER_DATA = {
           opts: [
             { pt: 'WhatsApp (mensageria)', en: 'WhatsApp (messaging)', es: 'WhatsApp (mensajería)',
               info: {
-                pt: 'Ferramenta usada por 100% das instituições do estudo de 2024: gratuita, familiar ao produtor e com poucos requisitos técnicos e de capacitação. Os teleatendimentos por mensagem costumam ser curtos, de até 10 minutos.',
-                en: 'Used by 100% of the institutions in the 2024 study: free, familiar to producers and with few technical or training requirements. Message-based tele-service sessions are usually short, up to 10 minutes.',
-                es: 'Herramienta usada por el 100% de las instituciones del estudio de 2024: gratuita, familiar para el productor y con pocos requisitos técnicos y de capacitación. Las teleatenciones por mensaje suelen ser cortas, de hasta 10 minutos.'
+                pt: 'Ferramenta utilizada atualmente por quase todas as instituições para a interação com os produtores. É gratuita, familiar aos produtores e exige poucos recursos técnicos e de capacitação.',
+                en: 'A tool currently used by almost every institution to interact with producers. It is free, familiar to producers and requires few technical and training resources.',
+                es: 'Herramienta utilizada actualmente por casi todas las instituciones para la interacción con los productores. Es gratuita, familiar para los productores y exige pocos recursos técnicos y de capacitación.'
               } },
             { pt: 'Ligações telefônicas', en: 'Phone calls', es: 'Llamadas telefónicas' },
             { pt: 'Videochamadas', en: 'Video calls', es: 'Videollamadas',
               info: {
-                pt: 'Segundo instrumento mais usado (65% das instituições, com plataformas como o Google Meet): melhor qualidade de vídeo e áudio e recursos como gravação, mas exige conexão mais estável e alguma capacitação.',
-                en: 'The second most used tool (65% of institutions, with platforms such as Google Meet): better video and audio quality and features such as recording, but it requires a more stable connection and some training.',
-                es: 'Segundo instrumento más usado (65% de las instituciones, con plataformas como Google Meet): mejor calidad de video y audio y recursos como la grabación, pero exige una conexión más estable y algo de capacitación.'
+                pt: 'Ferramenta também muito utilizada nas iniciativas de ATER Digital. Oferece diversas possibilidades de interação, além de recursos como gravação, mas exige conexão mais estável e algum nível de capacitação. Os atendimentos costumam ser breves, com duração de até 10 minutos.',
+                en: 'Another widely used tool in Digital ATER initiatives. It offers several interaction possibilities, plus features such as recording, but it requires a more stable connection and some level of training. Sessions are usually brief, lasting up to 10 minutes.',
+                es: 'Herramienta también muy utilizada en las iniciativas de ATER Digital. Ofrece diversas posibilidades de interacción, además de recursos como la grabación, pero exige una conexión más estable y algún nivel de capacitación. Las atenciones suelen ser breves, con una duración de hasta 10 minutos.'
               } },
             { pt: 'Plataformas específicas', en: 'Specific platforms', es: 'Plataformas específicas' },
             { pt: 'Redes sociais', en: 'Social media', es: 'Redes sociales' },
@@ -690,16 +855,21 @@ var PLANNER_DATA = {
         },
         {
           code: '2.2', type: 'single',
-          title: { pt: 'Dinâmica de atendimento', en: 'Service dynamics', es: 'Dinámica de atención' },
+          title: { pt: 'Dinâmica de atendimento digital e remoto', en: 'Digital and remote service dynamics', es: 'Dinámica de atención digital y remota' },
           sub: { pt: 'Como ocorrerá a dinâmica do atendimento?', en: 'How will the service be organized?', es: '¿Cómo será la dinámica de atención?' },
           opts: [
             { pt: 'Individual', en: 'Individual', es: 'Individual',
               info: {
-                pt: 'O teleatendimento individual é a metodologia mais usada na ATER digital (83% das instituições, por aplicativos de mensagem): permite tirar dúvidas, fazer diagnósticos e orientar o produtor no dia a dia.',
-                en: 'Individual tele-service is the most used methodology in digital ATER (83% of institutions, via messaging apps): it allows answering questions, making diagnoses and guiding producers day to day.',
-                es: 'La teleatención individual es la metodología más usada en la ATER digital (83% de las instituciones, por aplicaciones de mensajería): permite resolver dudas, hacer diagnósticos y orientar al productor en el día a día.'
+                pt: 'O teleatendimento individual é a metodologia mais utilizada na ATER Digital. Consiste em um atendimento direto e personalizado entre técnico e produtor, permitindo esclarecer dúvidas, realizar diagnósticos e adaptar as orientações às necessidades específicas.',
+                en: 'Individual tele-service is the most used methodology in Digital ATER. It is a direct, personalized exchange between technician and producer, making it possible to answer questions, carry out diagnoses and tailor guidance to specific needs.',
+                es: 'La teleatención individual es la metodología más utilizada en la ATER Digital. Consiste en una atención directa y personalizada entre técnico y productor, que permite aclarar dudas, realizar diagnósticos y adaptar las orientaciones a las necesidades específicas.'
               } },
-            { pt: 'Em grupo', en: 'Group', es: 'En grupo' },
+            { pt: 'Em grupo', en: 'Group', es: 'En grupo',
+              info: {
+                pt: 'Atendimentos realizados por meio de grupos em aplicativos de mensageria (ex.: WhatsApp), reunindo produtores com características semelhantes, como território, cadeia produtiva ou interesse comum. Esses grupos podem variar em tamanho, desde pequenos grupos mais homogêneos (ex.: 5 produtores da mesma comunidade) até grupos maiores com dinâmica mais aberta de troca de informações.',
+                en: 'Service delivered through groups in messaging apps (e.g. WhatsApp), bringing together producers with similar characteristics, such as territory, value chain or shared interest. These groups vary in size, from small, more homogeneous groups (e.g. 5 producers from the same community) to larger groups with a more open dynamic of information exchange.',
+                es: 'Atenciones realizadas mediante grupos en aplicaciones de mensajería (ej.: WhatsApp), que reúnen a productores con características semejantes, como territorio, cadena productiva o interés común. Esos grupos pueden variar en tamaño, desde pequeños grupos más homogéneos (ej.: 5 productores de la misma comunidad) hasta grupos mayores con una dinámica más abierta de intercambio de información.'
+              } },
             { pt: 'Mista (individual + grupo)', en: 'Mixed (individual + group)', es: 'Mixta (individual + grupo)' },
             { pt: 'Ainda será definido', en: 'To be defined', es: 'Aún por definir', neutral: true },
             { pt: 'Não se aplica', en: 'Not applicable', es: 'No se aplica', neutral: true }
@@ -771,6 +941,7 @@ var PLANNER_DATA = {
             { pt: 'Produção de conteúdo e materiais técnicos', en: 'Content and technical material production', es: 'Producción de contenidos y materiales técnicos' },
             { pt: 'Organização e resumo dos atendimentos', en: 'Organizing and summarizing service records', es: 'Organización y resumen de las atenciones' },
             { pt: 'Análise de dados e monitoramento', en: 'Data analysis and monitoring', es: 'Análisis de datos y monitoreo' },
+            { pt: 'Outro', en: 'Other', es: 'Otro' },
             { pt: 'Não pretende usar IA', en: 'Does not plan to use AI', es: 'No planea usar IA', neutral: true },
             { pt: 'Ainda será definido', en: 'To be defined', es: 'Aún por definir', neutral: true },
             { pt: 'Não se aplica', en: 'Not applicable', es: 'No se aplica', neutral: true }
@@ -785,9 +956,9 @@ var PLANNER_DATA = {
       desc:   { pt: 'Verificação e feedback', en: 'Verification & feedback', es: 'Verificación y retroalimentación' },
       about: {
         why: {
-          pt: 'Sem verificação e feedback não há como saber se a orientação foi adotada nem como melhorar o serviço. É o que fecha o ciclo e alimenta o ajuste contínuo.',
-          en: 'Without verification and feedback there is no way to know whether guidance was adopted, nor how to improve the service. It closes the cycle and feeds continuous adjustment.',
-          es: 'Sin verificación y retroalimentación no hay forma de saber si la orientación fue adoptada ni cómo mejorar el servicio. Cierra el ciclo y alimenta el ajuste continuo.'
+          pt: 'Sem verificação e retorno, não é possível avaliar se as orientações foram adotadas nem identificar ajustes necessários no serviço. Essa etapa contribui para o acompanhamento dos resultados e para o aperfeiçoamento contínuo das ações.',
+          en: 'Without verification and feedback, it is not possible to assess whether the guidance was adopted or to identify the adjustments the service needs. This stage supports the monitoring of results and the continuous improvement of the activities.',
+          es: 'Sin verificación y retorno, no es posible evaluar si las orientaciones fueron adoptadas ni identificar los ajustes necesarios en el servicio. Esta etapa contribuye al seguimiento de los resultados y al perfeccionamiento continuo de las acciones.'
         },
         what: {
           pt: 'Como verificar a adoção das práticas recomendadas e como coletar o retorno dos produtores.',
@@ -810,9 +981,9 @@ var PLANNER_DATA = {
               } },
             { pt: 'Visitas de campo', en: 'Field visits', es: 'Visitas de campo',
               info: {
-                pt: 'Forma mais usada de verificação (39% das instituições do estudo de 2024): mais precisa, permite feedback imediato e fortalece a relação de confiança entre técnico e produtor, mas custa mais em tempo, recursos e deslocamento.',
-                en: 'The most used form of verification (39% of institutions in the 2024 study): more precise, allows immediate feedback and strengthens trust between technician and producer, but costs more in time, resources and travel.',
-                es: 'Forma más usada de verificación (39% de las instituciones del estudio de 2024): más precisa, permite retroalimentación inmediata y fortalece la relación de confianza entre técnico y productor, pero cuesta más en tiempo, recursos y desplazamiento.'
+                pt: 'Forma mais utilizada para verificar a adoção das orientações. Permite observar diretamente a realidade do produtor, obter retorno imediato e fortalecer a relação entre técnico e produtor, embora demande mais tempo, recursos e deslocamentos. Geralmente quando a modalidade de atendimento é híbrida.',
+                en: 'The most used way to verify whether guidance was adopted. It allows direct observation of the producer\'s reality, immediate feedback and a stronger relationship between technician and producer, although it demands more time, resources and travel. It is generally used when the service modality is hybrid.',
+                es: 'Forma más utilizada para verificar la adopción de las orientaciones. Permite observar directamente la realidad del productor, obtener retorno inmediato y fortalecer la relación entre técnico y productor, aunque demanda más tiempo, recursos y desplazamientos. Generalmente cuando la modalidad de atención es híbrida.'
               } },
             { pt: 'Monitoramento remoto (sensores/imagens)', en: 'Remote monitoring (sensors/imagery)', es: 'Monitoreo remoto (sensores/imágenes)' },
             { pt: 'Não será realizada verificação', en: 'No verification', es: 'Sin verificación', neutral: true },
@@ -822,12 +993,12 @@ var PLANNER_DATA = {
         },
         {
           code: '3.2', type: 'multi',
-          title: { pt: 'Feedback dos clientes', en: 'Client feedback', es: 'Retroalimentación de los clientes' },
+          title: { pt: 'Feedback/avaliação do atendimento pelos agricultores', en: 'Farmer feedback/evaluation of the service', es: 'Feedback/evaluación de la atención por los agricultores' },
           sub: { pt: 'Como será coletado o feedback dos produtores? (pode marcar mais de um)', en: 'How will producer feedback be collected? (select all that apply)', es: '¿Cómo se recolectará la retroalimentación? (puede marcar varios)' },
           info: {
-            pt: 'No estudo de 2024, mais da metade das instituições coleta feedback por entrevistas (52%) e 39% por pesquisas (surveys): entrevistas geram profundidade e contexto qualitativo; pesquisas dão escala e padronização. A escolha depende dos recursos disponíveis e do que a instituição prioriza.',
-            en: 'In the 2024 study, more than half of the institutions collect feedback through interviews (52%) and 39% through surveys: interviews provide qualitative depth and context; surveys provide scale and standardization. The choice depends on available resources and institutional priorities.',
-            es: 'En el estudio de 2024, más de la mitad de las instituciones recolecta retroalimentación mediante entrevistas (52%) y el 39% mediante encuestas (surveys): las entrevistas aportan profundidad y contexto cualitativo; las encuestas dan escala y estandarización. La elección depende de los recursos disponibles y de las prioridades de la institución.'
+            pt: 'Entrevistas e pesquisas (surveys) são formas comuns de coleta de feedback pelas instituições de ATER. As entrevistas proporcionam maior profundidade e contexto qualitativo, enquanto as pesquisas permitem maior escala e padronização, podendo ser aplicadas após cada atendimento. A escolha depende dos recursos disponíveis e das prioridades da instituição.',
+            en: 'Interviews and surveys are common ways for ATER institutions to collect feedback. Interviews provide greater depth and qualitative context, while surveys allow for greater scale and standardization and can be applied after each service session. The choice depends on the available resources and the institution\'s priorities.',
+            es: 'Las entrevistas y las encuestas (surveys) son formas comunes de recolección de feedback por las instituciones de ATER. Las entrevistas proporcionan mayor profundidad y contexto cualitativo, mientras que las encuestas permiten mayor escala y estandarización, y pueden aplicarse después de cada atención. La elección depende de los recursos disponibles y de las prioridades de la institución.'
           },
           opts: [
             { pt: 'Mensagens diretas (ex.: WhatsApp)', en: 'Direct messages (e.g. WhatsApp)', es: 'Mensajes directos (ej.: WhatsApp)' },
@@ -938,15 +1109,23 @@ function plannerRefHtml() {
     '</ul><div class="ref-fonte">' + plannerL(PLANNER_REF.fonte) + '</div></div>';
 }
 
+// Quantas perguntas da fase já foram respondidas
+function plannerPhaseAnswered(ph) {
+  var ans = plannerState.answers[ph.key] || {};
+  return ph.questions.filter(function(q) { return (ans[q.code] || []).length > 0; }).length;
+}
+
 function renderPlannerPhases() {
   var wrap = document.getElementById('planner-phases');
   if (!wrap) return;
   wrap.innerHTML = PLANNER_DATA.phases.map(function(ph, i) {
     var active = i === plannerState.current ? ' active' : '';
+    var done = plannerPhaseAnswered(ph) === ph.questions.length
+      ? '<span class="planner-phase-dot" aria-hidden="true"></span>' : '';
     return '<button class="planner-phase-tab' + active + '" data-phase="' + i + '">' +
       '<div class="planner-phase-num">' + (i + 1) + '</div>' +
       '<div class="planner-phase-label">' +
-        '<span class="pl-name">' + plannerL(ph.name) + '</span>' +
+        '<span class="pl-name">' + plannerL(ph.name) + done + '</span>' +
         '<span class="pl-desc">' + plannerL(ph.desc) + '</span>' +
       '</div>' +
     '</button>';
@@ -989,6 +1168,7 @@ function renderPlannerBody() {
         (q.info ? '<div class="planner-q-info">' + plannerL(q.info) + '</div>' : '') +
         '<span class="planner-q-hint">' + plannerL(hintTxt) + '</span>' +
         '<div class="planner-opts">' + opts + '</div>' +
+        (q.link ? '<a class="planner-q-link" href="' + q.link.href + '">' + plannerL(q.link) + '</a>' : '') +
       '</div>';
     }).join('');
     var aboutHtml = '';
@@ -1031,7 +1211,7 @@ function renderPlannerBody() {
         if (idx === -1) cur = cur.concat([opt]); else { cur = cur.slice(); cur.splice(idx, 1); }
       }
       plannerState.answers[phase][code] = cur;
-      renderPlannerBody();
+      renderPlanner();
     });
   });
 }
@@ -1047,12 +1227,35 @@ function updatePlannerNav() {
   prev.disabled = plannerState.current === 0;
   next.style.display = isLast ? 'none' : '';
   gen.style.display = isLast ? '' : 'none';
+  // Pulso discreto quando há respostas suficientes para gerar o roteiro
+  var respondidas = PLANNER_DATA.phases.reduce(function(acc, ph) { return acc + plannerPhaseAnswered(ph); }, 0);
+  gen.classList.toggle('ready', isLast && respondidas > 0);
   prog.textContent = PLANNER_T.progress[currentLang]
     ? PLANNER_T.progress[currentLang](plannerState.current + 1, total)
     : PLANNER_T.progress.en(plannerState.current + 1, total);
 }
 
+// Cada etapa tem a sua cor: a classe stage-N na seção troca os tokens do CSS
+function applyStageColor() {
+  var sec = document.getElementById('planejador');
+  if (!sec) return;
+  sec.classList.remove('stage-1', 'stage-2', 'stage-3');
+  sec.classList.add('stage-' + (plannerState.current + 1));
+}
+
+// Sombra na trilha quando ela encosta no topo da tela
+function initPlannerSticky() {
+  var phases = document.getElementById('planner-phases');
+  if (!phases) return;
+  var onScroll = function() {
+    phases.classList.toggle('stuck', phases.getBoundingClientRect().top <= 0.5);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+}
+
 function renderPlanner() {
+  applyStageColor();
   renderPlannerPhases();
   renderPlannerBody();
   updatePlannerNav();
@@ -1121,11 +1324,18 @@ function initPlannerEvents() {
   var copy = document.getElementById('planner-copy');
   var restart = document.getElementById('planner-restart');
   if (!prev) return;
+  // Ao trocar de etapa, volta para o topo do questionário (a trilha fica visível)
+  var goTo = function(i) {
+    plannerState.current = i;
+    renderPlanner();
+    var phases = document.getElementById('planner-phases');
+    if (phases) phases.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
   prev.addEventListener('click', function() {
-    if (plannerState.current > 0) { plannerState.current--; renderPlanner(); }
+    if (plannerState.current > 0) goTo(plannerState.current - 1);
   });
   next.addEventListener('click', function() {
-    if (plannerState.current < PLANNER_DATA.phases.length - 1) { plannerState.current++; renderPlanner(); }
+    if (plannerState.current < PLANNER_DATA.phases.length - 1) goTo(plannerState.current + 1);
   });
   gen.addEventListener('click', function() { generatePlannerPlan(true); });
   copy.addEventListener('click', function() {
@@ -1151,6 +1361,7 @@ function initPlannerEvents() {
 applyLangAttrs();
 renderPlanner();
 initPlannerEvents();
+initPlannerSticky();
 })();
 </script>
 </body>

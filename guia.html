@@ -716,13 +716,13 @@ var PLANNER_DATA = {
         {
           code: '1.1', type: 'single',
           title: { pt: 'Modelo de incorporação', en: 'Adoption model', es: 'Modelo de incorporación' },
-          sub: { pt: 'Como a ATER Digital será incorporada na instituição?', en: 'How will Digital ATER be adopted by the institution?', es: '¿Cómo se incorporará la ATER Digital en la institución?' },
+          sub: { pt: 'Como a ATER Digital será incorporada na instituição e/ou projeto?', en: 'How will Digital ATER be adopted by the institution and/or project?', es: '¿Cómo se incorporará la ATER Digital en la institución y/o proyecto?' },
           opts: [
-            { pt: 'Contratar empresas especializadas', en: 'Hire specialized companies', es: 'Contratar empresas especializadas',
+            { pt: 'Contratar e/ou estabelecer parcerias com empresas especializadas', en: 'Hire and/or partner with specialized companies', es: 'Contratar y/o establecer alianzas con empresas especializadas',
               info: {
-                pt: 'As instituições podem optar por contratar empresas que já possuem expertise técnica consolidada na prestação de serviços de ATER Digital. Atualmente, existem diversas startups e empresas privadas atuando nesse segmento.',
-                en: 'Institutions may choose to hire companies that already have consolidated technical expertise in delivering Digital ATER services. There are currently several startups and private companies working in this segment.',
-                es: 'Las instituciones pueden optar por contratar empresas que ya poseen experiencia técnica consolidada en la prestación de servicios de ATER Digital. Actualmente existen diversas startups y empresas privadas actuando en ese segmento.'
+                pt: 'As instituições podem optar por contratar empresas ou estabelecer parcerias com organizações que já possuam experiência técnica consolidada na prestação de serviços de ATER Digital. Atualmente, diversas startups, empresas privadas e instituições públicas têm atuação nesse segmento e oferecem diferentes tipos de serviços.',
+                en: 'Institutions may choose to hire companies or partner with organizations that already have consolidated technical experience in delivering Digital ATER services. Several startups, private companies and public institutions are currently active in this segment and offer different types of services.',
+                es: 'Las instituciones pueden optar por contratar empresas o establecer alianzas con organizaciones que ya posean experiencia técnica consolidada en la prestación de servicios de ATER Digital. Actualmente, diversas startups, empresas privadas e instituciones públicas actúan en ese segmento y ofrecen distintos tipos de servicios.'
               } },
             { pt: 'Fortalecimento institucional (capacitar equipe própria)', en: 'Institutional strengthening (train own team)', es: 'Fortalecimiento institucional (capacitar equipo propio)',
               info: {
@@ -749,9 +749,9 @@ var PLANNER_DATA = {
               } },
             { pt: 'Pessoas diferentes para cada modalidade', en: 'Different people per modality', es: 'Personas diferentes por modalidad',
               info: {
-                pt: 'É o arranjo mais comum: a maioria das instituições mantém o mesmo técnico nas atividades presenciais e digitais, o que assegura a continuidade das orientações, fortalece a confiança dos produtores e reduz os custos de treinamento e supervisão de equipes separadas.',
-                en: 'This is the most common arrangement: most institutions keep the same technician in both in-person and digital activities, which ensures continuity of guidance, builds producers\' trust and reduces the costs of training and supervising separate teams.',
-                es: 'Es el arreglo más común: la mayoría de las instituciones mantiene al mismo técnico en las actividades presenciales y digitales, lo que asegura la continuidad de las orientaciones, fortalece la confianza de los productores y reduce los costos de capacitación y supervisión de equipos separados.'
+                pt: 'É um arranjo menos comum, adotado por instituições com equipes especializadas: um técnico cuida do atendimento presencial e outro do digital, permitindo maior especialização em cada frente. Em contrapartida, exige mais coordenação entre as equipes e atenção redobrada para manter a experiência do produtor consistente entre os dois canais.',
+                en: 'This is a less common arrangement, adopted by institutions with specialized teams: one technician handles in-person service and another handles digital service, allowing greater specialization in each front. In turn, it requires more coordination between teams and extra care to keep the producer\'s experience consistent across both channels.',
+                es: 'Es un arreglo menos común, adoptado por instituciones con equipos especializados: un técnico se encarga de la atención presencial y otro de la digital, lo que permite mayor especialización en cada frente. A cambio, exige más coordinación entre los equipos y cuidado adicional para mantener consistente la experiencia del productor entre ambos canales.'
               } },
             { pt: 'Varia conforme a situação ou demanda', en: 'Varies by situation or demand', es: 'Varía según la situación o demanda' },
             { pt: 'Ainda será definido', en: 'To be defined', es: 'Aún por definir', neutral: true },
@@ -1060,7 +1060,7 @@ var PLANNER_DATA = {
 };
 
 // Estado: respostas[phaseKey][code] = array de índices selecionados
-var plannerState = { answers: {}, current: 0, aboutOpen: {} };
+var plannerState = { answers: {}, current: 0, aboutOpen: { antes: true, durante: true, depois: true } };
 
 var PLANNER_T = {
   progress: {
@@ -1073,9 +1073,9 @@ var PLANNER_T = {
   copyOk: { pt: 'Roteiro copiado!', en: 'Roadmap copied!', es: '¡Hoja de ruta copiada!' },
   noteTitle: { pt: 'Próximo passo: ', en: 'Next step: ', es: 'Próximo paso: ' },
   note: {
-    pt: 'Use este roteiro como ponto de partida para o desenho do serviço. As lacunas marcadas como "a definir" indicam onde a instituição precisa decidir antes de começar. Para um modelo híbrido, combine este guia com o cronograma de 12 meses acima.',
-    en: 'Use this roadmap as a starting point for service design. Items marked "to be defined" show where the institution must decide before starting. For a hybrid model, combine this guide with the 12-month schedule above.',
-    es: 'Use esta hoja de ruta como punto de partida para el diseño del servicio. Los puntos marcados como "por definir" muestran dónde la institución debe decidir antes de empezar. Para un modelo híbrido, combine esta guía con el cronograma de 12 meses anterior.'
+    pt: 'Use este roteiro como ponto de partida para o desenho do serviço. As lacunas marcadas como "a definir" indicam onde a instituição precisa decidir antes de começar. Para um modelo híbrido, combine este guia com o cronograma de 12 meses disponível em 1.3. Momento de implementação.',
+    en: 'Use this roadmap as a starting point for service design. Items marked "to be defined" show where the institution must decide before starting. For a hybrid model, combine this guide with the 12-month schedule available in 1.3. Timing of implementation.',
+    es: 'Use esta hoja de ruta como punto de partida para el diseño del servicio. Los puntos marcados como "por definir" muestran dónde la institución debe decidir antes de empezar. Para un modelo híbrido, combine esta guía con el cronograma de 12 meses disponible en 1.3. Momento de implementación.'
   }
 };
 
@@ -1110,24 +1110,14 @@ var PLANNER_REF = {
   ],
   bullets: [
     {
-      pt: 'Custos de referência por família/ano: ATER presencial R$ 3.500–4.000; híbrida R$ 3.096; exclusivamente digital R$ 319. Incorporar atividades remotas reduz o custo e aumenta a frequência de contato.',
-      en: 'Reference costs per family/year: in-person ATER R$ 3,500–4,000; hybrid R$ 3,096; fully digital R$ 319. Incorporating remote activities lowers costs and increases contact frequency.',
-      es: 'Costos de referencia por familia/año: ATER presencial R$ 3.500–4.000; híbrida R$ 3.096; exclusivamente digital R$ 319. Incorporar actividades remotas reduce el costo y aumenta la frecuencia de contacto.'
+      pt: 'Frequência de contato: com a adoção de práticas digitais, a interação entre técnicos e produtores pode tornar-se semanal ou quinzenal, em comparação com quatro a seis visitas por ano na ATER exclusivamente presencial. Nesse modelo, é comum que as visitas ocorram a cada dois ou três meses, padrão adotado por diversas instituições.',
+      en: 'Contact frequency: with the adoption of digital practices, interaction between technicians and producers can become weekly or biweekly, compared to four to six visits per year in fully in-person ATER. In this model, visits commonly occur every two to three months, a pattern adopted by several institutions.',
+      es: 'Frecuencia de contacto: con la adopción de prácticas digitales, la interacción entre técnicos y productores puede volverse semanal o quincenal, en comparación con cuatro a seis visitas por año en la ATER exclusivamente presencial. En este modelo, es común que las visitas ocurran cada dos o tres meses, un patrón adoptado por varias instituciones.'
     },
     {
-      pt: 'Frequência de contato: com práticas digitais, a interação técnico–produtor passa a ser semanal ou quinzenal, ante 4 a 6 visitas por ano na ATER exclusivamente presencial.',
-      en: 'Contact frequency: with digital practices, technician–producer interaction becomes weekly or biweekly, versus 4 to 6 visits per year in fully in-person ATER.',
-      es: 'Frecuencia de contacto: con prácticas digitales, la interacción técnico–productor pasa a ser semanal o quincenal, frente a 4 a 6 visitas por año en la ATER exclusivamente presencial.'
-    },
-    {
-      pt: 'Capacidade de atendimento: um técnico em modalidade híbrida chega a 10 atendimentos presenciais e 70 on-line por mês, até 4 vezes o alcance do modelo exclusivamente presencial.',
-      en: 'Service capacity: a technician in hybrid mode can deliver 10 in-person and 70 online sessions per month, up to 4 times the reach of the fully in-person model.',
-      es: 'Capacidad de atención: un técnico en modalidad híbrida llega a 10 atenciones presenciales y 70 en línea por mes, hasta 4 veces el alcance del modelo exclusivamente presencial.'
-    },
-    {
-      pt: 'Metodologia de referência (12 meses): articulação e mobilização → cadastro e diagnóstico das famílias (incluindo o "capital digital") → planejamento coletivo e individual → atendimentos individuais virtuais quinzenais (cerca de 20 minutos, via WhatsApp) combinados a visitas presenciais e eventos coletivos → relatórios de avaliação e divulgação de resultados.',
-      en: 'Reference methodology (12 months): articulation and mobilization → family registration and diagnosis (including "digital capital") → collective and individual planning → biweekly virtual individual sessions (about 20 minutes, via WhatsApp) combined with in-person visits and collective events → evaluation reports and dissemination of results.',
-      es: 'Metodología de referencia (12 meses): articulación y movilización → registro y diagnóstico de las familias (incluido el "capital digital") → planificación colectiva e individual → atenciones individuales virtuales quincenales (unos 20 minutos, vía WhatsApp) combinadas con visitas presenciales y eventos colectivos → informes de evaluación y divulgación de resultados.'
+      pt: 'Capacidade de atendimento: experiências mostram que, na modalidade híbrida, um técnico pode realizar até dez atendimentos presenciais e 70 atendimentos on-line por mês, alcançando até quatro vezes mais produtores do que no modelo exclusivamente presencial. Evidentemente, o atendimento presencial continua sendo essencial, pois diversas ações só podem ser realizadas dessa forma. Contudo, a combinação das duas modalidades permite ampliar o alcance e a frequência do acompanhamento técnico.',
+      en: 'Service capacity: experience shows that, in the hybrid modality, a technician can carry out up to ten in-person visits and 70 online sessions per month, reaching up to four times more producers than in the fully in-person model. In-person service naturally remains essential, since several actions can only be carried out that way. However, combining both modalities makes it possible to expand the reach and frequency of technical follow-up.',
+      es: 'Capacidad de atención: la experiencia muestra que, en la modalidad híbrida, un técnico puede realizar hasta diez atenciones presenciales y 70 atenciones en línea por mes, alcanzando hasta cuatro veces más productores que en el modelo exclusivamente presencial. Naturalmente, la atención presencial sigue siendo esencial, ya que varias acciones solo pueden realizarse de esa forma. Sin embargo, la combinación de ambas modalidades permite ampliar el alcance y la frecuencia del acompañamiento técnico.'
     }
   ],
   fonte: {
@@ -1398,7 +1388,7 @@ function initPlannerEvents() {
     }
   });
   restart.addEventListener('click', function() {
-    plannerState = { answers: {}, current: 0, aboutOpen: {} };
+    plannerState = { answers: {}, current: 0, aboutOpen: { antes: true, durante: true, depois: true } };
     document.getElementById('planner-result').classList.remove('show');
     renderPlanner();
     document.getElementById('planejador').scrollIntoView({ behavior: 'smooth', block: 'start' });

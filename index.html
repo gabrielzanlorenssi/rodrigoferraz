@@ -3413,6 +3413,31 @@ var SELECTOR_UF = ATER_ORIENTACAO
   .concat([INTERNET_IND])
   .concat(['Estabelecimentos agropecuários','Estabelecimentos de agricultura familiar','% de agricultura familiar','Total de extensionistas']);
 
+// Nomes de indicador são também chaves de dado (props do geojson, UF_PCT etc.),
+// por isso ficam fixos em PT. Este mapa só traduz o RÓTULO exibido (seletor,
+// legenda do gráfico, tooltips) — nunca a chave usada para buscar o valor.
+var INDICATOR_LABELS = {
+  '% que recebe orientação técnica': { pt: '% que recebe orientação técnica', en: '% receiving technical guidance', es: '% que recibe orientación técnica' },
+  '% orientação técnica: governo': { pt: '% orientação técnica: governo', en: 'Technical guidance: government', es: '% orientación técnica: gobierno' },
+  '% orientação técnica: próprio produtor': { pt: '% orientação técnica: próprio produtor', en: 'Technical guidance: the producer themselves', es: '% orientación técnica: el propio productor' },
+  '% orientação técnica: cooperativas': { pt: '% orientação técnica: cooperativas', en: 'Technical guidance: cooperatives', es: '% orientación técnica: cooperativas' },
+  '% orientação técnica: empresas integradoras': { pt: '% orientação técnica: empresas integradoras', en: 'Technical guidance: integrator companies', es: '% orientación técnica: empresas integradoras' },
+  '% orientação técnica: empresas privadas': { pt: '% orientação técnica: empresas privadas', en: 'Technical guidance: private companies', es: '% orientación técnica: empresas privadas' },
+  '% orientação técnica: ONGs': { pt: '% orientação técnica: ONGs', en: 'Technical guidance: NGOs', es: '% orientación técnica: ONGs' },
+  '% orientação técnica: Sistema S': { pt: '% orientação técnica: Sistema S', en: 'Technical guidance: Sistema S', es: '% orientación técnica: Sistema S' },
+  '% orientação técnica: outra origem': { pt: '% orientação técnica: outra origem', en: 'Technical guidance: other source', es: '% orientación técnica: otro origen' },
+  '% de domicílios com acesso à internet': { pt: '% de domicílios com acesso à internet', en: '% of households with internet access', es: '% de hogares con acceso a internet' },
+  'Estabelecimentos agropecuários': { pt: 'Estabelecimentos agropecuários', en: 'Agricultural establishments', es: 'Establecimientos agropecuarios' },
+  'Estabelecimentos de agricultura familiar': { pt: 'Estabelecimentos de agricultura familiar', en: 'Family farming establishments', es: 'Establecimientos de agricultura familiar' },
+  '% Agricultura familiar entre estabelecimentos agrícolas': { pt: '% Agricultura familiar entre estabelecimentos agrícolas', en: '% Family farming among agricultural establishments', es: '% Agricultura familiar entre establecimientos agrícolas' },
+  '% de agricultura familiar': { pt: '% de agricultura familiar', en: '% of family farming', es: '% de agricultura familiar' },
+  'Total de extensionistas': { pt: 'Total de extensionistas', en: 'Total extension agents', es: 'Total de extensionistas' }
+};
+function indLabel(nome) {
+  var e = INDICATOR_LABELS[nome];
+  return e ? (e[currentLang] || e.pt) : nome;
+}
+
 var crossMode = false;
 
 // =============================================
@@ -3512,7 +3537,7 @@ function fillSelector(selector, nomes) {
   nomes.forEach(function(nome) {
     var opt = document.createElement('option');
     opt.value = nome;
-    opt.textContent = nome;
+    opt.textContent = indLabel(nome);
     selector.appendChild(opt);
   });
   var manteve = !!anterior && nomes.indexOf(anterior) !== -1;
@@ -3676,7 +3701,7 @@ function renderMunicipios() {
         ttip.style('opacity', 1)
           .style('left', (event.pageX + 12) + 'px')
           .style('top', (event.pageY - 20) + 'px')
-          .html('<strong>' + d.properties.municipio + ' (' + d.properties.uf + ')</strong><br>' + currentIndicador + ': ' + valFmt);
+          .html('<strong>' + d.properties.municipio + ' (' + d.properties.uf + ')</strong><br>' + indLabel(currentIndicador) + ': ' + valFmt);
       })
       .on('mouseout', function() {
         d3.select(this).style('opacity', 1);
@@ -3842,7 +3867,7 @@ var estado = d.properties.estado || d.properties.nome || d.properties.NM_UF || u
         ttip.style('opacity', 1)
           .style('left', (event.pageX + 12) + 'px')
           .style('top', (event.pageY - 20) + 'px')
-          .html('<strong>' + estado + '</strong><br><em>' + currentIndicador + ': ' + valFmt + '</em>' + (isPct ? breakdown : ''));
+          .html('<strong>' + estado + '</strong><br><em>' + indLabel(currentIndicador) + ': ' + valFmt + '</em>' + (isPct ? breakdown : ''));
       })
       .on('mouseout', function() {
         d3.select(this).style('opacity', 1);
@@ -3877,7 +3902,7 @@ var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] ||
     var MAP_COLORS = cfg.MAP_COLORS;
 
     // Atualizar label (título do gráfico)
-    setChartLabel(indicador, LBL_MUNIC);
+    setChartLabel(indLabel(indicador), LBL_MUNIC);
 
     // Usar as categorias da legenda como bins fixos
     var numCats = breaks.length - 1;
@@ -4038,7 +4063,7 @@ var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] ||
     var container = document.getElementById('map-chart');
     if (!container) return;
 
-    setChartLabel(indicador, LBL_UF);
+    setChartLabel(indLabel(indicador), LBL_UF);
 
     d3.select(container).selectAll('*').remove();
 
@@ -4205,8 +4230,8 @@ var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] ||
     if (!dados || dados.pts.length === 0) { container.innerHTML = ''; return; }
 
     var labelEl = document.getElementById('map-chart-label');
-    if (labelEl) labelEl.innerHTML = '<strong>' + escHtml(dados.indX) + '</strong>' +
-      ' <span class="mcl-soft">×</span> <strong>' + escHtml(dados.indY) + '</strong>';
+    if (labelEl) labelEl.innerHTML = '<strong>' + escHtml(indLabel(dados.indX)) + '</strong>' +
+      ' <span class="mcl-soft">×</span> <strong>' + escHtml(indLabel(dados.indY)) + '</strong>';
 
     var fonteEl = document.getElementById('map-fonte');
     if (fonteEl && dados.fonte) {
@@ -4353,6 +4378,10 @@ var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] ||
   window.addEventListener('resize', function() { drawMap(); });
 
   window._updateMapFonte = function() {
+    // Rótulos de indicador (seletor, legenda do gráfico, tooltips) dependem de
+    // currentLang — recarrega o <select> e redesenha para refletir o idioma novo.
+    populateSelector();
+    drawMapLevel();
     var currentIndicador = getSelectedIndicador();
     if (!currentIndicador || !indicadoresGlobal) return;
     var meta = indicadoresGlobal.find(function(d) { return d.indicador === currentIndicador; });

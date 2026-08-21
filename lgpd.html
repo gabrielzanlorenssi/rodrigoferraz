@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LGPD para ATER Digital — ICT4D Brazil</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --c-bg:         #f5f0e8;
+  --c-bg-alt:     #ece7db;
+  --c-ink:        #1c1c1c;
+  --c-ink-muted:  #646458;
+  --c-green-dark: #1f4023;
+  --c-green:      #2d6a32;
+  --c-amber:      #c47c2b;
+  --c-cream:      #fdf8f0;
+  --c-border:     #d4cdc0;
+  --f-serif:  'Libre Baskerville', Georgia, serif;
+  --f-sans:   'DM Sans', system-ui, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; }
+body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans); font-size: 16px; line-height: 1.55; }
+
+.topbar {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 12px 16px; border-bottom: 1px solid var(--c-border); background: var(--c-cream);
+}
+.topbar a.voltar { font-size: 14px; font-weight: 500; color: var(--c-green-dark); text-decoration: none; }
+.topbar a.voltar:hover { text-decoration: underline; }
+
+.lgpd-hero { background: var(--c-cream); border-bottom: 1px solid var(--c-border); }
+.lgpd-hero .wrap { max-width: 780px; margin: 0 auto; padding: 40px 20px 34px; }
+.lgpd-kicker {
+  display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--c-amber);
+  border: 1px solid var(--c-amber); border-radius: 20px; padding: 4px 14px; margin-bottom: 16px;
+}
+.lgpd-hero h1 {
+  font-family: var(--f-serif); font-size: clamp(25px, 4.6vw, 34px);
+  line-height: 1.22; color: var(--c-green-dark); margin-bottom: 12px;
+}
+.lgpd-hero p { font-size: 15.5px; color: var(--c-ink-muted); line-height: 1.7; }
+
+.wrap { max-width: 780px; margin: 0 auto; padding: 0 20px; }
+article { padding: 36px 0 70px; }
+article h2 {
+  font-family: var(--f-serif); font-size: 21px; line-height: 1.3;
+  color: var(--c-green-dark); margin: 38px 0 12px;
+  padding-top: 22px; border-top: 1px solid var(--c-border);
+}
+article h2:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+article p { margin-bottom: 15px; line-height: 1.72; }
+article ul { margin: 0 0 18px; padding-left: 0; list-style: none; }
+article li {
+  position: relative; padding-left: 22px; margin-bottom: 11px; line-height: 1.68;
+}
+article li::before {
+  content: ''; position: absolute; left: 4px; top: 10px;
+  width: 6px; height: 6px; border-radius: 50%; background: var(--c-green);
+}
+article li strong { color: var(--c-green-dark); }
+article .lei { color: var(--c-ink-muted); font-size: 14.5px; }
+
+.destaque {
+  background: var(--c-cream); border: 1px solid var(--c-border);
+  border-radius: 8px; padding: 18px 22px; margin: 22px 0;
+}
+.destaque p:last-child { margin-bottom: 0; }
+
+.aviso-modelo {
+  background: var(--c-bg-alt); border: 1px dashed var(--c-border); border-radius: 8px;
+  padding: 20px 22px; margin: 18px 0 22px;
+  font-style: italic; line-height: 1.72;
+}
+.aviso-modelo .rot {
+  display: block; font-style: normal; font-size: 11px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-amber); margin-bottom: 10px;
+}
+
+.nota-pais {
+  margin-top: 30px; padding: 16px 20px; border-radius: 8px;
+  background: var(--c-bg-alt); font-size: 14px; color: var(--c-ink-muted); line-height: 1.65;
+}
+.fim {
+  margin-top: 34px; padding-top: 22px; border-top: 1px solid var(--c-border);
+  font-size: 14px; color: var(--c-ink-muted); line-height: 1.7;
+}
+.fim a { color: var(--c-green); }
+
+@media (max-width: 600px) {
+  .lgpd-hero .wrap { padding: 30px 18px 26px; }
+  article { padding: 28px 0 56px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <a class="voltar" href="guia.html">← Voltar ao Guia de ATER Digital</a>
+</nav>
+
+<header class="lgpd-hero">
+  <div class="wrap">
+    <div class="lgpd-kicker">Anexo do Guia</div>
+    <h1>Como a LGPD se aplica à ATER Digital</h1>
+    <p>A LGPD aplica-se integralmente às ações digitais de atendimento aos produtores: WhatsApp, Telegram, aplicativos, formulários, CRM, videochamadas e plataformas. Ela não impede a ATER Digital, mas exige que os dados sejam coletados e utilizados com finalidade definida, transparência, segurança e acesso controlado.</p>
+  </div>
+</header>
+
+<div class="wrap">
+<article>
+
+  <h2>Que dados são esses</h2>
+  <p>No contexto da ATER, são dados pessoais, por exemplo: nome, CPF, telefone, endereço, localização da propriedade, fotografias identificáveis, informações produtivas vinculadas ao agricultor e registros dos atendimentos.</p>
+  <p>Alguns dados exigem cuidado reforçado, os chamados <strong>dados sensíveis</strong> <span class="lei">(art. 5º, II da LGPD)</span>, como informações sobre saúde, origem racial ou étnica, convicção religiosa, opinião política, filiação sindical e dados genéticos ou biométricos.</p>
+
+  <h2>Consentimento não é a única base legal</h2>
+  <div class="destaque">
+    <p>O ponto central é que a LGPD <strong>não exige consentimento em toda situação</strong>. A instituição precisa definir uma base legal para cada uso <span class="lei">(art. 7º)</span>.</p>
+  </div>
+  <ul>
+    <li>Em <strong>programas e políticas públicas</strong>, órgãos públicos podem tratar os dados para executar suas competências e políticas públicas <span class="lei">(art. 7º, III c/c art. 23, I)</span>, desde que informem claramente a finalidade.</li>
+    <li><strong>Empresas, OSCs ou consultorias contratadas</strong> normalmente atuam como operadoras, tratando os dados segundo as orientações da instituição responsável, que será a controladora <span class="lei">(art. 5º, VI e VII)</span>.</li>
+    <li>Para <strong>finalidades opcionais e diferentes do atendimento</strong>, como divulgação de imagem, envio de publicidade ou compartilhamento não necessário, pode ser necessário consentimento específico.</li>
+    <li>Não é adequado obter um <strong>consentimento genérico</strong> autorizando "qualquer uso" — o art. 8º, §4º declara nulas as autorizações genéricas.</li>
+  </ul>
+
+  <h2>Cuidados na prática</h2>
+  <p>Na prática, uma ação de ATER Digital deveria adotar os seguintes cuidados:</p>
+  <ul>
+    <li><strong>Definir a finalidade:</strong> quais dados serão coletados, por que são necessários e quem terá acesso.</li>
+    <li><strong>Coletar apenas o necessário:</strong> não solicitar CPF, localização exata ou documentos se esses dados não forem essenciais.</li>
+    <li><strong>Informar o produtor:</strong> apresentar um aviso simples explicando quem utilizará os dados, para qual finalidade, com quem poderão ser compartilhados e como exercer seus direitos.</li>
+    <li><strong>Controlar o acesso:</strong> cada técnico deve acessar apenas os produtores sob sua responsabilidade.</li>
+    <li><strong>Proteger os dispositivos:</strong> senha, autenticação em dois fatores, atualização dos equipamentos e procedimento para celular perdido ou roubado.</li>
+    <li><strong>Evitar armazenamento disperso:</strong> informações institucionais não devem permanecer indefinidamente em celulares pessoais, planilhas particulares ou contas individuais.</li>
+    <li><strong>Formalizar as responsabilidades:</strong> contratos com empresas de aplicativos, plataformas e prestadores devem prever proteção, confidencialidade, segurança, devolução e exclusão dos dados.</li>
+    <li><strong>Preparar resposta a incidentes:</strong> vazamentos, perda de aparelho ou envio de dados à pessoa errada precisam ser registrados e avaliados pela instituição.</li>
+    <li><strong>Manter um canal para o produtor:</strong> permitir solicitações de acesso, correção e informações sobre o tratamento dos dados <span class="lei">(art. 18)</span>.</li>
+  </ul>
+
+  <h2>Prazo de retenção e eliminação</h2>
+  <p>A LGPD não impõe um prazo automático de exclusão dos dados. O tratamento termina quando a finalidade é alcançada, os dados deixam de ser necessários ou o titular revoga o consentimento <span class="lei">(art. 15)</span>. A partir daí, a regra geral é eliminar os dados <span class="lei">(art. 16)</span>, mas a lei permite mantê-los em casos específicos: cumprimento de obrigação legal ou regulatória (como prestação de contas de um programa público), estudos por órgão de pesquisa com anonimização sempre que possível, transferência a terceiro nos termos da lei, ou uso exclusivo do controlador com os dados anonimizados.</p>
+  <p>Por isso, é a própria instituição que precisa <strong>definir e documentar por quanto tempo cada tipo de dado</strong> (cadastro, fotos, conversas, diagnósticos) será guardado e quando será eliminado ou anonimizado. Sem essa definição, os dados tendem a ficar armazenados indefinidamente, o que já configura uma não conformidade.</p>
+
+  <h2>Cuidados específicos com WhatsApp, Telegram e outros aplicativos de mensageria</h2>
+  <ul>
+    <li>Grupos <strong>expõem o número e, muitas vezes, a foto</strong> dos participantes aos demais membros. Para comunicados gerais, listas de transmissão ou canais podem ser mais adequados.</li>
+    <li>Não incluir automaticamente o produtor em grupos; ele deve ser informado sobre a dinâmica e a exposição de seus dados.</li>
+    <li>Evitar compartilhar CPF, documentos, diagnósticos socioeconômicos ou outras informações individuais no grupo.</li>
+    <li>Utilizar preferencialmente <strong>contas e aparelhos institucionais</strong>.</li>
+    <li>Definir regras para exportação de conversas, armazenamento de fotos e encerramento do acesso quando o técnico deixar o projeto.</li>
+    <li>O aplicativo pode ser o canal de interação, mas <strong>os dados relevantes do atendimento devem ser registrados no sistema institucional</strong> apropriado.</li>
+  </ul>
+
+  <h2>Exemplo de aviso simples de consentimento</h2>
+  <div class="aviso-modelo">
+    <span class="rot">Modelo para adaptar</span>
+    Seus dados serão utilizados por [instituição] para realizar e acompanhar os serviços de ATER, registrar os atendimentos e avaliar os resultados do programa. O acesso será restrito às equipes autorizadas e aos prestadores envolvidos na execução do serviço. Para informações, correções ou exercício de seus direitos, entre em contato por [canal].
+  </div>
+
+  <div class="fim">
+    <p>Portanto, a LGPD não significa apenas colocar uma caixa de "aceito". O essencial é construir uma <strong>governança dos dados ao longo de todo o atendimento</strong>, desde o cadastro do produtor até a exclusão ou anonimização das informações. A base está na Lei Geral de Proteção de Dados Pessoais e no Guia da ANPD sobre tratamento de dados pelo poder público. Para um projeto concreto, a definição das bases legais e dos papéis deve ser validada pelo encarregado de dados ou pela assessoria jurídica da instituição.</p>
+  </div>
+
+  <div class="nota-pais">
+    As orientações desta página se referem exclusivamente à legislação brasileira (LGPD, Lei nº 13.709/2018). Para projetos de ATER Digital em outros países, o conteúdo precisa ser adaptado e a legislação de proteção de dados pertinente a cada jurisdição deve ser verificada.
+    <br><br>
+    <em>This page is available in Portuguese only: it covers Brazilian data protection law. · Esta página está disponible solo en portugués: trata de la legislación brasileña de protección de datos.</em>
+  </div>
+
+</article>
+</div>
+
+</body>
+</html>

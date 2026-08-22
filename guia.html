@@ -1309,7 +1309,21 @@ function renderPlannerBody() {
 }
 
 // Perguntas sem nenhuma opção marcada, em todas as etapas.
-var plannerAvisado = false;
+var plannerAvisado = false;   // já tentou gerar com lacunas?
+
+// Reaplica as marcas depois de cada render e reconta o que falta. Sem isso,
+// responder uma pergunta apagava a marcação de todas as outras, porque o
+// corpo do planejador é remontado do zero a cada clique.
+function plannerAtualizarPendencias() {
+  if (!plannerAvisado) return;
+  var pendentes = plannerPendentes();
+  if (!pendentes.length) {
+    plannerAvisado = false;
+    plannerLimparPendentes();
+    return;
+  }
+  plannerMarcarPendentes(pendentes, true);
+}
 
 function plannerPendentes() {
   var out = [];
@@ -1330,7 +1344,7 @@ function plannerLimparPendentes() {
   if (av) av.classList.remove('show');
 }
 
-function plannerMarcarPendentes(pendentes) {
+function plannerMarcarPendentes(pendentes, semRolar) {
   plannerLimparPendentes();
   var codes = {};
   pendentes.forEach(function(p) { codes[p.code] = true; });
@@ -1353,7 +1367,7 @@ function plannerMarcarPendentes(pendentes) {
       '<span>' + plannerL(PLANNER_T.faltamAjuda) + '</span>' +
       (porFase.length > 1 ? '<span class="pa-fases">' + porFase.join(' · ') + '</span>' : '');
     av.classList.add('show');
-    av.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (!semRolar) av.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
   updatePlannerNav();
 }
@@ -1406,6 +1420,7 @@ function renderPlanner() {
   renderPlannerPhases();
   renderPlannerBody();
   updatePlannerNav();
+  plannerAtualizarPendencias();
 }
 
 function generatePlannerPlan(doScroll) {

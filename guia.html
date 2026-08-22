@@ -447,6 +447,30 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
   box-shadow: 0 2px 6px rgba(196,124,43,0.28);
 }
 .planner-btn.accent:hover:not(:disabled) { background: var(--c-amber-light); border-color: var(--c-amber-light); box-shadow: 0 5px 14px rgba(196,124,43,0.32); }
+.planner-aviso {
+  display: none; margin-top: 18px; padding: 14px 18px;
+  border: 1px solid var(--c-amber); border-radius: 8px; background: var(--c-bg-alt);
+}
+.planner-aviso.show { display: block; }
+.planner-aviso strong {
+  display: block; font-size: 14.5px; color: var(--c-amber); margin-bottom: 4px;
+}
+.planner-aviso span { display: block; font-size: 13.5px; color: var(--c-ink-muted); line-height: 1.6; }
+.planner-aviso .pa-fases {
+  margin-top: 7px; font-size: 12.5px; font-weight: 600; color: var(--c-amber);
+}
+
+/* Pergunta ainda sem resposta, depois de tentar gerar o roteiro */
+.planner-q.pendente {
+  background: var(--c-bg-alt); border-radius: 8px;
+  box-shadow: 0 0 0 2px var(--c-amber); padding: 14px; margin: 10px 0;
+}
+.planner-q.pendente .planner-q-icon { background: var(--c-amber); }
+
+/* O "Gerar roteiro" é a próxima etapa: maior e mais forte que o "Anterior" */
+.planner-btn.accent { min-width: 210px; min-height: 52px; font-size: 15px; }
+#planner-prev { min-width: 128px; opacity: 0.9; }
+
 /* Pulso leve quando o roteiro já pode ser gerado */
 .planner-btn.accent.ready { animation: plannerPulse 2.4s ease-in-out infinite; }
 @keyframes plannerPulse {
@@ -556,6 +580,8 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
   .planner-nav { flex-direction: column-reverse; align-items: stretch; }
   .planner-nav-btns { justify-content: space-between; }
   .planner-nav-btns .planner-btn { min-width: 0; flex: 1; }
+  /* mesmo apertado, "Gerar roteiro" continua sendo o botão principal */
+  .planner-nav-btns .planner-btn.accent { flex: 1.7; min-height: 50px; }
   .planner-opts { margin-left: 0; }
   .planner-q-sub, .planner-q-hint, .planner-q-info, .planner-q-link { margin-left: 0; }
   .planner-q-texto { margin-left: 0; }
@@ -617,6 +643,9 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
 
     <!-- Painéis das fases (preenchidos por JS) -->
     <div class="planner-body" id="planner-body"></div>
+
+    <!-- Aviso de perguntas pendentes (preenchido por JS) -->
+    <div class="planner-aviso" id="planner-aviso"></div>
 
     <!-- Navegação -->
     <div class="planner-nav">
@@ -1100,6 +1129,13 @@ var PLANNER_T = {
   },
   emptyAnswer: { pt: '(sem resposta)', en: '(no answer)', es: '(sin respuesta)' },
   notDefined: { pt: 'A definir', en: 'To be defined', es: 'Por definir' },
+  faltamTitulo: { pt: function(n) { return n === 1 ? 'Falta 1 pergunta sem resposta' : 'Faltam ' + n + ' perguntas sem resposta'; },
+                  en: function(n) { return n === 1 ? '1 question is still unanswered' : n + ' questions are still unanswered'; },
+                  es: function(n) { return n === 1 ? 'Falta 1 pregunta sin responder' : 'Faltan ' + n + ' preguntas sin responder'; } },
+  faltamAjuda: { pt: 'As perguntas pendentes estão marcadas abaixo. Você pode respondê-las ou gerar o roteiro assim mesmo — as lacunas aparecem como "a definir".',
+                 en: 'The pending questions are highlighted below. You can answer them or generate the roadmap anyway — the gaps appear as "to be defined".',
+                 es: 'Las preguntas pendientes están marcadas abajo. Puede responderlas o generar la hoja de ruta de todos modos — los vacíos aparecen como "por definir".' },
+  gerarMesmo: { pt: 'Gerar assim mesmo', en: 'Generate anyway', es: 'Generar de todos modos' },
   copyOk: { pt: 'Roteiro copiado!', en: 'Roadmap copied!', es: '¡Hoja de ruta copiada!' }
 };
 
@@ -1272,6 +1308,56 @@ function renderPlannerBody() {
   });
 }
 
+// Perguntas sem nenhuma opção marcada, em todas as etapas.
+var plannerAvisado = false;
+
+function plannerPendentes() {
+  var out = [];
+  PLANNER_DATA.phases.forEach(function(ph, pi) {
+    ph.questions.forEach(function(q) {
+      var sel = (plannerState.answers[ph.key] && plannerState.answers[ph.key][q.code]) || [];
+      if (!sel.length) out.push({ fase: pi, code: q.code });
+    });
+  });
+  return out;
+}
+
+function plannerLimparPendentes() {
+  document.querySelectorAll('.planner-q.pendente').forEach(function(el) {
+    el.classList.remove('pendente');
+  });
+  var av = document.getElementById('planner-aviso');
+  if (av) av.classList.remove('show');
+}
+
+function plannerMarcarPendentes(pendentes) {
+  plannerLimparPendentes();
+  var codes = {};
+  pendentes.forEach(function(p) { codes[p.code] = true; });
+  document.querySelectorAll('.planner-q').forEach(function(el) {
+    var c = el.querySelector('.planner-q-code');
+    if (c && codes[c.textContent]) el.classList.add('pendente');
+  });
+
+  // Quantas faltam em cada etapa — sem trocar de etapa, para o botão de
+  // gerar continuar à mão e a pessoa decidir se responde ou gera assim mesmo.
+  var porFase = PLANNER_DATA.phases.map(function(ph, pi) {
+    var n = pendentes.filter(function(p) { return p.fase === pi; }).length;
+    return n ? plannerL(ph.kicker) + ': ' + n : null;
+  }).filter(Boolean);
+
+  var av = document.getElementById('planner-aviso');
+  if (av) {
+    var fn = PLANNER_T.faltamTitulo[currentLang] || PLANNER_T.faltamTitulo.pt;
+    av.innerHTML = '<strong>' + fn(pendentes.length) + '</strong>' +
+      '<span>' + plannerL(PLANNER_T.faltamAjuda) + '</span>' +
+      (porFase.length > 1 ? '<span class="pa-fases">' + porFase.join(' · ') + '</span>' : '');
+    av.classList.add('show');
+    av.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  updatePlannerNav();
+}
+
 function updatePlannerNav() {
   var prev = document.getElementById('planner-prev');
   var next = document.getElementById('planner-next');
@@ -1286,6 +1372,11 @@ function updatePlannerNav() {
   // Pulso discreto quando há respostas suficientes para gerar o roteiro
   var respondidas = PLANNER_DATA.phases.reduce(function(acc, ph) { return acc + plannerPhaseAnswered(ph); }, 0);
   gen.classList.toggle('ready', isLast && respondidas > 0);
+  if (isLast && plannerAvisado && plannerPendentes().length) {
+    gen.textContent = plannerL(PLANNER_T.gerarMesmo);
+  } else if (isLast) {
+    gen.textContent = gen.getAttribute('data-' + currentLang) || gen.getAttribute('data-pt');
+  }
   prog.textContent = PLANNER_T.progress[currentLang]
     ? PLANNER_T.progress[currentLang](plannerState.current + 1, total)
     : PLANNER_T.progress.en(plannerState.current + 1, total);
@@ -1393,7 +1484,19 @@ function initPlannerEvents() {
   next.addEventListener('click', function() {
     if (plannerState.current < PLANNER_DATA.phases.length - 1) goTo(plannerState.current + 1);
   });
-  gen.addEventListener('click', function() { generatePlannerPlan(true); });
+  gen.addEventListener('click', function() {
+    // Pedido do Rodrigo: dizer QUAIS perguntas faltam, como faz um formulário
+    // de site, em vez de só não acontecer nada.
+    var pendentes = plannerPendentes();
+    if (pendentes.length && !plannerAvisado) {
+      plannerAvisado = true;
+      plannerMarcarPendentes(pendentes);
+      return;
+    }
+    plannerAvisado = false;
+    plannerLimparPendentes();
+    generatePlannerPlan(true);
+  });
   copy.addEventListener('click', function() {
     var txt = plannerPlainText();
     if (navigator.clipboard) navigator.clipboard.writeText(txt);

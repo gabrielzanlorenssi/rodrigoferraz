@@ -810,50 +810,7 @@ table.f2-tabela { width: 100%; border-collapse: collapse; font-family: var(--f-s
 }
 
 
-/* =====================================================================
-   IDENTIFIQUE O SEU PROJETO (FASE 1 do doc FIDA) — só na versão solo
-   ===================================================================== */
-#proj-box {
-  background: var(--c-cream); border: 1px solid var(--c-border);
-  border-radius: 10px; padding: 24px 26px; margin: 0 0 30px;
-}
-.proj-tit {
-  font-family: var(--f-serif); font-size: 19px; color: var(--c-green-dark); margin-bottom: 4px;
-}
-.proj-intro { font-size: 13px; color: var(--c-ink-muted); margin-bottom: 18px; }
-/* Duas colunas fixas: com auto-fit a grade mudava de forma conforme o campo
-   condicional aparecia. As linhas têm alturas iguais e o input é empurrado
-   para o rodapé da célula, então os campos alinham mesmo com subtítulos de
-   uma ou duas linhas. */
-.proj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 26px; }
-.proj-campo { display: flex; flex-direction: column; }
-.proj-campo select, .proj-campo input { margin-top: auto !important; }
-.proj-campo label { font-size: 14px; font-weight: 600; color: var(--c-ink); margin-bottom: 2px; }
-.proj-sub { font-size: 12.5px; color: var(--c-ink-muted); margin-bottom: 8px; line-height: 1.45; }
-.proj-campo select, .proj-campo input {
-  /* altura fixa: <select> e <input> não têm a mesma altura natural, e a
-     diferença de 1px desalinhava as duas colunas */
-  height: 40px; padding: 0 11px; margin: 0;
-  font-family: var(--f-sans); font-size: 14px; color: var(--c-ink);
-  border: 1px solid var(--c-border); border-radius: 5px; background: #fff; width: 100%;
-}
-.proj-campo select:disabled {
-  background: var(--c-bg-alt); color: var(--c-ink-muted); cursor: not-allowed;
-}
-.proj-campo select:focus, .proj-campo input:focus {
-  outline: none; border-color: var(--c-green); box-shadow: 0 0 0 3px var(--c-stage-glow, rgba(20,55,108,0.16));
-}
-.pri-projeto {
-  font-size: 14px; font-weight: 600; color: var(--c-green-dark);
-  padding: 10px 14px; margin-bottom: 16px;
-  background: var(--c-bg-alt); border-radius: 6px;
-}
 
-@media (max-width: 680px) {
-  .proj-grid { grid-template-columns: 1fr; gap: 16px; }
-  .proj-campo select, .proj-campo input { margin-top: 0; }
-  #proj-box { padding: 20px; }
-}
 
 /* --- legenda das colunas do planejador (P/V/E e O/S não são óbvios) --- */
 .f2-legenda-cols b { color: var(--c-ink); font-weight: 600; }
@@ -2121,10 +2078,7 @@ var F2_T = {
 
   fonte:     { pt: 'Base de atividades: Quadro 01 — Descrição das etapas e das atividades a serem realizadas.',
                en: 'Activity base: Table 01 — Description of stages and activities to be carried out.',
-               es: 'Base de actividades: Cuadro 01 — Descripción de las etapas y de las actividades a realizar.' },
-  aviso:     { pt: 'Primeira versão para avaliação.',
-               en: 'First version for review.',
-               es: 'Primera versión para evaluación.' }
+               es: 'Base de actividades: Cuadro 01 — Descripción de las etapas y de las actividades a realizar.' }
 };
 
 function f2L(o) { return (o && (o[currentLang] || o.pt)) || ''; }

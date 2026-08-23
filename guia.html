@@ -593,6 +593,378 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
 
 
 
+
+/* =====================================================================
+   ETAPA 2 — planejamento e cronograma. Vive aqui desde 09/08, quando o
+   Gabriel pediu a etapa também no site do Rodrigo. O que é do FIDA (texto
+   de introdução e bloco "Identifique o seu projeto") continua só na versão
+   solo, injetado por guia-solo/build.py.
+   ===================================================================== */
+/* =====================================================================
+   ETAPA 2 — PLANEJAMENTO E CRONOGRAMA (só na versão solo)
+   Usa os tokens do guia, então acompanha o tema IFAD sem cor fixa.
+   ===================================================================== */
+
+/* --- abas de fase --- */
+.fase-tabs-wrap { background: var(--c-cream); border-bottom: 1px solid var(--c-border); }
+.fase-tabs { max-width: 1120px; margin: 0 auto; padding: 0 16px; display: flex; gap: 4px; }
+.fase-tab {
+  font-family: var(--f-ui, var(--f-sans));
+  font-size: 13px; font-weight: 600; letter-spacing: 0.02em;
+  background: none; border: none; border-bottom: 3px solid transparent;
+  color: var(--c-ink-muted); padding: 14px 14px 11px; cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.fase-tab:hover { color: var(--c-ink); }
+.fase-tab.active { color: var(--c-green); border-bottom-color: var(--c-green); }
+.fase-tab.bloqueada { opacity: 0.55; }
+
+/* a etapa 2 é uma planilha: precisa de mais largura que o questionário */
+#fase2 { display: none; }
+#fase2 .section-wrap { max-width: 1120px; padding-top: 30px; }
+.f2-intro { font-size: 15px; color: var(--c-ink-muted); line-height: 1.65; margin-bottom: 8px; }
+.f2-partida { font-size: 13px; font-style: italic; color: var(--c-ink-muted); margin-bottom: 22px; }
+
+/* --- bloqueado --- */
+.f2-bloqueado {
+  border: 1px dashed var(--c-border); border-radius: 10px;
+  padding: 34px 24px; text-align: center; background: var(--c-cream);
+}
+.f2-bloqueado-tit { font-family: var(--f-serif); font-size: 20px; color: var(--c-green-dark); margin-bottom: 8px; }
+.f2-bloqueado p { font-size: 14px; color: var(--c-ink-muted); max-width: 460px; margin: 0 auto 18px; line-height: 1.6; }
+
+/* --- planejador (tabela editável) --- */
+.f2-plan-wrap {
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--c-border); border-radius: 10px; background: var(--c-cream);
+}
+table.f2-plan { width: 100%; border-collapse: collapse; font-family: var(--f-sans); font-size: 13px; }
+.f2-plan thead th {
+  background: var(--c-green-dark); color: #fff; font-weight: 500;
+  padding: 8px 6px; text-align: center; white-space: nowrap; position: sticky; top: 0;
+}
+.f2-plan thead th.f2-c-ativ { text-align: left; }
+.f2-plan tbody td {
+  padding: 6px; border-top: 1px solid var(--c-border); text-align: center; vertical-align: middle;
+}
+.f2-plan tr.f2-grupo td {
+  background: var(--c-bg-alt); font-family: var(--f-ui, var(--f-sans));
+  font-size: 11px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase;
+  color: var(--c-green-dark); text-align: left; padding: 7px 10px;
+}
+.f2-plan tr.f2-off td { opacity: 0.5; }
+.f2-plan tr.f2-off .f2-c-chk { opacity: 1; }
+.f2-c-chk { width: 34px; }
+.f2-c-chk input { width: 17px; height: 17px; cursor: pointer; accent-color: var(--c-green); }
+.f2-c-ativ { text-align: left !important; min-width: 240px; line-height: 1.4; }
+.f2-c-ativ sup { color: var(--c-amber); font-weight: 700; cursor: help; margin-left: 2px; }
+.f2-n { color: var(--c-ink-muted); margin-right: 8px; font-size: 11px; }
+.f2-c-nat { white-space: nowrap; }
+.f2-c-tipo { white-space: nowrap; font-size: 12px; color: var(--c-ink-muted); }
+.f2-c-tipo.obrig { color: var(--c-amber); font-weight: 600; }
+.f2-c-ch { color: var(--c-ink-muted); font-size: 12px; white-space: nowrap; }
+.f2-c-qtd input {
+  width: 54px; padding: 4px 6px; font-family: var(--f-sans); font-size: 13px;
+  border: 1px solid var(--c-border); border-radius: 4px; text-align: center; background: #fff;
+}
+.f2-c-meses { white-space: nowrap; }
+
+.f2-tag {
+  display: inline-block; padding: 2px 9px; border-radius: 20px;
+  font-size: 11px; font-weight: 600; white-space: nowrap;
+  border: 1px solid var(--c-border); color: var(--c-ink-muted); background: #fff;
+}
+.f2-tag.presencial { border-color: #3ab5e0; color: #1d6b87; }
+.f2-tag.virtual { border-color: #6dbf5e; color: #3d7433; }
+.f2-tag.escritorio { border-color: #9b8ec4; color: #574a80; }
+.f2-tag.obr.forte { border-color: var(--c-amber); color: var(--c-amber); }
+
+.f2-mes {
+  width: 23px; height: 23px; margin: 0 1px; padding: 0;
+  border: 1px solid var(--c-border); border-radius: 4px; background: #fff;
+  font-family: var(--f-sans); font-size: 10.5px; color: var(--c-ink-muted);
+  cursor: pointer; transition: all 0.12s;
+}
+.f2-mes:hover { border-color: var(--c-green); color: var(--c-green); }
+.f2-mes.on { color: #fff; border-color: transparent; font-weight: 700; }
+.f2-mes.on.presencial { background: #3ab5e0; }
+.f2-mes.on.virtual { background: #6dbf5e; }
+.f2-mes.on.escritorio { background: #9b8ec4; }
+
+.f2-rm {
+  font-family: var(--f-sans); font-size: 11px; color: var(--c-ink-muted);
+  background: none; border: none; text-decoration: underline; cursor: pointer; padding: 0 4px;
+}
+
+/* --- adicionar atividade --- */
+.f2-add { display: flex; gap: 8px; flex-wrap: wrap; margin: 14px 0 30px; }
+.f2-add input[type=text] {
+  flex: 1 1 260px; padding: 9px 12px; font-family: var(--f-sans); font-size: 13px;
+  border: 1px solid var(--c-border); border-radius: 4px; background: #fff;
+}
+.f2-add select {
+  padding: 9px 10px; font-family: var(--f-sans); font-size: 13px;
+  border: 1px solid var(--c-border); border-radius: 4px; background: #fff;
+}
+
+/* --- quadro gerado --- */
+.f2-quadro-tit {
+  font-family: var(--f-serif); font-size: 21px; color: var(--c-green-dark);
+  margin: 34px 0 12px; padding-top: 22px; border-top: 1px solid var(--c-border);
+}
+.f2-acoes { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.f2-acoes .planner-btn { min-width: 0; }
+.f2-legenda { display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 10px; font-size: 12.5px; color: var(--c-ink-muted); }
+.f2-legenda span { display: inline-flex; align-items: center; gap: 6px; }
+.f2-legenda i { width: 13px; height: 13px; display: inline-block; }
+.f2-vazio {
+  font-size: 14px; color: var(--c-ink-muted); font-style: italic;
+  padding: 26px; text-align: center; border: 1px dashed var(--c-border); border-radius: 10px;
+}
+.f2-tabela-wrap {
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--c-border); border-radius: 10px; background: var(--c-cream);
+}
+table.f2-tabela { width: 100%; border-collapse: collapse; font-family: var(--f-sans); font-size: 13px; }
+.f2-tabela thead th {
+  background: var(--c-green-dark); color: #fff; font-weight: 500;
+  padding: 8px 6px; text-align: center; white-space: nowrap;
+  border-right: 1px solid rgba(255,255,255,0.12);
+}
+.f2-tabela thead tr:first-child th { border-bottom: 1px solid rgba(255,255,255,0.2); }
+.f2-tabela .f2-th-ativ { text-align: left; }
+.f2-tabela tbody td {
+  padding: 7px 6px; text-align: center;
+  border-top: 1px solid var(--c-border); border-right: 1px solid var(--c-border);
+}
+.f2-tabela tbody td:last-child { border-right: none; }
+.f2-td-ativ { text-align: left !important; line-height: 1.4; min-width: 230px; }
+.f2-sem-mes { font-size: 11.5px; color: var(--c-amber); font-style: italic; }
+.f2-num { font-variant-numeric: tabular-nums; }
+.f2-cell { display: block; width: 20px; height: 20px; border-radius: 4px; margin: 0 auto; }
+.f2-cell.presencial { background: #3ab5e0; }
+.f2-cell.virtual { background: #6dbf5e; }
+.f2-cell.escritorio { background: #9b8ec4; }
+
+/* --- inferências --- */
+.f2-analises {
+  margin-top: 22px; padding: 16px 18px; border-radius: 8px;
+  background: var(--c-cream); border: 1px solid var(--c-border);
+}
+.f2-analises-tit {
+  font-family: var(--f-ui, var(--f-sans)); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-green); margin-bottom: 10px;
+}
+.f2-analises ul { margin: 0; padding-left: 18px; }
+.f2-analises li { font-size: 14px; line-height: 1.6; margin-bottom: 5px; }
+.f2-analises-nota { font-size: 12px; color: var(--c-ink-muted); margin-top: 10px; line-height: 1.5; }
+
+.f2-fonte { font-size: 12.5px; color: var(--c-ink-muted); margin-top: 14px; }
+.f2-aviso {
+  font-size: 12.5px; color: var(--c-ink-muted); line-height: 1.55;
+  margin-top: 10px; padding: 11px 15px;
+  border: 1px solid var(--c-border); background: var(--c-bg-alt); border-radius: 6px;
+}
+
+@media (max-width: 860px) {
+  .fase-tab { font-size: 12px; padding: 12px 8px 9px; }
+  table.f2-plan { min-width: 900px; }
+  table.f2-tabela { min-width: 640px; }
+}
+
+/* --- impressão: só o quadro gerado --- */
+@media print {
+  /* Paisagem e margem de verdade: sem isso o quadro encostava na borda do
+     papel (o corte que o Gabriel viu) e os 12 meses não cabiam em retrato. */
+  @page { size: A4 landscape; margin: 14mm; }
+
+  /* Fora tudo que é navegação e edição — o PDF entregue é o quadro. */
+  .topbar, .guia-hero, .fase-tabs-wrap, #planejador,
+  .f2-plan-wrap, .f2-add, .f2-acoes, .f2-aviso, .f2-modelo,
+  .f2-duracao, .f2-legenda-cols, .rodape-solo { display: none !important; }
+
+  /* Cabeçalho enxuto: título e identificação do projeto. Os parágrafos de
+     instrução ("marque as atividades…") saem: são de tela, não de documento. */
+  .f2-intro, .f2-partida { display: none !important; }
+  .f2-print-projeto { display: block !important; }
+
+  #fase2 { display: block !important; }
+  #fase2 .section-wrap { max-width: none; padding: 0; }
+  body { background: #fff; }
+
+  .f2-quadro-tit { margin: 0 0 10px; padding-top: 0; border-top: none; font-size: 15pt; }
+  .f2-sem-mes { display: none !important; }
+
+  .f2-tabela-wrap { overflow: visible; border: 1px solid #999; border-radius: 0; }
+  table.f2-tabela { min-width: 0; font-size: 8.5pt; }
+  .f2-tabela thead th {
+    background: #14376c !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .f2-tabela tbody tr { break-inside: avoid; }
+  .f2-td-ativ { min-width: 0; }
+  .f2-cell { -webkit-print-color-adjust: exact; print-color-adjust: exact; width: 14px; height: 14px; }
+
+  .f2-analises { break-inside: avoid; margin-top: 12pt; }
+  .f2-blocos { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .f2-legenda { margin-bottom: 6pt; }
+}
+
+
+/* =====================================================================
+   IDENTIFIQUE O SEU PROJETO (FASE 1 do doc FIDA) — só na versão solo
+   ===================================================================== */
+#proj-box {
+  background: var(--c-cream); border: 1px solid var(--c-border);
+  border-radius: 10px; padding: 24px 26px; margin: 0 0 30px;
+}
+.proj-tit {
+  font-family: var(--f-serif); font-size: 19px; color: var(--c-green-dark); margin-bottom: 4px;
+}
+.proj-intro { font-size: 13px; color: var(--c-ink-muted); margin-bottom: 18px; }
+/* Duas colunas fixas: com auto-fit a grade mudava de forma conforme o campo
+   condicional aparecia. As linhas têm alturas iguais e o input é empurrado
+   para o rodapé da célula, então os campos alinham mesmo com subtítulos de
+   uma ou duas linhas. */
+.proj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 26px; }
+.proj-campo { display: flex; flex-direction: column; }
+.proj-campo select, .proj-campo input { margin-top: auto !important; }
+.proj-campo label { font-size: 14px; font-weight: 600; color: var(--c-ink); margin-bottom: 2px; }
+.proj-sub { font-size: 12.5px; color: var(--c-ink-muted); margin-bottom: 8px; line-height: 1.45; }
+.proj-campo select, .proj-campo input {
+  /* altura fixa: <select> e <input> não têm a mesma altura natural, e a
+     diferença de 1px desalinhava as duas colunas */
+  height: 40px; padding: 0 11px; margin: 0;
+  font-family: var(--f-sans); font-size: 14px; color: var(--c-ink);
+  border: 1px solid var(--c-border); border-radius: 5px; background: #fff; width: 100%;
+}
+.proj-campo select:disabled {
+  background: var(--c-bg-alt); color: var(--c-ink-muted); cursor: not-allowed;
+}
+.proj-campo select:focus, .proj-campo input:focus {
+  outline: none; border-color: var(--c-green); box-shadow: 0 0 0 3px var(--c-stage-glow, rgba(20,55,108,0.16));
+}
+.pri-projeto {
+  font-size: 14px; font-weight: 600; color: var(--c-green-dark);
+  padding: 10px 14px; margin-bottom: 16px;
+  background: var(--c-bg-alt); border-radius: 6px;
+}
+
+@media (max-width: 680px) {
+  .proj-grid { grid-template-columns: 1fr; gap: 16px; }
+  .proj-campo select, .proj-campo input { margin-top: 0; }
+  #proj-box { padding: 20px; }
+}
+
+/* --- legenda das colunas do planejador (P/V/E e O/S não são óbvios) --- */
+.f2-legenda-cols b { color: var(--c-ink); font-weight: 600; }
+.f2-legenda-cols {
+  display: flex; flex-wrap: wrap; gap: 6px 26px; align-items: baseline;
+  border: 1px solid var(--c-border); border-radius: 8px;
+  background: var(--c-cream); padding: 12px 16px; margin-bottom: 14px;
+  font-size: 12.5px; color: var(--c-ink-muted);
+}
+.f2-leg-grupo { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; }
+.f2-leg-rot {
+  font-family: var(--f-ui, var(--f-sans)); font-size: 10.5px; font-weight: 700;
+  letter-spacing: 0.09em; text-transform: uppercase; color: var(--c-green);
+}
+.f2-leg-grupo > span { display: inline-flex; align-items: center; gap: 5px; }
+.f2-leg-grupo i.f2-tag { font-style: normal; margin-right: 0; }
+.f2-leg-grupo em { font-style: normal; opacity: 0.75; }
+.f2-leg-ch { width: 100%; padding-top: 2px; opacity: 0.85; }
+@media (max-width: 680px) {
+  .f2-legenda-cols { gap: 10px 16px; }
+  .f2-leg-grupo { width: 100%; }
+}
+
+/* --- bloco do modelo preenchido (comentário 4 do PDF de ajustes) --- */
+.f2-modelo {
+  border: 1px solid var(--c-border); border-radius: 8px;
+  background: var(--c-cream); padding: 16px 18px; margin: 4px 0 20px;
+}
+.f2-modelo-tit {
+  font-family: var(--f-ui, var(--f-sans)); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-green); margin-bottom: 7px;
+}
+.f2-modelo p { font-size: 14px; line-height: 1.6; color: var(--c-ink); margin-bottom: 10px; }
+.f2-modelo-link {
+  display: inline-block; font-size: 13.5px; font-weight: 600;
+  color: var(--c-green); text-decoration: underline;
+  text-underline-offset: 3px; text-decoration-thickness: 1px;
+}
+.f2-modelo-link:hover { color: var(--c-green-dark); text-decoration-thickness: 2px; }
+
+/* Linha de identificação do projeto: só na impressão do cronograma */
+.f2-print-projeto { display: none; font-size: 13px; font-weight: 600; margin-bottom: 10px; }
+
+/* --- duração do projeto (pedido: variar além dos 12 meses) --- */
+.f2-duracao {
+  display: flex; align-items: center; gap: 9px; flex-wrap: wrap;
+  border: 1px solid var(--c-border); border-radius: 8px;
+  background: var(--c-cream); padding: 12px 16px; margin-bottom: 12px;
+}
+.f2-duracao label { font-size: 13.5px; font-weight: 600; color: var(--c-ink); }
+.f2-duracao input {
+  width: 68px; height: 34px; padding: 0 8px; text-align: center;
+  font-family: var(--f-sans); font-size: 14px;
+  border: 1px solid var(--c-border); border-radius: 5px; background: #fff;
+}
+.f2-dur-un { font-size: 13px; color: var(--c-ink-muted); }
+.f2-dur-sub { font-size: 12.5px; color: var(--c-ink-muted); flex: 1 1 260px; }
+
+/* --- modalidade e carga horária editáveis por linha --- */
+.f2-sel-nat {
+  font-family: var(--f-sans); font-size: 11.5px; font-weight: 600;
+  padding: 3px 6px; border-radius: 20px; background: #fff;
+  border: 1px solid var(--c-border); color: var(--c-ink-muted); cursor: pointer;
+}
+.f2-sel-nat.presencial { border-color: #3ab5e0; color: #1d6b87; }
+.f2-sel-nat.virtual { border-color: #6dbf5e; color: #3d7433; }
+.f2-sel-nat.escritorio { border-color: #9b8ec4; color: #574a80; }
+.f2-c-ch input {
+  width: 52px; padding: 4px 5px; text-align: center;
+  font-family: var(--f-sans); font-size: 12.5px;
+  border: 1px solid var(--c-border); border-radius: 4px; background: #fff;
+}
+.f2-h { font-size: 11px; color: var(--c-ink-muted); margin-left: 2px; }
+
+/* mês bloqueado pelo limite da Qtd. */
+.f2-mes.travado { opacity: 0.32; cursor: not-allowed; }
+.f2-mes.travado:hover { border-color: var(--c-border); color: var(--c-ink-muted); }
+
+/* --- formulário de nova atividade --- */
+.f2-add { display: block; margin: 14px 0 30px; }
+.f2-add-tit {
+  font-family: var(--f-ui, var(--f-sans)); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-green); margin-bottom: 8px;
+}
+.f2-add-linha { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.f2-add-linha input[type=number] { width: 76px; text-align: center; }
+@media (max-width: 680px) {
+  .f2-add-linha > * { flex: 1 1 100%; }
+  .f2-duracao { gap: 8px; }
+}
+
+/* --- indicadores do plano (pedido: leitura mais visual) --- */
+.f2-blocos {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px; margin: 4px 0 14px;
+}
+.f2-bloco {
+  border: 1px solid var(--c-border); border-radius: 8px;
+  background: var(--c-bg-alt); padding: 12px 14px; text-align: center;
+}
+.f2-bloco-num {
+  font-family: var(--f-serif); font-size: 24px; font-weight: 700;
+  line-height: 1.1; color: var(--c-green-dark);
+}
+.f2-bloco-rot {
+  font-size: 11.5px; color: var(--c-ink-muted); line-height: 1.35; margin-top: 4px;
+}
+.f2-bloco.presencial .f2-bloco-num { color: #1d6b87; }
+.f2-bloco.virtual .f2-bloco-num { color: #3d7433; }
+@media (max-width: 560px) { .f2-blocos { grid-template-columns: 1fr 1fr; } }
+
 </style>
 </head>
 <body>
@@ -620,6 +992,13 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
 </div>
 
 <div class="share-toast" id="share-toast"></div>
+
+<div class="fase-tabs-wrap" id="fase-tabs">
+  <div class="fase-tabs">
+    <button class="fase-tab active" id="fase-tab-1">Etapa 1 · Questionário</button>
+    <button class="fase-tab" id="fase-tab-2">Etapa 2 · Cronograma</button>
+  </div>
+</div>
 
 <section id="planejador">
   <a class="section-anchor" id="anchor-planejador"></a>
@@ -655,6 +1034,7 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
                 data-pt="← Anterior" data-en="← Previous" data-es="← Anterior">← Anterior</button>
         <button class="planner-btn primary" id="planner-next"
                 data-pt="Próxima etapa →" data-en="Next stage →" data-es="Siguiente etapa →">Próxima etapa →</button>
+        <button class="planner-btn" id="planner-ir-crono" style="display:none"></button>
         <button class="planner-btn accent" id="planner-generate"
                 data-pt="Gerar roteiro" data-en="Generate roadmap" data-es="Generar hoja de ruta">Gerar roteiro</button>
       </div>
@@ -676,6 +1056,13 @@ body { background: var(--c-bg); color: var(--c-ink); font-family: var(--f-sans);
       <div class="planner-result-body" id="planner-result-body"></div>
     </div>
 
+  </div>
+</section>
+
+<section id="fase2">
+  <div class="section-wrap">
+    <h2 class="section-title" id="fase2-titulo">Cronograma de execução</h2>
+    <div id="fase2-body"></div>
   </div>
 </section>
 
@@ -1532,10 +1919,802 @@ function initPlannerEvents() {
 
 
 
+// =====================================================================
+// BASE DE ATIVIDADES DA ETAPA 2
+// Transcrição do "Quadro 01 - Descrição das etapas e das atividades a
+// serem realizadas", anexo do doc "Projeto FIDA instruções" (09/08).
+//
+// nat: P = presencial | V = virtual | E = escritório
+// obr: O = obrigatória | S = selecionável
+// ch:  carga horária total, em horas
+// div: true = "Atividades Diversas de ATER" (nota 1 do quadro)
+//
+// PT é a transcrição literal do quadro. EN/ES traduzidos pelo Claude —
+// REVISÃO PENDENTE.
+// =====================================================================
+
+var F2_ETAPAS = [
+  { key: 'mob',  nome: { pt: 'Mobilização e participação',      en: 'Mobilization and participation',   es: 'Movilización y participación' } },
+  { key: 'dgc',  nome: { pt: 'Diagnóstico do grupo/comunidade', en: 'Group/community assessment',       es: 'Diagnóstico del grupo/comunidad' } },
+  { key: 'dfam', nome: { pt: 'Diagnóstico da família',          en: 'Household assessment',             es: 'Diagnóstico de la familia' } },
+  { key: 'plan', nome: { pt: 'Planejamento',                    en: 'Planning',                         es: 'Planificación' } },
+  { key: 'exi',  nome: { pt: 'Execuções individuais',           en: 'Individual delivery',              es: 'Ejecuciones individuales' } },
+  { key: 'exc',  nome: { pt: 'Execuções coletivas',             en: 'Collective delivery',              es: 'Ejecuciones colectivas' } },
+  { key: 'aval', nome: { pt: 'Avaliação e participação social', en: 'Evaluation and social participation', es: 'Evaluación y participación social' } },
+  { key: 'rel',  nome: { pt: 'Relatório',                       en: 'Report',                           es: 'Informe' } }
+];
+
+var F2_ATIVIDADES = [
+  { n: 1,  etapa: 'mob',  nat: 'P', obr: 'O', ch: 4,
+    ativ: { pt: 'Reunião de mobilização de famílias', en: 'Household mobilization meeting', es: 'Reunión de movilización de familias' } },
+  { n: 2,  etapa: 'mob',  nat: 'P', obr: 'S', ch: 4,
+    ativ: { pt: 'Reunião com organizações e entidades parceiras', en: 'Meeting with partner organizations', es: 'Reunión con organizaciones y entidades socias' } },
+  { n: 3,  etapa: 'mob',  nat: 'V', obr: 'S', ch: 3,
+    ativ: { pt: 'Reunião virtual com organizações e entidades parceiras', en: 'Virtual meeting with partner organizations', es: 'Reunión virtual con organizaciones y entidades socias' } },
+  { n: 4,  etapa: 'dgc',  nat: 'P', obr: 'O', ch: 10,
+    ativ: { pt: 'Diagnóstico da comunidade — ferramentas práticas do DRP', en: 'Community assessment — practical PRA tools', es: 'Diagnóstico de la comunidad — herramientas prácticas del DRP' } },
+  { n: 5,  etapa: 'dgc',  nat: 'P', obr: 'O', ch: 4,
+    ativ: { pt: 'Reunião de socialização do diagnóstico', en: 'Assessment sharing meeting', es: 'Reunión de socialización del diagnóstico' } },
+  { n: 6,  etapa: 'dfam', nat: 'P', obr: 'O', ch: 3,
+    ativ: { pt: 'Cadastro e diagnóstico do(a) beneficiário(a)', en: 'Beneficiary registration and assessment', es: 'Registro y diagnóstico del/de la beneficiario(a)' } },
+  { n: 7,  etapa: 'plan', nat: 'P', obr: 'O', ch: 4,
+    ativ: { pt: 'Elaboração do Projeto Coletivo de ATER', en: 'Drafting of the Collective Rural Extension Project', es: 'Elaboración del Proyecto Colectivo de Extensión Rural' } },
+  { n: 8,  etapa: 'plan', nat: 'P', obr: 'O', ch: 4,
+    ativ: { pt: 'Elaboração do Projeto Individual de ATER', en: 'Drafting of the Individual Rural Extension Project', es: 'Elaboración del Proyecto Individual de Extensión Rural' } },
+  { n: 9,  etapa: 'plan', nat: 'E', obr: 'S', ch: 10,
+    ativ: { pt: 'Estudo temático', en: 'Thematic study', es: 'Estudio temático' } },
+  { n: 10, etapa: 'exi',  nat: 'P', obr: 'O', ch: 3,
+    ativ: { pt: 'Atendimento individual de ATER', en: 'Individual rural extension service', es: 'Atención individual de extensión rural' } },
+  { n: 11, etapa: 'exi',  nat: 'V', obr: 'S', ch: 1,
+    ativ: { pt: 'Atendimento virtual individual de ATER', en: 'Virtual individual rural extension service', es: 'Atención virtual individual de extensión rural' } },
+  { n: 12, etapa: 'exi',  nat: 'P', obr: 'S', ch: 4,
+    ativ: { pt: 'Implantação de unidade de referência', en: 'Setting up a reference unit', es: 'Implantación de unidad de referencia' } },
+  { n: 13, etapa: 'exc',  nat: 'P', obr: 'O', ch: 4,
+    ativ: { pt: 'Atendimento coletivo de ATER', en: 'Collective rural extension service', es: 'Atención colectiva de extensión rural' } },
+  { n: 14, etapa: 'exc',  nat: 'V', obr: 'S', ch: 3,
+    ativ: { pt: 'Atendimento virtual coletivo de ATER', en: 'Virtual collective rural extension service', es: 'Atención virtual colectiva de extensión rural' } },
+  { n: 15, etapa: 'exc',  nat: 'P', obr: 'O', ch: 4,
+    ativ: { pt: 'Atendimento coletivo de ATER por imediação', en: 'Collective rural extension service through mediation', es: 'Atención colectiva de extensión rural por mediación' } },
+  { n: 16, etapa: 'exc',  nat: 'P', obr: 'S', ch: 8, div: true,
+    ativ: { pt: 'Oficinas temáticas / cursos', en: 'Thematic workshops / courses', es: 'Talleres temáticos / cursos' } },
+  { n: 17, etapa: 'exc',  nat: 'P', obr: 'S', ch: 20, div: true,
+    ativ: { pt: 'Excursão', en: 'Field excursion', es: 'Excursión' } },
+  { n: 18, etapa: 'exc',  nat: 'P', obr: 'S', ch: 20, div: true,
+    ativ: { pt: 'Intercâmbio', en: 'Exchange visit', es: 'Intercambio' } },
+  { n: 19, etapa: 'exc',  nat: 'P', obr: 'S', ch: 10, div: true,
+    ativ: { pt: 'Dia de campo', en: 'Field day', es: 'Día de campo' } },
+  { n: 20, etapa: 'exc',  nat: 'P', obr: 'S', ch: 4, div: true,
+    ativ: { pt: 'Palestra / roda de conversa', en: 'Talk / discussion circle', es: 'Charla / rueda de conversación' } },
+  { n: 21, etapa: 'exc',  nat: 'P', obr: 'S', ch: 8, div: true,
+    ativ: { pt: 'Visita a unidade de referência', en: 'Visit to a reference unit', es: 'Visita a unidad de referencia' } },
+  { n: 22, etapa: 'exc',  nat: 'V', obr: 'S', ch: 3,
+    ativ: { pt: 'Evento virtual de ATER', en: 'Virtual rural extension event', es: 'Evento virtual de extensión rural' } },
+  { n: 23, etapa: 'aval', nat: 'P', obr: 'S', ch: 4,
+    ativ: { pt: 'Reunião com parceiros locais', en: 'Meeting with local partners', es: 'Reunión con socios locales' } },
+  { n: 24, etapa: 'aval', nat: 'P', obr: 'S', ch: 4,
+    ativ: { pt: 'Encontro de divulgação de resultados', en: 'Results dissemination meeting', es: 'Encuentro de divulgación de resultados' } },
+  { n: 25, etapa: 'rel',  nat: 'E', obr: 'O', ch: 2,
+    ativ: { pt: 'Relatório de avaliação de resultados', en: 'Results evaluation report', es: 'Informe de evaluación de resultados' } }
+];
+
+
+// =====================================================================
+// ETAPA 2 — PLANEJAMENTO E CRONOGRAMA DE ATER (presencial + digital)
+// Exclusivo da versão solo. Injetado por build.py DENTRO da IIFE do guia,
+// então enxerga plannerState, PLANNER_DATA, plannerL, currentLang,
+// renderPlanner e plannerPhaseAnswered.
+//
+// Escrito a partir do doc "Projeto FIDA instruções" (FASE 2):
+//  - base predefinida de atividades (Quadro 01) + atividades novas do usuário
+//  - o usuário define a Qtd. e marca os meses de cada atividade
+//  - a página gera o quadro anual, separando presencial de virtual
+//  - o quadro pode ser baixado (CSV) e impresso
+//  - inferências simples sobre frequência de contato
+//
+// A etapa 1 só dá o PONTO DE PARTIDA da seleção: tudo é editável depois.
+// =====================================================================
+
+// Traduções. PT escrito aqui; EN/ES pelo Claude — REVISÃO PENDENTE.
+var F2_T = {
+  tab1:      { pt: 'Etapa 1 · Questionário', en: 'Stage 1 · Questionnaire', es: 'Etapa 1 · Cuestionario' },
+  tab2:      { pt: 'Etapa 2 · Cronograma',   en: 'Stage 2 · Schedule',      es: 'Etapa 2 · Cronograma' },
+  titulo:    { pt: 'Planejamento e cronograma de ATER (presencial + digital)',
+               en: 'Rural extension planning and schedule (in-person + digital)',
+               es: 'Planificación y cronograma de extensión rural (presencial + digital)' },
+  intro:     { pt: 'Esta ferramenta apoia instituições na construção de um cronograma inicial para serviços de ATER com incorporação de estratégias digitais. A partir das respostas inseridas, o cronograma ajuda a organizar atividades presenciais, digitais ou remotas ao longo de 12 meses, ou de outro período escolhido.',
+               en: 'This tool supports institutions in building an initial schedule for rural extension services that incorporate digital strategies. Based on the answers provided, the schedule helps organize in-person, digital or remote activities over 12 months, or over another chosen period.',
+               es: 'Esta herramienta apoya a las instituciones en la construcción de un cronograma inicial para servicios de extensión rural con incorporación de estrategias digitales. A partir de las respuestas ingresadas, el cronograma ayuda a organizar actividades presenciales, digitales o remotas a lo largo de 12 meses, o de otro período elegido.' },
+  intro2:    { pt: 'Marque as atividades que farão parte do serviço, informe quantas vezes cada uma acontece no ano e clique nos meses em que ela será realizada. O cronograma pode incluir reuniões de articulação, mobilização de beneficiários, diagnósticos, planejamento, oficinas, cursos, atendimentos virtuais, relatórios e divulgação de resultados. O quadro é montado abaixo e pode ser baixado ou impresso.',
+               en: 'Select the activities that will be part of the service, set how many times each one happens in the year and click the months when it will take place. The schedule may include coordination meetings, beneficiary mobilization, assessments, planning, workshops, courses, virtual services, reports and results dissemination. The table is built below and can be downloaded or printed.',
+               es: 'Marque las actividades que formarán parte del servicio, indique cuántas veces ocurre cada una en el año y haga clic en los meses en que se realizará. El cronograma puede incluir reuniones de articulación, movilización de beneficiarios, diagnósticos, planificación, talleres, cursos, atenciones virtuales, informes y divulgación de resultados. El cuadro se arma abajo y puede descargarse o imprimirse.' },
+  partida:   { pt: 'A seleção começou a partir das suas respostas na etapa 1 do Guia de ATER Digital — mude o que quiser.',
+               en: 'The selection started from your answers in stage 1 of the Digital Rural Extension Guide — change whatever you want.',
+               es: 'La selección partió de sus respuestas en la etapa 1 de la Guía de Extensión Rural Digital — cambie lo que quiera.' },
+  bloqueado: { pt: 'Responda a etapa 1 para montar o cronograma',
+               en: 'Answer stage 1 to build the schedule',
+               es: 'Responda la etapa 1 para armar el cronograma' },
+  bloqDesc:  { pt: 'A seleção inicial de atividades parte das suas respostas. Marque ao menos uma opção em cada uma das três etapas do questionário.',
+               en: 'The initial activity selection starts from your answers. Select at least one option in each of the three stages of the questionnaire.',
+               es: 'La selección inicial de actividades parte de sus respuestas. Marque al menos una opción en cada una de las tres etapas del cuestionario.' },
+  irQuest:   { pt: '← Ir para o questionário', en: '← Go to the questionnaire', es: '← Ir al cuestionario' },
+  irCrono:   { pt: 'Ir para o cronograma →', en: 'Go to the schedule →', es: 'Ir al cronograma →' },
+
+  colAtiv:   { pt: 'Atividade', en: 'Activity', es: 'Actividad' },
+  colNat:    { pt: 'Modalidade', en: 'Mode', es: 'Modalidad' },
+  colTipo:   { pt: 'Tipo', en: 'Type', es: 'Tipo' },
+  colCh:     { pt: 'CH', en: 'Hrs', es: 'CH' },
+  colQtd:    { pt: 'Qtd.', en: 'Qty.', es: 'Cant.' },
+  colMeses:  { pt: 'Meses', en: 'Months', es: 'Meses' },
+  presencial:{ pt: 'Presencial', en: 'In-person', es: 'Presencial' },
+  virtual:   { pt: 'Virtual', en: 'Virtual', es: 'Virtual' },
+  escritorio:{ pt: 'Escritório', en: 'Office', es: 'Oficina' },
+  obrig:     { pt: 'Obrigatória', en: 'Mandatory', es: 'Obligatoria' },
+  selec:     { pt: 'Selecionável', en: 'Optional', es: 'Seleccionable' },
+  diversas:  { pt: 'Atividade Diversa de ATER', en: 'Miscellaneous rural extension activity', es: 'Actividad Diversa de Extensión Rural' },
+
+  legenda:   { pt: 'Como ler as colunas', en: 'How to read the columns', es: 'Cómo leer las columnas' },
+  legModal:  { pt: 'Modalidade', en: 'Mode', es: 'Modalidad' },
+  legTipo:   { pt: 'Tipo', en: 'Type', es: 'Tipo' },
+  legObrDesc:{ pt: 'prevista para todo serviço de ATER', en: 'expected in every rural extension service', es: 'prevista para todo servicio de extensión rural' },
+  legSelDesc:{ pt: 'entra conforme o desenho do projeto', en: 'included depending on the project design', es: 'se incluye según el diseño del proyecto' },
+  legCh:     { pt: 'CH = carga horária total da atividade', en: 'Hrs = total workload of the activity', es: 'CH = carga horaria total de la actividad' },
+  limiteQtd: { pt: 'Limite de meses atingido — aumente a Qtd. para marcar mais.',
+               en: 'Month limit reached — increase Qty. to select more.',
+               es: 'Límite de meses alcanzado — aumente la Cant. para marcar más.' },
+  duracao:   { pt: 'Duração do projeto', en: 'Project duration', es: 'Duración del proyecto' },
+  duracaoSub:{ pt: 'O padrão real da ATER costuma ser 24 meses; 12 fica como referência didática.',
+               en: 'Rural extension projects usually run for 24 months; 12 is kept as a teaching reference.',
+               es: 'Los proyectos de extensión rural suelen durar 24 meses; 12 queda como referencia didáctica.' },
+  mesesLbl:  { pt: 'meses', en: 'months', es: 'meses' },
+  addCat:    { pt: 'Categoria', en: 'Category', es: 'Categoría' },
+  addCh:     { pt: 'Carga horária', en: 'Workload', es: 'Carga horaria' },
+  addTit:    { pt: 'Adicionar atividade', en: 'Add activity', es: 'Agregar actividad' },
+  addNome:   { pt: 'Nome da atividade', en: 'Activity name', es: 'Nombre de la actividad' },
+  addBtn:    { pt: '+ Adicionar', en: '+ Add', es: '+ Agregar' },
+  remover:   { pt: 'Remover', en: 'Remove', es: 'Quitar' },
+
+  modeloTit: { pt: 'Modelo de referência',
+               en: 'Reference model', es: 'Modelo de referencia' },
+  modeloTxt: { pt: 'Há um cronograma já preenchido disponível para consulta. Use-o como exemplo para entender como as atividades podem ser organizadas ao longo do período.',
+               en: 'A filled-in schedule is available for consultation. Use it as an example to understand how activities can be organized over the period.',
+               es: 'Hay un cronograma ya completado disponible para consulta. Úselo como ejemplo para entender cómo las actividades pueden organizarse a lo largo del período.' },
+  modeloBtn: { pt: 'Acessar modelo preenchido →',
+               en: 'Open the filled-in model →', es: 'Acceder al modelo completado →' },
+  quadro:    { pt: 'Quadro resultado', en: 'Result table', es: 'Cuadro resultado' },
+  vazio:     { pt: 'Nenhuma atividade marcada ainda. Marque atividades acima para montar o quadro.',
+               en: 'No activity selected yet. Select activities above to build the table.',
+               es: 'Ninguna actividad marcada todavía. Marque actividades arriba para armar el cuadro.' },
+  semMes:    { pt: 'sem mês marcado', en: 'no month selected', es: 'sin mes marcado' },
+  baixarXls: { pt: '↓ Baixar planilha (Excel)', en: '↓ Download spreadsheet (Excel)', es: '↓ Descargar planilla (Excel)' },
+  baixar:    { pt: '↓ CSV simples', en: '↓ Plain CSV', es: '↓ CSV simple' },
+  imprimir:  { pt: '⎙ Imprimir / PDF', en: '⎙ Print / PDF', es: '⎙ Imprimir / PDF' },
+
+  analises:  { pt: 'Leitura do plano', en: 'Reading of the plan', es: 'Lectura del plan' },
+  aVisita:   { pt: function (n, m) { return 'Presencial: ' + n + ' ' + (n === 1 ? 'ação' : 'ações') + ' no ano — em média uma a cada ' + m + '.'; },
+               en: function (n, m) { return 'In-person: ' + n + ' ' + (n === 1 ? 'activity' : 'activities') + ' in the year — on average one every ' + m + '.'; },
+               es: function (n, m) { return 'Presencial: ' + n + ' ' + (n === 1 ? 'acción' : 'acciones') + ' en el año — en promedio una cada ' + m + '.'; } },
+  aVirtual:  { pt: function (n, d) { return 'Virtual: ' + n + ' ' + (n === 1 ? 'interação' : 'interações') + ' no ano — em média uma a cada ' + d + '.'; },
+               en: function (n, d) { return 'Virtual: ' + n + ' ' + (n === 1 ? 'interaction' : 'interactions') + ' in the year — on average one every ' + d + '.'; },
+               es: function (n, d) { return 'Virtual: ' + n + ' ' + (n === 1 ? 'interacción' : 'interacciones') + ' en el año — en promedio una cada ' + d + '.'; } },
+  aCarga:    { pt: function (h) { return 'Carga horária somada: ' + h + 'h no ano.'; },
+               en: function (h) { return 'Total workload: ' + h + 'h in the year.'; },
+               es: function (h) { return 'Carga horaria sumada: ' + h + 'h en el año.'; } },
+  aNota:     { pt: 'A conta considera apenas as atividades que já têm mês marcado no calendário, multiplicadas pela quantidade informada.',
+               en: 'The calculation only counts activities that already have a month selected in the calendar, multiplied by the quantity entered.',
+               es: 'El cálculo considera solo las actividades que ya tienen mes marcado en el calendario, multiplicadas por la cantidad informada.' },
+  mTotal:    { pt: 'atividades no período', en: 'activities in the period', es: 'actividades en el período' },
+  mHorasP:   { pt: 'de trabalho presencial', en: 'of in-person work', es: 'de trabajo presencial' },
+  mHorasV:   { pt: 'de trabalho remoto', en: 'of remote work', es: 'de trabajo remoto' },
+  mIntervalo:{ pt: 'Intervalo (presencial e remoto) médio de contato entre técnico e produtor',
+               en: 'Average interval (in-person and remote) of contact between extension professional and farmer',
+               es: 'Intervalo (presencial y remoto) medio de contacto entre profesional de extensión y productor' },
+  semMeses:  { pt: 'Marque os meses de pelo menos uma atividade para o plano ser lido aqui.',
+               en: 'Select the months of at least one activity for the plan to be read here.',
+               es: 'Marque los meses de al menos una actividad para que el plan se lea aquí.' },
+  aEscritorio:{ pt: function (h) { return 'Escritório: ' + h + 'h de trabalho interno (estudos e relatórios).'; },
+                en: function (h) { return 'Office: ' + h + 'h of internal work (studies and reports).'; },
+                es: function (h) { return 'Oficina: ' + h + 'h de trabajo interno (estudios e informes).'; } },
+  meses:     { pt: 'meses', en: 'months', es: 'meses' },
+  mes:       { pt: 'mês', en: 'month', es: 'mes' },
+  dias:      { pt: 'dias', en: 'days', es: 'días' },
+  dia:       { pt: 'dia', en: 'day', es: 'día' },
+
+  fonte:     { pt: 'Base de atividades: Quadro 01 — Descrição das etapas e das atividades a serem realizadas.',
+               en: 'Activity base: Table 01 — Description of stages and activities to be carried out.',
+               es: 'Base de actividades: Cuadro 01 — Descripción de las etapas y de las actividades a realizar.' },
+  aviso:     { pt: 'Primeira versão para avaliação.',
+               en: 'First version for review.',
+               es: 'Primera versión para evaluación.' }
+};
+
+function f2L(o) { return (o && (o[currentLang] || o.pt)) || ''; }
+// Português e espanhol usam vírgula decimal; inglês, ponto.
+function f2Numero(n) {
+  var t = String(n);
+  return currentLang === 'en' ? t : t.replace('.', ',');
+}
+function f2Fn(o) { return o[currentLang] || o.pt; }
+
+var F2_NAT_LABEL = { P: 'presencial', V: 'virtual', E: 'escritorio' };
+
+// Estado do planejamento: { <id>: {on:bool, qtd:int, meses:[1..12]} }
+var f2Plano = {};
+var f2Extras = [];      // atividades criadas pelo usuário
+var f2ExtraSeq = 0;
+var f2Semeado = false;  // a semeadura pela etapa 1 só acontece uma vez
+var f2Duracao = 12;     // meses do projeto — editável (padrão didático)
+
+// Modalidade e carga horária deixaram de ser fixas: o Rodrigo pediu que o
+// usuário possa mudar as duas, porque a mesma atividade pode ser presencial
+// num projeto e virtual em outro.
+function f2Nat(a) { var e = f2Estado(a); return e.nat || a.nat; }
+function f2Ch(a)  { var e = f2Estado(a); return e.ch === undefined ? (a.ch || 0) : e.ch; }
+
+function f2Todas() { return F2_ATIVIDADES.concat(f2Extras); }
+function f2Id(a) { return a.extra ? 'x' + a.n : 'a' + a.n; }
+
+// ---------------------------------------------------------------------
+// Ponto de partida vindo da etapa 1
+// ---------------------------------------------------------------------
+// As respostas só definem quais atividades já vêm marcadas. Nada é
+// travado: o usuário marca e desmarca o que quiser depois.
+function f2Respostas(code) {
+  var out = [];
+  PLANNER_DATA.phases.forEach(function (ph) {
+    ph.questions.forEach(function (q) {
+      if (q.code !== code) return;
+      var sel = (plannerState.answers[ph.key] && plannerState.answers[ph.key][q.code]) || [];
+      sel.forEach(function (i) { if (q.opts[i]) out.push(q.opts[i].pt || ''); });
+    });
+  });
+  return out;
+}
+
+function f2Semear() {
+  var q13 = f2Respostas('1.3')[0] || '';   // momento de implementação
+  var q22 = f2Respostas('2.2')[0] || '';   // dinâmica de atendimento
+  var soDigital = q13 === 'Exclusivamente digital';
+
+  F2_ATIVIDADES.forEach(function (a) {
+    var on = a.obr === 'O';                       // obrigatórias entram por padrão
+    if (soDigital && a.nat === 'P') on = false;   // plano só digital: sem presencial
+    if (!soDigital && a.nat === 'V') on = true;   // há digital: as virtuais entram
+    if (q22 === 'Individual' && a.etapa === 'exc' && a.nat === 'V') on = false;
+    if (q22 === 'Em grupo' && a.etapa === 'exi' && a.nat === 'V') on = false;
+    f2Plano[f2Id(a)] = { on: on, qtd: 1, meses: [] };
+  });
+  f2Semeado = true;
+}
+
+// O cronograma deixou de exigir a etapa 1 (pedido do Rodrigo): ele abre
+// sempre. Quando há respostas, elas continuam servindo de ponto de partida
+// da seleção; quando não há, começa só com as atividades obrigatórias.
+function f2Liberada() { return true; }
+
+function f2TemRespostas() {
+  return PLANNER_DATA.phases.some(function (ph) { return plannerPhaseAnswered(ph) > 0; });
+}
+
+function f2Estado(a) {
+  var id = f2Id(a);
+  if (!f2Plano[id]) f2Plano[id] = { on: false, qtd: 1, meses: [] };
+  return f2Plano[id];
+}
+
+// A Qtd. define quantos meses podem ser marcados: informou 3, marca 3.
+function f2LimiteAtingido(e) { return e.meses.length >= (e.qtd || 1); }
+
+// ---------------------------------------------------------------------
+// Render — planejador
+// ---------------------------------------------------------------------
+function f2LinhaPlano(a) {
+  var e = f2Estado(a);
+  var id = f2Id(a);
+  var nat = f2Nat(a);
+  var cheio = f2LimiteAtingido(e);
+  var meses = '';
+  for (var m = 1; m <= f2Duracao; m++) {
+    var on = e.meses.indexOf(m) !== -1;
+    // Ao bater o limite da Qtd., os meses ainda livres ficam bloqueados
+    var trava = !on && cheio;
+    meses += '<button class="f2-mes' + (on ? ' on ' + F2_NAT_LABEL[nat] : '') +
+      (trava ? ' travado' : '') + '" data-id="' + id + '" data-mes="' + m + '"' +
+      (trava ? ' disabled title="' + f2L(F2_T.limiteQtd) + '"' : '') + '>' + m + '</button>';
+  }
+  var obrTxt = a.obr === 'O' ? f2L(F2_T.obrig) : f2L(F2_T.selec);
+  var opcoesNat = ['P', 'V', 'E'].map(function (k) {
+    var rot = { P: f2L(F2_T.presencial), V: f2L(F2_T.virtual), E: f2L(F2_T.escritorio) }[k];
+    return '<option value="' + k + '"' + (nat === k ? ' selected' : '') + '>' + rot + '</option>';
+  }).join('');
+
+  return '<tr class="' + (e.on ? '' : 'f2-off') + '">' +
+    '<td class="f2-c-chk"><input type="checkbox" data-chk="' + id + '"' + (e.on ? ' checked' : '') + '></td>' +
+    '<td class="f2-c-ativ"><span class="f2-n">' + (a.extra ? '+' : a.n) + '</span>' +
+      (a.extra ? a.ativ.pt : plannerL(a.ativ)) +
+      (a.extra ? ' <button class="f2-rm" data-rm="' + id + '">' + f2L(F2_T.remover) + '</button>' : '') +
+    '</td>' +
+    '<td class="f2-c-nat"><select class="f2-sel-nat ' + F2_NAT_LABEL[nat] + '" data-nat="' + id + '">' +
+      opcoesNat + '</select></td>' +
+    '<td class="f2-c-tipo' + (a.obr === 'O' ? ' obrig' : '') + '">' + obrTxt + '</td>' +
+    '<td class="f2-c-ch"><input type="number" min="0" max="999" step="0.5" value="' + f2Ch(a) +
+      '" data-ch="' + id + '"><span class="f2-h">h</span></td>' +
+    '<td class="f2-c-qtd"><input type="number" min="1" max="365" value="' + e.qtd + '" data-qtd="' + id + '"></td>' +
+    '<td class="f2-c-meses">' + meses + '</td>' +
+  '</tr>';
+}
+
+function f2RenderPlanejador() {
+  var grupos = F2_ETAPAS.map(function (et) {
+    var doGrupo = F2_ATIVIDADES.filter(function (a) { return a.etapa === et.key; })
+      .concat(f2Extras.filter(function (a) { return a.etapa === et.key; }));
+    if (!doGrupo.length) return '';
+    return '<tr class="f2-grupo"><td colspan="7">' + plannerL(et.nome) + '</td></tr>' +
+      doGrupo.map(f2LinhaPlano).join('');
+  }).join('');
+
+  // atividade nova sem categoria (só se o select falhar) cai num grupo próprio
+  var soltas = f2Extras.filter(function (a) { return !a.etapa; });
+  var extras = soltas.length
+    ? '<tr class="f2-grupo"><td colspan="7">' + f2L(F2_T.addTit) + '</td></tr>' +
+      soltas.map(f2LinhaPlano).join('')
+    : '';
+
+  var cab = '<thead><tr>' +
+    '<th></th><th class="f2-c-ativ">' + f2L(F2_T.colAtiv) + '</th>' +
+    '<th>' + f2L(F2_T.colNat) + '</th><th>' + f2L(F2_T.colTipo) + '</th><th>' + f2L(F2_T.colCh) + '</th>' +
+    '<th>' + f2L(F2_T.colQtd) + '</th>' +
+    '<th class="f2-c-meses">' + f2L(F2_T.colMeses) + '</th></tr></thead>';
+
+  var legenda = '<div class="f2-legenda-cols">' +
+      '<span><b>' + f2L(F2_T.obrig) + ':</b> ' + f2L(F2_T.legObrDesc) + '</span>' +
+      '<span><b>' + f2L(F2_T.selec) + ':</b> ' + f2L(F2_T.legSelDesc) + '</span>' +
+      '<span>' + f2L(F2_T.legCh) + '</span>' +
+    '</div>';
+
+  var ctrlDuracao = '<div class="f2-duracao">' +
+      '<label for="f2-dur">' + f2L(F2_T.duracao) + '</label>' +
+      '<input type="number" id="f2-dur" min="1" max="36" value="' + f2Duracao + '">' +
+      '<span class="f2-dur-un">' + f2L(F2_T.mesesLbl) + '</span>' +
+      '<span class="f2-dur-sub">' + f2L(F2_T.duracaoSub) + '</span>' +
+    '</div>';
+
+  return ctrlDuracao + legenda + '<div class="f2-plan-wrap"><table class="f2-plan">' + cab +
+    '<tbody>' + grupos + extras + '</tbody></table></div>' +
+    '<div class="f2-add">' +
+      '<div class="f2-add-tit">' + f2L(F2_T.addTit) + '</div>' +
+      '<div class="f2-add-linha">' +
+        '<input type="text" id="f2-novo-nome" placeholder="' + f2L(F2_T.addNome) + '">' +
+        '<select id="f2-nova-cat" aria-label="' + f2L(F2_T.addCat) + '">' +
+          F2_ETAPAS.map(function (et) {
+            return '<option value="' + et.key + '">' + plannerL(et.nome) + '</option>';
+          }).join('') +
+        '</select>' +
+        '<select id="f2-novo-nat" aria-label="' + f2L(F2_T.colNat) + '">' +
+          '<option value="P">' + f2L(F2_T.presencial) + '</option>' +
+          '<option value="V">' + f2L(F2_T.virtual) + '</option>' +
+          '<option value="E">' + f2L(F2_T.escritorio) + '</option>' +
+        '</select>' +
+        '<input type="number" id="f2-nova-ch" min="0" step="0.5" value="2" ' +
+          'aria-label="' + f2L(F2_T.addCh) + '" title="' + f2L(F2_T.addCh) + '">' +
+        '<button class="planner-btn" id="f2-add">' + f2L(F2_T.addBtn) + '</button>' +
+      '</div>' +
+    '</div>';
+}
+
+// ---------------------------------------------------------------------
+// Render — quadro anual gerado
+// ---------------------------------------------------------------------
+function f2Selecionadas() {
+  return f2Todas().filter(function (a) { return f2Estado(a).on; });
+}
+
+function f2RenderQuadro() {
+  var sel = f2Selecionadas();
+  if (!sel.length) return '<p class="f2-vazio">' + f2L(F2_T.vazio) + '</p>';
+
+  var thead = '<thead><tr>' +
+      '<th colspan="2" class="f2-th-vazio"></th>' +
+      '<th colspan="' + f2Duracao + '" class="f2-th-meses">' + f2L(F2_T.colMeses) + '</th>' +
+    '</tr><tr><th class="f2-th-ativ">' + f2L(F2_T.colAtiv) + '</th><th>' + f2L(F2_T.colQtd) + '</th>';
+  for (var m = 1; m <= f2Duracao; m++) thead += '<th>' + m + '</th>';
+  thead += '</tr></thead>';
+
+  var tbody = '<tbody>';
+  sel.forEach(function (a, i) {
+    var e = f2Estado(a);
+    tbody += '<tr><td class="f2-td-ativ"><span class="f2-n">' + (i + 1) + '</span>' +
+      (a.extra ? a.ativ.pt : plannerL(a.ativ)) +
+      (e.meses.length ? '' : ' <em class="f2-sem-mes">(' + f2L(F2_T.semMes) + ')</em>') +
+      '</td><td class="f2-num">' + e.qtd + '</td>';
+    for (var mm = 1; mm <= f2Duracao; mm++) {
+      tbody += e.meses.indexOf(mm) !== -1
+        ? '<td><span class="f2-cell ' + F2_NAT_LABEL[f2Nat(a)] + '"></span></td>'
+        : '<td></td>';
+    }
+    tbody += '</tr>';
+  });
+  tbody += '</tbody>';
+
+  return '<div class="f2-legenda">' +
+      '<span><i class="f2-cell presencial"></i>' + f2L(F2_T.presencial) + '</span>' +
+      '<span><i class="f2-cell virtual"></i>' + f2L(F2_T.virtual) + '</span>' +
+      '<span><i class="f2-cell escritorio"></i>' + f2L(F2_T.escritorio) + '</span>' +
+    '</div>' +
+    '<div class="f2-tabela-wrap"><table class="f2-tabela">' + thead + tbody + '</table></div>';
+}
+
+// ---------------------------------------------------------------------
+// Inferências simples
+// ---------------------------------------------------------------------
+function f2Analises() {
+  // Só entram atividades que já têm mês marcado: o painel descreve o
+  // cronograma desenhado, não a lista de intenções. Antes somava tudo que
+  // estivesse marcado na coluna da esquerda, mesmo sem nenhum mês escolhido.
+  var sel = f2Selecionadas().filter(function (a) { return f2Estado(a).meses.length > 0; });
+  if (!sel.length) return '<div class="f2-analises"><div class="f2-analises-tit">' +
+    f2L(F2_T.analises) + '</div><p class="f2-analises-nota">' + f2L(F2_T.semMeses) + '</p></div>';
+  var nP = 0, nV = 0, hP = 0, hV = 0, hE = 0, total = 0;
+  sel.forEach(function (a) {
+    var q = f2Estado(a).qtd || 0;
+    var nat = f2Nat(a), h = f2Ch(a) * q;
+    total += q;
+    if (nat === 'P') { nP += q; hP += h; }
+    else if (nat === 'V') { nV += q; hV += h; }
+    else { hE += h; }
+  });
+
+  // Intervalo médio entre contatos com o beneficiário, juntando as duas vias
+  var contatos = nP + nV;
+  var intervalo = contatos
+    ? (f2Duracao / contatos >= 1
+        ? f2Numero(Math.round((f2Duracao / contatos) * 10) / 10) + ' ' + f2L(F2_T.mesesLbl)
+        : Math.round((f2Duracao * 30.4) / contatos) + ' ' + f2L(F2_T.dias))
+    : '—';
+
+  function bloco(valor, rotulo, cls) {
+    return '<div class="f2-bloco ' + (cls || '') + '">' +
+      '<div class="f2-bloco-num">' + valor + '</div>' +
+      '<div class="f2-bloco-rot">' + rotulo + '</div></div>';
+  }
+
+  var blocos = '<div class="f2-blocos">' +
+    bloco(total, f2L(F2_T.mTotal)) +
+    bloco(f2Numero(Math.round(hP * 10) / 10) + 'h', f2L(F2_T.mHorasP), 'presencial') +
+    bloco(f2Numero(Math.round(hV * 10) / 10) + 'h', f2L(F2_T.mHorasV), 'virtual') +
+    bloco(intervalo, f2L(F2_T.mIntervalo)) +
+  '</div>';
+
+  var linhas = [];
+  if (nP > 0) {
+    var m = f2Duracao / nP;
+    var mNum = Math.round(m * 10) / 10;
+    var mTxt = m >= 1
+      ? f2Numero(mNum) + ' ' + (mNum === 1 ? f2L(F2_T.mes) : f2L(F2_T.meses))
+      : Math.round((f2Duracao * 30.4) / nP) + ' ' + f2L(F2_T.dias);
+    linhas.push(f2Fn(F2_T.aVisita)(nP, mTxt));
+  }
+  if (nV > 0) {
+    var d = Math.round((f2Duracao * 30.4) / nV);
+    linhas.push(f2Fn(F2_T.aVirtual)(nV, d + ' ' + (d === 1 ? f2L(F2_T.dia) : f2L(F2_T.dias))));
+  }
+  if (hE > 0) linhas.push(f2Fn(F2_T.aEscritorio)(f2Numero(Math.round(hE * 10) / 10)));
+
+  return '<div class="f2-analises"><div class="f2-analises-tit">' + f2L(F2_T.analises) + '</div>' +
+    blocos +
+    (linhas.length ? '<ul>' + linhas.map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ul>' : '') +
+    '<p class="f2-analises-nota">' + f2L(F2_T.aNota) + '</p></div>';
+}
+
+// ---------------------------------------------------------------------
+// Download
+// ---------------------------------------------------------------------
+function f2CSV() {
+  var sep = ';';
+  var linhas = [];
+  var cab = [f2L(F2_T.colAtiv), f2L(F2_T.colNat), f2L(F2_T.colTipo), f2L(F2_T.colCh), f2L(F2_T.colQtd)];
+  for (var m = 1; m <= f2Duracao; m++) cab.push(String(m));
+  linhas.push(cab.join(sep));
+  f2Selecionadas().forEach(function (a) {
+    var e = f2Estado(a);
+    var natTxt = { P: f2L(F2_T.presencial), V: f2L(F2_T.virtual), E: f2L(F2_T.escritorio) }[f2Nat(a)] || '';
+    var l = ['"' + (a.extra ? a.ativ.pt : plannerL(a.ativ)).replace(/"/g, '""') + '"',
+             natTxt, (a.obr === 'O' ? f2L(F2_T.obrig) : f2L(F2_T.selec)), f2Ch(a), e.qtd];
+    for (var m = 1; m <= f2Duracao; m++) l.push(e.meses.indexOf(m) !== -1 ? 'X' : '');
+    linhas.push(l.join(sep));
+  });
+  return '\ufeff' + linhas.join('\n');
+}
+
+// Planilha formatada (SpreadsheetML 2003): abre no Excel com as cores, as
+// bordas e as larguras da página, em vez do CSV cru. Sem biblioteca externa.
+var F2_COR = { P: '#3AB5E0', V: '#6DBF5E', E: '#9B8EC4' };
+
+function f2XmlEsc(t) {
+  return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                  .replace(/"/g, '&quot;');
+}
+
+function f2Planilha() {
+  var sel = f2Selecionadas();
+  var estilos =
+    '<Style ss:ID="cab"><Alignment ss:Vertical="Center" ss:Horizontal="Center" ss:WrapText="1"/>' +
+      '<Font ss:Bold="1" ss:Color="#FFFFFF"/><Interior ss:Color="#14376C" ss:Pattern="Solid"/>' +
+      '<Borders><Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/></Borders></Style>' +
+    '<Style ss:ID="tit"><Font ss:Bold="1" ss:Size="14" ss:Color="#0D2447"/></Style>' +
+    '<Style ss:ID="sub"><Font ss:Size="10" ss:Color="#5A6673"/></Style>' +
+    '<Style ss:ID="ativ"><Alignment ss:Vertical="Center" ss:WrapText="1"/>' +
+      '<Borders><Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Color="#CFD9E5"/></Borders></Style>' +
+    '<Style ss:ID="cel"><Alignment ss:Vertical="Center" ss:Horizontal="Center"/>' +
+      '<Borders><Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Color="#CFD9E5"/></Borders></Style>' +
+    ['P', 'V', 'E'].map(function (k) {
+      return '<Style ss:ID="m' + k + '"><Interior ss:Color="' + F2_COR[k] + '" ss:Pattern="Solid"/>' +
+        '<Borders><Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Color="#CFD9E5"/></Borders></Style>';
+    }).join('');
+
+  var colunas = '<Column ss:Width="260"/><Column ss:Width="80"/><Column ss:Width="80"/>' +
+    '<Column ss:Width="45"/><Column ss:Width="40"/>';
+  for (var c = 1; c <= f2Duracao; c++) colunas += '<Column ss:Width="26"/>';
+
+  function cel(txt, estilo, tipo) {
+    return '<Cell' + (estilo ? ' ss:StyleID="' + estilo + '"' : '') + '>' +
+      (txt === '' ? '' : '<Data ss:Type="' + (tipo || 'String') + '">' + f2XmlEsc(txt) + '</Data>') +
+      '</Cell>';
+  }
+
+  var linhas = '';
+  // título e identificação do projeto
+  linhas += '<Row ss:Height="24"><Cell ss:StyleID="tit"><Data ss:Type="String">' +
+    f2XmlEsc(f2L(F2_T.titulo)) + '</Data></Cell></Row>';
+  var pj = (typeof projetoResumo === 'function') ? projetoResumo() : '';
+  if (pj) linhas += '<Row><Cell ss:StyleID="sub"><Data ss:Type="String">' + f2XmlEsc(pj) + '</Data></Cell></Row>';
+  linhas += '<Row/>';
+
+  // cabeçalho
+  var cab = '<Row ss:Height="30">' + cel(f2L(F2_T.colAtiv), 'cab') + cel(f2L(F2_T.colNat), 'cab') +
+    cel(f2L(F2_T.colTipo), 'cab') + cel(f2L(F2_T.colCh), 'cab') + cel(f2L(F2_T.colQtd), 'cab');
+  for (var m = 1; m <= f2Duracao; m++) cab += cel(m, 'cab', 'Number');
+  linhas += cab + '</Row>';
+
+  sel.forEach(function (a) {
+    var e = f2Estado(a), nat = f2Nat(a);
+    var natTxt = { P: f2L(F2_T.presencial), V: f2L(F2_T.virtual), E: f2L(F2_T.escritorio) }[nat] || '';
+    var r = '<Row>' + cel(a.extra ? a.ativ.pt : plannerL(a.ativ), 'ativ') + cel(natTxt, 'cel') +
+      cel(a.obr === 'O' ? f2L(F2_T.obrig) : f2L(F2_T.selec), 'cel') +
+      cel(f2Ch(a), 'cel', 'Number') + cel(e.qtd, 'cel', 'Number');
+    for (var mm = 1; mm <= f2Duracao; mm++) {
+      r += cel('', e.meses.indexOf(mm) !== -1 ? 'm' + nat : 'cel');
+    }
+    linhas += r + '</Row>';
+  });
+
+  return '<?xml version="1.0" encoding="UTF-8"?>' +
+    '<?mso-application progid="Excel.Sheet"?>' +
+    '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" ' +
+      'xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">' +
+    '<Styles>' + estilos + '</Styles>' +
+    '<Worksheet ss:Name="Cronograma"><Table>' + colunas + linhas + '</Table>' +
+    '<WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">' +
+      '<FreezePanes/><SplitHorizontal>5</SplitHorizontal><TopRowBottomPane>5</TopRowBottomPane>' +
+      '<ActivePane>2</ActivePane></WorksheetOptions>' +
+    '</Worksheet></Workbook>';
+}
+
+function f2Baixar(tipo) {
+  var conteudo, mime, nome;
+  if (tipo === 'csv') {
+    conteudo = f2CSV(); mime = 'text/csv;charset=utf-8;'; nome = 'cronograma-ater.csv';
+  } else {
+    conteudo = f2Planilha(); mime = 'application/vnd.ms-excel;charset=utf-8;'; nome = 'cronograma-ater.xls';
+  }
+  var blob = new Blob([conteudo], { type: mime });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = nome;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+}
+
+// ---------------------------------------------------------------------
+// Render geral + eventos
+// ---------------------------------------------------------------------
+function renderFase2() {
+  var alvo = document.getElementById('fase2-body');
+  if (!alvo) return;
+
+  var t1 = document.getElementById('fase-tab-1');
+  var t2 = document.getElementById('fase-tab-2');
+  if (t1) t1.textContent = f2L(F2_T.tab1);
+  if (t2) { t2.textContent = f2L(F2_T.tab2); t2.classList.toggle('bloqueada', !f2Liberada()); }
+
+  var btnIr = document.getElementById('planner-ir-crono');
+  if (btnIr) {
+    btnIr.textContent = f2L(F2_T.irCrono);
+    btnIr.style.display = f2Liberada() ? 'inline-flex' : 'none';
+  }
+
+  var tit = document.getElementById('fase2-titulo');
+  if (tit) tit.textContent = f2L(F2_T.titulo);
+
+  if (!f2Liberada()) {
+    alvo.innerHTML = '<div class="f2-bloqueado">' +
+      '<div class="f2-bloqueado-tit">' + f2L(F2_T.bloqueado) + '</div>' +
+      '<p>' + f2L(F2_T.bloqDesc) + '</p>' +
+      '<button class="planner-btn" id="f2-ir-quest">' + f2L(F2_T.irQuest) + '</button></div>';
+    var bq = document.getElementById('f2-ir-quest');
+    if (bq) bq.addEventListener('click', function () { irParaFase(1); });
+    return;
+  }
+
+  if (!f2Semeado) f2Semear();
+
+  alvo.innerHTML =
+    '<p class="f2-print-projeto">' + (typeof projetoResumo === 'function' ? projetoResumo() : '') + '</p>' +
+    '<p class="f2-intro">' + f2L(F2_T.intro) + '</p>' +
+    '<p class="f2-intro">' + f2L(F2_T.intro2) + '</p>' +
+    '<div class="f2-modelo">' +
+      '<div class="f2-modelo-tit">' + f2L(F2_T.modeloTit) + '</div>' +
+      '<p>' + f2L(F2_T.modeloTxt) + '</p>' +
+      '<a class="f2-modelo-link" href="index.html#cronograma" target="_blank" rel="noopener">' +
+        f2L(F2_T.modeloBtn) + '</a>' +
+    '</div>' +
+    (f2TemRespostas() ? '<p class="f2-partida">' + f2L(F2_T.partida) + '</p>' : '') +
+    f2RenderPlanejador() +
+    '<h3 class="f2-quadro-tit">' + f2L(F2_T.quadro) + '</h3>' +
+    '<div class="f2-acoes">' +
+      '<button class="planner-btn accent" id="f2-excel">' + f2L(F2_T.baixarXls) + '</button>' +
+      '<button class="planner-btn" id="f2-baixar">' + f2L(F2_T.baixar) + '</button>' +
+      '<button class="planner-btn" id="f2-imprimir">' + f2L(F2_T.imprimir) + '</button>' +
+    '</div>' +
+    f2RenderQuadro() +
+    f2Analises() +
+    '<p class="f2-fonte">' + f2L(F2_T.fonte) + '</p>';
+
+  f2Eventos(alvo);
+}
+
+function f2Eventos(alvo) {
+  alvo.querySelectorAll('[data-chk]').forEach(function (el) {
+    el.addEventListener('change', function () {
+      f2Plano[el.getAttribute('data-chk')].on = el.checked;
+      renderFase2();
+    });
+  });
+  alvo.querySelectorAll('[data-qtd]').forEach(function (el) {
+    el.addEventListener('change', function () {
+      var v = parseInt(el.value, 10);
+      var e = f2Plano[el.getAttribute('data-qtd')];
+      e.qtd = (isNaN(v) || v < 1) ? 1 : Math.min(v, 365);
+      // baixar a Qtd. abaixo do que já está marcado: sobra o começo
+      if (e.meses.length > e.qtd) e.meses = e.meses.slice(0, e.qtd);
+      renderFase2();
+    });
+  });
+
+  alvo.querySelectorAll('[data-nat]').forEach(function (el) {
+    el.addEventListener('change', function () {
+      f2Plano[el.getAttribute('data-nat')].nat = el.value;
+      renderFase2();
+    });
+  });
+
+  alvo.querySelectorAll('[data-ch]').forEach(function (el) {
+    el.addEventListener('change', function () {
+      var v = parseFloat(el.value);
+      f2Plano[el.getAttribute('data-ch')].ch = (isNaN(v) || v < 0) ? 0 : v;
+      renderFase2();
+    });
+  });
+
+  var dur = document.getElementById('f2-dur');
+  if (dur) dur.addEventListener('change', function () {
+    var v = parseInt(dur.value, 10);
+    f2Duracao = (isNaN(v) || v < 1) ? 1 : Math.min(v, 36);
+    // encurtar o projeto derruba os meses que ficaram fora dele
+    Object.keys(f2Plano).forEach(function (k) {
+      f2Plano[k].meses = f2Plano[k].meses.filter(function (m) { return m <= f2Duracao; });
+    });
+    renderFase2();
+  });
+  alvo.querySelectorAll('.f2-mes').forEach(function (el) {
+    el.addEventListener('click', function () {
+      var e = f2Plano[el.getAttribute('data-id')];
+      var m = parseInt(el.getAttribute('data-mes'), 10);
+      var i = e.meses.indexOf(m);
+      if (i === -1) { e.meses.push(m); e.meses.sort(function (a, b) { return a - b; }); }
+      else e.meses.splice(i, 1);
+      if (!e.on) e.on = true;   // marcar um mês liga a atividade
+      renderFase2();
+    });
+  });
+  alvo.querySelectorAll('[data-rm]').forEach(function (el) {
+    el.addEventListener('click', function () {
+      var id = el.getAttribute('data-rm');
+      f2Extras = f2Extras.filter(function (a) { return f2Id(a) !== id; });
+      delete f2Plano[id];
+      renderFase2();
+    });
+  });
+
+  var add = document.getElementById('f2-add');
+  if (add) add.addEventListener('click', function () {
+    var nome = (document.getElementById('f2-novo-nome').value || '').trim();
+    if (!nome) return;
+    var nat = document.getElementById('f2-novo-nat').value;
+    var cat = document.getElementById('f2-nova-cat').value;
+    var ch = parseFloat(document.getElementById('f2-nova-ch').value);
+    f2ExtraSeq++;
+    // a atividade nova entra na categoria escolhida, e não solta no fim da lista
+    var a = { n: f2ExtraSeq, extra: true, nat: nat, obr: 'S', ch: isNaN(ch) ? 0 : ch,
+              etapa: cat, ativ: { pt: nome, en: nome, es: nome } };
+    f2Extras.push(a);
+    document.getElementById('f2-novo-nome').value = '';
+    f2Plano[f2Id(a)] = { on: true, qtd: 1, meses: [] };
+    renderFase2();
+  });
+
+  var xl = document.getElementById('f2-excel');
+  if (xl) xl.addEventListener('click', function () { f2Baixar('xls'); });
+  var bx = document.getElementById('f2-baixar');
+  if (bx) bx.addEventListener('click', function () { f2Baixar('csv'); });
+  var im = document.getElementById('f2-imprimir');
+  if (im) im.addEventListener('click', function () { window.print(); });
+}
+
+// ---------------------------------------------------------------------
+// Abas
+// ---------------------------------------------------------------------
+function irParaFase(n) {
+  document.getElementById('fase-tab-1').classList.toggle('active', n === 1);
+  document.getElementById('fase-tab-2').classList.toggle('active', n === 2);
+  // valores explícitos: '' cairia de volta na regra #fase2 { display: none }
+  document.getElementById('planejador').style.display = n === 1 ? 'block' : 'none';
+  document.getElementById('fase2').style.display = n === 2 ? 'block' : 'none';
+  document.body.classList.toggle('em-fase2', n === 2);
+  document.getElementById('fase-tabs').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  if (n === 2) renderFase2();
+}
+
+function initFase2() {
+  document.getElementById('fase-tab-1').addEventListener('click', function () { irParaFase(1); });
+  document.getElementById('fase-tab-2').addEventListener('click', function () { irParaFase(2); });
+
+  var btnIr = document.getElementById('planner-ir-crono');
+  if (btnIr) btnIr.addEventListener('click', function () { irParaFase(2); });
+
+  // links internos para a etapa 2 (ex.: o "ver exemplo de cronograma" da 1.3)
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href="#fase-2"]');
+    if (!a) return;
+    e.preventDefault();
+    irParaFase(2);
+  });
+
+  var _render = renderPlanner;
+  renderPlanner = function () {
+    _render.apply(null, arguments);
+    // Na etapa 1 não existe "anterior": o botão some em vez de ficar apagado.
+    var prev = document.getElementById('planner-prev');
+    if (prev) prev.style.display = prev.disabled ? 'none' : 'inline-flex';
+    // só atualiza a etapa 2 se ela estiver à vista (senão o usuário perde
+    // o que já mexeu ali a cada clique no questionário)
+    if (document.body.classList.contains('em-fase2')) renderFase2();
+    else {
+      var t2 = document.getElementById('fase-tab-2');
+      if (t2) t2.classList.toggle('bloqueada', !f2Liberada());
+      var bi = document.getElementById('planner-ir-crono');
+      if (bi) bi.style.display = f2Liberada() ? 'inline-flex' : 'none';
+    }
+  };
+
+  renderFase2();
+}
+
+
 applyLangAttrs();
 renderPlanner();
 initPlannerEvents();
 initPlannerSticky();
+initFase2();
 })();
 </script>
 </body>

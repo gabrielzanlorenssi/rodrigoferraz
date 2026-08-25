@@ -998,11 +998,69 @@ box-shadow: 0 1px 0 var(--c-amber);
 .map-chart-label strong { font-weight: 700; color: var(--c-ink); }
 .map-chart-label .mcl-soft { font-weight: 400; color: var(--c-ink-muted); }
 
+.map-fonte-actions { display: flex; gap: 8px; flex-shrink: 0; }
+
+/* Busca de município para destacar um ponto na dispersão */
+.scatter-find-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.scatter-find-box { position: relative; }
+.scatter-find-box input {
+  font-family: var(--f-sans);
+  font-size: 13px;
+  padding: 7px 12px;
+  border: 1.5px solid var(--c-border);
+  border-radius: 4px;
+  background: var(--c-cream);
+  color: var(--c-ink);
+  min-width: 240px;
+}
+.scatter-find-box input:focus { outline: none; border-color: var(--c-green); }
+.scatter-find-drop {
+  display: none;
+  position: absolute;
+  top: calc(100% + 2px);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  max-height: 220px;
+  overflow-y: auto;
+  background: var(--c-cream);
+  border: 1.5px solid var(--c-border);
+  border-radius: 4px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+.scatter-find-drop.open { display: block; }
+.scatter-find-opt {
+  font-family: var(--f-sans);
+  font-size: 13px;
+  padding: 8px 12px;
+  cursor: pointer;
+  color: var(--c-ink);
+}
+.scatter-find-opt:hover { background: rgba(45,106,50,0.08); }
+.scatter-destaque-info {
+  font-family: var(--f-sans);
+  font-size: 13px;
+  color: var(--c-ink);
+  background: var(--c-cream);
+  border: 1.5px solid var(--c-border);
+  border-radius: 4px;
+  padding: 10px 14px;
+  margin-top: 10px;
+}
+
 @media (max-width: 600px) {
   .map-fonte-row { flex-direction: column; align-items: stretch; gap: 8px; }
   .map-fonte-row .map-fonte { text-align: left; }
   .map-download-btn { align-self: flex-start; }
+  .map-fonte-actions { flex-wrap: wrap; }
   .map-chart-label { font-size: 16px; }
+  .scatter-find-box, .scatter-find-box input { width: 100%; min-width: 0; }
 }
 
 #map-chart {
@@ -1143,30 +1201,10 @@ box-shadow: 0 1px 0 var(--c-amber);
       transform: translateY(-3px);
     }
 
-    .project-card-thumb {
-      height: 130px;
-      background: var(--c-green-dark);
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .project-card-thumb .thumb-label {
-      font-family: var(--f-serif);
-      font-size: 13px;
-      font-style: italic;
-      color: rgba(255,255,255,0.92); /* 0.5 dava até 2.6:1 nos thumbs mais claros */
-      text-align: center;
-      padding: 12px;
-    }
-
-    .project-card-thumb .thumb-accent {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 3px;
-      background: var(--c-amber);
+    /* No lugar da tarja de 130px que só repetia a sigla da instituição. */
+    .project-card-faixa {
+      height: 5px;
+      flex-shrink: 0;
     }
 
     .project-card-body {
@@ -1867,8 +1905,12 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
     </div>
     <div class="map-fonte-row">
       <p id="map-fonte" class="map-fonte"></p>
-      <button class="map-download-btn" id="map-download-btn" type="button"
-              data-pt="Baixar dados do mapa" data-en="Download map data" data-es="Descargar datos del mapa">Baixar dados do mapa</button>
+      <div class="map-fonte-actions">
+        <button class="map-download-btn" id="map-clear-btn" type="button"
+                data-pt="Limpar mapa" data-en="Clear map" data-es="Limpiar mapa">Limpar mapa</button>
+        <button class="map-download-btn" id="map-download-btn" type="button"
+                data-pt="Baixar dados do mapa" data-en="Download map data" data-es="Descargar datos del mapa">Baixar dados do mapa</button>
+      </div>
     </div>
 
     <!-- Cruzamento: vem depois do mapa, junto do gráfico que ele controla -->
@@ -1879,6 +1921,20 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
       <div class="cross-y-wrap" id="cross-y-wrap" style="display:none">
         <span class="cross-y-label" data-pt="× segundo indicador (eixo Y):" data-en="× second indicator (Y axis):" data-es="× segundo indicador (eje Y):">× segundo indicador (eixo Y):</span>
         <select id="map-indicator-selector-y" class="map-indicator-selector"></select>
+        <button class="map-download-btn" id="cross-swap-btn" type="button"
+                data-pt="⇄ Inverter eixos" data-en="⇄ Swap axes" data-es="⇄ Invertir ejes">⇄ Inverter eixos</button>
+      </div>
+      <div class="scatter-find-wrap" id="scatter-find-wrap" style="display:none">
+        <label class="cross-y-label" for="scatter-find"
+               data-pt="Destacar um município:" data-en="Highlight a municipality:" data-es="Destacar un municipio:">Destacar um município:</label>
+        <div class="scatter-find-box">
+          <input type="text" id="scatter-find" autocomplete="off"
+                 data-ph-pt="Digite o município..." data-ph-en="Type the municipality..." data-ph-es="Escriba el municipio..."
+                 placeholder="Digite o município...">
+          <div class="scatter-find-drop" id="scatter-find-drop"></div>
+        </div>
+        <button class="map-download-btn" id="scatter-find-clear" type="button" style="display:none"
+                data-pt="Remover destaque" data-en="Clear highlight" data-es="Quitar el destaque">Remover destaque</button>
       </div>
     </div>
 
@@ -2806,6 +2862,11 @@ function setLang(lang) {
     }
   });
 
+  // Placeholders de campo (data-ph-pt / -en / -es)
+  document.querySelectorAll('[data-ph-pt]').forEach(function(el) {
+    el.setAttribute('placeholder', el.getAttribute('data-ph-' + lang) || el.getAttribute('data-ph-en'));
+  });
+
   // Update [data-html-pt] / [data-html-en] / [data-html-es] (conteúdo com HTML embutido)
   document.querySelectorAll('[data-html-pt]').forEach(function(el) {
     var html = el.getAttribute('data-html-' + lang) || el.getAttribute('data-html-en');
@@ -2818,6 +2879,10 @@ function setLang(lang) {
   renderProjects();
   renderPublications();
   renderVideos();
+
+  // O <html lang> ficava preso em pt-BR nos três idiomas — leitor de tela lia o
+  // inglês com fonética portuguesa. O <title> é nome próprio e não traduz.
+  document.documentElement.lang = lang === 'pt' ? 'pt-BR' : lang;
 
   localStorage.setItem('lang', lang);
 
@@ -2916,7 +2981,8 @@ function renderTimeline() {
       +     '<div class="tl-text" style="font-weight: 500; margin-top: 8px; line-height: 1.5;">' + item.text[currentLang] + '</div>'
       
       // IMAGEM (se houver)
-      +     (item.img ? '<div class="tl-img-wrap"><img src="' + item.img + '" style="border-radius: 4px; margin-top: 12px; width: 100%;"></div>' : '')
+      +     (item.img ? '<div class="tl-img-wrap"><img src="' + item.img + '" alt="' + item.text[currentLang].replace(/"/g, '&quot;') + '" loading="lazy" style="border-radius: 4px; margin-top: 12px; width: 100%;">'
+      +       (item.imgCredit ? '<div class="tl-img-credit">' + item.imgCredit + '</div>' : '') + '</div>' : '')
       
       // TAGS (Natureza e Canal)
       +     '<div class="tl-tags" style="margin-top: 15px; display: flex; flex-wrap: wrap; gap: 6px;">'
@@ -2950,10 +3016,7 @@ function renderProjects() {
     // org pode ser texto fixo (siglas institucionais) ou objeto {pt,en,es}
     var org = typeof p.org === 'string' ? p.org : (p.org[currentLang] || p.org.en);
     return '<a class="project-card" ' + href + '>' +
-      '<div class="project-card-thumb" style="background:' + p.color + '">' +
-        '<span class="thumb-label">' + org + '</span>' +
-        '<div class="thumb-accent"></div>' +
-      '</div>' +
+      '<div class="project-card-faixa" style="background:' + p.color + '"></div>' +
       '<div class="project-card-body">' +
         '<div class="project-card-org">' + org + '</div>' +
    '<div class="project-card-title">' + (p.title[currentLang] || p.title.en) + '</div>' +
@@ -3127,6 +3190,91 @@ function fmtPct(v, dec, lang) {
   var crossSelY = document.getElementById('map-indicator-selector-y');
   if (crossSelY) {
     crossSelY.addEventListener('change', function() { drawMapLevel(); });
+  }
+
+  // Inverter os eixos da dispersão: troca os dois indicadores de lugar.
+  var swapBtn = document.getElementById('cross-swap-btn');
+  if (swapBtn) {
+    swapBtn.addEventListener('click', function() {
+      var selX = document.getElementById('map-indicator-selector');
+      var selY2 = document.getElementById('map-indicator-selector-y');
+      if (!selX || !selY2) return;
+      var vx = selX.value;
+      selX.value = selY2.value;
+      selY2.value = vx;
+      // O eixo X manda no mapa (é o indicador pintado), então redesenha tudo.
+      resetManualSePreciso();
+      drawMapLevel();
+    });
+  }
+
+  // Busca para destacar um município no gráfico de dispersão.
+  var findInput = document.getElementById('scatter-find');
+  var findDrop  = document.getElementById('scatter-find-drop');
+  var findClear = document.getElementById('scatter-find-clear');
+  if (findInput && findDrop) {
+    findInput.addEventListener('input', function() {
+      var termo = findInput.value.trim().toLowerCase();
+      if (termo.length < 2 || !geojsonMunicGlobal) { findDrop.classList.remove('open'); return; }
+      var achados = [];
+      for (var i = 0; i < geojsonMunicGlobal.features.length && achados.length < 8; i++) {
+        var pr = geojsonMunicGlobal.features[i].properties;
+        var nome = pr.municipio + ' (' + pr.uf + ')';
+        if (nome.toLowerCase().indexOf(termo) !== -1) achados.push(nome);
+      }
+      if (achados.length === 0) { findDrop.classList.remove('open'); return; }
+      findDrop.innerHTML = achados.map(function(n) {
+        return '<div class="scatter-find-opt">' + escHtml(n) + '</div>';
+      }).join('');
+      [].slice.call(findDrop.querySelectorAll('.scatter-find-opt')).forEach(function(opt) {
+        opt.addEventListener('click', function() {
+          scatterDestaque = opt.textContent;
+          findInput.value = scatterDestaque;
+          findDrop.classList.remove('open');
+          if (findClear) findClear.style.display = '';
+          renderScatter();
+        });
+      });
+      findDrop.classList.add('open');
+    });
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.scatter-find-box')) findDrop.classList.remove('open');
+    });
+  }
+  if (findClear) {
+    findClear.addEventListener('click', function() {
+      scatterDestaque = null;
+      if (findInput) findInput.value = '';
+      findClear.style.display = 'none';
+      renderScatter();
+    });
+  }
+
+  // "Limpar mapa": devolve a seção ao estado de quando a página abre, sem F5.
+  var clearBtn = document.getElementById('map-clear-btn');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', function() {
+      scatterDestaque = null;
+      if (findInput) findInput.value = '';
+      if (findClear) findClear.style.display = 'none';
+      if (findDrop) findDrop.classList.remove('open');
+      classMode = 'pretty'; manualBreaks = null;
+      var painel = document.getElementById('class-panel');
+      if (painel) painel.style.display = 'none';
+      var gear = document.getElementById('class-gear');
+      if (gear) gear.setAttribute('aria-expanded', 'false');
+      currentGeoLevel = 'municipio';
+      document.querySelectorAll('.geo-btn').forEach(function(b) {
+        b.classList.toggle('active', b.getAttribute('data-level') === 'municipio');
+      });
+      setCrossMode(false, true);
+      populateSelector();
+      var selX = document.getElementById('map-indicator-selector');
+      if (selX && selX.options.length) selX.value = selX.options[0].value;
+      var zr = document.getElementById('zoom-reset');
+      if (zr && zr.onclick) zr.onclick();
+      drawMapLevel();
+    });
   }
 
   // Botões "Baixar dados" (CSV client-side): um para o mapa (indicador atual),
@@ -3351,7 +3499,7 @@ function fmtPct(v, dec, lang) {
 
     var path = d3.geoPath().projection(projection);
 
-    var MAP_COLORS = ['#fdf8f0','#e8d9b8','#d4ba80','#c09848','#8a6a20','#5a4210','#2e2008'];
+    var MAP_COLORS = ['#f4e5b5','#e6cd8a','#d3af5f','#bd9038','#8a6a20','#5a4210','#2e2008'];
 
     Promise.all([
       d3.json("https://storage.googleapis.com/ict4dbrazil/mapas/munic.geojson?v96"),
@@ -3406,6 +3554,9 @@ var ATER_ORIENTACAO = [
 ];
 var INTERNET_IND = '% de domicílios com acesso à internet';
 
+// A fonte do total de extensionistas aparecia só como "ASBRAER", sem ano.
+var FONTE_ASBRAER = 'ASBRAER, 2023';
+
 // "% que recebe orientação técnica" primeiro: é o dado principal do mapa
 // (pedido de 22/07) e por isso a seleção padrão nos dois níveis.
 var SELECTOR_MUNICIPIO = ATER_ORIENTACAO
@@ -3441,6 +3592,8 @@ function indLabel(nome) {
 }
 
 var crossMode = false;
+// Município destacado na dispersão (nome + UF, como no tooltip). null = nenhum.
+var scatterDestaque = null;
 
 // =============================================
 // DIVISÃO DAS FAIXAS (engrenagem da legenda)
@@ -3495,8 +3648,11 @@ function computeBreaks(valoresBrutos, isPct) {
 }
 
 // Cores por nº de faixas: amostra espaçada da escala de 7 tons de terra
-var CLASS_RAMP = ['#fdf8f0','#e8d9b8','#d4ba80','#c09848','#8a6a20','#5a4210','#2e2008'];
-var CLASS_RAMP_CLARAS = ['#fdf8f0','#e8d9b8','#d4ba80','#c09848'];
+var CLASS_RAMP = ['#f4e5b5','#e6cd8a','#d3af5f','#bd9038','#8a6a20','#5a4210','#2e2008'];
+// Tons que ainda pedem texto escuro na legenda.
+// A primeira faixa era #fdf8f0 — mais clara que o fundo da página (#f5f0e8) e que a
+// cor de "sem dado" (#e0ddd5), então estados com valor baixo pareciam vazios no mapa.
+var CLASS_RAMP_CLARAS = ['#f4e5b5','#e6cd8a','#d3af5f','#bd9038'];
 function rampColors(n) {
   if (n >= CLASS_RAMP.length) return CLASS_RAMP.slice(0, n);
   if (n <= 1) return [CLASS_RAMP[CLASS_RAMP.length - 1]];
@@ -3577,6 +3733,16 @@ function populateSelector() {
   }
 }
 
+// A busca de destaque só faz sentido na dispersão municipal (no nível UF cada
+// ponto já vem rotulado com a sigla).
+function atualizarBuscaDestaque() {
+  var wrap = document.getElementById('scatter-find-wrap');
+  if (!wrap) return;
+  var mostrar = crossMode && currentGeoLevel === 'municipio';
+  wrap.style.display = mostrar ? '' : 'none';
+  if (!mostrar) scatterDestaque = null;
+}
+
 function setCrossMode(on, skipRedraw) {
   crossMode = on;
   var btn = document.getElementById('cross-toggle');
@@ -3588,6 +3754,7 @@ function setCrossMode(on, skipRedraw) {
   }
   if (yWrap) yWrap.style.display = on ? '' : 'none';
   if (dlCross) dlCross.style.display = on ? '' : 'none';
+  atualizarBuscaDestaque();
   if (!skipRedraw) {
     populateSelector();
     drawMapLevel();
@@ -3624,6 +3791,7 @@ function setCrossMode(on, skipRedraw) {
   var LBL_UF = { pt: '· por estado', en: '· by state', es: '· por estado' };
 
   function drawMapLevel() {
+    atualizarBuscaDestaque();
     if (!geojsonMunicGlobal) return;
     if (currentGeoLevel === 'municipio') {
       renderMunicipios();
@@ -3767,7 +3935,7 @@ function renderMunicipios() {
     if (!currentIndicador) return;
 
     var path = drawMap._path;
-    var MAP_COLORS = ['#fdf8f0','#e8d9b8','#d4ba80','#c09848','#8a6a20','#5a4210','#2e2008'];
+    var MAP_COLORS = ['#f4e5b5','#e6cd8a','#d3af5f','#bd9038','#8a6a20','#5a4210','#2e2008'];
     var categorias = ['Ensino Médio','Graduação','Especialização','Mestrado','Doutorado'];
 
     var isEstab = ESTAB_INDICADORES.indexOf(currentIndicador) !== -1;
@@ -3879,7 +4047,7 @@ var estado = d.properties.estado || d.properties.nome || d.properties.NM_UF || u
     var fonteEl = document.getElementById('map-fonte');
 var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] || 'Source: ';
     var fonteTxt = isUFPct ? fonteDoIndicador(currentIndicador)
-      : isEstab ? 'IBGE, Censo Agropecuário 2017' : 'ASBRAER';
+      : isEstab ? 'IBGE, Censo Agropecuário 2017' : FONTE_ASBRAER;
     if (fonteEl) fonteEl.textContent = lblFonte + fonteTxt;
     if (crossMode) renderScatter();
     else renderBarrasUF(totaisPorUF, currentIndicador, isPct, catName, isUFPct ? valoresPorUF : null);
@@ -4169,7 +4337,7 @@ var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] ||
   function fonteUF(ind) {
     var f = fonteDoIndicador(ind);
     if (f) return f;
-    return ind === 'Total de extensionistas' ? 'ASBRAER' : 'IBGE, Censo Agropecuário 2017';
+    return ind === 'Total de extensionistas' ? FONTE_ASBRAER : 'IBGE, Censo Agropecuário 2017';
   }
 
   function scatterData() {
@@ -4306,6 +4474,14 @@ var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] ||
       .attr('font-size', '12px').attr('fill', '#646458')
       .text(truncLabel(dados.indY, 52));
 
+    // Ponto destacado pela busca: sai da nuvem cinza-âmbar e ganha rótulo.
+    var ptDestaque = null;
+    if (scatterDestaque) {
+      for (var di = 0; di < dados.pts.length; di++) {
+        if (dados.pts[di].nome === scatterDestaque) { ptDestaque = dados.pts[di]; break; }
+      }
+    }
+
     // Pontos
     g.selectAll('circle.scatter-pt')
       .data(dados.pts)
@@ -4331,6 +4507,23 @@ var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] ||
         d3.select(this).attr('fill', '#8a6a20').attr('fill-opacity', isUF ? 0.85 : 0.35);
         ttip.style('opacity', 0);
       });
+
+    if (ptDestaque) {
+      g.append('circle')
+        .attr('cx', x(ptDestaque.x)).attr('cy', y(ptDestaque.y))
+        .attr('r', 7)
+        .attr('fill', '#2d6a32')
+        .attr('stroke', '#fff')
+        .attr('stroke-width', 2);
+      g.append('text')
+        .attr('x', x(ptDestaque.x) + 11)
+        .attr('y', y(ptDestaque.y) + 4)
+        .attr('font-family', 'DM Sans, sans-serif')
+        .attr('font-size', '12px')
+        .attr('font-weight', '600')
+        .attr('fill', '#1f4023')
+        .text(ptDestaque.nome);
+    }
 
     // Siglas das UFs (só no nível UF — 27 pontos)
     if (isUF) {
@@ -4374,6 +4567,20 @@ var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] ||
     d3.select(container).append('p')
       .attr('class', 'scatter-note')
       .text(nota[currentLang] || nota.en);
+
+    if (scatterDestaque) {
+      var box = d3.select(container).append('div').attr('class', 'scatter-destaque-info');
+      if (ptDestaque) {
+        box.html('<strong>' + escHtml(ptDestaque.nome) + '</strong><br>' +
+          escHtml(indLabel(dados.indX)) + ': ' + fmtVal(ptDestaque.x, dados.isPctX, decX) + '<br>' +
+          escHtml(indLabel(dados.indY)) + ': ' + fmtVal(ptDestaque.y, dados.isPctY, decY));
+      } else {
+        box.text({ pt: 'Este município não tem valor para os dois indicadores escolhidos, então não aparece no gráfico.',
+                   en: 'This municipality has no value for both chosen indicators, so it does not appear in the chart.',
+                   es: 'Este municipio no tiene valor para los dos indicadores elegidos, por eso no aparece en el gráfico.' }[currentLang] ||
+                 'This municipality has no value for both chosen indicators, so it does not appear in the chart.');
+      }
+    }
   }
 
   drawMap();

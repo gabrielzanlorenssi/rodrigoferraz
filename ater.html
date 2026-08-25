@@ -196,12 +196,10 @@
     .mapa-num-big { font-family: var(--f-serif); font-size: 42px; font-weight: 700; color: var(--c-amber); line-height: 1; }
     .mapa-num-label { font-size: 13px; color: var(--c-ink-muted); margin-top: 4px; line-height: 1.4; }
     .mapa-equiv { margin-top: 16px; display: flex; flex-direction: column; gap: 6px; }
-    .mapa-equiv-item { font-size: 13px; color: var(--c-ink-muted); display: flex; align-items: center; gap: 8px; }
+    .mapa-equiv-item { font-size: 13px; color: var(--c-ink-muted); line-height: 1.5; }
+    .mapa-equiv-item span { white-space: nowrap; }
 
-    .vidas-num { font-family: var(--f-serif); font-size: 72px; font-weight: 700; color: #fff; line-height: 1; }
-    .vidas-label { font-size: 15px; color: rgba(255,255,255,0.65); margin-top: 8px; line-height: 1.5; }
-    .vidas-icons { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 16px; max-width: 400px; }
-    .vida-icon { font-size: 18px; line-height: 1; transition: opacity 0.3s; }
+    .equipe-label { font-size: 15px; color: rgba(255,255,255,0.75); line-height: 1.6; }
 
     .horas-dia-wrap { display: flex; gap: 24px; align-items: flex-start; flex-wrap: wrap; }
     .horas-track-wrap { flex: 1; min-width: 200px; }
@@ -496,13 +494,10 @@
         <span class="hint">Média nacional: 20 a 30 visitas/mês por extensionista</span>
       </div>
 
-      <div class="field slider-wrap">
+      <div class="field">
         <label>Famílias sob sua responsabilidade</label>
-        <div class="slider-row">
-          <input type="range" id="familias_resp" min="20" max="500" step="10" value="100">
-          <span class="slider-val" id="familias_resp_val">100</span>
-        </div>
-        <span class="hint">Referência técnica: até 100 famílias por técnico para ATER</span>
+        <input type="number" id="familias_resp" min="1" step="1" value="100">
+        <span class="hint">Preenchido automaticamente com a carga real do território escolhido no passo 2 (famílias ÷ técnicos). Pode ajustar. Referência técnica: até 100 famílias por técnico.</span>
       </div>
 
       <div class="field-grid two">
@@ -593,10 +588,17 @@
         </div>
       </div>
 
-      <div class="field">
-        <label>Km médio percorrido por técnico por mês</label>
-        <input type="number" id="km_tec_mes" placeholder="Ex: 600" min="0" value="600">
-        <span class="hint">Base para calcular desgaste de frota e infraestrutura</span>
+      <div class="field-grid two">
+        <div class="field">
+          <label>Km médio percorrido por técnico por mês</label>
+          <input type="number" id="km_tec_mes" placeholder="Ex: 600" min="0" value="600">
+          <span class="hint">Base para calcular desgaste de frota e infraestrutura</span>
+        </div>
+        <div class="field">
+          <label>Custo por km rodado (R$)</label>
+          <input type="number" id="custo_km" placeholder="Ex: 2,00" min="0" step="0.10" value="2">
+          <span class="hint">Combustível, manutenção e depreciação da frota. Ajuste conforme a realidade local.</span>
+        </div>
       </div>
 
     </div>
@@ -694,7 +696,7 @@
 
       <div class="metodologia-item">
         <div class="metodologia-item-title">Relação técnico por famílias atendidas</div>
-        <p>A ferramenta adota como referência o parâmetro mínimo recomendado de 1 técnico para cada 100 famílias, conforme diversas diretrizes nacionais de ATER. Com base nisso, calcula-se o número necessário de técnicos dividindo o total de famílias por esse parâmetro. A diferença entre esse valor de referência e o número existente gera o indicador de déficit, em termos absolutos e percentuais. Esse mesmo parâmetro também é utilizado para construir mensagens comparativas e indicadores, como "quantas vezes mais técnicos seriam necessários".</p>
+        <p>A ferramenta adota como referência o parâmetro mínimo recomendado de 1 técnico para cada 100 famílias, conforme diversas diretrizes nacionais de ATER. Com base nisso, calcula-se o número necessário de técnicos dividindo o total de famílias por esse parâmetro. A diferença entre esse valor de referência e o número existente gera o indicador de déficit, em termos absolutos e percentuais.</p>
       </div>
 
       <div class="metodologia-item">
@@ -719,7 +721,7 @@
 
       <div class="metodologia-item">
         <div class="metodologia-item-title">Estimativas de investimento em ATER</div>
-        <p>Para o perfil de gestor, a ferramenta utiliza o custo médio por família atendida — com base em referências como chamadas públicas da ANATER para o ano de 2026 — e a meta de famílias a serem atendidas para estimar o volume total de investimento necessário. Esse valor é calculado multiplicando o custo médio pelo número de famílias, podendo ser ajustado conforme região e parâmetros operacionais, como tempo em deslocamento e intensidade do atendimento.</p>
+        <p>Para o perfil de gestor, a ferramenta utiliza o custo médio por família atendida — com base em referências como chamadas públicas da ANATER para o ano de 2026 — e a meta de famílias a serem atendidas para estimar o volume total de investimento necessário. Esse valor é calculado multiplicando o custo médio pelo número de famílias, podendo ser ajustado conforme região e parâmetros operacionais, como tempo em deslocamento e intensidade do atendimento. O custo de deslocamento é estimado em duas parcelas: a fração da jornada das equipes gasta em estrada (percentual informado pelo usuário) e o custo de rodagem da frota, obtido pela multiplicação dos quilômetros percorridos pelo custo por quilômetro — parâmetro editável que reúne combustível, manutenção e depreciação.</p>
       </div>
 
       <div class="metodologia-creditos">
@@ -803,6 +805,8 @@
       if (el) el.style.display = m === nivel ? '' : 'none';
     });
     if (modoLocalidade) alternarModo();
+    if (window.sincronizarFamiliasResp) window.sincronizarFamiliasResp(true);
+    recalcularSeVisivel();
   };
 
   window.selecionarUF = function(sigla) {
@@ -810,6 +814,8 @@
     var total = agregados.porUF[sigla] || 0;
     var el = document.getElementById('total_agricultores_uf');
     if (el) { el.value = parseInt(total).toLocaleString('pt-BR'); el.dataset.raw = String(total); }
+    if (window.sincronizarFamiliasResp) window.sincronizarFamiliasResp(true);
+    recalcularSeVisivel();
   };
 
   window.selecionarRegiao = function(codigo) {
@@ -817,6 +823,8 @@
     var total = agregados.porRegiao[codigo] || 0;
     var el = document.getElementById('total_agricultores_reg');
     if (el) { el.value = parseInt(total).toLocaleString('pt-BR'); el.dataset.raw = String(total); }
+    if (window.sincronizarFamiliasResp) window.sincronizarFamiliasResp(true);
+    recalcularSeVisivel();
   };
 
   // =============================================
@@ -863,6 +871,8 @@
     agEl.value = parseInt(total, 10).toLocaleString('pt-BR');
     agEl.dataset.raw = String(total);
     document.getElementById('municipio-dropdown').classList.remove('open');
+    if (window.sincronizarFamiliasResp) window.sincronizarFamiliasResp(true);
+    recalcularSeVisivel();
   };
 
   document.addEventListener('click', function(e) {
@@ -975,7 +985,6 @@
   // =============================================
   var sliders = [
     { id: 'visitas_mes',      valId: 'visitas_mes_val',      fmt: function(v) { return v; } },
-    { id: 'familias_resp',    valId: 'familias_resp_val',    fmt: function(v) { return v; } },
     { id: 'horas_campo',      valId: 'horas_campo_val',      fmt: function(v) { return v + 'h'; } },
     { id: 'horas_escritorio', valId: 'horas_escritorio_val', fmt: function(v) { return v + 'h'; } },
     { id: 'dias_mes',         valId: 'dias_mes_val',         fmt: function(v) { return v; } },
@@ -989,6 +998,39 @@
     function upd() { if (vl) vl.textContent = s.fmt(el.value); }
     el.addEventListener('input', upd);
     upd();
+  });
+
+  // ---------------------------------------------
+  // "Famílias sob sua responsabilidade" acompanha o território
+  // ---------------------------------------------
+  // Antes esse campo vivia solto em 100 (a referência recomendada), então o
+  // extensionista via um intervalo entre visitas que não tinha nada a ver com o
+  // município escolhido — e o teto de 500 do slider impedia corrigir na mão.
+  var famRespManual = false;
+  var elFamResp = document.getElementById('familias_resp');
+  if (elFamResp) {
+    elFamResp.addEventListener('input', function() { famRespManual = true; });
+  }
+
+  window.sincronizarFamiliasResp = function(forcar) {
+    if (!elFamResp) return;
+    if (famRespManual && !forcar) return;
+    var t = lerTerritorio();
+    if (!(t.agric > 0) || !(t.tecs > 0)) return;
+    var real = Math.round(t.agric / t.tecs);
+    if (!isFinite(real) || real <= 0) return;
+    elFamResp.value = String(Math.max(1, real));
+    famRespManual = false;
+  };
+
+  // Qualquer mudança no território (passo 2) volta a mandar no campo.
+  ['total_agricultores', 'total_tecnicos', 'total_agricultores_loc', 'total_tecnicos_loc',
+   'total_agricultores_uf', 'total_tecnicos_uf', 'total_agricultores_reg', 'total_tecnicos_reg',
+   'total_agricultores_br', 'total_tecnicos_br', 'uf_select', 'regiao_select'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('change', function() { window.sincronizarFamiliasResp(true); });
+    el.addEventListener('input', function() { window.sincronizarFamiliasResp(true); });
   });
 
   // =============================================
@@ -1023,6 +1065,19 @@
     return n.toLocaleString('pt-BR', { minimumFractionDigits: dec || 0, maximumFractionDigits: dec || 0 });
   }
   function r1(n) { return Math.round(n * 10) / 10; }
+  function capitalizar(txt) { return txt ? txt.charAt(0).toUpperCase() + txt.slice(1) : txt; }
+
+  // Multiplicador aproximado: "quase 2×" quando o arredondamento subiu,
+  // "mais de 2×" quando desceu. Evita afirmar 2× para 7.200 km (1,64×).
+  function multAprox(valor) {
+    if (!isFinite(valor) || valor <= 0) return '—';
+    if (valor < 1) return fmt(valor, 1) + '×';
+    var arred = Math.round(valor);
+    var prefixo = '';
+    if (arred - valor > 0.05) prefixo = 'quase ';
+    else if (valor - arred > 0.05) prefixo = 'mais de ';
+    return prefixo + fmt(arred) + '×';
+  }
 
   function card(label, num, unit, desc, tipo) {
     return '<div class="stat-card ' + (tipo || '') + '">' +
@@ -1048,19 +1103,22 @@
       agric = parseFloat(document.getElementById('total_agricultores_loc').value) || 350;
       tecs  = parseFloat(document.getElementById('total_tecnicos_loc').value) || 2;
       nomeLocalidade = document.getElementById('localidade_nome').value.trim() || '';
-      territ = nomeLocalidade || 'na localidade';
+      territ = nomeLocalidade ? 'em ' + nomeLocalidade : 'na localidade';
+      if (!nomeLocalidade) nomeLocalidade = 'a localidade';
     } else if (nivelGeo === 'uf') {
       agric = lerCampoNumerico('total_agricultores_uf') || 0;
       tecs  = parseFloat(document.getElementById('total_tecnicos_uf').value) || 0;
       var siglaUF = document.getElementById('uf_select').value;
-      nomeLocalidade = siglaUF ? (UF_NOME[siglaUF] || siglaUF) : 'estado';
-      territ = 'em ' + nomeLocalidade;
+      nomeLocalidade = siglaUF ? (UF_NOME[siglaUF] || siglaUF) : '';
+      territ = nomeLocalidade ? 'em ' + nomeLocalidade : 'no estado';
+      if (!nomeLocalidade) nomeLocalidade = 'o estado';
     } else if (nivelGeo === 'regiao') {
       agric = lerCampoNumerico('total_agricultores_reg') || 0;
       tecs  = parseFloat(document.getElementById('total_tecnicos_reg').value) || 0;
       var codReg = document.getElementById('regiao_select').value;
-      nomeLocalidade = codReg ? ('Região ' + REGIAO_MAP[codReg]) : 'região';
-      territ = 'na ' + nomeLocalidade;
+      nomeLocalidade = codReg ? ('Região ' + REGIAO_MAP[codReg]) : '';
+      territ = nomeLocalidade ? 'na ' + nomeLocalidade : 'na região';
+      if (!nomeLocalidade) nomeLocalidade = 'a região';
     } else if (nivelGeo === 'brasil') {
       agric = lerCampoNumerico('total_agricultores_br') || 0;
       tecs  = parseFloat(document.getElementById('total_tecnicos_br').value) || 0;
@@ -1071,14 +1129,20 @@
       tecs  = parseFloat(document.getElementById('total_tecnicos').value) || 4;
       nomeLocalidade = document.getElementById('municipio_input').value.trim() || '';
       territ = nomeLocalidade ? 'em ' + nomeLocalidade : 'no município';
+      if (!nomeLocalidade) nomeLocalidade = 'o município';
     }
-    return { agric: agric, tecs: tecs, nome: nomeLocalidade || territ, territ: territ };
+    // `nome` vem sem preposicao ("Bragança (PA)"); `territ` ja vem com ela ("em Bragança (PA)").
+    // Nunca prefixar territ com "em" — foi assim que nasceu o "em em".
+    return { agric: agric, tecs: tecs, nome: nomeLocalidade, territ: territ };
   }
 
   // =============================================
   // CALCULAR
   // =============================================
-  window.calcular = function() {
+  // `silencioso` = recálculo automático disparado por uma edição do usuário:
+  // atualiza os números sem rolar a página nem marcar campo em erro (ele ainda
+  // está digitando). O clique no botão continua chamando calcular() sem argumento.
+  window.calcular = function(silencioso) {
     document.querySelectorAll('.campo-erro').forEach(function(el) { el.remove(); });
     document.querySelectorAll('.campo-invalido').forEach(function(el) { el.classList.remove('campo-invalido'); });
 
@@ -1119,6 +1183,7 @@
     }
 
     if (erros.length > 0) {
+      if (silencioso) return;
       var primeiro = document.querySelector('.campo-invalido');
       if (primeiro) primeiro.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
@@ -1134,9 +1199,10 @@
     var pctDeficit     = Math.round((deficit / tecNecessarios) * 100);
 
     document.getElementById('rh-num').textContent = fmt(Math.round(famPorTec));
-    document.getElementById('rh-unit').textContent = 'famílias / técnico — ' + territ;
+    document.getElementById('rh-unit').textContent = 'famílias / técnico — ' + nomeLoc;
 
     if (perfil === 'extensionista') {
+      window.sincronizarFamiliasResp(false);
       calcularExtensionista(agric, tecs, territ, nomeLoc, famPorTec, tecNecessarios, deficit, pctDeficit, CRITERIO);
     } else if (perfil === 'gestor') {
       calcularGestor(agric, tecs, territ, nomeLoc, famPorTec, tecNecessarios, deficit, pctDeficit);
@@ -1146,8 +1212,23 @@
 
     var r = document.getElementById('resultado');
     r.classList.add('visible');
-    r.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (!silencioso) r.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
+
+  // Depois que o resultado aparece, mudar qualquer campo do formulário passa a
+  // atualizar os números na hora — antes era preciso clicar no botão de novo, e
+  // campos como a meta do programa davam a impressão de não fazer efeito.
+  var recalcTimer = null;
+  function recalcularSeVisivel() {
+    var r = document.getElementById('resultado');
+    if (!r || !r.classList.contains('visible')) return;
+    clearTimeout(recalcTimer);
+    recalcTimer = setTimeout(function() { window.calcular(true); }, 250);
+  }
+  document.querySelectorAll('.step-card input, .step-card select').forEach(function(el) {
+    el.addEventListener('input', recalcularSeVisivel);
+    el.addEventListener('change', recalcularSeVisivel);
+  });
 
   // =============================================
   // EXTENSIONISTA
@@ -1155,6 +1236,7 @@
   function calcularExtensionista(agric, tecs, territ, nomeLoc, famPorTec, tecNecessarios, deficit, pctDeficit, CRITERIO) {
     var visitMes    = parseFloat(document.getElementById('visitas_mes').value);
     var famResp     = parseFloat(document.getElementById('familias_resp').value);
+    if (!isFinite(famResp) || famResp <= 0) famResp = Math.max(1, Math.round(famPorTec));
     var horasCampo  = parseFloat(document.getElementById('horas_campo').value);
     var horasEscrit = parseFloat(document.getElementById('horas_escritorio').value);
     var horasDia    = horasCampo + horasEscrit;
@@ -1170,7 +1252,8 @@
     var pctAtend        = 100 - pctDesl;
     var kmMes           = distKm * 2 * visitMes;
     var kmAno           = kmMes * 12;
-    var brasSpEquiv     = Math.round(kmAno / 1015);
+    var brasSpRaz       = kmAno / 1015;
+    var brasSpEquiv     = Math.round(brasSpRaz);
     var horasEstradaMes = (deslMin * visitMes) / 60;
     var horasEscritMes  = horasEscrit * diasMes;
     var horasCampoMes   = horasCampo * diasMes;
@@ -1184,16 +1267,14 @@
     var visitDiaNec     = agric / (tecs * 365);
     var horasDiaNec     = visitDiaNec * (minTotal / 60);
 
-    var vidas           = Math.ceil(famPorTec / 100);
-    var mult            = vidas;
 
-    document.getElementById('rh-tag').textContent = 'Famílias por extensionista — ' + territ;
+    document.getElementById('rh-tag').textContent = 'Famílias por extensionista — ' + nomeLoc;
 
     var cards = '';
-    cards += card('Técnicos necessários', fmt(tecNecessarios), '', 'Para cobrir ' + territ + ' (1 técnico/100 famílias)', deficit > 0 ? 'alert' : 'ok');
+    cards += card('Técnicos necessários', fmt(tecNecessarios), '', 'Para cobertura total ' + territ + ' (1 técnico/100 famílias)', deficit > 0 ? 'alert' : 'ok');
     cards += card('Déficit de técnicos', deficit > 0 ? fmt(deficit) : '0', '', deficit > 0 ? 'Faltam ' + fmt(deficit) + ' técnico' + (deficit > 1 ? 's' : '') + ' — déficit de ' + pctDeficit + '%.' : 'Cobertura dentro do esperado.', deficit > 0 ? 'alert' : 'ok');
     cards += card('Intervalo entre visitas', fmt(r1(mesesVisitar), 1), 'meses', 'Tempo para cada família receber 1 visita.', mesesVisitar > 4 ? 'alert' : 'ok');
-    cards += card('Km rodados por ano', fmt(Math.round(kmAno)), 'km', 'Equivale a Brasília–SP ' + fmt(brasSpEquiv) + ' vez' + (brasSpEquiv !== 1 ? 'es' : '') + '.', '');
+    cards += card('Km rodados por ano', fmt(Math.round(kmAno)), 'km', 'Equivale a ' + multAprox(brasSpRaz) + ' o trajeto Brasília–São Paulo.', '');
     document.getElementById('cards-grid').innerHTML = cards;
 
     var vis = '';
@@ -1214,11 +1295,11 @@
 
     var horasDiaNecFmt = r1(horasDiaNec);
     vis += '<div class="vis-block vis-block-amber">';
-    vis += '<div class="vis-block-title">Visitas necessárias para cobrir ' + territ + '</div>';
+    vis += '<div class="vis-block-title">Visitas necessárias ' + territ + '</div>';
     vis += '<div class="horas-dia-wrap">';
     vis += '<div style="flex:1;min-width:180px;">';
     vis += '<div class="horas-insight">' + fmt(r1(visitDiaNec), 1) + ' visitas/dia</div>';
-    vis += '<div class="horas-insight-label" style="color:var(--c-ink-muted)">Para garantir pelo menos 1 visita por ano a cada agricultor de ' + territ + ', seriam necessárias <strong>' + fmt(r1(visitDiaNec), 1) + ' visitas por dia</strong> — todos os ' + fmt(tecs) + ' técnico' + (tecs > 1 ? 's' : '') + ' trabalhando inclusive aos finais de semana.</div>';
+    vis += '<div class="horas-insight-label" style="color:var(--c-ink-muted)">Para garantir pelo menos 1 visita por ano a cada agricultor ' + territ + ', seriam necessárias <strong>' + fmt(r1(visitDiaNec), 1) + ' visitas por dia</strong> — todos os ' + fmt(tecs) + ' técnico' + (tecs > 1 ? 's' : '') + ' trabalhando inclusive aos finais de semana.</div>';
     vis += '<div style="margin-top:14px;padding-top:12px;border-top:1px solid #e0c88a;">';
     vis += '<div style="font-size:13px;color:var(--c-ink-muted)">Ou seja, cada técnico teria que trabalhar pelo menos <strong style="color:var(--c-red);font-size:18px;">' + fmt(horasDiaNecFmt, 1) + ' horas por dia</strong>, todos os dias do ano.</div>';
     vis += '</div>';
@@ -1232,12 +1313,11 @@
     vis += '</div>';
 
     var nsEquiv = kmAno / 4394;
-    var nsEquivFmt = nsEquiv < 1 ? fmt(nsEquiv, 1) : fmt(Math.round(nsEquiv));
     vis += '<div class="vis-block">';
     vis += '<div class="vis-block-title">Distância percorrida em campo por ano</div>';
     vis += '<div class="mapa-brasil-wrap">';
     vis += '<div class="mapa-brasil-svg" style="position:relative;width:200px;height:240px;flex-shrink:0;">';
-    vis += '<img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Blank_Map_of_Brazil.svg" width="200" height="240" style="display:block;filter:saturate(0) opacity(0.3);" crossorigin="anonymous">';
+    vis += '<img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Blank_Map_of_Brazil.svg" alt="" width="200" height="240" style="display:block;filter:saturate(0) opacity(0.3);" crossorigin="anonymous">';
     vis += '<svg style="position:absolute;top:0;left:0;pointer-events:none;" width="200" height="240">';
     vis += '<line x1="128" y1="130" x2="132" y2="160" stroke="#c47c2b" stroke-width="2" stroke-dasharray="4,3"/>';
     vis += '<circle cx="128" cy="130" r="5" fill="#c47c2b" stroke="white" stroke-width="1.5"/>';
@@ -1250,33 +1330,19 @@
     vis += '<div class="mapa-num-big">' + fmt(Math.round(kmAno)) + ' km</div>';
     vis += '<div class="mapa-num-label">percorridos por ano em campo</div>';
     vis += '<div class="mapa-equiv" style="margin-top:12px;">';
-    vis += '<div class="mapa-equiv-item"><span style="color:var(--c-amber);font-weight:600;">' + fmt(brasSpEquiv) + '×</span> o trajeto Brasília–São Paulo (1.015 km)</div>';
-    vis += '<div class="mapa-equiv-item"><span style="color:var(--c-amber);font-weight:600;">' + nsEquivFmt + '×</span> a extensão do Brasil de norte a sul (4.394 km)</div>';
+    vis += '<div class="mapa-equiv-item"><span style="color:var(--c-amber);font-weight:600;">' + multAprox(brasSpRaz) + '</span> o trajeto Brasília–São Paulo (1.015 km)</div>';
+    vis += '<div class="mapa-equiv-item"><span style="color:var(--c-amber);font-weight:600;">' + multAprox(nsEquiv) + '</span> a extensão do Brasil de norte a sul (4.394 km)</div>';
     vis += '</div>';
     vis += '</div>';
     vis += '</div>';
     vis += '</div>';
 
-    vis += '<div class="vis-block vis-block-dark">';
-    vis += '<div class="vis-block-title">Quantas vidas seriam necessárias?</div>';
-    vis += '<div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;">';
-    vis += '<div style="flex:1;min-width:160px;">';
-    vis += '<div class="vidas-num">' + mult + '</div>';
-    vis += '<div class="vidas-label">Os técnicos da região precisariam de <strong>' + mult + ' vida' + (mult > 1 ? 's' : '') + '</strong> para atender todos os ' + fmt(Math.round(famPorTec)) + ' agricultores por técnico com o quantitativo atual de profissionais.</div>';
-    vis += '</div>';
-    vis += '<div class="vidas-bar-wrap" style="margin-top:16px;">';
-    for (var i = 0; i < Math.min(mult, 10); i++) {
-      var op = i === 0 ? '1' : '0.25';
-      vis += '<div style="display:inline-block;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,' + op + ');margin:3px;"></div>';
-    }
-    vis += '</div>';
-    vis += '</div>';
     if (deficit > 0) {
-      vis += '<div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.15);font-size:13px;color:rgba(255,255,255,0.55);">';
-      vis += 'Para chegar a 1 vida por técnico — ou seja, uma carga humana — seriam necessários <strong style="color:var(--c-amber-light)">' + fmt(tecNecessarios) + ' técnicos</strong> em ' + territ + '. Hoje há ' + fmt(tecs) + '.';
+      vis += '<div class="vis-block vis-block-dark">';
+      vis += '<div class="vis-block-title">O que falta para dar conta</div>';
+      vis += '<div class="equipe-label">Para respeitar o parâmetro de 1 técnico para cada 100 famílias, seriam necessários <strong style="color:var(--c-amber-light)">' + fmt(tecNecessarios) + ' técnicos</strong> ' + territ + '. Hoje há <strong>' + fmt(tecs) + '</strong>.</div>';
       vis += '</div>';
     }
-    vis += '</div>';
 
     document.getElementById('vis-blocks').innerHTML = '<div class="vis-blocks-wrap">' + vis + '</div>';
 
@@ -1284,8 +1350,8 @@
 
     var narrativa = 'Como <strong>extensionista</strong>, você é responsável por <strong>' + fmt(famResp) + ' famílias</strong> e realiza <strong>' + fmt(visitMes) + ' visitas por mês</strong>. ';
     narrativa += 'Você passa cerca de <strong>' + fmt(Math.round(horasEstradaMes)) + ' horas por mês</strong> na estrada, além de <strong>' + fmt(Math.round(horasEscritMes)) + ' horas</strong> em atividades administrativas. ';
-    if (mesesVisitar > 4) narrativa += 'No ritmo atual, cada família recebe uma visita a cada <strong>' + fmt(Math.round(mesesVisitar)) + ' meses</strong>. ';
-    narrativa += 'Em ' + territ + ' há <strong>' + fmt(tecs) + ' técnico' + (tecs > 1 ? 's' : '') + '</strong> para <strong>' + fmt(agric) + ' agricultores</strong> — quando seriam necessários pelo menos <strong>' + fmt(tecNecessarios) + '</strong>. ';
+    if (mesesVisitar > 4) narrativa += 'No ritmo atual, cada família recebe uma visita a cada <strong>' + fmt(r1(mesesVisitar), 1) + ' meses</strong>. ';
+    narrativa += capitalizar(territ) + ' há <strong>' + fmt(tecs) + ' técnico' + (tecs > 1 ? 's' : '') + '</strong> para <strong>' + fmt(agric) + ' agricultores</strong> — quando seriam necessários pelo menos <strong>' + fmt(tecNecessarios) + '</strong>. ';
     narrativa += 'Fazer ATER de qualidade não depende apenas de você: depende de <strong>estrutura, equipes e políticas públicas adequadas</strong>.';
     document.getElementById('narrativa-text').innerHTML = narrativa;
   }
@@ -1323,30 +1389,39 @@
     var metaFamilias = parseFloat(document.getElementById('meta_familias').value) || agric;
     var pctDeslGest  = parseFloat(document.getElementById('pct_desl_gest').value);
     var kmTecMes     = parseFloat(document.getElementById('km_tec_mes').value) || 600;
+    var custoKm      = parseFloat(document.getElementById('custo_km').value);
+    if (!isFinite(custoKm) || custoKm < 0) custoKm = 2;
     var custoTec     = custoPorFamAno;
 
     var custoTotalMes    = custoPorFamAno * agric / 12;
-    var custoEstradaMes  = custoTotalMes * (pctDeslGest / 100);
-    var custoAtendMes    = custoTotalMes - custoEstradaMes;
+    var custoPessoalEstradaMes = custoTotalMes * (pctDeslGest / 100);
+    var custoAtendMes    = custoTotalMes - custoPessoalEstradaMes;
     var kmTotalAno       = kmTecMes * tecs * 12;
+    // Rodagem entra à parte: antes o custo na estrada ignorava o km e não mudava
+    // nada quando o gestor dobrava a distância percorrida.
+    var custoRodagemMes  = kmTecMes * tecs * custoKm;
+    var custoEstradaMes  = custoPessoalEstradaMes + custoRodagemMes;
     var coberturaAtual   = Math.min(100, Math.round((tecs * 100 / tecNecessarios) * 100) / 100);
     var familiasPorTecMes = agric / tecs;
     var mesesVisitarGest = familiasPorTecMes / 20;
     var custoTotalAno    = custoPorFamAno * metaFamilias;
     var tecNecMeta       = Math.ceil(metaFamilias / 100);
 
-    document.getElementById('rh-tag').textContent = 'Cobertura atual — ' + territ;
+    document.getElementById('rh-tag').textContent = 'Cobertura atual — ' + nomeLoc;
     document.getElementById('rh-num').textContent = Math.round(coberturaAtual) + '%';
     document.getElementById('rh-unit').textContent = 'das famílias com acesso a ATER (estimativa)';
 
     var cards = '';
     cards += card('Técnicos necessários', fmt(tecNecessarios), '', 'Para cobertura total (1 técnico por 100 famílias)', deficit > 0 ? 'alert' : 'ok');
     cards += card('Déficit de pessoal', pctDeficit + '%', '', deficit > 0 ? 'Faltam ' + fmt(deficit) + ' profissionais para atingir a meta técnica.' : 'Equipe suficiente para a cobertura.', deficit > 0 ? 'alert' : 'ok');
-    cards += card('Custo estimado na estrada/mês', 'R$ ' + fmt(Math.round(custoEstradaMes)), '', 'De cada R$ 1.000 investidos, R$ ' + fmt(Math.round(pctDeslGest * 10)) + ' são gastos em deslocamento — não em atendimento direto.', pctDeslGest > 35 ? 'alert' : '');
+    cards += card('Custo estimado na estrada/mês', 'R$ ' + fmt(Math.round(custoEstradaMes)), '', 'R$ ' + fmt(Math.round(custoPessoalEstradaMes)) + ' de jornada das equipes + R$ ' + fmt(Math.round(custoRodagemMes)) + ' de rodagem (' + fmt(kmTecMes * tecs) + ' km/mês × R$ ' + fmt(custoKm, 2) + '/km).', pctDeslGest > 35 ? 'alert' : '');
     cards += card('Km/ano (frota)', fmt(Math.round(kmTotalAno)), 'km', 'Desgaste total da frota municipal — ' + fmt(kmTecMes) + ' km/técnico/mês.', '');
+    // A meta do programa só aparecia num bloco no fim da página, então mexer nela
+    // parecia não mudar nada. Agora ela tem os dois cards que dependem dela.
+    cards += card('Técnicos para a meta', fmt(tecNecMeta), '', 'Para atender as ' + fmt(metaFamilias) + ' famílias da meta do programa (1 técnico/100 famílias).', tecNecMeta > tecs ? 'alert' : 'ok');
+    cards += card('Investimento para a meta', 'R$ ' + fmt(Math.round(custoTotalAno)), '/ano', fmt(metaFamilias) + ' famílias × R$ ' + fmt(custoPorFamAno) + ' por família/ano.', '');
     document.getElementById('cards-grid').innerHTML = cards;
 
-    var vidas = Math.ceil(famPorTec / 100);
     var vis = '';
 
     vis += '<div class="vis-block">';
@@ -1361,33 +1436,25 @@
     vis += '<div class="vis-block-title">Onde vai o investimento?</div>';
     vis += '<div class="horas-track-wrap">';
     vis += '<div class="horas-bar-row"><div class="horas-bar-label">Atendimento</div><div class="horas-bar-track"><div class="horas-bar-fill" style="width:' + (100 - pctDeslGest) + '%;background:var(--c-green)"></div></div><div class="horas-bar-val">R$ ' + fmt(Math.round(custoAtendMes / 1000)) + 'k</div></div>';
-    vis += '<div class="horas-bar-row"><div class="horas-bar-label">Na estrada</div><div class="horas-bar-track"><div class="horas-bar-fill" style="width:' + pctDeslGest + '%;background:var(--c-amber)"></div></div><div class="horas-bar-val" style="color:var(--c-amber)">R$ ' + fmt(Math.round(custoEstradaMes / 1000)) + 'k</div></div>';
+    vis += '<div class="horas-bar-row"><div class="horas-bar-label">Na estrada</div><div class="horas-bar-track"><div class="horas-bar-fill" style="width:' + pctDeslGest + '%;background:var(--c-amber)"></div></div><div class="horas-bar-val" style="color:var(--c-amber)">R$ ' + fmt(Math.round(custoPessoalEstradaMes / 1000)) + 'k</div></div>';
     vis += '</div>';
-    vis += '<p style="font-size:13px;color:var(--c-ink-muted);margin-top:14px;border-top:1px solid #e0c88a;padding-top:12px;">De cada <strong>R$ 1.000</strong> investidos em salários, <strong style="color:var(--c-amber)">R$ ' + fmt(Math.round(pctDeslGest * 10)) + '</strong> são gastos em deslocamento — não em assistência direta. Melhorias na logística ampliam o retorno do investimento.</p>';
+    vis += '<p style="font-size:13px;color:var(--c-ink-muted);margin-top:14px;border-top:1px solid #e0c88a;padding-top:12px;">De cada <strong>R$ 1.000</strong> investidos em salários, <strong style="color:var(--c-amber)">R$ ' + fmt(Math.round(pctDeslGest * 10)) + '</strong> são gastos em deslocamento — não em assistência direta. Somando a rodagem da frota (R$ ' + fmt(Math.round(custoRodagemMes)) + '/mês), a estrada consome <strong>R$ ' + fmt(Math.round(custoEstradaMes)) + '</strong> por mês. Melhorias na logística ampliam o retorno do investimento.</p>';
     vis += '</div>';
 
-    vis += '<div class="vis-block vis-block-dark">';
-    vis += '<div class="vis-block-title">Quantas vidas seriam necessárias?</div>';
-    vis += '<div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;">';
-    vis += '<div style="flex:1;min-width:160px;"><div class="vidas-num">' + vidas + '</div>';
-    vis += '<div class="vidas-label">Para atender todos os agricultores com o quantitativo atual, cada técnico precisaria de <strong>' + vidas + ' vida' + (vidas > 1 ? 's</strong>.' : '</strong>.') + ' São <strong>' + fmt(Math.round(famPorTec)) + ' famílias por profissional</strong>.</div></div>';
-    vis += '<div class="vidas-bar-wrap" style="margin-top:16px;">';
-    for (var vi = 0; vi < Math.min(vidas, 10); vi++) {
-      var op2 = vi === 0 ? '1' : '0.25';
-      vis += '<div style="display:inline-block;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,' + op2 + ');margin:3px;"></div>';
-    }
-    vis += '</div></div>';
     if (metaFamilias > 0) {
-      vis += '<div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.15);font-size:13px;color:rgba(255,255,255,0.55);">Para atingir a meta do programa de <strong style="color:var(--c-amber-light)">' + fmt(metaFamilias) + ' famílias</strong> atendidas, serão necessários <strong style="color:var(--c-amber-light)">' + fmt(tecNecMeta) + ' técnicos</strong> e investimento estimado de <strong style="color:var(--c-amber-light)">R$ ' + fmt(Math.round(custoTotalAno)) + '/ano</strong>.</div>';
+      vis += '<div class="vis-block vis-block-dark">';
+      vis += '<div class="vis-block-title">O que a meta do programa exige</div>';
+      vis += '<div class="equipe-label">Para atingir a meta do programa de <strong style="color:var(--c-amber-light)">' + fmt(metaFamilias) + ' famílias</strong> atendidas, serão necessários <strong style="color:var(--c-amber-light)">' + fmt(tecNecMeta) + ' técnicos</strong> e investimento estimado de <strong style="color:var(--c-amber-light)">R$ ' + fmt(Math.round(custoTotalAno)) + '/ano</strong>.</div>';
+      vis += '</div>';
     }
-    vis += '</div>';
 
     document.getElementById('vis-blocks').innerHTML = '<div class="vis-blocks-wrap">' + vis + '</div>';
 
-    var narrativa = 'A gestão da ATER em <strong>' + nomeLoc + '</strong> conta com <strong>' + fmt(tecs) + ' técnico' + (tecs > 1 ? 's' : '') + '</strong> para atender <strong>' + fmt(agric) + ' famílias</strong>. ';
-    narrativa += 'Com a estrutura atual, o serviço alcança cobertura parcial: cada família recebe assistência a cada <strong>' + fmt(Math.round(mesesVisitarGest)) + ' meses</strong> em média. ';
+    var narrativa = 'A gestão da ATER <strong>' + territ + '</strong> conta com <strong>' + fmt(tecs) + ' técnico' + (tecs > 1 ? 's' : '') + '</strong> para atender <strong>' + fmt(agric) + ' famílias</strong>. ';
+    narrativa += 'Com a estrutura atual, o serviço alcança cobertura parcial: cada família recebe assistência a cada <strong>' + fmt(r1(mesesVisitarGest), 1) + ' meses</strong> em média. ';
     narrativa += 'O deslocamento consome cerca de <strong>' + pctDeslGest + '%</strong> da jornada das equipes — melhorias em logística e infraestrutura viária podem ampliar significativamente o tempo de atendimento direto. ';
-    narrativa += 'Para atingir o padrão técnico recomendado, o município precisaria expandir a equipe em <strong>' + pctDeficit + '%</strong>. ';
+    narrativa += 'Para atingir o padrão técnico recomendado, o território precisaria expandir a equipe em <strong>' + pctDeficit + '%</strong>. ';
+    narrativa += 'A meta de <strong>' + fmt(metaFamilias) + ' famílias</strong> do programa exige <strong>' + fmt(tecNecMeta) + ' técnicos</strong> e <strong>R$ ' + fmt(Math.round(custoTotalAno)) + ' por ano</strong>. ';
     narrativa += 'Investir em ATER é investir diretamente no PIB agropecuário local e na segurança alimentar.';
     document.getElementById('narrativa-text').innerHTML = narrativa;
   }
@@ -1408,24 +1475,23 @@
     var kmAnoEstim      = 15 * 2 * visitMesEstim * 12;
     var brasSpEquiv     = Math.round(kmAnoEstim / 1015);
 
-    document.getElementById('rh-tag').textContent = 'Famílias por técnico — ' + territ;
+    document.getElementById('rh-tag').textContent = 'Famílias por técnico — ' + nomeLoc;
 
     var cards = '';
     cards += card('Técnicos necessários', fmt(tecNecessarios), '', 'Para que você e seus vizinhos tenham ATER de qualidade', deficit > 0 ? 'alert' : 'ok');
-    cards += card('Déficit de técnicos', pctDeficit + '%', '', deficit > 0 ? 'Faltam ' + fmt(deficit) + ' profissionais em ' + territ + '.' : 'Cobertura adequada na região.', deficit > 0 ? 'alert' : 'ok');
+    cards += card('Déficit de técnicos', pctDeficit + '%', '', deficit > 0 ? 'Faltam ' + fmt(deficit) + ' profissionais ' + territ + '.' : 'Cobertura adequada na região.', deficit > 0 ? 'alert' : 'ok');
     var freqTexto = freqVisita === 0 ? 'Nunca' : (freqVisita === 1 ? '1 vez/mês' : '1 vez a cada ' + freqVisita + ' meses');
     cards += card('Sua frequência de atendimento', freqTexto, '', tempoSuf === 'nao' ? 'E você sente que o tempo de atendimento é insuficiente.' : tempoSuf === 'nunca' ? 'Você nunca foi atendido(a).' : 'E você sente que o tempo é adequado.', freqVisita > 3 || tempoSuf !== 'sim' ? 'alert' : 'ok');
     cards += card('Intervalo ideal vs. real', fmt(r1(mesesVisitar), 1) + ' meses', '', 'Tempo que o técnico levaria para visitar todas as famílias uma vez no ritmo atual.', mesesVisitar > 4 ? 'alert' : 'ok');
     document.getElementById('cards-grid').innerHTML = cards;
 
-    var vidas = Math.ceil(famPorTec / 100);
     var vis = '';
 
     vis += '<div class="vis-block vis-block-amber">';
     vis += '<div class="vis-block-title">A fila de espera pelo técnico</div>';
     vis += '<div style="margin:12px 0;">';
     vis += '<div class="horas-insight">' + fmt(r1(mesesVisitar), 1) + ' meses</div>';
-    vis += '<div class="horas-insight-label" style="color:var(--c-ink-muted)">é o intervalo médio para cada família receber uma visita — no ritmo atual dos técnicos de ' + territ + '.</div>';
+    vis += '<div class="horas-insight-label" style="color:var(--c-ink-muted)">é o intervalo médio para cada família receber uma visita — no ritmo atual dos técnicos ' + territ + '.</div>';
     vis += '</div>';
     vis += '<div style="display:flex;gap:4px;margin-top:12px;">';
     for (var m = 1; m <= 12; m++) {
@@ -1437,17 +1503,8 @@
     vis += '</div>';
 
     vis += '<div class="vis-block vis-block-dark">';
-    vis += '<div class="vis-block-title">Quantas vidas o seu técnico precisaria ter?</div>';
-    vis += '<div style="display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;">';
-    vis += '<div style="flex:1;min-width:160px;"><div class="vidas-num">' + vidas + '</div>';
-    vis += '<div class="vidas-label">Os técnicos da região precisariam de <strong>' + vidas + ' vida' + (vidas > 1 ? 's</strong>' : '</strong>') + ' para atender todos os produtores — são <strong>' + fmt(Math.round(famPorTec)) + ' famílias por técnico</strong>, quando o máximo recomendado é 100.</div></div>';
-    vis += '<div class="vidas-bar-wrap" style="margin-top:16px;">';
-    for (var vi = 0; vi < Math.min(vidas, 10); vi++) {
-      var op2 = vi === 0 ? '1' : '0.25';
-      vis += '<div style="display:inline-block;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,' + op2 + ');margin:3px;"></div>';
-    }
-    vis += '</div></div>';
-    vis += '<div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.15);font-size:13px;color:rgba(255,255,255,0.55);">Pelo parâmetro recomendado, o ideal é 1 técnico para até 100 famílias. ' + territ + ' tem um déficit de <strong style="color:var(--c-amber-light)">' + pctDeficit + '%</strong> de profissionais.</div>';
+    vis += '<div class="vis-block-title">A conta do seu técnico</div>';
+    vis += '<div class="equipe-label">Hoje cada técnico é responsável por <strong style="color:var(--c-amber-light)">' + fmt(Math.round(famPorTec)) + ' famílias</strong>, quando o parâmetro recomendado é de até <strong>100</strong>. O déficit de profissionais ' + territ + ' é de <strong style="color:var(--c-amber-light)">' + pctDeficit + '%</strong>.</div>';
     vis += '</div>';
 
     if (tempoSuf === 'nao' || tempoSuf === 'nunca') {
@@ -1459,7 +1516,7 @@
 
     document.getElementById('vis-blocks').innerHTML = '<div class="vis-blocks-wrap">' + vis + '</div>';
 
-    var narrativa = 'Para que <strong>você e sua família</strong> tenham ATER de qualidade em <strong>' + nomeLoc + '</strong>, o serviço precisaria de muito mais braços. ';
+    var narrativa = 'Para que <strong>você e sua família</strong> tenham ATER de qualidade <strong>' + territ + '</strong>, o serviço precisaria de muito mais braços. ';
     narrativa += 'Hoje, o técnico disponível está sobrecarregado, sendo responsável por <strong>' + fmt(Math.round(famPorTec)) + ' famílias</strong> — o que torna as visitas raras ';
     narrativa += '(uma a cada <strong>' + fmt(r1(mesesVisitar), 1) + ' meses</strong>). ';
     narrativa += 'Além disso, ele passa grande parte do dia na estrada para conseguir chegar até você. ';
@@ -1594,7 +1651,7 @@
 
     if (perfil === 'extensionista') {
       var visitMes   = parseFloat(document.getElementById('visitas_mes').value);
-      var famResp    = parseFloat(document.getElementById('familias_resp').value);
+      var famResp    = parseFloat(document.getElementById('familias_resp').value) || 100;
       var horasCampo = parseFloat(document.getElementById('horas_campo').value);
       var horasEscrit= parseFloat(document.getElementById('horas_escritorio').value);
       var horasDia   = horasCampo + horasEscrit;
@@ -1604,8 +1661,9 @@
       var distKm     = parseFloat(document.getElementById('dist_km').value) || 15;
 
       var mesesVisitar = famResp / visitMes;
-      var agric2       = modoLocalidade ? (lerCampoNumerico('total_agricultores_loc') || 2500) : (lerCampoNumerico('total_agricultores') || 2500);
-      var tecs2        = parseFloat(document.getElementById(modoLocalidade ? 'total_tecnicos_loc' : 'total_tecnicos').value) || 4;
+      var tExt         = lerTerritorio();
+      var agric2       = tExt.agric || 2500;
+      var tecs2        = tExt.tecs || 4;
       var tecNecessarios = Math.ceil(agric2 / 100);
       var famPorTec    = agric2 / tecs2;
       var minTotal     = deslMin + atendMin;
@@ -1615,11 +1673,11 @@
       slides = [{
         tag: 'A realidade da ATER',
         narrativa: (function() {
-          var loc = document.getElementById(modoLocalidade ? 'localidade_nome' : 'municipio_input').value || 'seu município';
+          var loc = tExt.territ;
           var n = 'Como <strong>extensionista</strong>, você é responsável por <strong>' + fmt(famResp) + ' famílias</strong> e realiza <strong>' + fmt(visitMes) + ' visitas por mês</strong>. ';
           n += 'Você passa cerca de <strong>' + fmt(Math.round(horasEstradaMes)) + ' horas por mês</strong> na estrada, além de <strong>' + fmt(Math.round(horasEscrit * diasMes)) + ' horas</strong> em atividades administrativas. ';
-          if (mesesVisitar > 4) n += 'No ritmo atual, cada família recebe uma visita a cada <strong>' + fmt(Math.round(mesesVisitar)) + ' meses</strong>. ';
-          n += 'Em ' + loc + ' há <strong>' + fmt(tecs2) + ' técnico' + (tecs2 > 1 ? 's' : '') + '</strong> para <strong>' + fmt(agric2) + ' agricultores</strong> — quando seriam necessários pelo menos <strong>' + fmt(tecNecessarios) + '</strong>. ';
+          if (mesesVisitar > 4) n += 'No ritmo atual, cada família recebe uma visita a cada <strong>' + fmt(r1(mesesVisitar), 1) + ' meses</strong>. ';
+          n += capitalizar(loc) + ' há <strong>' + fmt(tecs2) + ' técnico' + (tecs2 > 1 ? 's' : '') + '</strong> para <strong>' + fmt(agric2) + ' agricultores</strong> — quando seriam necessários pelo menos <strong>' + fmt(tecNecessarios) + '</strong>. ';
           n += 'Fazer ATER de qualidade não depende apenas de você: depende de <strong>estrutura, equipes e políticas públicas adequadas</strong>.';
           return n;
         })()
@@ -1628,18 +1686,22 @@
     } else if (perfil === 'gestor') {
       var pctDeslGest = parseFloat(document.getElementById('pct_desl_gest').value);
       var custoTec    = parseFloat(document.getElementById('custo_tec').value) || 5000;
-      var tecs        = parseFloat(document.getElementById('total_tecnicos').value) || 4;
-      var agric       = parseFloat(document.getElementById('total_agricultores').value) || 2500;
+      var tGest       = lerTerritorio();
+      var tecs        = tGest.tecs || 4;
+      var agric       = tGest.agric || 2500;
       var tecNec      = Math.ceil(agric / 100);
       var deficit     = Math.max(0, tecNec - tecs);
       var pctDef      = Math.round((deficit / tecNec) * 100);
-      var custoEstrada= Math.round(custoTec * agric / 12 * pctDeslGest / 100);
-      var locGest = document.getElementById(modoLocalidade ? 'localidade_nome' : 'municipio_input').value || 'o município';
+      var kmTecMesG   = parseFloat(document.getElementById('km_tec_mes').value) || 600;
+      var custoKmG    = parseFloat(document.getElementById('custo_km').value);
+      if (!isFinite(custoKmG) || custoKmG < 0) custoKmG = 2;
+      var custoEstrada= Math.round(custoTec * agric / 12 * pctDeslGest / 100 + kmTecMesG * tecs * custoKmG);
+      var locGest = tGest.territ;
 
       slides = [{
         tag: 'A realidade da ATER',
         narrativa: (function() {
-          var n = 'A gestão da ATER em <strong>' + locGest + '</strong> conta com <strong>' + fmt(tecs) + ' técnico' + (tecs > 1 ? 's</strong>' : '</strong>') + ' para atender <strong>' + fmt(agric) + ' famílias</strong>. ';
+          var n = 'A gestão da ATER <strong>' + locGest + '</strong> conta com <strong>' + fmt(tecs) + ' técnico' + (tecs > 1 ? 's</strong>' : '</strong>') + ' para atender <strong>' + fmt(agric) + ' famílias</strong>. ';
           n += 'Para atingir a cobertura mínima recomendada, seriam necessários <strong>' + fmt(tecNec) + ' profissionais</strong> — um déficit de <strong>' + pctDef + '%</strong>. ';
           n += 'O deslocamento consome cerca de <strong>' + pctDeslGest + '%</strong> da jornada das equipes — o equivalente a <strong>R$ ' + fmt(custoEstrada) + ' por mês</strong> gastos na estrada em vez de no atendimento direto. ';
           n += 'Investir em ATER é investir diretamente no <strong>PIB agropecuário local</strong> e na <strong>segurança alimentar</strong>.';
@@ -1649,23 +1711,23 @@
 
     } else {
       // CORRECAO 3: calcular famPorTec diretamente dos inputs, sem ler do DOM
-      var agric2    = modoLocalidade ? (lerCampoNumerico('total_agricultores_loc') || 2500) : (lerCampoNumerico('total_agricultores') || 2500);
-      var tecs2     = parseFloat(document.getElementById(modoLocalidade ? 'total_tecnicos_loc' : 'total_tecnicos').value) || 4;
+      var tAgr      = lerTerritorio();
+      var agric2    = tAgr.agric || 2500;
+      var tecs2     = tAgr.tecs || 4;
       var famPorTec = tecs2 > 0 ? agric2 / tecs2 : 0;
-      var vidas     = Math.ceil(famPorTec / 100) || 1;
       var meses     = famPorTec > 0 ? Math.round(famPorTec / 20 * 10) / 10 : 0;
       var tecNec2   = Math.ceil(agric2 / 100);
       var deficit2  = Math.max(0, tecNec2 - tecs2);
       var pctDef2   = Math.round((deficit2 / tecNec2) * 100);
-      var locAgr = document.getElementById(modoLocalidade ? 'localidade_nome' : 'municipio_input').value || 'seu município';
+      var locAgr = tAgr.territ;
 
       slides = [{
         tag: 'A realidade da ATER',
         narrativa: (function() {
-          var n = 'Para que você e sua família tenham ATER de qualidade em <strong>' + locAgr + '</strong>, o serviço precisaria de muito mais braços. ';
+          var n = 'Para que você e sua família tenham ATER de qualidade <strong>' + locAgr + '</strong>, o serviço precisaria de muito mais braços. ';
           n += 'Hoje, o técnico disponível é responsável por <strong>' + fmt(Math.round(famPorTec)) + ' famílias</strong> — quando o ideal é no máximo <strong>100</strong>. ';
           n += 'Isso faz com que as visitas sejam raras: uma a cada <strong>' + fmt(meses, 1) + ' meses</strong>. ';
-          n += 'Ter ATER é um <strong>direito seu</strong>. Faltam <strong>' + fmt(deficit2) + ' técnicos</strong> para cobrir ' + locAgr + ' com qualidade — um déficit de <strong>' + pctDef2 + '%</strong>.';
+          n += 'Ter ATER é um <strong>direito seu</strong>. Faltam <strong>' + fmt(deficit2) + ' técnicos</strong> para dar conta ' + locAgr + ' com qualidade — um déficit de <strong>' + pctDef2 + '%</strong>.';
           return n;
         })()
       }];

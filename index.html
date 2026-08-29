@@ -2752,9 +2752,9 @@ var N2_DESC = {
 var PROJECTS_DATA = [
   {
     org: "FIDA / IFAD",
-    title: { pt: "CompensAÇÃO — ATER Digital no Semiárido", en: "CompensACTION — Digital Rural Extension in the Semiarid", es: "CompensACCIÓN — Extensión Rural Digital en el Semiárido" },
-    desc: { pt: "Piloto de extensão rural digital, alcançando ~1.600 agricultores familiares no Nordeste com ferramentas ICT4D.", en: "Digital rural extension pilot reaching ~1,600 smallholder farmers in Northeast Brazil with ICT4D tools.", es: "Piloto de extensión rural digital, alcanzando a ~1.600 agricultores familiares en el Nordeste con herramientas ICT4D." },
-    link: "https://brasil.un.org/pt-br/307560-ferramenta-ajuda-conter-desinforma%C3%A7%C3%A3o-no-agro-e-fortalece-agricultores-no-sul-da-bahia",
+    title: { pt: "ATER Digital no Semiárido", en: "Digital Rural Extension in the Semiarid", es: "Extensión Rural Digital en el Semiárido" },
+    desc: { pt: "Contribuição ao desenho e ao acompanhamento de projetos do portfólio do FIDA no Brasil, como Dom Helder Câmara III, Paulo Freire II, CompensAÇÃO e Sertão Vivo, com foco em ICT4D, incluindo missões de campo e a elaboração de notas conceituais.", en: "Contribution to the design and supervision of projects in IFAD's Brazil portfolio — such as Dom Helder Câmara III, Paulo Freire II, CompensACTION and Sertão Vivo — with a focus on ICT4D, including field missions and the preparation of concept notes.", es: "Contribución al diseño y al acompañamiento de proyectos de la cartera del FIDA en Brasil, como Dom Helder Câmara III, Paulo Freire II, CompensACCIÓN y Sertão Vivo, con enfoque en las TIC4D, incluyendo misiones de campo y la elaboración de notas conceptuales." },
+    link: "https://www.ifad.org/en/w/countries/brazil",
     color: "#1f4023"
   },
   {
@@ -2763,13 +2763,6 @@ var PROJECTS_DATA = [
     desc: { pt: "Coordenação da implementação do Programa de Extensão Rural Digital liderado pelo MAPA, incluindo o desenvolvimento da plataforma Ater+ Digital.", en: "Coordination of the Digital Rural Extension Program led by MAPA, including the development of the ATER+ Digital platform.", es: "Coordinación de la implementación del Programa de Extensión Rural Digital liderado por el MAPA, incluyendo el desarrollo de la plataforma ATER+ Digital." },
     link: "https://www.atermaisdigital.cnptia.embrapa.br/",
     color: "#2d6a32"
-  },
-  {
-    org: "FIDA / IFAD",
-    title: { pt: "Dom Helder Câmara III & Paulo Freire II", en: "Dom Helder Câmara III & Paulo Freire II", es: "Dom Helder Câmara III & Paulo Freire II" },
-    desc: { pt: "Contribuição ao design de projetos do portfólio FIDA Brasil na área de ICT4D, com missões de campo e elaboração de notas conceituais.", en: "Contribution to the design of projects in IFAD's Brazil portfolio in the field of ICT4D, with field missions and preparation of concept notes.", es: "Contribución al diseño de proyectos de la cartera del FIDA en Brasil en el ámbito de las TIC4D, con misiones de campo y elaboración de notas conceptuales." },
-    link: "https://www.ifad.org/en/w/countries/brazil",
-    color: "#8a6a20"
   },
   {
     org: "REAF / MERCOSUL",
@@ -3800,7 +3793,9 @@ function setCrossMode(on, skipRedraw) {
     }
   }
 
-  function updateLegend(breaks, colors, isPct) {
+  var LBL_SEM_DADO = { pt: 'Sem dado', en: 'No data', es: 'Sin dato' };
+
+  function updateLegend(breaks, colors, isPct, temSemDado) {
     var legendWrap = document.getElementById('map-legend-wrap');
     legendWrap.innerHTML = '';
     var dec = isPct ? pctDecimals(breaks) : 0;
@@ -3819,6 +3814,16 @@ function setCrossMode(on, skipRedraw) {
       div.textContent = fmt(lo) + '–' + fmt(hi);
       legendWrap.appendChild(div);
     }
+    // Cinza de ausência de informação — sem isso, quem via um município apagado
+    // não tinha como distinguir "sem dado" da faixa mais baixa da escala.
+    if (temSemDado) {
+      var semDado = document.createElement('div');
+      semDado.className = 'map-legend-item';
+      semDado.style.backgroundColor = '#e0ddd5';
+      semDado.style.color = '#1c1c1c';
+      semDado.textContent = LBL_SEM_DADO[currentLang] || LBL_SEM_DADO.pt;
+      legendWrap.appendChild(semDado);
+    }
   }
 
 function renderMunicipios() {
@@ -3834,7 +3839,10 @@ function renderMunicipios() {
       .map(function(f) { return f.properties[currentIndicador]; });
     var cfg = makeClassCfg(computeBreaks(valoresMunic, meta.mensuracao === 'percentual'),
       meta.mensuracao === 'percentual');
-    updateLegend(cfg.breaks, cfg.colors, cfg.isPct);
+    var semDadoMunic = valoresMunic.some(function(v) {
+      return v === null || v === undefined || v === '';
+    });
+    updateLegend(cfg.breaks, cfg.colors, cfg.isPct, semDadoMunic);
     // Tooltip com pelo menos 1 casa; mais se a escala exigir (valores pequenos)
     var decTip = cfg.isPct ? Math.max(1, pctDecimals(cfg.breaks)) : 0;
 
@@ -3980,6 +3988,12 @@ function renderMunicipios() {
         totaisPorUF[uf][ind] = (totaisPorUF[uf][ind] || 0) + qtd;
         totaisPorUF[uf].total += qtd;
       });
+      // A base da ASBRAER traz RR com 0 em todos os níveis de formação. Um estado
+      // com Emater ativa não tem zero extensionista: é ausência de informação.
+      // Sai do conjunto para ser pintado como "sem dado", não como o menor valor.
+      Object.keys(totaisPorUF).forEach(function(uf) {
+        if (!totaisPorUF[uf].total) delete totaisPorUF[uf];
+      });
       isPct = currentIndicador.indexOf('%') === 0;
       catName = isPct ? currentIndicador.replace('% ', '') : null;
     }
@@ -3998,7 +4012,12 @@ function renderMunicipios() {
     var cfgUF = makeClassCfg(computeBreaks(valores, isPct), isPct);
     var colorScale = cfgUF.colorScale;
     var breaks = cfgUF.breaks;
-    updateLegend(breaks, cfgUF.colors, isPct);
+    var semDadoUF = geojsonStateGlobal.features.some(function(f) {
+      var uf = ibge2ToUF[String(f.properties.ibge2 || '')];
+      var v = uf ? valoresPorUF[uf] : undefined;
+      return v === undefined || v === null;
+    });
+    updateLegend(breaks, cfgUF.colors, isPct, semDadoUF);
     var decLeg = isPct ? pctDecimals(breaks) : 0;
 
     zoomGroup.selectAll('path.municipio').remove();
@@ -4329,6 +4348,8 @@ var lblFonte = { pt: 'Fonte: ', en: 'Source: ', es: 'Fuente: ' }[currentLang] ||
         if (!uf) return;
         vals[uf] = (vals[uf] || 0) + (+row['Quantidade'] || 0);
       });
+      // Ver comentário acima: total 0 na ASBRAER = sem informação (RR), não zero real.
+      Object.keys(vals).forEach(function(uf) { if (!vals[uf]) delete vals[uf]; });
     }
     return vals;
   }

@@ -121,6 +121,8 @@
     .resultado-hero .rh-unit { font-size: 14px; color: rgba(255,255,255,0.55); }
 
     .cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+    /* Com nº ímpar de cards, o último ocupa a linha inteira em vez de deixar buraco */
+    .cards-grid .stat-card:last-child:nth-child(odd) { grid-column: 1 / -1; }
     .stat-card { background: var(--c-cream); border: 1px solid var(--c-border); border-radius: 12px; padding: 20px; position: relative; overflow: hidden; }
     .stat-card::before { display: none; }
     .stat-card.alert { background: #fdf5f5; }
@@ -701,7 +703,7 @@
 
       <div class="metodologia-item">
         <div class="metodologia-item-title">Carga de trabalho e visitas técnicas</div>
-        <p>As estimativas consideram parâmetros médios de atuação, como o número de visitas mensais realizadas por extensionistas, geralmente entre 20 e 30. A ferramenta permite ajustar esses valores com base na realidade informada pelo usuário, incorporando variáveis como tempo de deslocamento, duração das visitas e número de famílias sob responsabilidade. Com isso, estima a capacidade mensal de atendimento por técnico, calcula quantas famílias podem ser atendidas no ritmo atual e projeta o número de visitas necessárias para cobrir toda a demanda. Quando essa capacidade é inferior à demanda, o sistema estima o esforço adicional necessário, incluindo métricas como visitas por dia e carga horária total necessária.</p>
+        <p>As estimativas consideram parâmetros médios de atuação, como o número de visitas mensais realizadas por extensionistas, geralmente entre 20 e 30. A ferramenta permite ajustar esses valores com base na realidade informada pelo usuário, incorporando variáveis como tempo de deslocamento, duração das visitas e número de famílias sob responsabilidade. Com isso, estima a capacidade mensal de atendimento por técnico, quantas famílias podem ser atendidas no ritmo atual e quanto da jornada é consumido por deslocamento.</p>
       </div>
 
       <div class="metodologia-item">
@@ -1246,7 +1248,6 @@
     var atendMin    = parseFloat(document.getElementById('atend_min').value) || 60;
 
     var mesesVisitar    = famResp / visitMes;
-    var anosVisitar     = mesesVisitar / 12;
     var minTotal        = deslMin + atendMin;
     var pctDesl         = (deslMin / minTotal) * 100;
     var pctAtend        = 100 - pctDesl;
@@ -1263,17 +1264,12 @@
     var pctDeslBarra    = r1(pctDesl / 100 * pctCampoTotal);
     var pctAtendBarra   = r1(pctCampoTotal - pctDeslBarra);
 
-    // CORRECAO 2: dividir pelo total de tecnicos * 365, nao apenas 365
-    var visitDiaNec     = agric / (tecs * 365);
-    var horasDiaNec     = visitDiaNec * (minTotal / 60);
-
 
     document.getElementById('rh-tag').textContent = 'Famílias por extensionista — ' + nomeLoc;
 
     var cards = '';
     cards += card('Técnicos necessários', fmt(tecNecessarios), '', 'Para cobertura total ' + territ + ' (1 técnico/100 famílias)', deficit > 0 ? 'alert' : 'ok');
     cards += card('Déficit de técnicos', deficit > 0 ? fmt(deficit) : '0', '', deficit > 0 ? 'Faltam ' + fmt(deficit) + ' técnico' + (deficit > 1 ? 's' : '') + ' — déficit de ' + pctDeficit + '%.' : 'Cobertura dentro do esperado.', deficit > 0 ? 'alert' : 'ok');
-    cards += card('Intervalo entre visitas', fmt(r1(mesesVisitar), 1), 'meses', 'Tempo para cada família receber 1 visita.', mesesVisitar > 4 ? 'alert' : 'ok');
     cards += card('Km rodados por ano', fmt(Math.round(kmAno)), 'km', 'Equivale a ' + multAprox(brasSpRaz) + ' o trajeto Brasília–São Paulo.', '');
     document.getElementById('cards-grid').innerHTML = cards;
 
@@ -1293,24 +1289,6 @@
     vis += '<p style="font-size:13px;color:var(--c-ink-muted);margin-top:14px;border-top:1px solid var(--c-border);padding-top:12px;">A infraestrutura viária é parte da sua ATER. Cada minuto na estrada é um minuto a menos na lavoura.</p>';
     vis += '</div>';
 
-    var horasDiaNecFmt = r1(horasDiaNec);
-    vis += '<div class="vis-block vis-block-amber">';
-    vis += '<div class="vis-block-title">Visitas necessárias ' + territ + '</div>';
-    vis += '<div class="horas-dia-wrap">';
-    vis += '<div style="flex:1;min-width:180px;">';
-    vis += '<div class="horas-insight">' + fmt(r1(visitDiaNec), 1) + ' visitas/dia</div>';
-    vis += '<div class="horas-insight-label" style="color:var(--c-ink-muted)">Para garantir pelo menos 1 visita por ano a cada agricultor ' + territ + ', seriam necessárias <strong>' + fmt(r1(visitDiaNec), 1) + ' visitas por dia</strong> — todos os ' + fmt(tecs) + ' técnico' + (tecs > 1 ? 's' : '') + ' trabalhando inclusive aos finais de semana.</div>';
-    vis += '<div style="margin-top:14px;padding-top:12px;border-top:1px solid #e0c88a;">';
-    vis += '<div style="font-size:13px;color:var(--c-ink-muted)">Ou seja, cada técnico teria que trabalhar pelo menos <strong style="color:var(--c-red);font-size:18px;">' + fmt(horasDiaNecFmt, 1) + ' horas por dia</strong>, todos os dias do ano.</div>';
-    vis += '</div>';
-    vis += '</div>';
-    vis += '<div class="horas-track-wrap">';
-    vis += '<div class="horas-bar-row"><div class="horas-bar-label">Tempo de campo (real)</div><div class="horas-bar-track"><div class="horas-bar-fill" style="width:' + Math.min(100, (horasCampo/16)*100) + '%;background:var(--c-green)"></div></div><div class="horas-bar-val">' + horasCampo + 'h</div></div>';
-    vis += '<div class="horas-bar-row"><div class="horas-bar-label">Tempo de escritório (real)</div><div class="horas-bar-track"><div class="horas-bar-fill" style="width:' + Math.min(100, (horasEscrit/16)*100) + '%;background:#aaa"></div></div><div class="horas-bar-val">' + horasEscrit + 'h</div></div>';
-    vis += '<div class="horas-bar-row"><div class="horas-bar-label">Tempo total necessário para atender a demanda</div><div class="horas-bar-track"><div class="horas-bar-fill" style="width:' + Math.min(100, (horasDiaNecFmt/16)*100) + '%;background:var(--c-red)"></div></div><div class="horas-bar-val" style="color:var(--c-red)">' + fmt(horasDiaNecFmt,1) + 'h</div></div>';
-    vis += '</div>';
-    vis += '</div>';
-    vis += '</div>';
 
     var nsEquiv = kmAno / 4394;
     vis += '<div class="vis-block">';
@@ -1482,7 +1460,6 @@
     cards += card('Déficit de técnicos', pctDeficit + '%', '', deficit > 0 ? 'Faltam ' + fmt(deficit) + ' profissionais ' + territ + '.' : 'Cobertura adequada na região.', deficit > 0 ? 'alert' : 'ok');
     var freqTexto = freqVisita === 0 ? 'Nunca' : (freqVisita === 1 ? '1 vez/mês' : '1 vez a cada ' + freqVisita + ' meses');
     cards += card('Sua frequência de atendimento', freqTexto, '', tempoSuf === 'nao' ? 'E você sente que o tempo de atendimento é insuficiente.' : tempoSuf === 'nunca' ? 'Você nunca foi atendido(a).' : 'E você sente que o tempo é adequado.', freqVisita > 3 || tempoSuf !== 'sim' ? 'alert' : 'ok');
-    cards += card('Intervalo ideal vs. real', fmt(r1(mesesVisitar), 1) + ' meses', '', 'Tempo que o técnico levaria para visitar todas as famílias uma vez no ritmo atual.', mesesVisitar > 4 ? 'alert' : 'ok');
     document.getElementById('cards-grid').innerHTML = cards;
 
     var vis = '';
@@ -1499,7 +1476,7 @@
       vis += '<div style="flex:1;height:28px;border-radius:4px;background:' + (ativo ? 'var(--c-amber)' : '#e0ddd5') + ';display:flex;align-items:center;justify-content:center;font-size:9px;color:' + (ativo ? 'white' : '#999') + ';">' + m + '</div>';
     }
     vis += '</div>';
-    vis += '<div style="font-size:11px;color:var(--c-ink-muted);margin-top:6px;">Meses até receber uma visita (em laranja)</div>';
+    vis += '<div style="font-size:11px;color:var(--c-ink-muted);margin-top:6px;">' + (mesesVisitar > 12 ? 'A régua mostra 12 meses; no ritmo atual a espera passa de um ano.' : 'Meses até receber uma visita (em laranja)') + '</div>';
     vis += '</div>';
 
     vis += '<div class="vis-block vis-block-dark">';

@@ -1236,6 +1236,32 @@ box-shadow: 0 1px 0 var(--c-amber);
       color: var(--c-ink-muted);
     }
 
+    /* Card de duas fontes: o cartão inteiro não é mais clicável, quem clica são
+       os links do rodapé. Sem cursor de mão, para não prometer clique que não existe. */
+    .project-card--multi { cursor: default; }
+
+    .project-card-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid var(--c-border);
+    }
+
+    .project-card-links a {
+      font-size: 12px;
+      font-weight: 600;
+      color: #8a6a20;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+    }
+
+    .project-card-links a:hover,
+    .project-card-links a:focus-visible {
+      border-bottom-color: #8a6a20;
+    }
+
     /* =============================================
        PUBLICATIONS
     ============================================= */
@@ -2754,7 +2780,12 @@ var PROJECTS_DATA = [
     org: "FIDA / IFAD",
     title: { pt: "ATER Digital no Semiárido", en: "Digital Rural Extension in the Semiarid", es: "Extensión Rural Digital en el Semiárido" },
     desc: { pt: "Contribuição ao desenho e ao acompanhamento de projetos do portfólio do FIDA no Brasil, como Dom Helder Câmara III, Paulo Freire II, CompensAÇÃO e Sertão Vivo, com foco em ICT4D, incluindo missões de campo e a elaboração de notas conceituais.", en: "Contribution to the design and supervision of projects in IFAD's Brazil portfolio — such as Dom Helder Câmara III, Paulo Freire II, CompensACTION and Sertão Vivo — with a focus on ICT4D, including field missions and the preparation of concept notes.", es: "Contribución al diseño y al acompañamiento de proyectos de la cartera del FIDA en Brasil, como Dom Helder Câmara III, Paulo Freire II, CompensACCIÓN y Sertão Vivo, con enfoque en las TIC4D, incluyendo misiones de campo y la elaboración de notas conceptuales." },
-    link: "https://www.ifad.org/en/w/countries/brazil",
+    links: [
+      { label: { pt: "Notícia da ONU", en: "UN news story", es: "Noticia de la ONU" },
+        url: "https://brasil.un.org/pt-br/307560-ferramenta-ajuda-conter-desinforma%C3%A7%C3%A3o-no-agro-e-fortalece-agricultores-no-sul-da-bahia" },
+      { label: { pt: "Portfólio do FIDA no Brasil", en: "IFAD's Brazil portfolio", es: "Cartera del FIDA en Brasil" },
+        url: "https://www.ifad.org/en/w/countries/brazil" }
+    ],
     color: "#1f4023"
   },
   {
@@ -3008,15 +3039,32 @@ function renderProjects() {
     var href = p.link ? 'href="' + p.link + '" target="_blank"' : '';
     // org pode ser texto fixo (siglas institucionais) ou objeto {pt,en,es}
     var org = typeof p.org === 'string' ? p.org : (p.org[currentLang] || p.org.en);
-    return '<a class="project-card" ' + href + '>' +
+
+    // Card com mais de uma fonte não pode ser um <a> só: <a> dentro de <a> é HTML
+    // inválido e o navegador desmonta a marcação. Nesse caso o cartão vira <div>
+    // e os links viram uma linha de destinos no rodapé do card.
+    var temVarios = Array.isArray(p.links) && p.links.length > 0;
+    var tag       = temVarios ? 'div' : 'a';
+    var attrs     = temVarios ? 'class="project-card project-card--multi"' : 'class="project-card" ' + href;
+
+    var rodape = '';
+    if (temVarios) {
+      rodape = '<div class="project-card-links">' + p.links.map(function(l) {
+        return '<a href="' + l.url + '" target="_blank" rel="noopener">' +
+               (l.label[currentLang] || l.label.en) + ' <span aria-hidden="true">&rarr;</span></a>';
+      }).join('') + '</div>';
+    }
+
+    return '<' + tag + ' ' + attrs + '>' +
       '<div class="project-card-faixa" style="background:' + p.color + '"></div>' +
       '<div class="project-card-body">' +
         '<div class="project-card-org">' + org + '</div>' +
    '<div class="project-card-title">' + (p.title[currentLang] || p.title.en) + '</div>' +
         (p.subtitle ? '<div style="font-size:12px; font-weight:500; font-style:italic; color:var(--c-ink-muted); margin:2px 0 4px;">' + (p.subtitle[currentLang] || p.subtitle.en) + '</div>' : '') +
         '<div class="project-card-desc">' + (p.desc[currentLang] || p.desc.en) + '</div>' +
+        rodape +
       '</div>' +
-    '</a>';
+    '</' + tag + '>';
   }).join('');
 }
 

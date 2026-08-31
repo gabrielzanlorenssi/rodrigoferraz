@@ -463,6 +463,16 @@ box-shadow: 0 1px 0 var(--c-amber);
     #mapa_d3 svg { width: 0; height: 0; }
     #mapa_d3 #svg_mapa { width: 100%; height: auto; }
 
+    /* O mapa desenhava 758px de altura numa coluna de 860px. Em notebook de 15"
+       (viewport ~830px) ele sozinho ocupava a tela inteira: não dava para ver o
+       mapa e a legenda juntos sem diminuir o zoom do navegador — foi o que o
+       Rodrigo relatou. Limitar a LARGURA a 66vh faz a altura (proporção 600x560
+       do viewBox, com height:auto) caber em ~62% da tela, sobrando espaço para a
+       legenda e os controles. Em monitor alto o limite não morde e o mapa volta
+       a crescer até os 860px da coluna. Mexer na largura, e não na altura,
+       preserva o preserveAspectRatio="xMinYMin" que o D3 usa no pan/zoom. */
+    #mapa_d3 #svg_mapa { max-width: 66vh; display: block; margin: 0 auto; }
+
     .map-controls {
       display: flex;
       gap: 6px;
@@ -2208,10 +2218,10 @@ Aqui, é possível acessar uma linha do tempo com os principais marcos da inova�
         data-en="Projects & Initiatives"
         data-es="Proyectos e Iniciativas">Projetos e Iniciativas</h2>
     <p class="section-sub"
-       data-pt="Seleção de projetos desenvolvidos em parceria com organismos nacionais e internacionais."
-       data-en="Selection of projects developed in partnership with national and international organizations."
-       data-es="Selección de proyectos desarrollados en asociación con organismos nacionales e internacionales.">
-      Seleção de projetos desenvolvidos em parceria com organismos nacionais e internacionais.
+       data-pt="Seleção de projetos e ações desenvolvidos na temática, tanto individualmente quanto em organismos nacionais e internacionais e em outras instituições."
+       data-en="A selection of projects and activities developed in this field, both independently and within national and international organizations and other institutions."
+       data-es="Selección de proyectos y acciones desarrollados en la temática, tanto de forma individual como en organismos nacionales e internacionales y en otras instituciones.">
+      Seleção de projetos e ações desenvolvidos na temática, tanto individualmente quanto em organismos nacionais e internacionais e em outras instituições.
     </p>
 
     <div class="projects-grid" id="projects-grid">

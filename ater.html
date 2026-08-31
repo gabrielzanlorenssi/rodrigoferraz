@@ -1067,6 +1067,35 @@
     return n.toLocaleString('pt-BR', { minimumFractionDigits: dec || 0, maximumFractionDigits: dec || 0 });
   }
   function r1(n) { return Math.round(n * 10) / 10; }
+
+  // Concordância: com 1 família, "1 famílias" saía errado na tela.
+  function plural(n, sing, plur) { return fmt(n) + ' ' + (Math.abs(n) === 1 ? sing : plur); }
+
+  // Contagem que pode ser fracionária (famílias por técnico, quando há mais
+  // técnicos do que famílias): arredondar dava "0 famílias", que lido é o
+  // contrário do que acontece — o técnico tem folga, não ausência de público.
+  function contagem(n, sing, plur) {
+    if (n > 0 && n < 1) return 'menos de 1 ' + sing;
+    return plural(Math.round(n), sing, plur);
+  }
+
+  // Intervalo entre visitas. Abaixo de 1 mês, "0,0 meses" não diz nada:
+  // vira "menos de 1 mês". Acima de 12, quem lê a régua precisa saber que
+  // ela para em um ano.
+  // "recebe assistência a cada menos de 1 mês" não se diz. Abaixo de um mês a
+  // frase muda de forma, em vez de encaixar o número numa regência que não cabe.
+  function frequencia(m) {
+    if (!isFinite(m) || m < 0) return '—';
+    if (m < 1) return 'mais de uma vez por mês';
+    return 'a cada ' + fmtMeses(m);
+  }
+
+  function fmtMeses(m) {
+    if (!isFinite(m) || m < 0) return '—';
+    if (m < 1) return 'menos de 1 mês';
+    if (r1(m) === 1) return '1 mês';
+    return fmt(r1(m), 1) + ' meses';
+  }
   function capitalizar(txt) { return txt ? txt.charAt(0).toUpperCase() + txt.slice(1) : txt; }
 
   // Multiplicador aproximado: "quase 2×" quando o arredondamento subiu,
@@ -1318,7 +1347,7 @@
     if (deficit > 0) {
       vis += '<div class="vis-block vis-block-dark">';
       vis += '<div class="vis-block-title">O que falta para dar conta</div>';
-      vis += '<div class="equipe-label">Para respeitar o parâmetro de 1 técnico para cada 100 famílias, seriam necessários <strong style="color:var(--c-amber-light)">' + fmt(tecNecessarios) + ' técnicos</strong> ' + territ + '. Hoje há <strong>' + fmt(tecs) + '</strong>.</div>';
+      vis += '<div class="equipe-label">Para respeitar o parâmetro de 1 técnico para cada 100 famílias, seriam necessários <strong style="color:var(--c-amber-light)">' + plural(tecNecessarios, 'técnico', 'técnicos') + '</strong> ' + territ + '. Hoje há <strong>' + fmt(tecs) + '</strong>.</div>';
       vis += '</div>';
     }
 
@@ -1326,9 +1355,9 @@
 
     setTimeout(function() { desenharDonut(pctDeslBarra, pctAtendBarra, pctEscrit); }, 50);
 
-    var narrativa = 'Como <strong>extensionista</strong>, você é responsável por <strong>' + fmt(famResp) + ' famílias</strong> e realiza <strong>' + fmt(visitMes) + ' visitas por mês</strong>. ';
+    var narrativa = 'Como <strong>extensionista</strong>, você é responsável por <strong>' + plural(famResp, 'família', 'famílias') + '</strong> e realiza <strong>' + plural(visitMes, 'visita', 'visitas') + ' por mês</strong>. ';
     narrativa += 'Você passa cerca de <strong>' + fmt(Math.round(horasEstradaMes)) + ' horas por mês</strong> na estrada, além de <strong>' + fmt(Math.round(horasEscritMes)) + ' horas</strong> em atividades administrativas. ';
-    if (mesesVisitar > 4) narrativa += 'No ritmo atual, cada família recebe uma visita a cada <strong>' + fmt(r1(mesesVisitar), 1) + ' meses</strong>. ';
+    if (mesesVisitar > 4) narrativa += 'No ritmo atual, cada família recebe uma visita a cada <strong>' + fmtMeses(mesesVisitar) + '</strong>. ';
     narrativa += capitalizar(territ) + ' há <strong>' + fmt(tecs) + ' técnico' + (tecs > 1 ? 's' : '') + '</strong> para <strong>' + fmt(agric) + ' agricultores</strong> — quando seriam necessários pelo menos <strong>' + fmt(tecNecessarios) + '</strong>. ';
     narrativa += 'Fazer ATER de qualidade não depende apenas de você: depende de <strong>estrutura, equipes e políticas públicas adequadas</strong>.';
     document.getElementById('narrativa-text').innerHTML = narrativa;
@@ -1407,7 +1436,7 @@
     vis += '<div style="margin-bottom:8px;display:flex;justify-content:space-between;"><span style="font-size:13px;color:var(--c-ink-muted)">Técnicos disponíveis: <strong>' + fmt(tecs) + '</strong></span><span style="font-size:13px;color:var(--c-ink-muted)">Necessários: <strong>' + fmt(tecNecessarios) + '</strong></span></div>';
     vis += '<div class="deficit-track"><div class="deficit-fill" style="width:' + Math.min(100, coberturaAtual) + '%;background:' + (coberturaAtual >= 80 ? 'var(--c-green)' : coberturaAtual >= 50 ? 'var(--c-amber)' : 'var(--c-red)') + '"></div></div>';
     vis += '<div class="deficit-nums"><span>' + Math.round(coberturaAtual) + '% coberto</span><span style="color:var(--c-red)">' + pctDeficit + '% déficit</span></div>';
-    vis += '<p style="font-size:13px;color:var(--c-ink-muted);margin-top:12px;">Para cumprir a meta técnica de 1 técnico por 100 famílias, seriam necessários <strong>' + fmt(tecNecessarios) + ' profissionais</strong>. Faltam <strong>' + fmt(deficit) + '</strong>.</p>';
+    vis += '<p style="font-size:13px;color:var(--c-ink-muted);margin-top:12px;">Para cumprir a meta técnica de 1 técnico por 100 famílias, seriam necessários <strong>' + plural(tecNecessarios, 'profissional', 'profissionais') + '</strong>. Faltam <strong>' + fmt(deficit) + '</strong>.</p>';
     vis += '</div>';
 
     vis += '<div class="vis-block vis-block-amber">';
@@ -1428,8 +1457,8 @@
 
     document.getElementById('vis-blocks').innerHTML = '<div class="vis-blocks-wrap">' + vis + '</div>';
 
-    var narrativa = 'A gestão da ATER <strong>' + territ + '</strong> conta com <strong>' + fmt(tecs) + ' técnico' + (tecs > 1 ? 's' : '') + '</strong> para atender <strong>' + fmt(agric) + ' famílias</strong>. ';
-    narrativa += 'Com a estrutura atual, o serviço alcança cobertura parcial: cada família recebe assistência a cada <strong>' + fmt(r1(mesesVisitarGest), 1) + ' meses</strong> em média. ';
+    var narrativa = 'A gestão da ATER <strong>' + territ + '</strong> conta com <strong>' + plural(tecs, 'técnico', 'técnicos') + '</strong> para atender <strong>' + plural(agric, 'família', 'famílias') + '</strong>. ';
+    narrativa += (deficit > 0 ? 'Com a estrutura atual, o serviço alcança cobertura parcial: ' : 'Com a estrutura atual, ') + 'cada família recebe assistência <strong>' + frequencia(mesesVisitarGest) + '</strong>, em média. ';
     narrativa += 'O deslocamento consome cerca de <strong>' + pctDeslGest + '%</strong> da jornada das equipes — melhorias em logística e infraestrutura viária podem ampliar significativamente o tempo de atendimento direto. ';
     narrativa += 'Para atingir o padrão técnico recomendado, o território precisaria expandir a equipe em <strong>' + pctDeficit + '%</strong>. ';
     narrativa += 'A meta de <strong>' + fmt(metaFamilias) + ' famílias</strong> do programa exige <strong>' + fmt(tecNecMeta) + ' técnicos</strong> e <strong>R$ ' + fmt(Math.round(custoTotalAno)) + ' por ano</strong>. ';
@@ -1467,37 +1496,57 @@
     vis += '<div class="vis-block vis-block-amber">';
     vis += '<div class="vis-block-title">A fila de espera pelo técnico</div>';
     vis += '<div style="margin:12px 0;">';
-    vis += '<div class="horas-insight">' + fmt(r1(mesesVisitar), 1) + ' meses</div>';
+    vis += '<div class="horas-insight">' + fmtMeses(mesesVisitar) + '</div>';
     vis += '<div class="horas-insight-label" style="color:var(--c-ink-muted)">é o intervalo médio para cada família receber uma visita — no ritmo atual dos técnicos ' + territ + '.</div>';
     vis += '</div>';
     vis += '<div style="display:flex;gap:4px;margin-top:12px;">';
     for (var m = 1; m <= 12; m++) {
-      var ativo = m <= Math.min(Math.round(mesesVisitar), 12);
+      // Com espera menor que 1 mês, Math.round dava 0 e a régua ficava toda
+      // apagada embaixo de uma legenda prometendo laranja. Acende o 1º mês.
+      var acesos = mesesVisitar > 0 && mesesVisitar < 1 ? 1 : Math.min(Math.round(mesesVisitar), 12);
+      var ativo = m <= acesos;
       vis += '<div style="flex:1;height:28px;border-radius:4px;background:' + (ativo ? 'var(--c-amber)' : '#e0ddd5') + ';display:flex;align-items:center;justify-content:center;font-size:9px;color:' + (ativo ? 'white' : '#999') + ';">' + m + '</div>';
     }
     vis += '</div>';
-    vis += '<div style="font-size:11px;color:var(--c-ink-muted);margin-top:6px;">' + (mesesVisitar > 12 ? 'A régua mostra 12 meses; no ritmo atual a espera passa de um ano.' : 'Meses até receber uma visita (em laranja)') + '</div>';
+    var legendaRegua = mesesVisitar > 12
+      ? 'A régua mostra 12 meses; no ritmo atual a espera passa de um ano.'
+      : (mesesVisitar < 1
+          ? 'No ritmo atual a espera é menor que um mês — o primeiro quadrado já cobre toda a fila.'
+          : 'Meses até receber uma visita (em laranja)');
+    vis += '<div style="font-size:11px;color:var(--c-ink-muted);margin-top:6px;">' + legendaRegua + '</div>';
     vis += '</div>';
 
     vis += '<div class="vis-block vis-block-dark">';
     vis += '<div class="vis-block-title">A conta do seu técnico</div>';
-    vis += '<div class="equipe-label">Hoje cada técnico é responsável por <strong style="color:var(--c-amber-light)">' + fmt(Math.round(famPorTec)) + ' famílias</strong>, quando o parâmetro recomendado é de até <strong>100</strong>. O déficit de profissionais ' + territ + ' é de <strong style="color:var(--c-amber-light)">' + pctDeficit + '%</strong>.</div>';
+    vis += '<div class="equipe-label">Hoje cada técnico é responsável por <strong style="color:var(--c-amber-light)">' + contagem(famPorTec, 'família', 'famílias') + '</strong>, quando o parâmetro recomendado é de até <strong>100</strong>. O déficit de profissionais ' + territ + ' é de <strong style="color:var(--c-amber-light)">' + pctDeficit + '%</strong>.</div>';
     vis += '</div>';
 
     if (tempoSuf === 'nao' || tempoSuf === 'nunca') {
       vis += '<div class="vis-block" style="border-color:var(--c-red)">';
       vis += '<div class="vis-block-title">Tempo de atendimento insuficiente</div>';
-      vis += '<p style="font-size:14px;color:var(--c-ink)">' + (tempoSuf === 'nunca' ? 'Você nunca foi atendido(a). Isso é mais comum do que parece: com a sobrecarga atual, muitos agricultores ficam anos sem receber uma única visita técnica.' : 'Você sente que o atendimento não dura tempo suficiente. Com ' + fmt(Math.round(famPorTec)) + ' famílias para atender, o técnico precisa reduzir o tempo em cada visita para conseguir cobrir todas. Isso é sobrecarga — não falta de dedicação.') + '</p>';
+      vis += '<p style="font-size:14px;color:var(--c-ink)">' + (tempoSuf === 'nunca' ? 'Você nunca foi atendido(a). Isso é mais comum do que parece: com a sobrecarga atual, muitos agricultores ficam anos sem receber uma única visita técnica.' : 'Você sente que o atendimento não dura tempo suficiente. Com ' + contagem(famPorTec, 'família', 'famílias') + ' para atender, o técnico precisa reduzir o tempo em cada visita para conseguir cobrir todas. Isso é sobrecarga — não falta de dedicação.') + '</p>';
       vis += '</div>';
     }
 
     document.getElementById('vis-blocks').innerHTML = '<div class="vis-blocks-wrap">' + vis + '</div>';
 
-    var narrativa = 'Para que <strong>você e sua família</strong> tenham ATER de qualidade <strong>' + territ + '</strong>, o serviço precisaria de muito mais braços. ';
-    narrativa += 'Hoje, o técnico disponível está sobrecarregado, sendo responsável por <strong>' + fmt(Math.round(famPorTec)) + ' famílias</strong> — o que torna as visitas raras ';
-    narrativa += '(uma a cada <strong>' + fmt(r1(mesesVisitar), 1) + ' meses</strong>). ';
-    narrativa += 'Além disso, ele passa grande parte do dia na estrada para conseguir chegar até você. ';
-    narrativa += 'Ter ATER é um <strong>direito seu</strong> e um recurso essencial para melhorar sua renda; os números mostram que o serviço precisa de mais investimento e estrutura para que o apoio chegue à sua porteira com a frequência que sua lavoura exige.';
+    // A narrativa afirmava sobrecarga sempre. Quando o território tem técnicos
+    // suficientes (déficit 0), isso contradiz os próprios cards da página, que
+    // dizem "cobertura adequada" — e a ferramenta perde credibilidade justamente
+    // com quem conferiu os números.
+    var narrativa;
+    if (deficit > 0) {
+      narrativa = 'Para que <strong>você e sua família</strong> tenham ATER de qualidade <strong>' + territ + '</strong>, o serviço precisaria de muito mais braços. ';
+      narrativa += 'Hoje, o técnico disponível está sobrecarregado, sendo responsável por <strong>' + contagem(famPorTec, 'família', 'famílias') + '</strong> — o que torna as visitas raras ';
+      narrativa += '(uma a cada <strong>' + fmtMeses(mesesVisitar) + '</strong>). ';
+      narrativa += 'Além disso, ele passa grande parte do dia na estrada para conseguir chegar até você. ';
+      narrativa += 'Ter ATER é um <strong>direito seu</strong> e um recurso essencial para melhorar sua renda; os números mostram que o serviço precisa de mais investimento e estrutura para que o apoio chegue à sua porteira com a frequência que sua lavoura exige.';
+    } else {
+      narrativa = 'Pelos números informados, a ATER <strong>' + territ + '</strong> tem equipe suficiente para o parâmetro de 1 técnico para cada 100 famílias: ';
+      narrativa += 'cada técnico responde por <strong>' + contagem(famPorTec, 'família', 'famílias') + '</strong>, e cada família receberia visita <strong>' + frequencia(mesesVisitar) + '</strong>. ';
+      narrativa += 'Isso é a exceção no Brasil — na maior parte do país falta gente. ';
+      narrativa += 'Ter ATER é um <strong>direito seu</strong>: se mesmo com equipe suficiente o atendimento não chega até você, vale cobrar da instituição responsável como esse tempo está sendo distribuído.';
+    }
     document.getElementById('narrativa-text').innerHTML = narrativa;
   }
 
@@ -1651,9 +1700,9 @@
         tag: 'A realidade da ATER',
         narrativa: (function() {
           var loc = tExt.territ;
-          var n = 'Como <strong>extensionista</strong>, você é responsável por <strong>' + fmt(famResp) + ' famílias</strong> e realiza <strong>' + fmt(visitMes) + ' visitas por mês</strong>. ';
+          var n = 'Como <strong>extensionista</strong>, você é responsável por <strong>' + plural(famResp, 'família', 'famílias') + '</strong> e realiza <strong>' + plural(visitMes, 'visita', 'visitas') + ' por mês</strong>. ';
           n += 'Você passa cerca de <strong>' + fmt(Math.round(horasEstradaMes)) + ' horas por mês</strong> na estrada, além de <strong>' + fmt(Math.round(horasEscrit * diasMes)) + ' horas</strong> em atividades administrativas. ';
-          if (mesesVisitar > 4) n += 'No ritmo atual, cada família recebe uma visita a cada <strong>' + fmt(r1(mesesVisitar), 1) + ' meses</strong>. ';
+          if (mesesVisitar > 4) n += 'No ritmo atual, cada família recebe uma visita a cada <strong>' + fmtMeses(mesesVisitar) + '</strong>. ';
           n += capitalizar(loc) + ' há <strong>' + fmt(tecs2) + ' técnico' + (tecs2 > 1 ? 's' : '') + '</strong> para <strong>' + fmt(agric2) + ' agricultores</strong> — quando seriam necessários pelo menos <strong>' + fmt(tecNecessarios) + '</strong>. ';
           n += 'Fazer ATER de qualidade não depende apenas de você: depende de <strong>estrutura, equipes e políticas públicas adequadas</strong>.';
           return n;
@@ -1678,7 +1727,7 @@
       slides = [{
         tag: 'A realidade da ATER',
         narrativa: (function() {
-          var n = 'A gestão da ATER <strong>' + locGest + '</strong> conta com <strong>' + fmt(tecs) + ' técnico' + (tecs > 1 ? 's</strong>' : '</strong>') + ' para atender <strong>' + fmt(agric) + ' famílias</strong>. ';
+          var n = 'A gestão da ATER <strong>' + locGest + '</strong> conta com <strong>' + plural(tecs, 'técnico', 'técnicos') + '</strong> para atender <strong>' + plural(agric, 'família', 'famílias') + '</strong>. ';
           n += 'Para atingir a cobertura mínima recomendada, seriam necessários <strong>' + fmt(tecNec) + ' profissionais</strong> — um déficit de <strong>' + pctDef + '%</strong>. ';
           n += 'O deslocamento consome cerca de <strong>' + pctDeslGest + '%</strong> da jornada das equipes — o equivalente a <strong>R$ ' + fmt(custoEstrada) + ' por mês</strong> gastos na estrada em vez de no atendimento direto. ';
           n += 'Investir em ATER é investir diretamente no <strong>PIB agropecuário local</strong> e na <strong>segurança alimentar</strong>.';
@@ -1701,9 +1750,13 @@
       slides = [{
         tag: 'A realidade da ATER',
         narrativa: (function() {
+          if (deficit2 === 0) {
+            return 'Pelos números informados, a ATER <strong>' + locAgr + '</strong> tem equipe suficiente para o parâmetro de 1 técnico para cada 100 famílias: cada técnico responde por <strong>' +
+              contagem(famPorTec, 'família', 'famílias') + '</strong>. Isso é a exceção no Brasil — na maior parte do país falta gente.';
+          }
           var n = 'Para que você e sua família tenham ATER de qualidade <strong>' + locAgr + '</strong>, o serviço precisaria de muito mais braços. ';
-          n += 'Hoje, o técnico disponível é responsável por <strong>' + fmt(Math.round(famPorTec)) + ' famílias</strong> — quando o ideal é no máximo <strong>100</strong>. ';
-          n += 'Isso faz com que as visitas sejam raras: uma a cada <strong>' + fmt(meses, 1) + ' meses</strong>. ';
+          n += 'Hoje, o técnico disponível é responsável por <strong>' + contagem(famPorTec, 'família', 'famílias') + '</strong> — quando o ideal é no máximo <strong>100</strong>. ';
+          n += 'Isso faz com que as visitas sejam raras: uma a cada <strong>' + fmtMeses(meses) + '</strong>. ';
           n += 'Ter ATER é um <strong>direito seu</strong>. Faltam <strong>' + fmt(deficit2) + ' técnicos</strong> para dar conta ' + locAgr + ' com qualidade — um déficit de <strong>' + pctDef2 + '%</strong>.';
           return n;
         })()

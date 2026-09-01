@@ -289,7 +289,15 @@ box-shadow: 0 1px 0 var(--c-amber);
     ============================================= */
     #hero {
       background: var(--c-bg-dark);
-     padding: calc(var(--nav-h) + var(--section-gap) * 1.2) 0 var(--section-gap);
+     /* O hero media 949px de altura. Num notebook de 15" a 100% de zoom (janela
+        de 1512x800) ele passava 149px da tela: os dois botões ficavam fora, e
+        era preciso reduzir o zoom para ver a abertura inteira — o incômodo que o
+        Rodrigo relatou. O gargalo é vertical, não horizontal: o texto do hero
+        tem max-width de 520px, então alargar a coluna não mudaria nada aqui.
+        Com o respiro preso à altura da janela, em tela baixa ele encolhe e a
+        abertura cabe inteira; quanto mais alto o monitor, mais folga — sempre
+        um pouco mais apertado que os 176px/100px fixos de antes. */
+     padding: calc(var(--nav-h) + clamp(32px, 6vh, 120px)) 0 clamp(32px, 6vh, 100px);
       position: relative;
       overflow: hidden;
     }

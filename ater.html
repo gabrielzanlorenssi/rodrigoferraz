@@ -1493,29 +1493,6 @@
 
     var vis = '';
 
-    vis += '<div class="vis-block vis-block-amber">';
-    vis += '<div class="vis-block-title">A fila de espera pelo técnico</div>';
-    vis += '<div style="margin:12px 0;">';
-    vis += '<div class="horas-insight">' + fmtMeses(mesesVisitar) + '</div>';
-    vis += '<div class="horas-insight-label" style="color:var(--c-ink-muted)">é o intervalo médio para cada família receber uma visita — no ritmo atual dos técnicos ' + territ + '.</div>';
-    vis += '</div>';
-    vis += '<div style="display:flex;gap:4px;margin-top:12px;">';
-    for (var m = 1; m <= 12; m++) {
-      // Com espera menor que 1 mês, Math.round dava 0 e a régua ficava toda
-      // apagada embaixo de uma legenda prometendo laranja. Acende o 1º mês.
-      var acesos = mesesVisitar > 0 && mesesVisitar < 1 ? 1 : Math.min(Math.round(mesesVisitar), 12);
-      var ativo = m <= acesos;
-      vis += '<div style="flex:1;height:28px;border-radius:4px;background:' + (ativo ? 'var(--c-amber)' : '#e0ddd5') + ';display:flex;align-items:center;justify-content:center;font-size:9px;color:' + (ativo ? 'white' : '#999') + ';">' + m + '</div>';
-    }
-    vis += '</div>';
-    var legendaRegua = mesesVisitar > 12
-      ? 'A régua mostra 12 meses; no ritmo atual a espera passa de um ano.'
-      : (mesesVisitar < 1
-          ? 'No ritmo atual a espera é menor que um mês — o primeiro quadrado já cobre toda a fila.'
-          : 'Meses até receber uma visita (em laranja)');
-    vis += '<div style="font-size:11px;color:var(--c-ink-muted);margin-top:6px;">' + legendaRegua + '</div>';
-    vis += '</div>';
-
     vis += '<div class="vis-block vis-block-dark">';
     vis += '<div class="vis-block-title">A conta do seu técnico</div>';
     vis += '<div class="equipe-label">Hoje cada técnico é responsável por <strong style="color:var(--c-amber-light)">' + contagem(famPorTec, 'família', 'famílias') + '</strong>, quando o parâmetro recomendado é de até <strong>100</strong>. O déficit de profissionais ' + territ + ' é de <strong style="color:var(--c-amber-light)">' + pctDeficit + '%</strong>.</div>';

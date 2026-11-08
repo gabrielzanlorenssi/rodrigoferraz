@@ -1191,7 +1191,33 @@ var PLANNER_DATA = {
           ]
         },
         {
-          code: '1.5', type: 'multi',
+          // Pergunta nova pedida pelo Rodrigo (doc "guia-nova-pergunta", 29/10).
+          // A 1.4 trata do tempo da interação (síncrona/assíncrona); esta trata
+          // da direção — são eixos independentes. As antigas 1.5–1.7 viraram 1.6–1.8.
+          // EN/ES traduzidos pelo Claude — revisão pendente.
+          code: '1.5', type: 'single',
+          title: { pt: 'Direção da interação', en: 'Direction of interaction', es: 'Dirección de la interacción' },
+          sub: { pt: 'Como ocorrerá a interação com o beneficiário?', en: 'How will interaction with beneficiaries take place?', es: '¿Cómo se dará la interacción con los beneficiarios?' },
+          opts: [
+            { pt: 'Unidirecional', en: 'One-way', es: 'Unidireccional',
+              info: {
+                pt: 'Apenas envio de mensagens ou conteúdo (boletins, avisos, materiais informativos, lives), sem canal estruturado de retorno. É a forma mais barata de escalar o atendimento, mas não permite tirar dúvidas nem verificar se a orientação foi compreendida.',
+                en: 'Messages or content are only sent out (bulletins, notices, informational materials, livestreams), with no structured channel for feedback. It is the cheapest way to scale up the service, but it does not allow questions to be answered or confirm whether the guidance was understood.',
+                es: 'Solo se envían mensajes o contenidos (boletines, avisos, materiales informativos, transmisiones en vivo), sin un canal estructurado de retorno. Es la forma más económica de ampliar la atención, pero no permite resolver dudas ni verificar si la orientación fue comprendida.'
+              } },
+            { pt: 'Bidirecional', en: 'Two-way', es: 'Bidireccional',
+              info: {
+                pt: 'Canal de troca com o produtor, com perguntas e respostas (ex.: WhatsApp individual ou em grupo, plantão de dúvidas, videochamada). Fortalece o vínculo técnico-produtor, mas demanda mais tempo de equipe à medida que a base cresce.',
+                en: 'A channel for exchange with the farmer, with questions and answers (e.g., individual or group WhatsApp chats, Q&A office hours, video calls). It strengthens the bond between the extension professional and the farmer, but requires more staff time as the number of farmers served grows.',
+                es: 'Canal de intercambio con el productor, con preguntas y respuestas (p. ej., WhatsApp individual o en grupo, horario de consultas, videollamadas). Fortalece el vínculo entre técnico y productor, pero demanda más tiempo del equipo a medida que crece el número de productores atendidos.'
+              } },
+            { pt: 'Varia conforme o canal ou momento', en: 'Varies by channel or timing', es: 'Varía según el canal o el momento' },
+            { pt: 'Ainda será definido', en: 'To be defined', es: 'Por definir', neutral: true },
+            { pt: 'Não se aplica', en: 'Not applicable', es: 'No se aplica', neutral: true }
+          ]
+        },
+        {
+          code: '1.6', type: 'multi',
           title: { pt: 'Questões legais, éticas e de sigilo', en: 'Legal, ethical and data privacy considerations', es: 'Aspectos legales, éticos y de privacidad de los datos' },
           sub: { pt: 'Como esses aspectos serão tratados? (pode marcar mais de um)', en: 'How will legal, ethical and data privacy requirements be addressed? (select all that apply)', es: '¿Cómo se abordarán los requisitos legales, éticos y de privacidad de los datos? (puede seleccionar varias opciones)' },
           info: {
@@ -1219,7 +1245,7 @@ var PLANNER_DATA = {
           }
         },
         {
-          code: '1.6', type: 'multi',
+          code: '1.7', type: 'multi',
           title: { pt: 'Material digital para as ações de ATER', en: 'Digital materials for rural extension activities', es: 'Materiales digitales para las actividades de extensión rural' },
           sub: { pt: 'Quais materiais serão produzidos e usados nas práticas de ATER? (pode marcar mais de um)', en: 'Which types of materials will be produced or used? (select all that apply)', es: '¿Qué tipos de materiales se producirán o utilizarán? (puede seleccionar varias opciones)' },
           info: {
@@ -1240,7 +1266,8 @@ var PLANNER_DATA = {
         {
           // Pergunta nova pedida pelo Rodrigo no PDF em português (09/08).
           // EN/ES traduzidos pelo Claude — revisão pendente.
-          code: '1.7', type: 'multi',
+          // Era a 1.7; virou 1.8 com a entrada da "Direção da interação" (29/10).
+          code: '1.8', type: 'multi',
           title: { pt: 'Origem dos conteúdos utilizados', en: 'Origin of the content used', es: 'Origen de los contenidos utilizados' },
           sub: {
             pt: 'Os conteúdos utilizados nas ações de ATER Digital serão produzidos pela própria instituição ou obtidos de fontes públicas e/ou de parceiros? (pode marcar mais de um)',
@@ -1508,10 +1535,12 @@ var PLANNER_ICONS = {
   '1.2': '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7.5" r="3.8"/>',
   '1.3': '<rect x="3" y="4.5" width="18" height="17" rx="2"/><path d="M16 2.5v4M8 2.5v4M3 10h18"/>',
   '1.4': '<path d="M20.5 11.6a7.9 7.9 0 0 1-8.5 7.9 8 8 0 0 1-3.6-.9L3.5 20l1.4-4.9a8 8 0 0 1-.9-3.6 7.9 7.9 0 0 1 7.9-8.5 8 8 0 0 1 8.6 8.6z"/>',
-  '1.5': '<path d="M12 21.5s7.6-3.8 7.6-9.5V5.2L12 2.5 4.4 5.2v6.8c0 5.7 7.6 9.5 7.6 9.5z"/>',
-  '1.6': '<rect x="3" y="3.5" width="18" height="17" rx="2"/><circle cx="8.5" cy="9" r="1.6"/><path d="M21 15l-5-5-11 10.5"/>',
-  // 1.7 (origem dos conteúdos): pastas/fontes de onde o material vem
-  '1.7': '<path d="M20.5 19.5a1.5 1.5 0 0 1-1.5 1.5H5a1.5 1.5 0 0 1-1.5-1.5v-13A1.5 1.5 0 0 1 5 5h4.5l2 2.5H19a1.5 1.5 0 0 1 1.5 1.5z"/><path d="M8.5 14.5h7M8.5 17.5h4"/>',
+  // 1.5 (direção da interação): setas nos dois sentidos — uni ou bidirecional
+  '1.5': '<path d="M3.5 8h16"/><path d="M15.5 4l4 4-4 4"/><path d="M20.5 16h-16"/><path d="M8.5 12l-4 4 4 4"/>',
+  '1.6': '<path d="M12 21.5s7.6-3.8 7.6-9.5V5.2L12 2.5 4.4 5.2v6.8c0 5.7 7.6 9.5 7.6 9.5z"/>',
+  '1.7': '<rect x="3" y="3.5" width="18" height="17" rx="2"/><circle cx="8.5" cy="9" r="1.6"/><path d="M21 15l-5-5-11 10.5"/>',
+  // 1.8 (origem dos conteúdos): pastas/fontes de onde o material vem
+  '1.8': '<path d="M20.5 19.5a1.5 1.5 0 0 1-1.5 1.5H5a1.5 1.5 0 0 1-1.5-1.5v-13A1.5 1.5 0 0 1 5 5h4.5l2 2.5H19a1.5 1.5 0 0 1 1.5 1.5z"/><path d="M8.5 14.5h7M8.5 17.5h4"/>',
   '2.1': '<path d="M20.5 14.6a2 2 0 0 1-2 2H7l-3.5 3.5V4.9a2 2 0 0 1 2-2h13a2 2 0 0 1 2 2z"/>',
   '2.2': '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7.5" r="3.6"/><path d="M22 21v-2a4 4 0 0 0-3-3.8"/><path d="M16 3.9a3.6 3.6 0 0 1 0 7"/>',
   '2.3': '<path d="M9.5 6.5h11M9.5 12h11M9.5 17.5h11"/><path d="M3 6.4l1.3 1.3 2.4-2.6M3 11.9l1.3 1.3 2.4-2.6M3 17.4l1.3 1.3 2.4-2.6"/>',
@@ -1554,7 +1583,7 @@ function renderPlannerPhases() {
 }
 
 // Campo de texto livre de uma pergunta (q.texto). Só aparece quando uma das
-// opções listadas em q.texto.quando está marcada — ex.: a 1.7 só pede "quais"
+// opções listadas em q.texto.quando está marcada — ex.: a 1.8 só pede "quais"
 // se a pessoa disser que usa base pública ou conteúdo de parceiro.
 function plannerCampoTexto(q, sel) {
   if (!q.texto) return '';
